@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
 const SiteWrapper = styled.div`
@@ -12,6 +12,10 @@ const SiteWrapper = styled.div`
     justify-content: center;
     align-item: center;
     color: #eee;
+    & a {
+      color: #eee;
+      text-decoration: none;
+    }
   }
   & main {
     flex: 1;
@@ -32,8 +36,8 @@ const SiteWrapper = styled.div`
 export const Layout = ({ children }) => {
   return (
     <SiteWrapper>
-      <header>
-        NeuroBridge
+      <header role="banner">
+        <a href="/">NeuroBridge</a>
       </header>
       <main>
         { children }
