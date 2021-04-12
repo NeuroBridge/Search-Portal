@@ -3,6 +3,7 @@ import { Layout } from './components/layout'
 import { config } from './config'
 import { Select } from './components/select'
 import { Selections, Selection } from './components/selections'
+import { QueryForm } from './components/query-form'
 import './app.css'
 
 const generateId = () => Math.random().toString(36).substr(2, 9)
@@ -37,7 +38,7 @@ export const App = () => {
     }
   }, [table])
 
-  const handleClickAdd = () => {
+  const handleClickAddSelection = () => {
     if (table && criterion) {
       setTable('')
       setSelections([ { table, criterion, id: generateId() }, ...selections ])
@@ -57,9 +58,9 @@ export const App = () => {
     <Layout>
       <h1>Query</h1>
       
-      <hr/>
+      <hr />
       
-      <div style={{ display: 'flex', justifyContent: 'center', padding: '2rem', gap: '1rem' }}>
+      <QueryForm>
         <Select value={ table.id || '' } onChange={ handleChangeTable }>
           <option key="no-table" value="">Select Table</option>
           {
@@ -78,13 +79,19 @@ export const App = () => {
           }
         </Select>
 
-        <button onClick={ handleClickAdd } disabled={ !table || !criterion }>+ Add Selection</button>
+        <button onClick={ handleClickAddSelection } disabled={ !table || !criterion }>+ Add Selection</button>
         <button onClick={ handleClickAddRandomSelection }>+ Add Random Selection</button>
-      </div>
+      </QueryForm>
 
       <Selections>
         { selections.map(selection => <Selection key={ selection.id } selection={ selection } onDelete={ handleDeleteSelection } />) }
       </Selections>
+
+      <br /><br /><hr /><br /><br />
+
+      <pre>
+        { table && JSON.stringify(table, null, 2) }
+      </pre>
 
     </Layout>
   );

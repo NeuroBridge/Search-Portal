@@ -7,11 +7,12 @@ const SiteWrapper = styled.div`
   flex-direction: column;
   & header {
     padding: 2rem;
-    background: #345;
+    background: #234;
     display: flex;
     justify-content: center;
     align-item: center;
     color: #eee;
+    filter: drop-shadow(0 0 5px #00000066);
     & a {
       color: #eee;
       text-decoration: none;
@@ -22,6 +23,11 @@ const SiteWrapper = styled.div`
     width: calc(100% - 4rem);
     max-width: 1080px;
     margin: 3rem auto;
+    h1 {
+      text-align: center;
+      color: #234;
+      text-transform: uppercase;
+    }
   }
   & footer {
     padding: 2rem;
@@ -30,6 +36,7 @@ const SiteWrapper = styled.div`
     justify-content: center;
     align-item: center;
     color: #eee;
+    filter: drop-shadow(0 0 5px #00000066);
   }
 `
 
@@ -43,7 +50,7 @@ export const Layout = ({ children }) => {
         { children }
       </main>
       <footer>
-        &copy; { new Date().getFullYear() } NeuroBridge
+        &copy; { new Date().getFullYear() }
       </footer>
     </SiteWrapper>
   )

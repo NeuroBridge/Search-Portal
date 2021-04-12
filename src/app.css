@@ -10,6 +10,7 @@ body {
   margin: 0;
   font-family: sans-serif;
   letter-spacing: 1px;
+  background-color: #ab9;
 }
 
 #root {
@@ -18,3 +19,16 @@ body {
   flex-direction: column;  
 }
 
+pre {
+  background-color: #333333ff;
+  color: #aabb99bb;
+  padding: 1rem;
+  border-radius: 5px;
+  font-size: 80%;
+  filter: opacity(0.5);
+  transition: filter 250ms;
+}
+
+pre:hover {
+  filter: opacity(1.0);
+}
