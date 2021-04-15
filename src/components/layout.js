@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 const SiteWrapper = styled.div`
+  // & * { border: 1px solid #f99; }
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -22,7 +23,7 @@ const SiteWrapper = styled.div`
     flex: 1;
     width: calc(100% - 4rem);
     max-width: 1080px;
-    margin: 3rem auto;
+    margin: 2rem auto;
     h1 {
       text-align: center;
       color: #234;
