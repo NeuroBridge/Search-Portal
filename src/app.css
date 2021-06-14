@@ -10,11 +10,55 @@ body {
   margin: 0;
   font-family: sans-serif;
   letter-spacing: 1px;
-  background-color: #ab9;
+  background-color: #def;
 }
 
 #root {
   min-height: 100vh;
   display: flex;
   flex-direction: column;  
+}
+
+/* Layout */
+
+.main-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-layout header {
+  padding: 2rem;
+  background: #234;
+  display: flex;
+  justify-content: center;
+  align-item: center;
+  color: #eee;
+  filter: drop-shadow(0 0 5px #00000066);
+}
+.main-layout header a {
+  color: #eee;
+  text-decoration: none;
+}
+
+.main-layout main {
+  flex: 1;
+  width: calc(100% - 4rem);
+  max-width: 1080px;
+  margin: 2rem auto;
+}
+.main-layout main h1 {
+  text-align: center;
+  color: #234;
+  text-transform: uppercase;
+}
+
+.main-layout footer {
+  padding: 2rem;
+  background: #001;
+  display: flex;
+  justify-content: center;
+  align-item: center;
+  color: #eee;
+  filter: drop-shadow(0 0 5px #00000066);
 }

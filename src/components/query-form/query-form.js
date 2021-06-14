@@ -1,61 +1,51 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
-import axios from 'axios'
-import { QueryField } from './query-field'
-import { QueryResetButton, QuerySubmitButton } from './buttons'
+import React, { useRef, useState } from 'react'
 import ReactJson from 'react-json-view'
-
-const QUERY_TEST_ENDPOINT = `${ process.env.REACT_APP_API_URL }/query`
-
-export const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  & .actions {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    & button {
-      flex: 1;
-    }
-    @media (min-width: 600px) {
-      flex-direction: row;
-      justify-content: center;
-      gap: 2rem;
-    }
-  }
-`
+import './query-form.css'
+import { sampleResponse } from '../../sample-response'
 
 export const QueryForm = () => {
   const [query, setQuery] = useState('')
-  const [result, setResult] = useState({})
+  const [results, setResults] = useState([])
+  const inputRef = useRef()
 
-  const handleChangeQuery = event => setQuery(event.target.value)
   const handleResetQuery = event => {
+    inputRef.current.value = ''
     setQuery('')
-    setResult({})
+    setResults([])
   }
+
   const handleSubmitQuery = async () => {
+    setQuery(inputRef.current.value)
     try {
-      const response = await axios.get(QUERY_TEST_ENDPOINT)
-      setResult(response.data)
+      setResults(sampleResponse)
     } catch (error) {
       console.error(error)
     }
-
   }
 
   return (
-    <Wrapper>
-      <QueryField value={ query } onChange={ handleChangeQuery } />
-      <div className="actions">
-        <QuerySubmitButton onClick={ handleSubmitQuery }/>
-        <QueryResetButton onClick={ handleResetQuery }/>
+    <div className="query-form">
+      <input className="query-input" ref={ inputRef } placeholder="Enter search term" />
+      
+      <div className="buttons">
+        <button onClick={ handleSubmitQuery }>Submit Query</button>
+        <button onClick={ handleResetQuery }>Reset</button>
       </div>
-      {
+      
+      { query && <div>You searched for "{ query }"</div> }
 
+      {
+        results.map(result => (
+          <ReactJson
+            key={ result.id }
+            src={ result }
+            collapsed={ false }
+            enableClipboard={ false }
+            theme="monokai"
+            style={{ borderRadius: '4px', padding: '1rem' }}
+          />
+        ))
       }
-      <ReactJson src={ result } collapsed={ false } enableClipboard={ false } theme="monokai" style={{ borderRadius: '4px', padding: '1rem' }} />
-    </Wrapper>
+    </div>
   )
 }
