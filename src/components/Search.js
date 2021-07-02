@@ -25,7 +25,7 @@ const Search = props => {
             <Form.Field 
                 id="search-field"
                 control={Input}
-                label="Enter an ontology id (e.g. Cardiovascular Disease = cdvo"
+                label="Enter an ontology id (e.g. Cardiovascular Disease = cdvo)"
                 placeholder="type an ontology id here"
                 value={searchVal}
                 onChange={handleInputChange}

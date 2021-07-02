@@ -1,4 +1,4 @@
-import { useState, useRef } from "react"
+import { useState } from "react"
 import { Container, Header, Grid, Form, Input, Button } from "semantic-ui-react"
 import './App.css';
 import axios from 'axios'
@@ -10,7 +10,6 @@ function App() {
   const [loading, setLoading] = useState(true)
   const [results, setResults] = useState([])
   const [errMsg, setErrMsg] = useState(null)
-  const queryInput = useRef()
 
   const handleKeyDown = event => {
     if (event.keyCode === 13) {
@@ -28,8 +27,7 @@ function App() {
 
     const fetchTerms = async () => {
       try {
-        const q = queryInput.current.value
-        const { data } = await axios.get(`http://www.ebi.ac.uk/ols/api/ontologies/${q}/terms`)
+        const { data } = await axios.get(`http://www.ebi.ac.uk/ols/api/ontologies/${searchVal}/terms`)
         if(!data) {
           throw new Error('an error occured while trying to get the results')
         }
