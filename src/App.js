@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Container, Header, Grid, Input, Loader, Dimmer } from "semantic-ui-react"
+import { Container, Header, Grid, Input, Loader, Dimmer, List } from "semantic-ui-react"
 import './App.css';
 import axios from 'axios'
 
@@ -31,13 +31,16 @@ function App() {
         if(!data) {
           throw new Error('an error occurred while trying to get the results')
         }
-        console.log(data)
+        console.log("this is data", data._embedded.terms)
+        setLoading(false)
+        setResults(data._embedded.terms)
       } catch (err) {
         console.log(err)
+        setLoading(false)
+        setErrMsg(err)
       }
     }
 
-    setResults([])
     fetchTerms()
 
   }
@@ -75,8 +78,13 @@ function App() {
                 ) : errMsg ? (
                   <div className="errorMessage">{errMsg}</div>
                   ) : (
-                  <p className="App-intro">Here are all the terms associated with the ontology you searched for:</p>
-
+                    //console.log("this is results", results)
+                    <span>
+                      <Header size="medium" className="App-intro">Here are all the terms associated with the <b>{searchVal}</b> ontology:</Header>
+                      <List className="results">
+                        {results.map(result => <Results term={result} />)}
+                      </List>
+                    </span>
                 )
               }
               </div>
