@@ -6,7 +6,7 @@ function Results ({ term }) {
         <List.Item>
             <List.Content>
                 <List.Header>{term.label}</List.Header>
-                <List.Description>Description: {term.description}</List.Description>
+                <List.Description>{term.description === null ? "No description found" : `Description: ${term.description}`}</List.Description>
             </List.Content>
         </List.Item>
     )

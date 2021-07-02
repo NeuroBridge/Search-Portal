@@ -54,12 +54,12 @@ function App() {
         <Grid centered>
           <Grid.Row>
             <Grid.Column>
-              <p style={{marginTop: "2rem"}}><b>Enter an ontology id/short name</b></p>
+              <p style={{marginTop: "2rem"}}><b>Enter an ontology id/short name</b> (<a href="https://www.ebi.ac.uk/ols/ontologies" target="_blank" rel="noreferrer">List of all ontologies</a>)</p>
               <Input 
                 id="search-field"
                 action={{icon: "search", onClick: handleSubmit}}
                 size="large"
-                placeholder="e.g. Cardiovascular Disease = cvdo"
+                placeholder="e.g. Chemical Methods = chmo"
                 value={searchVal}
                 onKeyDown={handleKeyDown}
                 onChange={handleInputChange}
