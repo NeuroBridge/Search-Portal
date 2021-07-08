@@ -1,13 +1,13 @@
-import { List } from "semantic-ui-react"
+import { List } from "antd"
 
 function Results ({ term }) {
 
     return (    
         <List.Item>
-            <List.Content>
-                <List.Header>{term.label}</List.Header>
-                <List.Description>{term.description === null ? "No description found" : `Description: ${term.description}`}</List.Description>
-            </List.Content>
+            <List.Item.Meta 
+                title={term.label}
+                description={term.description === null ? "No description found" : `Description: ${term.description}`}
+            />
         </List.Item>
     )
 }
