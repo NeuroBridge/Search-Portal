@@ -1,5 +1,4 @@
 import { useState } from "react"
-import { Header } from "semantic-ui-react"
 import { Input, PageHeader, Row, Col, Spin, List } from "antd"
 import './App.css';
 import axios from 'axios'
@@ -70,7 +69,7 @@ function App() {
             ) : (
               //console.log("this is results", results)
               <span>
-                <Header size="medium" className="App-intro">Here are all the terms associated with the <b>{searchVal}</b> ontology:</Header>
+                <p className="App-intro">Here are all the terms associated with the <b>{searchVal}</b> ontology:</p>
                 <List className="results">
                   {results.map(result => <Results term={result} />)}
                 </List>
