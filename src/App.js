@@ -12,16 +12,20 @@ function App() {
   const [loading, setLoading] = useState()
   const [results, setResults] = useState([])
   const [errMsg, setErrMsg] = useState(null)
+  // const searchValRef = useRef(searchVal)
 
-  // const handleKeyDown = event => {
-  //   if (event.keyCode === 13) {
-  //     handleSubmit()
-  //   }
+  // const setMyRef = status => {
+  //   searchValRef.current = status
+  //   setSearchVal(status)
   // }
+
+  // const listener = () => {
+  //   console.log(`current search value is ${searchValRef.current}`)
+  // }
+
   const handleInputChange = e => {
     setSearchVal(e.target.value)
   }
-
 
   const handleSubmit = () => {
     setLoading(true)
@@ -29,51 +33,63 @@ function App() {
 
     const fetchTerms = async () => {
       try {
-        const { data } = await axios.get(`https://www.ebi.ac.uk/ols/api/ontologies/${searchVal}/terms`)
+        const { data } = await axios.get(`http://beast.europa.renci.org:8080/api/search?q=${searchVal}&ontology=neurobridges_ontology`)
         if(!data) {
           throw new Error('an error occurred while trying to get the results')
         }
-        console.log("this is data", data._embedded.terms)
+        console.log("this is data", data.response)
         setLoading(false)
-        setResults(data._embedded.terms)
+        setResults(data.response.docs)
       } catch (err) {
         console.log(err)
         setLoading(false)
         setErrMsg(err)
       }
     }
-
     fetchTerms()
-
   }
+
+  // useEffect(() => {
+  //   document.getElementsByClassName("ant-input-clear-icon")[0].addEventListener("click", listener)
+
+  // }, [])
+  
+  
 
   return (
     <div className="App">
       <PageHeader title="OLS Terms" ghost={false} />
       <Row>
         <Col span={12} offset={6}>
-          <p style={{marginTop: "2rem"}}><b>Enter an ontology id/short name</b> (<a href="https://www.ebi.ac.uk/ols/ontologies" target="_blank" rel="noreferrer">List of all ontologies</a>)</p>
-          <Search id="search-field" placeholder="e.g. Chemical Methods = chmo" onSearch={handleSubmit} onChange={handleInputChange} value={searchVal} allowClear enterButton />
+          <p style={{marginTop: "2rem"}}><b>Enter a term from the Neurobridge ontology</b></p>
+          <Search id="search-field" placeholder="e.g. Spectroscopy" onSearch={handleSubmit} onChange={handleInputChange} value={searchVal} allowClear enterButton />
         </Col>
       </Row>
 
       <Row>
         <Col span={12} offset={6}>
-          <div className="results">
+          <div id="results-container">
             {loading && !errMsg ? (
+              <div>
                 <Spin tip="Getting Results..." />
+              </div>
+            // ) : !loading && searchVal.length > 0 ? (
+            //   <div>
+            //     <Spin tip="Waiting to search..." />
+            //   </div>
             ) : errMsg ? (
-              <div className="errorMessage">{errMsg}</div>
-            ) : !loading && searchVal === "" ? (
+                <div className="errorMessage">{errMsg}</div>
+            ) : !loading && searchVal.length === 0 ? (
+              <div>
                 <Spin tip="Enter a search term..." />
+              </div>
             ) : (
-              //console.log("this is results", results)
-              <span>
-                <p className="App-intro">Here are all the terms associated with the <b>{searchVal}</b> ontology:</p>
+              <div>
+                <p className="App-intro">Here are all the terms associated with your search for "{searchVal}":</p>
                 <List className="results">
-                  {results.map(result => <Results term={result} />)}
+                  {results.map(result => <Results term={result} key={result.label} />)}
                 </List>
-              </span>
+              </div>
             )
           }
           </div>
