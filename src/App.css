@@ -1,5 +1,7 @@
 .App {
-  font-family:Georgia, 'Times New Roman', Times, serif
+  font-family: 'Quicksand', 'Helvetica', 'Arial', sans-serif;
+  background-color: whitesmoke;
+  min-height: 100vh;
 }
 
 .App-header {

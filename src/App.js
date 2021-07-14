@@ -58,7 +58,7 @@ function App() {
 
   return (
     <div className="App">
-      <PageHeader title="OLS Terms" ghost={false} />
+      <PageHeader title="Neurobridge Ontology Search" ghost={false} />
       <Row>
         <Col span={12} offset={6}>
           <p style={{marginTop: "2rem"}}><b>Enter a term from the Neurobridge ontology</b></p>
@@ -70,21 +70,11 @@ function App() {
         <Col span={18} offset={3}>
           <div id="results-container">
             <Row gutter={10}>
-              {loading && !errMsg ? (
-                <Col span={12} offset={6}>
-                  <Spin tip="Getting Results..." />
+              {loading && !errMsg && searchVal ? (
+                <Col span={16} offset={10}>
+                  <Spin tip="Searching..." />
                 </Col>
-              // ) : !loading && searchVal.length > 0 ? (
-              //   <div>
-              //     <Spin tip="Waiting to search..." />
-              //   </div>
-              ) : errMsg ? (
-                  <Col span={12} offset={6} className="errorMessage">{errMsg}</Col>
-              ) : !loading && results === [] ? (
-                <Col span={12} offset={6}>
-                  <Spin tip="Enter a search term..." />
-                </Col>
-              ) : (
+              ) : !loading && !errMsg && results.length > 0 ? (
                 <>
                   <Col span={18}>
                     <p id="results-header">Here are all the terms associated with your search:</p>
@@ -96,6 +86,12 @@ function App() {
                     </Col>
                   )}
                 </>
+              ) : !loading && !errMsg && results.length === 0 ? (
+                <Col span={16} offset={8}>
+                    <p id="results-header">No results found or no search term entered.</p>
+                </Col>
+              ) : (
+                <Col span={16} offset={4} className="errorMessage">{errMsg}</Col>
               )
             }
             </Row>
