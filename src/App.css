@@ -1,5 +1,5 @@
 .App {
-  text-align: center;
+  font-family:Georgia, 'Times New Roman', Times, serif
 }
 
 .App-header {
@@ -15,7 +15,7 @@
   cursor: pointer;
 }
 
-.App-intro {
+#results-header {
   font-size: large;
 }
 

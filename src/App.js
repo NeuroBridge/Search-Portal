@@ -1,9 +1,9 @@
 import { useState } from "react"
-import { Input, PageHeader, Row, Col, Spin, List } from "antd"
+import { Input, PageHeader, Row, Col, Spin } from "antd"
 import './App.css';
 import axios from 'axios'
 
-import Results from "./components/Results";
+import ResultCard from "./components/ResultCard";
 
 const { Search } = Input
 
@@ -67,31 +67,38 @@ function App() {
       </Row>
 
       <Row>
-        <Col span={12} offset={6}>
+        <Col span={18} offset={3}>
           <div id="results-container">
-            {loading && !errMsg ? (
-              <div>
-                <Spin tip="Getting Results..." />
-              </div>
-            // ) : !loading && searchVal.length > 0 ? (
-            //   <div>
-            //     <Spin tip="Waiting to search..." />
-            //   </div>
-            ) : errMsg ? (
-                <div className="errorMessage">{errMsg}</div>
-            ) : !loading && searchVal.length === 0 ? (
-              <div>
-                <Spin tip="Enter a search term..." />
-              </div>
-            ) : (
-              <div>
-                <p className="App-intro">Here are all the terms associated with your search for "{searchVal}":</p>
-                <List className="results">
-                  {results.map(result => <Results term={result} key={result.label} />)}
-                </List>
-              </div>
-            )
-          }
+            <Row gutter={10}>
+              {loading && !errMsg ? (
+                <Col span={12} offset={6}>
+                  <Spin tip="Getting Results..." />
+                </Col>
+              // ) : !loading && searchVal.length > 0 ? (
+              //   <div>
+              //     <Spin tip="Waiting to search..." />
+              //   </div>
+              ) : errMsg ? (
+                  <Col span={12} offset={6} className="errorMessage">{errMsg}</Col>
+              ) : !loading && results === [] ? (
+                <Col span={12} offset={6}>
+                  <Spin tip="Enter a search term..." />
+                </Col>
+              ) : (
+                <>
+                  <Col span={18}>
+                    <p id="results-header">Here are all the terms associated with your search:</p>
+                  </Col>
+                  
+                  {results.map(result => 
+                    <Col span={8} key={result.label}>
+                      <ResultCard term={result} />
+                    </Col>
+                  )}
+                </>
+              )
+            }
+            </Row>
           </div>
         </Col>
       </Row>
