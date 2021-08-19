@@ -1,13 +1,15 @@
 import { forwardRef, useEffect, useMemo, useRef, useState } from 'react'
 import axios from 'axios'
 import {
-  AppBar, Button, Card, CardContent, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Grid, LinearProgress, Paper, InputBase, Slide, Toolbar, Typography
+  AppBar, Button, Card, CardContent, IconButton, Grid, LinearProgress, Paper, InputBase, Toolbar, Typography
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import {
-  PlayCircleOutline as ViewTermIcon,
+  ArrowForwardIos as ViewTermIcon,
   Search as SearchIcon,
 } from '@material-ui/icons'
+import { TermCard } from './term-card'
+import { TermDialog } from './term-dialog'
 
 const SEARCH_URL = `https://neurobridges.renci.org:8444/api/select`
 const DEFAULT_PARAMS = {
@@ -32,7 +34,11 @@ const useStyles = makeStyles(theme => ({
   input: {
     backgroundColor: '#fff',
     padding: `0 ${ theme.spacing(3) }px`,
-    flex: 1
+    flex: 1,
+  },
+  inputTip: {
+    filter: 'opacity(0.33)',
+    whiteSpace: 'nowrap',
   },
   main: {
     margin: theme.spacing(4),
@@ -42,24 +48,7 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     gap: theme.spacing(1),
   },
-  termCard: {
-    padding: theme.spacing(2),
-    fontSize: '80%',
-    position: 'relative',
-  },
-  button: {
-    position: 'absolute',
-    bottom: theme.spacing(1),
-    right: theme.spacing(1),
-  },
-  termDialog: {
-    margin: '9rem 2rem 2rem 2rem',
-  }
 }))
-
-const DialogTransition = forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ ref } {...props} />
-})
 
 export const App = () => {
   const classes = useStyles()
@@ -115,7 +104,7 @@ export const App = () => {
           <Typography variant="h6">NeuroBridge</Typography>
         </Toolbar>
         <form className={ classes.form } noValidate autoComplete="off" onSubmit={ handleSubmit }>
-          <InputBase className={ classes.input } id="query-field" label="Enter Query" value={ query } onChange={ handleChangeQuery } type="search" variant="filled" inputRef={ inputRef } />
+          <InputBase className={ classes.input } id="query-field" label="Enter Query" value={ query } onChange={ handleChangeQuery } type="search" variant="filled" inputRef={ inputRef } endAdornment={ <small className={ classes.inputTip }>Press / to focus</small> }/>
           <IconButton type="submit" className={classes.iconButton} aria-label="search">
             <SearchIcon />
           </IconButton>
@@ -126,39 +115,9 @@ export const App = () => {
         <Grid container spacing={ 3 }>
           <Grid item xs={ 12 } className={ classes.terms }>
             {
-              terms.map(term => (
-                <Card
-                  key={ term.label }
-                  variant="outlined"
-                  className={ classes.termCard }
-                  onClick={ () => console.log(term) }
-                >
-                  <pre>{ JSON.stringify(term, null, 2) }</pre>
-                  <IconButton
-                    color="secondary"
-                    className={ classes.button }
-                    size="small"
-                    onClick={ () => setSelectedTerm(term) }
-                    children={ <ViewTermIcon /> }
-                  />
-                </Card>
-              ))
+              terms.map(term => <TermCard term={ term } key={ term.label } clickHandler={ () => setSelectedTerm(term) }/>)
             }
-            <Dialog fullScreen open={ dialogOpen } onClose={ () => setSelectedTerm(null) } TransitionComponent={ DialogTransition } classes={{ root: classes.termDialog }}>
-              <DialogTitle>
-                { selectedTerm && selectedTerm.short_form }
-              </DialogTitle>
-              <DialogContent style={{ flex: 1}}>
-                <pre>
-                  { JSON.stringify(selectedTerm, null, 2) }
-                </pre>
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={ () => setSelectedTerm(null) } color="primary">
-                  Close
-                </Button>
-              </DialogActions>
-            </Dialog>
+            <TermDialog open={ dialogOpen } term={ selectedTerm } closeHandler={ () => setSelectedTerm(null) } />
           </Grid>
         </Grid>
       </main>
