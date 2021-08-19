@@ -123,7 +123,7 @@ export const App = () => {
         <LinearProgress variant={ busy ? 'indeterminate' : 'determinate' } value={ 100 } />
       </AppBar>
       <main className={ classes.main }>
-              <Grid container spacing={ 3 }>
+        <Grid container spacing={ 3 }>
           <Grid item xs={ 12 } className={ classes.terms }>
             {
               terms.map(term => (
