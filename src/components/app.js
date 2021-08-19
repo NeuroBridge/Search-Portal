@@ -1,7 +1,7 @@
-import { forwardRef, useMemo, useState } from 'react'
+import { forwardRef, useEffect, useMemo, useRef, useState } from 'react'
 import axios from 'axios'
 import {
-  AppBar, Button, Card, CardContent, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Grid, Paper, InputBase, Slide, Toolbar, Typography
+  AppBar, Button, Card, CardContent, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Grid, LinearProgress, Paper, InputBase, Slide, Toolbar, Typography
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import {
@@ -58,7 +58,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const DialogTransition = forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />
+  return <Slide direction="up" ref={ ref } {...props} />
 })
 
 export const App = () => {
@@ -66,10 +66,31 @@ export const App = () => {
   const [query, setQuery] = useState('')
   const [terms, setTerms] = useState([])
   const [selectedTerm, setSelectedTerm] = useState(null)
+  const [busy, setBusy] = useState(false)
   const dialogOpen = useMemo(() => !!selectedTerm, [selectedTerm])
+  const inputRef = useRef()
+
+  useEffect(() => {
+    // this lets the user press backslash to jump focus to the search box
+    const handleKeyPress = event => {
+      if (event.keyCode === 220) { // backslash ("\") key 
+        if (inputRef.current) {
+          event.preventDefault()
+          inputRef.current.select()
+          window.scroll({
+            top: 0,
+            behavior: 'smooth',
+          })
+        }
+      }
+    }
+    window.addEventListener('keydown', handleKeyPress)
+    return () => window.removeEventListener('keydown', handleKeyPress)
+  }, [])
 
   const handleChangeQuery = event => setQuery(event.target.value)
   const handleSubmit = event => {
+    setBusy(true)
     event.preventDefault()
     const params = { ...DEFAULT_PARAMS, q: query }
     const fetchTerms = async () => {
@@ -82,6 +103,7 @@ export const App = () => {
       } catch (error) {
         console.log(error)
       }
+      setBusy(false)
     }
     fetchTerms()
   }
@@ -93,14 +115,15 @@ export const App = () => {
           <Typography variant="h6">NeuroBridge</Typography>
         </Toolbar>
         <form className={ classes.form } noValidate autoComplete="off" onSubmit={ handleSubmit }>
-          <InputBase className={ classes.input } id="query-field" label="Enter Query" value={ query } onChange={ handleChangeQuery } type="search" variant="filled" />
+          <InputBase className={ classes.input } id="query-field" label="Enter Query" value={ query } onChange={ handleChangeQuery } type="search" variant="filled" inputRef={ inputRef } />
           <IconButton type="submit" className={classes.iconButton} aria-label="search">
             <SearchIcon />
           </IconButton>
         </form>
+        <LinearProgress variant={ busy ? 'indeterminate' : 'determinate' } value={ 100 } />
       </AppBar>
       <main className={ classes.main }>
-        <Grid container spacing={ 3 }>
+              <Grid container spacing={ 3 }>
           <Grid item xs={ 12 } className={ classes.terms }>
             {
               terms.map(term => (
@@ -123,7 +146,7 @@ export const App = () => {
             }
             <Dialog fullScreen open={ dialogOpen } onClose={ () => setSelectedTerm(null) } TransitionComponent={ DialogTransition } classes={{ root: classes.termDialog }}>
               <DialogTitle>
-                <Typography variant="h6">{ selectedTerm && selectedTerm.short_form }</Typography>
+                { selectedTerm && selectedTerm.short_form }
               </DialogTitle>
               <DialogContent style={{ flex: 1}}>
                 <pre>
