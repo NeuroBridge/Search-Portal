@@ -48,13 +48,22 @@ export const TermDialog = ({ open, term, closeHandler }) => {
           { JSON.stringify(term, null, 2) }
         </pre>
         
+        <br /><br />
         <Divider light />
-        <Button onClick={ handleFetchChildren }>fetch hierarchical children</Button>
+        <br /><br />
+
+        <Button variant="contained" color="primary" onClick={ handleFetchChildren }>fetch hierarchical children</Button>
+        <br /><br />
         <ReactJson src={ children } theme="monokai" collapsed={ 1 } />
         
+        <br /><br />
         <Divider light />
-        <Button onClick={ handleFetchParents }>fetch hierarchical parents</Button>
+        <br /><br />
+
+        <Button variant="contained" color="primary" onClick={ handleFetchParents }>fetch hierarchical parents</Button>
+        <br /><br />
         <ReactJson src={ parents } theme="monokai" collapsed={ 1 } />
+
       </DialogContent>
       <DialogActions>
         <Button onClick={ closeHandler }>Close</Button>
