@@ -5,6 +5,7 @@ import {
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { api } from '../api'
+import ReactJson from 'react-json-view'
 
 const useStyles = makeStyles(theme => ({
   termDialog: {
@@ -49,11 +50,11 @@ export const TermDialog = ({ open, term, closeHandler }) => {
         
         <Divider light />
         <Button onClick={ handleFetchChildren }>fetch hierarchical children</Button>
-        <pre>{ JSON.stringify(children, null, 2) }</pre>
+        <ReactJson src={ children } theme="monokai" collapsed={ 1 } />
         
         <Divider light />
         <Button onClick={ handleFetchParents }>fetch hierarchical parents</Button>
-        <pre>{ JSON.stringify(parents, null, 2) }</pre>
+        <ReactJson src={ parents } theme="monokai" collapsed={ 1 } />
       </DialogContent>
       <DialogActions>
         <Button onClick={ closeHandler }>Close</Button>
