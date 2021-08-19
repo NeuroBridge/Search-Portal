@@ -8,13 +8,9 @@ import {
   ArrowForwardIos as ViewTermIcon,
   Search as SearchIcon,
 } from '@material-ui/icons'
-import { TermCard } from './term-card'
-import { TermDialog } from './term-dialog'
-
-const SEARCH_URL = `https://neurobridges.renci.org:8444/api/select`
-const DEFAULT_PARAMS = {
-  ontology: 'neurobridges_ontology',
-}
+import { TermCard } from './components/term-card'
+import { TermDialog } from './components/term-dialog'
+import { api } from './api'
 
 const useStyles = makeStyles(theme => ({
   app: {
@@ -81,20 +77,10 @@ export const App = () => {
   const handleSubmit = event => {
     setBusy(true)
     event.preventDefault()
-    const params = { ...DEFAULT_PARAMS, q: query }
-    const fetchTerms = async () => {
-      try {
-        const { data } = await axios.get(SEARCH_URL, { params })
-        if (!data) {
-          throw new Error('An error occurred while fetching terms')
-        }
-        setTerms(data.response.docs)
-      } catch (error) {
-        console.log(error)
-      }
-      setBusy(false)
-    }
-    fetchTerms()
+    api.select(query)
+      .then(terms => setTerms(terms))
+      .catch(error => console.error(error))
+      .finally(setBusy(false))
   }
 
   return (
@@ -104,7 +90,7 @@ export const App = () => {
           <Typography variant="h6">NeuroBridge</Typography>
         </Toolbar>
         <form className={ classes.form } noValidate autoComplete="off" onSubmit={ handleSubmit }>
-          <InputBase className={ classes.input } id="query-field" label="Enter Query" value={ query } onChange={ handleChangeQuery } type="search" variant="filled" inputRef={ inputRef } endAdornment={ <small className={ classes.inputTip }>Press / to focus</small> }/>
+          <InputBase className={ classes.input } id="query-field" label="Enter Query" value={ query } onChange={ handleChangeQuery } type="search" variant="filled" inputRef={ inputRef } endAdornment={ <small className={ classes.inputTip }>Press \ to focus</small> }/>
           <IconButton type="submit" className={classes.iconButton} aria-label="search">
             <SearchIcon />
           </IconButton>
