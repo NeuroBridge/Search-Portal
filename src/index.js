@@ -1,5 +1,5 @@
 import { render } from 'react-dom'
-import { App } from './components/app'
+import { App } from './app'
 import './styles/index.scss'
 import { createTheme, ThemeProvider } from '@material-ui/core/styles'
 import { orange } from '@material-ui/core/colors'
