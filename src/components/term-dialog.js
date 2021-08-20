@@ -1,20 +1,30 @@
 import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react'
 import axios from 'axios'
 import {
-  Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Slide
+  Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Slide, useMediaQuery
 } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles, useTheme } from '@material-ui/core/styles'
 import { api } from '../api'
 import ReactJson from 'react-json-view'
 import ForceGraph2D from 'react-force-graph-2d'
 
 const useStyles = makeStyles(theme => ({
-  termDialog: {
+  root: {
     margin: '9rem 2rem 2rem 2rem',
+  },
+  termDialog: {
+    height: '100%',
   },
   dialogTitle: {
     width: '100%',
     textAlign: 'center',
+  },
+  content: {
+    '& div': {
+      position: 'absolute',
+      left: '50%',
+      transform: 'translateX(-50%)',
+    },
   },
 }))
 
@@ -24,6 +34,8 @@ const DialogTransition = forwardRef(function Transition(props, ref) {
 
 export const TermDialog = ({ open, term, closeHandler }) => {
   const classes = useStyles()
+  const theme = useTheme()
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'))
   const [children, setChildren] = useState([])
   const [parents, setParents] = useState([])
   const [graphData, setGraphData] = useState({ nodes: [], links: [] })
@@ -56,18 +68,25 @@ export const TermDialog = ({ open, term, closeHandler }) => {
   }, [term])
 
   return (
-    <Dialog fullScreen open={ open } onClose={ closeHandler } TransitionComponent={ DialogTransition } classes={{ root: classes.termDialog }}>
+    <Dialog
+      fullScreen={ fullScreen }
+      maxWidth={ 'lg' }
+      open={ open }
+      onClose={ closeHandler }
+      TransitionComponent={ DialogTransition }
+      classes={{ root: classes.root, paper: classes.termDialog }}
+    >
       <DialogTitle className={ classes.dialogTitle }>
         { term && term.short_form }
       </DialogTitle>
-      <DialogContent>
+      <DialogContent className={ classes.content }>
         <pre>{ JSON.stringify(term, null, 2) }</pre>
         <Divider />
         {
           graphData.nodes && graphData.links && (
             <ForceGraph2D
               width={ 700 }
-              height={ 700 }
+              height={ 400 }
               graphData={ graphData }
               dagMode="td"
               dagLevelDistance={ 50 }
