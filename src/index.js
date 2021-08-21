@@ -1,8 +1,9 @@
 import { render } from 'react-dom'
-import { App } from './components/app'
+import { App } from './app'
 import './styles/index.scss'
 import { createTheme, ThemeProvider } from '@material-ui/core/styles'
 import { orange } from '@material-ui/core/colors'
+import { SearchContextProvider } from './context.js'
 
 const theme = createTheme({
   palette: {
@@ -16,8 +17,10 @@ const theme = createTheme({
 })
 
 render(
-  <ThemeProvider theme={theme}>
-    <App />
-  </ThemeProvider>,
+  <SearchContextProvider>
+    <ThemeProvider theme={theme}>
+      <App />
+    </ThemeProvider>
+  </SearchContextProvider>,
   document.getElementById('root')
 )
