@@ -100,7 +100,9 @@ export const App = () => {
         <Grid container spacing={ 3 }>
           <Grid item xs={ 12 } className={ classes.terms }>
             {
-              terms.map((term, index) => <TermCard term={ term } key={ term.label } clickHandler={ handleClickTerm(index) }/>)
+              terms.length
+                ? terms.map((term, index) => <TermCard term={ term } key={ term.label } clickHandler={ handleClickTerm(index) }/>)
+                : `no terms returned from searching "${ inputRef.current.value }"`
             }
             <TermDialog open={ dialogOpen } term={ currentTerm } closeHandler={ handleClickTerm(null) } />
           </Grid>

@@ -5,7 +5,7 @@ import {
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import {
-  AspectRatio as ViewTermIcon,
+  ZoomOutMap as ViewTermIcon,
   Search as SearchIcon,
 } from '@material-ui/icons'
 import { TermDetails } from './term-details'
@@ -35,8 +35,10 @@ export const TermCard = ({ term, clickHandler }) => {
       <IconButton
         className={ classes.viewTermButton }
         size="small"
+        variant="contained"
+        color="secondary"
         onClick={ clickHandler }
-        children={ <ViewTermIcon /> }
+        children={ <ViewTermIcon fontSize="small" /> }
       />
     </Card>
   )

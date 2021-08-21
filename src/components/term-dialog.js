@@ -93,9 +93,9 @@ export const TermDialog = ({ open, closeHandler }) => {
       classes={{ root: classes.root, paper: classes.termDialog }}
     >
       <DialogTitle className={ classes.dialogHeader } disableTypography>
-        <IconButton size="small" onClick={ handleClickPreviousTerm } disabled={ !previousTerm }><PreviousTermIcon /></IconButton>
+        <IconButton size="small" color="secondary" onClick={ handleClickPreviousTerm } disabled={ !previousTerm }><PreviousTermIcon /></IconButton>
         <Typography variant="h6" className={ classes.dialogTitle }>{ currentTerm && currentTerm.short_form }</Typography>
-        <IconButton size="small" onClick={ handleClickNextTerm } disabled={ !nextTerm }><NextTermIcon /></IconButton>
+        <IconButton size="small" color="secondary" onClick={ handleClickNextTerm } disabled={ !nextTerm }><NextTermIcon /></IconButton>
       </DialogTitle>
       <Divider />
       <DialogContent className={ classes.content }>
