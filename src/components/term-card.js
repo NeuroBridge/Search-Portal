@@ -5,9 +5,10 @@ import {
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import {
-  ArrowForwardIos as ViewTermIcon,
+  AspectRatio as ViewTermIcon,
   Search as SearchIcon,
 } from '@material-ui/icons'
+import { TermDetails } from './term-details'
 
 const useStyles = makeStyles(theme => ({
   termCard: {
@@ -30,9 +31,8 @@ export const TermCard = ({ term, clickHandler }) => {
       variant="outlined"
       className={ classes.termCard }
     >
-      <pre>{ JSON.stringify(term, null, 2) }</pre>
+      <TermDetails term={ term } />
       <IconButton
-        color="secondary"
         className={ classes.viewTermButton }
         size="small"
         onClick={ clickHandler }

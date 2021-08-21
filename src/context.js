@@ -1,11 +1,11 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useMemo, useState } from 'react'
 import { api } from './api'
 
 const SearchContext = createContext({})
 
 export const SearchContextProvider = ({ children }) => {
   const [terms, setTerms] = useState([])
-  const [selectedTerm, setSelectedTerm] = useState(null)
+  const [currentTerm, setCurrentTerm] = useState(null)
   const [busy, setBusy] = useState(false)
 
   const doSearch = query => {
@@ -16,14 +16,34 @@ export const SearchContextProvider = ({ children }) => {
       .finally(setBusy(false))
   }
 
+  const previousTerm = useMemo(() => {
+    if (currentTerm) {
+      const index = terms.findIndex(term => term.id === currentTerm.id)
+      if (0 <= index - 1) {
+        return terms[index - 1]
+      }
+    }
+    return null
+  }, [currentTerm])
+
+  const nextTerm = useMemo(() => {
+    if (currentTerm) {
+      const index = terms.findIndex(term => term.id === currentTerm.id)
+      if (index + 1 < terms.length) {
+        return terms[index + 1]
+      }
+    }
+    return null
+  }, [currentTerm])
+
   return (
     <SearchContext.Provider
       value={{
         busy,
         doSearch,
         terms,
-        selectedTerm,
-        setSelectedTerm,
+        currentTerm, setCurrentTerm,
+        previousTerm, nextTerm,
       }}
     >
       { children }

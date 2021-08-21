@@ -8,9 +8,9 @@ import {
   ArrowForwardIos as ViewTermIcon,
   Search as SearchIcon,
 } from '@material-ui/icons'
+import { useSearchContext } from './context'
 import { TermCard } from './components/term-card'
 import { TermDialog } from './components/term-dialog'
-import { useSearchContext } from './context'
 
 const useStyles = makeStyles(theme => ({
   app: {
@@ -48,9 +48,9 @@ const useStyles = makeStyles(theme => ({
 
 export const App = () => {
   const classes = useStyles()
-  const { busy, doSearch, terms, selectedTerm, setSelectedTerm } = useSearchContext()
+  const { busy, doSearch, terms, currentTerm, setCurrentTerm, previousTerm, nextTerm } = useSearchContext()
   const [query, setQuery] = useState('')
-  const dialogOpen = useMemo(() => !!selectedTerm, [selectedTerm])
+  const dialogOpen = useMemo(() => !!currentTerm, [currentTerm])
   const inputRef = useRef() // used for programatic focus of text input
 
   useEffect(() => {
@@ -76,7 +76,11 @@ export const App = () => {
     doSearch(inputRef.current.value)
   }
   
-  const handleClickTerm = term => event => setSelectedTerm(term)
+  const handleClickTerm = index => event => {
+    if (0 <= index && index < terms.length) {
+      setCurrentTerm(terms[index])
+    }
+  }
 
   return (
     <div className={ classes.app }>
@@ -96,9 +100,9 @@ export const App = () => {
         <Grid container spacing={ 3 }>
           <Grid item xs={ 12 } className={ classes.terms }>
             {
-              terms.map(term => <TermCard term={ term } key={ term.label } clickHandler={ handleClickTerm(term) }/>)
+              terms.map((term, index) => <TermCard term={ term } key={ term.label } clickHandler={ handleClickTerm(index) }/>)
             }
-            <TermDialog open={ dialogOpen } term={ selectedTerm } closeHandler={ handleClickTerm(null) } />
+            <TermDialog open={ dialogOpen } term={ currentTerm } closeHandler={ handleClickTerm(null) } />
           </Grid>
         </Grid>
       </main>
