@@ -102,7 +102,9 @@ export const App = () => {
             {
               terms.length
                 ? terms.map((term, index) => <TermCard term={ term } key={ term.label } clickHandler={ handleClickTerm(index) }/>)
-                : `no terms returned from searching "${ inputRef.current.value }"`
+                : inputRef?.current
+                  ? `no terms returned from searching "${ inputRef.current.value }"`
+                  : ``
             }
             <TermDialog open={ dialogOpen } term={ currentTerm } closeHandler={ handleClickTerm(null) } />
           </Grid>
