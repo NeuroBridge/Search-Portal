@@ -10,7 +10,7 @@ import {
 } from '@material-ui/icons'
 import { TermCard } from './components/term-card'
 import { TermDialog } from './components/term-dialog'
-import { api } from './api'
+import { useSearchContext } from './context'
 
 const useStyles = makeStyles(theme => ({
   app: {
@@ -48,12 +48,10 @@ const useStyles = makeStyles(theme => ({
 
 export const App = () => {
   const classes = useStyles()
+  const { busy, doSearch, terms, selectedTerm, setSelectedTerm } = useSearchContext()
   const [query, setQuery] = useState('')
-  const [terms, setTerms] = useState([])
-  const [selectedTerm, setSelectedTerm] = useState(null)
-  const [busy, setBusy] = useState(false)
   const dialogOpen = useMemo(() => !!selectedTerm, [selectedTerm])
-  const inputRef = useRef()
+  const inputRef = useRef() // used for programatic focus of text input
 
   useEffect(() => {
     // this lets the user press backslash to jump focus to the search box
@@ -73,15 +71,12 @@ export const App = () => {
     return () => window.removeEventListener('keydown', handleKeyPress)
   }, [])
 
-  const handleChangeQuery = event => setQuery(event.target.value)
   const handleSubmit = event => {
-    setBusy(true)
     event.preventDefault()
-    api.select(query)
-      .then(terms => setTerms(terms))
-      .catch(error => console.error(error))
-      .finally(setBusy(false))
+    doSearch(inputRef.current.value)
   }
+  
+  const handleClickTerm = term => event => setSelectedTerm(term)
 
   return (
     <div className={ classes.app }>
@@ -90,7 +85,7 @@ export const App = () => {
           <Typography variant="h6">NeuroBridge</Typography>
         </Toolbar>
         <form className={ classes.form } noValidate autoComplete="off" onSubmit={ handleSubmit }>
-          <InputBase className={ classes.input } id="query-field" label="Enter Query" value={ query } onChange={ handleChangeQuery } type="search" variant="filled" inputRef={ inputRef } endAdornment={ <small className={ classes.inputTip }>Press \ to focus</small> }/>
+          <InputBase className={ classes.input } id="query-field" label="Enter Query" type="search" variant="filled" inputRef={ inputRef } endAdornment={ <small className={ classes.inputTip }>Press \ to focus</small> }/>
           <IconButton type="submit" className={classes.iconButton} aria-label="search">
             <SearchIcon />
           </IconButton>
@@ -101,9 +96,9 @@ export const App = () => {
         <Grid container spacing={ 3 }>
           <Grid item xs={ 12 } className={ classes.terms }>
             {
-              terms.map(term => <TermCard term={ term } key={ term.label } clickHandler={ () => setSelectedTerm(term) }/>)
+              terms.map(term => <TermCard term={ term } key={ term.label } clickHandler={ handleClickTerm(term) }/>)
             }
-            <TermDialog open={ dialogOpen } term={ selectedTerm } closeHandler={ () => setSelectedTerm(null) } />
+            <TermDialog open={ dialogOpen } term={ selectedTerm } closeHandler={ handleClickTerm(null) } />
           </Grid>
         </Grid>
       </main>
