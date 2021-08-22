@@ -45,6 +45,7 @@ const useStyles = makeStyles(theme => ({
   inputTip: {
     filter: 'opacity(0.33)',
     whiteSpace: 'nowrap',
+    pointerEvents: 'none'
   },
   main: {
     margin: theme.spacing(4),
