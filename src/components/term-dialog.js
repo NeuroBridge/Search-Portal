@@ -1,7 +1,7 @@
 import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react'
 import axios from 'axios'
 import {
-  Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, IconButton, Slide, Typography, useMediaQuery
+  Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, IconButton, Slide, Tooltip, Typography, useMediaQuery
 } from '@material-ui/core'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import {
@@ -93,9 +93,13 @@ export const TermDialog = ({ open, closeHandler }) => {
       classes={{ paperFullScreen: classes.root, paper: classes.termDialog }}
     >
       <DialogTitle className={ classes.dialogHeader } disableTypography>
-        <IconButton size="small" color="secondary" onClick={ handleClickPreviousTerm } disabled={ !previousTerm }><PreviousTermIcon /></IconButton>
+        <Tooltip title="View previous result">
+          <IconButton size="small" color="secondary" onClick={ handleClickPreviousTerm } disabled={ !previousTerm }><PreviousTermIcon /></IconButton>
+        </Tooltip>
         <Typography variant="h6" className={ classes.dialogTitle }>{ currentTerm && currentTerm.short_form }</Typography>
-        <IconButton size="small" color="secondary" onClick={ handleClickNextTerm } disabled={ !nextTerm }><NextTermIcon /></IconButton>
+        <Tooltip title="View next result">
+          <IconButton size="small" color="secondary" onClick={ handleClickNextTerm } disabled={ !nextTerm }><NextTermIcon /></IconButton>
+        </Tooltip>
       </DialogTitle>
       <Divider />
       <DialogContent className={ classes.content }>
