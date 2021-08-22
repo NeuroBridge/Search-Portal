@@ -15,11 +15,13 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(2),
     fontSize: '80%',
     position: 'relative',
+    borderLeft: `0.5rem solid ${ theme.palette.primary.light }`,
     filter: 'opacity(0.8)',
-    transition: 'filter 250ms',
+    transition: 'filter 250ms, border-color 250ms',
     '&:hover': {
       filter: 'opacity(1.0)',
-    }
+      borderColor: theme.palette.secondary.light,
+    },
   },
   viewTermButton: {
     position: 'absolute',
