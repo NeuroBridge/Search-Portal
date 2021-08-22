@@ -6,10 +6,12 @@ const SearchContext = createContext({})
 export const SearchContextProvider = ({ children }) => {
   const [terms, setTerms] = useState([])
   const [currentTerm, setCurrentTerm] = useState(null)
+  const [searchedQuery, setSearchedQuery] = useState(null)
   const [busy, setBusy] = useState(false)
 
   const doSearch = query => {
     setBusy(true)
+    setSearchedQuery(query)
     api.select(query)
       .then(terms => setTerms(terms))
       .catch(error => console.error(error))
@@ -44,6 +46,7 @@ export const SearchContextProvider = ({ children }) => {
         terms,
         currentTerm, setCurrentTerm,
         previousTerm, nextTerm,
+        searchedQuery,
       }}
     >
       { children }
