@@ -16,10 +16,10 @@ import { TermDetails } from './term-details'
 
 const useStyles = makeStyles(theme => ({
   root: {
-    margin: '9rem 2rem 2rem 2rem',
   },
   termDialog: {
     height: '100%',
+    width: '100%',
   },
   dialogHeader: {
     width: '100%',
@@ -48,7 +48,7 @@ export const TermDialog = ({ open, closeHandler }) => {
   const { currentTerm, setCurrentTerm, previousTerm, nextTerm } = useSearchContext()
   const classes = useStyles()
   const theme = useTheme()
-  const fullScreen = useMediaQuery(theme.breakpoints.down('md'))
+  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const [children, setChildren] = useState([])
   const [parents, setParents] = useState([])
   const [graphData, setGraphData] = useState({ nodes: [], links: [] })
@@ -86,11 +86,11 @@ export const TermDialog = ({ open, closeHandler }) => {
   return (
     <Dialog
       fullScreen={ fullScreen }
-      maxWidth={ 'lg' }
+      maxWidth={ 'md' }
       open={ open }
       onClose={ closeHandler }
       TransitionComponent={ DialogTransition }
-      classes={{ root: classes.root, paper: classes.termDialog }}
+      classes={{ paperFullScreen: classes.root, paper: classes.termDialog }}
     >
       <DialogTitle className={ classes.dialogHeader } disableTypography>
         <IconButton size="small" color="secondary" onClick={ handleClickPreviousTerm } disabled={ !previousTerm }><PreviousTermIcon /></IconButton>
@@ -123,7 +123,7 @@ export const TermDialog = ({ open, closeHandler }) => {
         }
       </DialogContent>
       <DialogActions>
-        <Button onClick={ closeHandler }>Close</Button>
+        <Button color="secondary" variant="contained" onClick={ closeHandler }>Close</Button>
       </DialogActions>
     </Dialog>
   )
