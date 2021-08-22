@@ -1,7 +1,7 @@
 import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react'
 import axios from 'axios'
 import {
-  Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, IconButton, Slide, Tooltip, Typography, useMediaQuery
+  Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, IconButton, Grow, Tooltip, Typography, useMediaQuery
 } from '@material-ui/core'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import {
@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const DialogTransition = forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ ref } {...props} />
+  return <Grow direction="up" ref={ ref } {...props} />
 })
 
 export const TermDialog = ({ open, closeHandler }) => {
