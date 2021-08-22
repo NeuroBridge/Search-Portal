@@ -15,6 +15,11 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(2),
     fontSize: '80%',
     position: 'relative',
+    filter: 'opacity(0.8)',
+    transition: 'filter 250ms',
+    '&:hover': {
+      filter: 'opacity(1.0)',
+    }
   },
   viewTermButton: {
     position: 'absolute',

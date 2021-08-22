@@ -11,6 +11,7 @@ import {
 import { useSearchContext } from './context'
 import { TermCard } from './components/term-card'
 import { TermDialog } from './components/term-dialog'
+import brainImage from './images/brain.png'
 
 const useStyles = makeStyles(theme => ({
   app: {
@@ -19,6 +20,10 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'flex-start',
     alignItems: 'stretch',
     minHeight: '100vh',
+    backgroundImage: `url(${ brainImage })`,
+    backgroundPosition: 'center 100%',
+    backgroundSize: '800px',
+    backgroundRepeat: 'no-repeat',
   },
   toolbar: {
     padding: `0 ${ theme.spacing(3) }px`,
