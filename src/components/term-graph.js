@@ -75,7 +75,6 @@ export const TermGraph = ({ term }) => {
     const newNodes = children
       .filter(child => !visibleNodes.includes(child.short_form))
       .map(child => ({ id: child.short_form, name: child.short_form, val: 10, color: 'indianred', iri: child.iri }))
-      .filter(node => !graphData.nodes.includes(node))
     const newLinks = newNodes.map(newNode => ({ source: node.id, target: newNode.id }))
     setGraphData({
       nodes: [...graphData.nodes, ...newNodes],
