@@ -14,7 +14,6 @@ export const api = {
       if (!data) {
         throw new Error('An error occurred while fetching terms')
       }
-      console.log(data.response)
       return data.response.docs
     } catch (error) {
       console.log(error)
