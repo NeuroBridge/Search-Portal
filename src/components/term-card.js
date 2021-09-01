@@ -38,7 +38,7 @@ export const TermCard = ({ term, clickHandler }) => {
       variant="outlined"
       className={ classes.termCard }
     >
-      <TermDetails term={ term } />
+      <TermDetails term={ term } style={{ backgroundColor: 'transparent' }}/>
       <IconButton
         className={ classes.viewTermButton }
         size="small"

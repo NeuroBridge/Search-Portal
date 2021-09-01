@@ -33,6 +33,7 @@ const useStyles = makeStyles(theme => ({
     flex: 1,
   },
   content: {
+    padding: 0,
     '& div': {
       position: 'absolute',
       left: '50%',

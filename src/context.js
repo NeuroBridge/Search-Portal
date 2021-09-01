@@ -20,7 +20,7 @@ export const SearchContextProvider = ({ children }) => {
 
   const previousTerm = useMemo(() => {
     if (currentTerm) {
-      const index = terms.findIndex(term => term.id === currentTerm.id)
+      const index = terms.findIndex(term => term.short_form === currentTerm.short_form)
       if (0 <= index - 1) {
         return terms[index - 1]
       }
@@ -30,7 +30,7 @@ export const SearchContextProvider = ({ children }) => {
 
   const nextTerm = useMemo(() => {
     if (currentTerm) {
-      const index = terms.findIndex(term => term.id === currentTerm.id)
+      const index = terms.findIndex(term => term.short_form === currentTerm.short_form)
       if (index + 1 < terms.length) {
         return terms[index + 1]
       }
