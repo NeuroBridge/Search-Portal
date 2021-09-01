@@ -51,9 +51,9 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(4),
   },
   terms: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: theme.spacing(1),
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(500px, 1fr))',
+    gap: theme.spacing(2),
   },
 }))
 
@@ -107,9 +107,10 @@ export const App = () => {
         <LinearProgress variant={ busy ? 'indeterminate' : 'determinate' } value={ 100 } />
       </AppBar>
       <main className={ classes.main }>
+        { searchedQuery && <MemoizedResultsHeader /> }
+        <br />
         <Grid container spacing={ 3 }>
           <Grid item xs={ 12 } className={ classes.terms }>
-            { searchedQuery && <MemoizedResultsHeader /> }
             {
               !!terms.length && terms.map((term, index) => <TermCard term={ term } key={ term.label } clickHandler={ handleClickTerm(index) }/>)
             }

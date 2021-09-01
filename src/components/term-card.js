@@ -1,7 +1,7 @@
 import { forwardRef, useEffect, useMemo, useRef, useState } from 'react'
 import axios from 'axios'
 import {
-  AppBar, Button, Card, CardContent, IconButton, Grid, LinearProgress, Paper, InputBase, Toolbar, Typography
+  AppBar, Button, Card, CardContent, Divider, IconButton, Grid, LinearProgress, Paper, InputBase, Toolbar, Typography
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import {
@@ -25,8 +25,8 @@ const useStyles = makeStyles(theme => ({
   },
   viewTermButton: {
     position: 'absolute',
-    bottom: theme.spacing(1),
-    right: theme.spacing(1),
+    top: theme.spacing(2),
+    right: theme.spacing(2),
   },
 }))
 
@@ -38,12 +38,14 @@ export const TermCard = ({ term, clickHandler }) => {
       variant="outlined"
       className={ classes.termCard }
     >
-      <TermDetails term={ term } style={{ backgroundColor: 'transparent' }}/>
+      <Typography variant="h6">{ term.label }</Typography>
+      <Divider />
+      <TermDetails term={ term } style={{ backgroundColor: 'transparent' }} />
       <IconButton
         className={ classes.viewTermButton }
         size="small"
         variant="contained"
-        color="secondary"
+        color="primary"
         onClick={ clickHandler }
         children={ <ViewTermIcon fontSize="small" /> }
       />
