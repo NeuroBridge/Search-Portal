@@ -38,6 +38,8 @@ export const TermGraph = ({ term }) => {
   const classes = useStyles()
   const [graphData, setGraphData] = useState({ nodes: [], links: [] })
 
+  const visibleNodes = useMemo(() => graphData ? graphData.nodes.map(node => node.id) : [], [graphData.nodes])
+
   useEffect(() => {
     if (term) {
       const promises = [
@@ -49,19 +51,16 @@ export const TermGraph = ({ term }) => {
           const [children, parents] = responses
           const parent = parents[0]
           const nodes = [
-            { id: parent.short_form, name: parent.short_form, val: 10, color: 'slategrey', iri: parent.iri },
-            { id: term.short_form, name: term.short_form, val: 15, color: 'indianred', iri: term.iri },
-            ...children.map(child => ({ id: child.short_form, name: child.short_form, val: 10, color: 'lightsalmon', iri: child.iri })),
+            { id: parent.short_form, name: parent.short_form, val: 10, color: 'maroon', iri: parent.iri, hasChildren: parent.has_children },
+            { id: term.short_form, name: term.short_form, val: 15, color: 'orangered', iri: term.iri, hasChildren: term.has_children },
+            ...children.map(child => ({ id: child.short_form, name: child.short_form, val: 10, color: 'indianred', iri: child.iri, hasChildren: child.has_children })),
           ]
           const links = [
             ...parents.map(parent => ({ source: parent.short_form, target: term.short_form })),
             ...children.map(child => ({ source: term.short_form, target: child.short_form })),
           ]
-          return { nodes, links }
-        }).then(({ nodes, links }) => {
           setGraphData({ nodes, links })
-        })
-        .catch(error => console.log(error))
+        }).catch(error => console.log(error))
     }
   }, [term])
 
@@ -71,11 +70,18 @@ export const TermGraph = ({ term }) => {
       <p class="${ classes.tooltipDetail }">${ iri }</p>
     </div>`
 
-  const handleNodeClick = useCallback(async (node, event) => {
+  const handleNodeClick = async (node, event) => {
     const children = await api.hierarchicalChildren(encodeURIComponent(encodeURIComponent(node.iri)))
-    console.log(`"${ node.id }" has ${ children.length } children:`)
-    console.table(children.map(term => term.short_form))
-  }, [term])
+    const newNodes = children
+      .filter(child => !visibleNodes.includes(child.short_form))
+      .map(child => ({ id: child.short_form, name: child.short_form, val: 10, color: 'indianred', iri: child.iri }))
+      .filter(node => !graphData.nodes.includes(node))
+    const newLinks = newNodes.map(newNode => ({ source: node.id, target: newNode.id }))
+    setGraphData({
+      nodes: [...graphData.nodes, ...newNodes],
+      links: [...graphData.links, ...newLinks]
+    })
+  }
 
   return (
     <Paper className={ classes.root } elevation={ 0 }>
@@ -93,7 +99,7 @@ export const TermGraph = ({ term }) => {
             nodeId="id"
             nodeLabel="name"
             nodeVal={ node => node.val }
-            nodeColor={ node => node.color }
+            nodeColor={ node => node.hasChildren ? node.color : 'lightslategrey' }
             linkDirectionalParticles={ 2 }
             linkDirectionalParticleWidth={ 2 }
             d3VelocityDecay={ 0.5 }
