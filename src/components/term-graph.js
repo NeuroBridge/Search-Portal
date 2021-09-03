@@ -37,6 +37,7 @@ const useStyles = makeStyles(theme => ({
 export const TermGraph = ({ term }) => {
   const classes = useStyles()
   const [graphData, setGraphData] = useState({ nodes: [], links: [] })
+  const [highlightedNodes, setHighlightedNodes] = useState([])
 
   const visibleNodes = useMemo(() => graphData ? graphData.nodes.map(node => node.id) : [], [graphData.nodes])
 
@@ -51,23 +52,25 @@ export const TermGraph = ({ term }) => {
           const [children, parents] = responses
           const parent = parents[0]
           const nodes = [
-            { id: parent.short_form, name: parent.short_form, val: 10, color: 'maroon', iri: parent.iri, hasChildren: parent.has_children },
+            { id: parent.short_form, name: parent.short_form, val: 15, color: 'maroon', iri: parent.iri, hasChildren: parent.has_children },
             { id: term.short_form, name: term.short_form, val: 15, color: 'orangered', iri: term.iri, hasChildren: term.has_children },
-            ...children.map(child => ({ id: child.short_form, name: child.short_form, val: 10, color: 'indianred', iri: child.iri, hasChildren: child.has_children })),
+            ...children.map(child => ({ id: child.short_form, name: child.short_form, val: 15, color: 'indianred', iri: child.iri, hasChildren: child.has_children })),
           ]
           const links = [
             ...parents.map(parent => ({ source: parent.short_form, target: term.short_form })),
             ...children.map(child => ({ source: term.short_form, target: child.short_form })),
           ]
           setGraphData({ nodes, links })
+          setHighlightedNodes([term.short_form, parent.short_form, ...children.map(child => child.short_form)])
         }).catch(error => console.log(error))
     }
   }, [term])
 
-  const tooltip = ({ name, iri, color }) => `
+  const tooltip = ({ name, iri, color, hasChildren }) => `
     <div class="${ classes.tooltip }" style="background-color: ${ color }">
       <h3 class="${ classes.tooltipTitle }">${ name }</h3>
       <p class="${ classes.tooltipDetail }">${ iri }</p>
+      <p class="${ classes.tooltipDetail }">${ hasChildren ? 'Has children' : 'No children' }</p>
     </div>`
 
   const handleNodeClick = async (node, event) => {
@@ -76,12 +79,28 @@ export const TermGraph = ({ term }) => {
     console.table(children.map(child => child.short_form))
     const newNodes = children
       .filter(child => !visibleNodes.includes(child.short_form))
-      .map(child => ({ id: child.short_form, name: child.short_form, val: 10, color: 'indianred', iri: child.iri }))
+      .map(child => ({ id: child.short_form, name: child.short_form, val: 10, color: 'slategrey', iri: child.iri, hasChildren: child.has_children }))
     const newLinks = newNodes.map(newNode => ({ source: node.id, target: newNode.id }))
     setGraphData({
       nodes: [...graphData.nodes, ...newNodes],
       links: [...graphData.links, ...newLinks]
     })
+  }
+
+  const nodePaint = ({ id, x, y, hasChildren }, color, ctx) => {
+    if (hasChildren) {
+      ctx.beginPath()
+      ctx.strokeStyle = color
+      ctx.fillStyle = 'transparent'
+      ctx.lineWidth = 0.25
+      ctx.arc(x, y, 5, 0, 2 * Math.PI, false)
+      ctx.stroke()
+      ctx.fill()
+    }
+    ctx.beginPath()
+    ctx.fillStyle = color
+    ctx.arc(x, y, 4, 0, 2 * Math.PI, false)
+    ctx.fill()
   }
 
   return (
@@ -99,13 +118,13 @@ export const TermGraph = ({ term }) => {
             nodeRelSize={1}
             nodeId="id"
             nodeLabel="name"
-            nodeVal={ node => node.val }
-            nodeColor={ node => node.hasChildren ? node.color : 'lightslategrey' }
             linkDirectionalParticles={ 2 }
             linkDirectionalParticleWidth={ 2 }
             d3VelocityDecay={ 0.5 }
             onNodeClick={ (node, event) => handleNodeClick(node, event) }
             nodeLabel={ node => tooltip({ ...node }) }
+            nodeCanvasObject={ (node, ctx) => nodePaint(node, node.color, ctx) }
+            nodePointerAreaPaint={ nodePaint }
           />
         )
       }
