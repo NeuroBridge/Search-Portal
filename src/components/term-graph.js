@@ -66,10 +66,11 @@ export const TermGraph = ({ term }) => {
     }
   }, [term])
 
-  const tooltip = ({ name, iri, color }) => `
+  const tooltip = ({ name, iri, color, hasChildren }) => `
     <div class="${ classes.tooltip }" style="background-color: ${ color }">
       <h3 class="${ classes.tooltipTitle }">${ name }</h3>
       <p class="${ classes.tooltipDetail }">${ iri }</p>
+      <p class="${ classes.tooltipDetail }">${ hasChildren ? 'Has children' : 'No children' }</p>
     </div>`
 
   const handleNodeClick = async (node, event) => {
@@ -78,7 +79,7 @@ export const TermGraph = ({ term }) => {
     console.table(children.map(child => child.short_form))
     const newNodes = children
       .filter(child => !visibleNodes.includes(child.short_form))
-      .map(child => ({ id: child.short_form, name: child.short_form, val: 10, color: 'slategrey', iri: child.iri }))
+      .map(child => ({ id: child.short_form, name: child.short_form, val: 10, color: 'slategrey', iri: child.iri, hasChildren: child.has_children }))
     const newLinks = newNodes.map(newNode => ({ source: node.id, target: newNode.id }))
     setGraphData({
       nodes: [...graphData.nodes, ...newNodes],
@@ -86,8 +87,8 @@ export const TermGraph = ({ term }) => {
     })
   }
 
-  const nodePaint = ({ id, x, y }, color, ctx) => {
-    if (highlightedNodes.includes(id)) {
+  const nodePaint = ({ id, x, y, hasChildren }, color, ctx) => {
+    if (hasChildren) {
       ctx.beginPath()
       ctx.strokeStyle = color
       ctx.fillStyle = 'transparent'
