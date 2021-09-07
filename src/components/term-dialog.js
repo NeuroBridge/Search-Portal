@@ -13,6 +13,7 @@ import ReactJson from 'react-json-view'
 import ForceGraph2D from 'react-force-graph-2d'
 import { useSearchContext } from '../context'
 import { TermGraph } from './term-graph'
+import { SizeMe } from 'react-sizeme'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -56,36 +57,36 @@ export const TermDialog = ({ open, closeHandler }) => {
   const handleClickNextTerm = event => setCurrentTerm(nextTerm)
   const handleClickPreviousTerm = event => setCurrentTerm(previousTerm)
 
-  return currentTerm && (
-    <Dialog
-      fullScreen={ fullScreen }
-      maxWidth={ 'md' }
-      open={ open }
-      onClose={ closeHandler }
-      TransitionComponent={ DialogTransition }
-      classes={{ paperFullScreen: classes.root, paper: classes.termDialog }}
-    >
-      <DialogTitle className={ classes.dialogHeader } disableTypography>
-        <Tooltip title="View previous result">
-          <span>
-            <IconButton size="small" color="secondary" onClick={ handleClickPreviousTerm } disabled={ !previousTerm }><PreviousTermIcon /></IconButton>
-          </span>
-        </Tooltip>
-        <Typography variant="h6" className={ classes.dialogTitle }>{ currentTerm && currentTerm.short_form }</Typography>
-        <Tooltip title="View next result">
-          <span>
-            <IconButton size="small" color="secondary" onClick={ handleClickNextTerm } disabled={ !nextTerm }><NextTermIcon /></IconButton>
-          </span>
-        </Tooltip>
-      </DialogTitle>
-      <Divider />
-      <DialogContent className={ classes.content }>
-        <Typography paragraph>{ currentTerm.comment_annotation || 'N/A' }</Typography>
-        <TermGraph term={ currentTerm } />
-      </DialogContent>
-      <DialogActions>
-        <Button color="secondary" variant="contained" onClick={ closeHandler }>Close</Button>
-      </DialogActions>
-    </Dialog>
-  )
+  return currentTerm
+    ? (
+      <Dialog
+        fullScreen={ fullScreen }
+        maxWidth={ 'md' }
+        open={ open }
+        onClose={ closeHandler }
+        TransitionComponent={ DialogTransition }
+        classes={{ paperFullScreen: classes.root, paper: classes.termDialog }}
+      >
+        <DialogTitle className={ classes.dialogHeader } disableTypography>
+          <Tooltip title="View previous result">
+            <span>
+              <IconButton size="small" color="secondary" onClick={ handleClickPreviousTerm } disabled={ !previousTerm }><PreviousTermIcon /></IconButton>
+            </span>
+          </Tooltip>
+          <Typography variant="h6" className={ classes.dialogTitle }>{ currentTerm && currentTerm.short_form }</Typography>
+          <Tooltip title="View next result">
+            <span>
+              <IconButton size="small" color="secondary" onClick={ handleClickNextTerm } disabled={ !nextTerm }><NextTermIcon /></IconButton>
+            </span>
+          </Tooltip>
+        </DialogTitle>
+        <Divider />
+        <DialogContent className={ classes.content }>
+          <TermGraph term={ currentTerm } />
+        </DialogContent>
+        <DialogActions>
+          <Button color="secondary" variant="contained" onClick={ closeHandler }>Close</Button>
+        </DialogActions>
+      </Dialog>
+    ) : null
 }

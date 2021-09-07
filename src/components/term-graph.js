@@ -1,4 +1,4 @@
-import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react'
+import { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import axios from 'axios'
 import {
   Paper
@@ -12,11 +12,16 @@ import { api } from '../api'
 import ReactJson from 'react-json-view'
 import ForceGraph2D from 'react-force-graph-2d'
 import { useSearchContext } from '../context'
+import { SizeMe } from 'react-sizeme'
 
 const useStyles = makeStyles(theme => ({
   root: {
-    minHeight: '400px',
+    minHeight: '91%',
     width: '100%',
+    '& > div': {
+      width: '100%',
+      backgroundColor: 'var(--color-unc-gray)'
+    }
   },
   tooltip: {
     padding: theme.spacing(1),
@@ -33,10 +38,11 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-export const TermGraph = ({ term }) => {
+export const TermGraph = ({ term, height, width }) => {
   const classes = useStyles()
   const [graphData, setGraphData] = useState({ nodes: [], links: [] })
   const [highlightedNodes, setHighlightedNodes] = useState([])
+  const container = useRef()
 
   const visibleNodes = useMemo(() => graphData ? graphData.nodes.map(node => node.id) : [], [graphData.nodes])
 
@@ -86,6 +92,8 @@ export const TermGraph = ({ term }) => {
     })
   }
 
+  console.log(container)
+
   const nodePaint = ({ id, x, y, hasChildren }, color, ctx) => {
     if (hasChildren) {
       ctx.beginPath()
@@ -103,29 +111,31 @@ export const TermGraph = ({ term }) => {
   }
 
   return (
-    <Paper className={ classes.root } elevation={ 0 }>
-      {
-        graphData.nodes.length > 0 && graphData.links && (
-          <ForceGraph2D
-            width={ 700 }
-            height={ 400 }
-            graphData={ graphData }
-            dagMode="td"
-            dagLevelDistance={ 50 }
-            backgroundColor="transparent"
-            linkColor={ () => 'rgba(0,0,0,0.2)' }
-            nodeRelSize={1}
-            nodeId="id"
-            linkDirectionalParticles={ 2 }
-            linkDirectionalParticleWidth={ 2 }
-            d3VelocityDecay={ 0.5 }
-            onNodeClick={ (node, event) => handleNodeClick(node, event) }
-            nodeLabel={ node => tooltip({ ...node }) }
-            nodeCanvasObject={ (node, ctx) => nodePaint(node, node.color, ctx) }
-            nodePointerAreaPaint={ nodePaint }
-          />
-        )
-      }
+    <Paper className={ classes.root } elevation={ 0 } square ref={ container }>
+      <SizeMe monitorHeight>
+        {
+          ({ size }) => graphData.nodes.length > 0 && graphData.links && (
+            <ForceGraph2D
+              width={ size.width }
+              height={ container?.current.clientHeight }
+              graphData={ graphData }
+              dagMode="td"
+              dagLevelDistance={ 50 }
+              backgroundColor="transparent"
+              linkColor={ () => 'rgba(0,0,0,0.2)' }
+              nodeRelSize={1}
+              nodeId="id"
+              linkDirectionalParticles={ 2 }
+              linkDirectionalParticleWidth={ 2 }
+              d3VelocityDecay={ 0.5 }
+              onNodeClick={ (node, event) => handleNodeClick(node, event) }
+              nodeLabel={ node => tooltip({ ...node }) }
+              nodeCanvasObject={ (node, ctx) => nodePaint(node, node.color, ctx) }
+              nodePointerAreaPaint={ nodePaint }
+            />
+          )
+        }
+      </SizeMe>
     </Paper>
   )
 }
