@@ -12,7 +12,6 @@ import { api } from '../api'
 import ReactJson from 'react-json-view'
 import ForceGraph2D from 'react-force-graph-2d'
 import { useSearchContext } from '../context'
-import { TermDetails } from './term-details'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -117,7 +116,6 @@ export const TermGraph = ({ term }) => {
             linkColor={ () => 'rgba(0,0,0,0.2)' }
             nodeRelSize={1}
             nodeId="id"
-            nodeLabel="name"
             linkDirectionalParticles={ 2 }
             linkDirectionalParticleWidth={ 2 }
             d3VelocityDecay={ 0.5 }

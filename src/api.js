@@ -10,10 +10,11 @@ const ONTOLOGY_NAME = 'neurobridges_ontology'
 export const api = {
   select: async q => {
     try {
-      const { data } = await axios.get(`${ API_ROOT }/select`, { params: { ontology: ONTOLOGY_NAME, q, fieldList: 'iri,label,short_form,obo_id,ontology_name,ontology_prefix,description,type,has_children' }})
+      const { data } = await axios.get(`${ API_ROOT }/select`, { params: { ontology: ONTOLOGY_NAME, q, fieldList: 'iri,label,short_form,obo_id,ontology_name,ontology_prefix,description,type,has_children,comment_annotation' }})
       if (!data) {
         throw new Error('An error occurred while fetching terms')
       }
+      console.log(data.response)
       return data.response.docs
     } catch (error) {
       console.log(error)

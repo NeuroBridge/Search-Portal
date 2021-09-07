@@ -8,7 +8,6 @@ import {
   ZoomOutMap as ViewTermIcon,
   Search as SearchIcon,
 } from '@material-ui/icons'
-import { TermDetails } from './term-details'
 
 const useStyles = makeStyles(theme => ({
   termCard: {
@@ -38,9 +37,9 @@ export const TermCard = ({ term, clickHandler }) => {
       variant="outlined"
       className={ classes.termCard }
     >
-      <Typography variant="h6">{ term.label }</Typography>
+      <Typography variant="h6" component="h2">{ term.label }</Typography>
       <Divider />
-      <TermDetails term={ term } style={{ backgroundColor: 'transparent' }} />
+      <Typography paragraph>{ term.comment_annotation || 'N/A' }</Typography>
       <IconButton
         className={ classes.viewTermButton }
         size="small"

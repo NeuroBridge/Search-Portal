@@ -12,7 +12,6 @@ import { api } from '../api'
 import ReactJson from 'react-json-view'
 import ForceGraph2D from 'react-force-graph-2d'
 import { useSearchContext } from '../context'
-import { TermDetails } from './term-details'
 import { TermGraph } from './term-graph'
 
 const useStyles = makeStyles(theme => ({
@@ -57,7 +56,7 @@ export const TermDialog = ({ open, closeHandler }) => {
   const handleClickNextTerm = event => setCurrentTerm(nextTerm)
   const handleClickPreviousTerm = event => setCurrentTerm(previousTerm)
 
-  return (
+  return currentTerm && (
     <Dialog
       fullScreen={ fullScreen }
       maxWidth={ 'md' }
@@ -81,7 +80,7 @@ export const TermDialog = ({ open, closeHandler }) => {
       </DialogTitle>
       <Divider />
       <DialogContent className={ classes.content }>
-        <TermDetails term={ currentTerm } />
+        <Typography paragraph>{ currentTerm.comment_annotation || 'N/A' }</Typography>
         <TermGraph term={ currentTerm } />
       </DialogContent>
       <DialogActions>
