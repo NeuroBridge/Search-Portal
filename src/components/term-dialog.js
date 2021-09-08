@@ -85,7 +85,7 @@ export const TermDialog = ({ open, closeHandler }) => {
           <TermGraph term={ currentTerm } />
         </DialogContent>
         <DialogActions>
-          <Button color="secondary" variant="contained" onClick={ closeHandler }>Close</Button>
+          <Button color="primary" variant="contained" onClick={ closeHandler }>Close</Button>
         </DialogActions>
       </Dialog>
     ) : null

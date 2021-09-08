@@ -5,6 +5,7 @@ import {
   ChevronLeft as PreviousTermIcon,
   ChevronRight as NextTermIcon,
   Close as DeleteIcon,
+  ArrowForward as ActionIcon,
 } from '@material-ui/icons'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import { api } from '../api'
@@ -48,7 +49,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: 'transparent',
   },
   summary: {
-    fontSize: '85%',
+    fontSize: '95%',
     backgroundColor: 'transparent',
     padding: '4px 5px',
     fontWeight: 'bold',
@@ -197,8 +198,8 @@ export const TermGraph = ({ term, height, width }) => {
       {
         selectedNodes.length > 0 && (
           <div className={ classes.selection }>
-            <Typography className={ classes.summary } paragraph color="primary">
-              { selectedNodes.length } node{ selectedNodes.length === 1 ? '' : 's' } selected
+            <Typography className={ classes.summary } color="primary">
+              { selectedNodes.length } node{ selectedNodes.length === 1 ? '' : 's' } selected:
             </Typography>
             {
               selectedNodes.map(id => (
@@ -213,6 +214,9 @@ export const TermGraph = ({ term, height, width }) => {
                 </Slide>
               ))
             }
+            <br />
+            <br />
+            <Button variant="outlined" color="primary" size="small" endIcon={ <ActionIcon /> }>Action</Button>
           </div>
         )
       }
