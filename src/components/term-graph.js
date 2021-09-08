@@ -13,7 +13,7 @@ import ForceGraph2D from 'react-force-graph-2d'
 import { useSearchContext } from '../context'
 import { SizeMe } from 'react-sizeme'
 
-const SELECTED_NODE_COLOR = 'crimson'
+const SELECTED_NODE_COLOR = '#378f91'
 
 const useStyles = makeStyles(theme => ({
   root: {
