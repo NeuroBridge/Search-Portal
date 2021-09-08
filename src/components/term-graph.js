@@ -51,6 +51,7 @@ const useStyles = makeStyles(theme => ({
     fontSize: '85%',
     backgroundColor: 'transparent',
     padding: '4px 5px',
+    fontWeight: 'bold',
   },
   chips: {
     backgroundColor: 'transparent',
@@ -196,8 +197,8 @@ export const TermGraph = ({ term, height, width }) => {
       {
         selectedNodes.length > 0 && (
           <div className={ classes.selection }>
-            <Typography className={ classes.summary } paragraph>
-              { selectedNodes.length } nodes selected
+            <Typography className={ classes.summary } paragraph color="primary">
+              { selectedNodes.length } node{ selectedNodes.length === 1 ? '' : 's' } selected
             </Typography>
             {
               selectedNodes.map(id => (
