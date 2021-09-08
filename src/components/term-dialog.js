@@ -7,6 +7,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles'
 import {
   ChevronLeft as PreviousTermIcon,
   ChevronRight as NextTermIcon,
+  HelpOutline as HelpIcon,
 } from '@material-ui/icons'
 import { api } from '../api'
 import ReactJson from 'react-json-view'
@@ -85,6 +86,7 @@ export const TermDialog = ({ open, closeHandler }) => {
           <TermGraph term={ currentTerm } />
         </DialogContent>
         <DialogActions>
+          <IconButton color="primary" variant="outlined"><HelpIcon /></IconButton>
           <Button color="primary" variant="contained" onClick={ closeHandler }>Close</Button>
         </DialogActions>
       </Dialog>

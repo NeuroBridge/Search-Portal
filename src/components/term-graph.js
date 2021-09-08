@@ -60,7 +60,7 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
   },
   chip: {
-    marginBottom: theme.spacing(1),
+    marginBottom: theme.spacing(1) / 2,
     '&:hover $deleteIcon': {
       filter: 'opacity(1.0)',
     },
