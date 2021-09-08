@@ -1,9 +1,10 @@
 import { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import axios from 'axios'
-import { Paper, Typography } from '@material-ui/core'
+import { Button, Slide, Paper, Typography } from '@material-ui/core'
 import {
   ChevronLeft as PreviousTermIcon,
   ChevronRight as NextTermIcon,
+  Close as DeleteIcon,
 } from '@material-ui/icons'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import { api } from '../api'
@@ -21,13 +22,11 @@ const useStyles = makeStyles(theme => ({
     position: 'relative',
     '& > div': {
       width: '100%',
-      backgroundColor: 'var(--color-unc-gray)'
     }
   },
   tooltip: {
     padding: theme.spacing(1),
     backgroundColor: 'grey',
-    border: '1px solid #333',
   },
   tooltipTitle: {
     margin: 0,
@@ -37,11 +36,41 @@ const useStyles = makeStyles(theme => ({
     margin: 0,
     fontSize: '65%',
   },
-  selectionNote: {
+  selection: {
+    display: 'flex',
     position: 'absolute',
-    bottom: '1rem',
-    left: '1rem',
-  }
+    left: 0,
+    top: 0,
+    transform: 'none',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    padding: theme.spacing(1),
+    backgroundColor: 'transparent',
+  },
+  summary: {
+    fontSize: '85%',
+    backgroundColor: 'transparent',
+    padding: '4px 5px',
+  },
+  chips: {
+    backgroundColor: 'transparent',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  chip: {
+    marginBottom: theme.spacing(1),
+    '&:hover $deleteIcon': {
+      filter: 'opacity(1.0)',
+    },
+  },
+  chipLabel: {
+    fontSize: '85%',
+    textTransform: 'none',
+  },
+  deleteIcon: {
+    filter: 'opacity(0.25)',
+    transition: 'filter 250ms',
+  },
 }))
 
 export const TermGraph = ({ term, height, width }) => {
@@ -98,17 +127,18 @@ export const TermGraph = ({ term, height, width }) => {
     })
   }
 
-  const handleNodeRightClick = (node, event) => {
+  const toggleNodeSelection = id => {
     const newSelection = new Set(selectedNodes)
-    if (newSelection.has(node.id)) {
-      console.log(`deselecting`, node.id)
-      newSelection.delete(node.id)
+    if (newSelection.has(id)) {
+      newSelection.delete(id)
     } else {
-      console.log(`selecting`, node.id)
-      newSelection.add(node.id)
+      newSelection.add(id)
     }
     setSelectedNodes(Array.from(newSelection))
   }
+
+  const handleNodeRightClick = (node, event) => toggleNodeSelection(node.id)
+  const handleDeleteSelectionChip = id => toggleNodeSelection(id)
 
   const nodePaint = ({ id, x, y, color, hasChildren }, ctx) => {
     if (selectedNodes.includes(id)) {
@@ -136,6 +166,7 @@ export const TermGraph = ({ term, height, width }) => {
     ctx.fill()
   }
 
+
   return (
     <Paper className={ classes.root } elevation={ 0 } square ref={ container }>
       <SizeMe monitorHeight>
@@ -162,7 +193,28 @@ export const TermGraph = ({ term, height, width }) => {
           )
         }
       </SizeMe>
-      <Typography className={ classes.selectionNote }>{ selectedNodes.length } nodes selected</Typography>
+      {
+        selectedNodes.length > 0 && (
+          <div className={ classes.selection }>
+            <Typography className={ classes.summary } paragraph>
+              { selectedNodes.length } nodes selected
+            </Typography>
+            {
+              selectedNodes.map(id => (
+                <Slide key={ `selected_${ id }` } direction="right" in={ true }>
+                  <Button
+                    size="small"
+                    color="secondary"
+                    classes={{ root: classes.chip, label: classes.chipLabel, endIcon: classes.deleteIcon }}
+                    onClick={ () => handleDeleteSelectionChip(id) }
+                    endIcon={ <DeleteIcon /> }
+                  >{ id }</Button>
+                </Slide>
+              ))
+            }
+          </div>
+        )
+      }
     </Paper>
   )
 }
