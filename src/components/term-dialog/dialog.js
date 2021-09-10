@@ -24,9 +24,9 @@ export const useDialogContext = () => useContext(DialogContext)
 
 const useStyles = makeStyles(theme => ({
   root: {
-    overflow: 'hidden',
   },
   termDialog: {
+    overflow: 'hidden',
     height: '100%',
     width: '100%',
   },
@@ -47,6 +47,11 @@ const useStyles = makeStyles(theme => ({
       left: '50%',
       transform: 'translateX(-50%)',
     },
+  },
+  toolbar: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    padding: `0 ${ theme.spacing(1) }px`,
   },
   actions: {
     display: 'flex',
@@ -117,6 +122,16 @@ export const TermDialog = ({ open, closeHandler }) => {
 
         <Divider />
         
+        <div className={ classes.toolbar }>
+          <IconButton variant="outlined" onClick={ () => setSelectionVisibility(!selectionVisibility) } >
+            <Badge badgeContent={ selectedNodes.length || 0 } color="secondary">
+              <SelectionIcon color={ selectionVisibility ? 'secondary' : 'primary' } />
+            </Badge>
+          </IconButton>
+        </div>
+
+        <Divider />
+
         <DialogContent className={ classes.content }>
           <TermGraph term={ currentTerm } />
         </DialogContent>
@@ -126,11 +141,6 @@ export const TermDialog = ({ open, closeHandler }) => {
         <NodeSelection />
         
         <DialogActions className={ classes.actions }>
-          <IconButton variant="outlined" onClick={ () => setSelectionVisibility(!selectionVisibility) } disabled={ !selectedNodes.length }>
-            <Badge badgeContent={ selectedNodes.length || 0 } color="secondary">
-              <SelectionIcon color={ selectionVisibility ? 'secondary' : 'primary' } />
-            </Badge>
-          </IconButton>
           <div style={{ flex: 1 }} />
           <IconButton color={ helpVisibility ? 'secondary' : 'primary' } variant="outlined" onClick={ () => setHelpVisibility(!helpVisibility) }><HelpIcon /></IconButton>
           <Button color="primary" variant="contained" onClick={ closeHandler }>Close</Button>

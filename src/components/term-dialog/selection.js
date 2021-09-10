@@ -5,20 +5,21 @@ import { Close as DeleteIcon } from '@material-ui/icons'
 import { useDialogContext } from './'
 
 const useStyles = makeStyles(theme => ({
+  wrapper: {
+    position: 'absolute',
+    top: theme.spacing(15),
+    right: theme.spacing(1),
+    clipPath: 'polygon(0% 1rem, calc(85% - 1rem) 1rem, 85% 0%, calc(85% + 1rem) 1rem, 100% 1rem, 100% 100%, 0 100%)',
+  },
   root: {
     backgroundColor: '#378f9111',
   },
-  wrapper: {
-    position: 'absolute',
-    bottom: theme.spacing(8),
-    left: theme.spacing(2),
-    clipPath: 'polygon(0% 0%, 100% 0%, 100% calc(100% - 1rem), calc(8% + 1rem) calc(100% - 1rem), 8% 100%, calc(8% - 1rem) calc(100% - 1rem), 0% calc(100% - 1rem))',
-  },
-  summary: {
+  header: {
     textAlign: 'center',
     fontSize: '95%',
     textTransform: 'uppercase',
     backgroundColor: '#378f9133',
+    paddingTop: '2rem',
   },
   chip: {
     margin: 0,
@@ -46,8 +47,9 @@ export const NodeSelection = () => {
     <FadeTransition in={ selectionVisibility }>
       <div className={ classes.wrapper }>
         <Card classes={ classes } elevation={ 0 } square>
-          <CardHeader disableTypography title={ `${ selectedNodes.length } node${ selectedNodes.length === 1 ? '' : 's' } selected` } className={ classes.summary } />
+          <CardHeader disableTypography title="Selected Nodes" className={ classes.header } />
           <CardContent>
+            { !selectedNodes.length && <Typography paragraph>No selected nodes</Typography> }
             <List dense>
               {
                 selectedNodes.map(id => (

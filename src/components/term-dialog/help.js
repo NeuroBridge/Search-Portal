@@ -47,25 +47,30 @@ export const GraphHelp = () => {
           <CardContent>
             <List dense>
               <ListItem>
-                <Node color="coral" />
-                <Typography color="primary">Current term</Typography>
-              </ListItem>
-              <ListItem>
                 <Node color="indianred" />
-                <Typography color="primary">Current term's parent & children</Typography>
+                <Typography color="primary">Current term, parents, & children</Typography>
               </ListItem>
               <ListItem>
                 <Node color="slategrey" />
                 <Typography color="primary">Term</Typography>
               </ListItem>
             </List>
-              <Divider />
+            <Divider />
             <List dense>
               <ListItem>
                 <Typography color="primary"><strong>Solid:</strong>&nbsp; Has children</Typography>
               </ListItem>
               <ListItem>
                 <Typography color="primary"><strong>Empty:</strong>&nbsp; Childless</Typography>
+              </ListItem>
+            </List>
+            <Divider />
+            <List dense>
+              <ListItem>
+                <Typography color="primary"><strong>Left click:</strong>&nbsp; Add children</Typography>
+              </ListItem>
+              <ListItem>
+                <Typography color="primary"><strong>Right click:</strong>&nbsp; Select node</Typography>
               </ListItem>
             </List>
           </CardContent>
