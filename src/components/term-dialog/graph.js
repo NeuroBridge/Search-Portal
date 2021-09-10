@@ -12,7 +12,7 @@ import { api } from '../../api'
 import ReactJson from 'react-json-view'
 import ForceGraph2D from 'react-force-graph-2d'
 import { useSearchContext } from '../../context'
-import { useDialogContext } from './context'
+import { useDialogContext } from './'
 import { SizeMe } from 'react-sizeme'
 
 const SELECTED_NODE_COLOR = '#378f91'

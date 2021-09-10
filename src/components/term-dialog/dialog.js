@@ -1,13 +1,14 @@
 import { createContext, forwardRef, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import axios from 'axios'
 import {
-  Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Grow, IconButton, Paper, Tooltip, Typography, useMediaQuery
+  Badge, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Grow, IconButton, Paper, Tooltip, Typography, useMediaQuery
 } from '@material-ui/core'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import {
   ChevronLeft as PreviousTermIcon,
   ChevronRight as NextTermIcon,
   HelpOutline as HelpIcon,
+  ShoppingBasket as SelectionIcon,
 } from '@material-ui/icons'
 import { api } from '../../api'
 import ReactJson from 'react-json-view'
@@ -15,9 +16,11 @@ import ForceGraph2D from 'react-force-graph-2d'
 import { useSearchContext } from '../../context'
 import { TermGraph } from './graph'
 import { SizeMe } from 'react-sizeme'
-import { TermGrapHelp } from './help'
-import { NodeSelection } from './node-selection'
-import { DialogContextProvider, useDialogContext } from './context'
+import { GraphHelp } from './help'
+import { NodeSelection } from './selection'
+
+const DialogContext = createContext({})
+export const useDialogContext = () => useContext(DialogContext)
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -45,13 +48,9 @@ const useStyles = makeStyles(theme => ({
       transform: 'translateX(-50%)',
     },
   },
-  help: {
-    position: 'absolute',
-    left: 0,
-    bottom: 0,
-    maxWidth: '50%',
-    backgroundColor: 'crimson',
-  }
+  actions: {
+    display: 'flex',
+  },
 }))
 
 const DialogTransition = forwardRef(function Transition(props, ref) {
@@ -60,7 +59,9 @@ const DialogTransition = forwardRef(function Transition(props, ref) {
 
 export const TermDialog = ({ open, closeHandler }) => {
   const { currentTerm, setCurrentTerm, previousTerm, nextTerm } = useSearchContext()
-  const { selectedNodes, helpVisbility, setHelpVisibility } = useDialogContext()
+  const [selectedNodes, setSelectedNodes] = useState([])
+  const [helpVisibility, setHelpVisibility] = useState(false)
+  const [selectionVisibility, setSelectionVisibility] = useState(false)
   const classes = useStyles()
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
@@ -69,7 +70,16 @@ export const TermDialog = ({ open, closeHandler }) => {
 
   const handleClickNextTerm = event => setCurrentTerm(nextTerm)
   const handleClickPreviousTerm = event => setCurrentTerm(previousTerm)
-  const toggleHelp = event => console.log(event)
+
+  const toggleNodeSelection = id => {
+    const newSelection = new Set(selectedNodes)
+    if (newSelection.has(id)) {
+      newSelection.delete(id)
+    } else {
+      newSelection.add(id)
+    }
+    setSelectedNodes(Array.from(newSelection))
+  }
 
   if (!currentTerm) {
     return null
@@ -84,7 +94,13 @@ export const TermDialog = ({ open, closeHandler }) => {
       TransitionComponent={ DialogTransition }
       classes={{ paperFullScreen: classes.root, paper: classes.termDialog }}
     >
-      <DialogContextProvider>
+      <DialogContext.Provider
+        value={{
+          selectedNodes, setSelectedNodes, toggleNodeSelection,
+          helpVisibility, setHelpVisibility,
+          selectionVisibility, setSelectionVisibility,
+        }}
+      >
         <DialogTitle className={ classes.dialogHeader } disableTypography>
           <Tooltip title="View previous result">
             <span>
@@ -98,17 +114,28 @@ export const TermDialog = ({ open, closeHandler }) => {
             </span>
           </Tooltip>
         </DialogTitle>
+
         <Divider />
+        
         <DialogContent className={ classes.content }>
           <TermGraph term={ currentTerm } />
         </DialogContent>
-        <TermGrapHelp />
+
+        <GraphHelp />
+        
         <NodeSelection />
-        <DialogActions>
-          <IconButton color="primary" variant="outlined" onClick={ toggleHelp }><HelpIcon /></IconButton>
+        
+        <DialogActions className={ classes.actions }>
+          <IconButton variant="outlined" onClick={ () => setSelectionVisibility(!selectionVisibility) } disabled={ !selectedNodes.length }>
+            <Badge badgeContent={ selectedNodes.length || 0 } color="secondary">
+              <SelectionIcon color={ selectionVisibility ? 'secondary' : 'primary' } />
+            </Badge>
+          </IconButton>
+          <div style={{ flex: 1 }} />
+          <IconButton color={ helpVisibility ? 'secondary' : 'primary' } variant="outlined" onClick={ () => setHelpVisibility(!helpVisibility) }><HelpIcon /></IconButton>
           <Button color="primary" variant="contained" onClick={ closeHandler }>Close</Button>
         </DialogActions>
-      </DialogContextProvider>
+      </DialogContext.Provider>
     </Dialog>
   )
 }
