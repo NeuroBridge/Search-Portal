@@ -97,7 +97,7 @@ export const TermGraph = ({ term, height, width }) => {
           const parent = parents[0]
           const nodes = [
             { id: parent.short_form, name: parent.short_form, val: 15, color: 'indianred', iri: parent.iri, hasChildren: parent.has_children }, // add parent term node
-            { id: term.short_form, name: term.short_form, val: 15, color: 'coral', iri: term.iri, hasChildren: term.has_children }, // add current term node
+            { id: term.short_form, name: term.short_form, val: 15, color: 'indianred', iri: term.iri, hasChildren: term.has_children }, // add current term node
             ...children.map(child => ({ id: child.short_form, name: child.short_form, val: 15, color: 'indianred', iri: child.iri, hasChildren: child.has_children })), // add current term's children nodes
           ]
           const links = [
