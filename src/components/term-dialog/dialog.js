@@ -1,4 +1,4 @@
-import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react'
+import { createContext, forwardRef, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import axios from 'axios'
 import {
   Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Grow, IconButton, Paper, Tooltip, Typography, useMediaQuery
@@ -9,13 +9,15 @@ import {
   ChevronRight as NextTermIcon,
   HelpOutline as HelpIcon,
 } from '@material-ui/icons'
-import { api } from '../api'
+import { api } from '../../api'
 import ReactJson from 'react-json-view'
 import ForceGraph2D from 'react-force-graph-2d'
-import { useSearchContext } from '../context'
-import { TermGraph } from './term-graph'
+import { useSearchContext } from '../../context'
+import { TermGraph } from './graph'
 import { SizeMe } from 'react-sizeme'
-import { TermGrapHelp } from './term-graph-help'
+import { TermGrapHelp } from './help'
+import { NodeSelection } from './node-selection'
+import { DialogContextProvider, useDialogContext } from './context'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -53,31 +55,36 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const DialogTransition = forwardRef(function Transition(props, ref) {
-  return <Grow direction="up" ref={ ref } {...props} />
+  return <Grow direction="up" ref={ ref } { ...props } />
 })
 
 export const TermDialog = ({ open, closeHandler }) => {
   const { currentTerm, setCurrentTerm, previousTerm, nextTerm } = useSearchContext()
+  const { selectedNodes, helpVisbility, setHelpVisibility } = useDialogContext()
   const classes = useStyles()
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const [children, setChildren] = useState([])
   const [parents, setParents] = useState([])
-  const [isHelpVisible, setIsHelpVisible] = useState(false)
 
   const handleClickNextTerm = event => setCurrentTerm(nextTerm)
   const handleClickPreviousTerm = event => setCurrentTerm(previousTerm)
+  const toggleHelp = event => console.log(event)
 
-  return currentTerm
-    ? (
-      <Dialog
-        fullScreen={ fullScreen }
-        maxWidth={ 'md' }
-        open={ open }
-        onClose={ closeHandler }
-        TransitionComponent={ DialogTransition }
-        classes={{ paperFullScreen: classes.root, paper: classes.termDialog }}
-      >
+  if (!currentTerm) {
+    return null
+  }
+
+  return (
+    <Dialog
+      fullScreen={ fullScreen }
+      maxWidth={ 'md' }
+      open={ open }
+      onClose={ closeHandler }
+      TransitionComponent={ DialogTransition }
+      classes={{ paperFullScreen: classes.root, paper: classes.termDialog }}
+    >
+      <DialogContextProvider>
         <DialogTitle className={ classes.dialogHeader } disableTypography>
           <Tooltip title="View previous result">
             <span>
@@ -95,11 +102,13 @@ export const TermDialog = ({ open, closeHandler }) => {
         <DialogContent className={ classes.content }>
           <TermGraph term={ currentTerm } />
         </DialogContent>
-        <TermGrapHelp visible={ isHelpVisible } />
+        <TermGrapHelp />
+        <NodeSelection />
         <DialogActions>
-          <IconButton color="primary" variant="outlined" onClick={ () => {setIsHelpVisible(previous => !previous); console.log(isHelpVisible)} }><HelpIcon /></IconButton>
+          <IconButton color="primary" variant="outlined" onClick={ toggleHelp }><HelpIcon /></IconButton>
           <Button color="primary" variant="contained" onClick={ closeHandler }>Close</Button>
         </DialogActions>
-      </Dialog>
-    ) : null
+      </DialogContextProvider>
+    </Dialog>
+  )
 }

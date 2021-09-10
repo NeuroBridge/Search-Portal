@@ -8,10 +8,11 @@ import {
   ArrowForward as ActionIcon,
 } from '@material-ui/icons'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
-import { api } from '../api'
+import { api } from '../../api'
 import ReactJson from 'react-json-view'
 import ForceGraph2D from 'react-force-graph-2d'
-import { useSearchContext } from '../context'
+import { useSearchContext } from '../../context'
+import { useDialogContext } from './context'
 import { SizeMe } from 'react-sizeme'
 
 const SELECTED_NODE_COLOR = '#378f91'
@@ -76,9 +77,9 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export const TermGraph = ({ term, height, width }) => {
+  const { selectedNodes, setSelectedNodes, toggleNodeSelection } = useDialogContext()
   const classes = useStyles()
   const [graphData, setGraphData] = useState({ nodes: [], links: [] })
-  const [selectedNodes, setSelectedNodes] = useState([])
   const container = useRef()
 
   const visibleNodes = useMemo(() => graphData ? graphData.nodes.map(node => node.id) : [], [graphData.nodes])
@@ -129,18 +130,7 @@ export const TermGraph = ({ term, height, width }) => {
     })
   }
 
-  const toggleNodeSelection = id => {
-    const newSelection = new Set(selectedNodes)
-    if (newSelection.has(id)) {
-      newSelection.delete(id)
-    } else {
-      newSelection.add(id)
-    }
-    setSelectedNodes(Array.from(newSelection))
-  }
-
   const handleNodeRightClick = (node, event) => toggleNodeSelection(node.id)
-  const handleDeleteSelectionChip = id => toggleNodeSelection(id)
 
   const nodePaint = ({ id, x, y, color, hasChildren }, ctx) => {
     if (selectedNodes.includes(id)) {
@@ -194,31 +184,6 @@ export const TermGraph = ({ term, height, width }) => {
           )
         }
       </SizeMe>
-      {
-        selectedNodes.length > 0 && (
-          <div className={ classes.selection }>
-            <Typography className={ classes.summary } color="primary">
-              { selectedNodes.length } node{ selectedNodes.length === 1 ? '' : 's' } selected:
-            </Typography>
-            {
-              selectedNodes.map(id => (
-                <Slide key={ `selected_${ id }` } direction="right" in={ true }>
-                  <Button
-                    size="small"
-                    color="secondary"
-                    classes={{ root: classes.chip, label: classes.chipLabel, endIcon: classes.deleteIcon }}
-                    onClick={ () => handleDeleteSelectionChip(id) }
-                    endIcon={ <DeleteIcon /> }
-                  >{ id }</Button>
-                </Slide>
-              ))
-            }
-            <br />
-            <br />
-            <Button variant="outlined" color="primary" size="small" endIcon={ <ActionIcon /> }>Action</Button>
-          </div>
-        )
-      }
     </Paper>
   )
 }

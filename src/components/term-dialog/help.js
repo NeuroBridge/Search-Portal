@@ -1,6 +1,7 @@
 import { forwardRef } from 'react'
 import { Card, CardContent, Divider, Fade, List, ListItem, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
+import { useDialogContext } from './context'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -29,10 +30,11 @@ const Node = ({ color = '#ccc' }) => {
 }
 
 export const TermGrapHelp = ({ visible = false }) => {
+  const { helpVisbility } = useDialogContext()
   const classes = useStyles()
 
   return (
-    <FadeTransition in={ visible }>
+    <FadeTransition in={ helpVisbility }>
       <Card classes={ classes } elevation={ 0 } square>
         <CardContent>
           <List dense>
