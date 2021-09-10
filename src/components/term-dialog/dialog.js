@@ -51,7 +51,7 @@ const useStyles = makeStyles(theme => ({
   toolbar: {
     display: 'flex',
     justifyContent: 'flex-end',
-    padding: `0 ${ theme.spacing(1) }px`,
+    padding: `0 ${ theme.spacing(2) }px`,
   },
   actions: {
     display: 'flex',

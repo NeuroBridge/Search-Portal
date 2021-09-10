@@ -9,7 +9,7 @@ const useStyles = makeStyles(theme => ({
     position: 'absolute',
     top: theme.spacing(15),
     right: theme.spacing(1),
-    clipPath: 'polygon(0% 1rem, calc(85% - 1rem) 1rem, 85% 0%, calc(85% + 1rem) 1rem, 100% 1rem, 100% 100%, 0 100%)',
+    clipPath: 'polygon(0% 1rem, calc(100% - 3rem) 1rem, calc(100% - 2rem) 0%, calc(100% - 1rem) 1rem, 100% 1rem, 100% 100%, 0 100%)',
   },
   root: {
     backgroundColor: '#378f9111',
