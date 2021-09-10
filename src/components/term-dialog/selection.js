@@ -12,13 +12,15 @@ const useStyles = makeStyles(theme => ({
     clipPath: 'polygon(0% 1rem, calc(100% - 3rem) 1rem, calc(100% - 2rem) 0%, calc(100% - 1rem) 1rem, 100% 1rem, 100% 100%, 0 100%)',
   },
   root: {
-    backgroundColor: '#378f9111',
+    backgroundColor: '#f2f8f8',
+
   },
   header: {
     textAlign: 'center',
     fontSize: '95%',
     textTransform: 'uppercase',
-    backgroundColor: '#378f9133',
+    backgroundColor: '#cce3e3',
+
     paddingTop: '2rem',
   },
   chip: {
