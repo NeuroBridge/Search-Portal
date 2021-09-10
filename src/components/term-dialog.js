@@ -1,7 +1,7 @@
 import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react'
 import axios from 'axios'
 import {
-  Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, IconButton, Grow, Tooltip, Typography, useMediaQuery
+  Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Grow, IconButton, Paper, Tooltip, Typography, useMediaQuery
 } from '@material-ui/core'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import {
@@ -15,9 +15,11 @@ import ForceGraph2D from 'react-force-graph-2d'
 import { useSearchContext } from '../context'
 import { TermGraph } from './term-graph'
 import { SizeMe } from 'react-sizeme'
+import { TermGrapHelp } from './term-graph-help'
 
 const useStyles = makeStyles(theme => ({
   root: {
+    overflow: 'hidden',
   },
   termDialog: {
     height: '100%',
@@ -41,6 +43,13 @@ const useStyles = makeStyles(theme => ({
       transform: 'translateX(-50%)',
     },
   },
+  help: {
+    position: 'absolute',
+    left: 0,
+    bottom: 0,
+    maxWidth: '50%',
+    backgroundColor: 'crimson',
+  }
 }))
 
 const DialogTransition = forwardRef(function Transition(props, ref) {
@@ -54,6 +63,7 @@ export const TermDialog = ({ open, closeHandler }) => {
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const [children, setChildren] = useState([])
   const [parents, setParents] = useState([])
+  const [isHelpVisible, setIsHelpVisible] = useState(false)
 
   const handleClickNextTerm = event => setCurrentTerm(nextTerm)
   const handleClickPreviousTerm = event => setCurrentTerm(previousTerm)
@@ -85,8 +95,9 @@ export const TermDialog = ({ open, closeHandler }) => {
         <DialogContent className={ classes.content }>
           <TermGraph term={ currentTerm } />
         </DialogContent>
+        <TermGrapHelp visible={ isHelpVisible } />
         <DialogActions>
-          <IconButton color="primary" variant="outlined"><HelpIcon /></IconButton>
+          <IconButton color="primary" variant="outlined" onClick={ () => {setIsHelpVisible(previous => !previous); console.log(isHelpVisible)} }><HelpIcon /></IconButton>
           <Button color="primary" variant="contained" onClick={ closeHandler }>Close</Button>
         </DialogActions>
       </Dialog>

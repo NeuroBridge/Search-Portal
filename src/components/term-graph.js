@@ -168,7 +168,6 @@ export const TermGraph = ({ term, height, width }) => {
     ctx.fill()
   }
 
-
   return (
     <Paper className={ classes.root } elevation={ 0 } square ref={ container }>
       <SizeMe monitorHeight>
