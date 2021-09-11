@@ -9,18 +9,19 @@ const useStyles = makeStyles(theme => ({
     position: 'absolute',
     top: theme.spacing(15),
     right: theme.spacing(1),
+    padding: '1px',
+    backgroundColor: '#cce3e3dd',
     clipPath: 'polygon(0% 1rem, calc(100% - 3rem) 1rem, calc(100% - 2rem) 0%, calc(100% - 1rem) 1rem, 100% 1rem, 100% 100%, 0 100%)',
   },
   root: {
     backgroundColor: '#f2f8f8dd',
-
+    clipPath: 'polygon(0% 1rem, calc(100% - 3rem) 1rem, calc(100% - 2rem) 0%, calc(100% - 1rem) 1rem, 100% 1rem, 100% 100%, 0 100%)',
   },
   header: {
     textAlign: 'center',
     fontSize: '95%',
     textTransform: 'uppercase',
     backgroundColor: '#cce3e3dd',
-
     paddingTop: '2rem',
   },
   chip: {

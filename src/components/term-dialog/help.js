@@ -4,13 +4,12 @@ import { makeStyles } from '@material-ui/core/styles'
 import { useDialogContext } from './'
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    backgroundColor: '#f2f8f8dd',
-  },
   wrapper: {
     position: 'absolute',
     bottom: theme.spacing(8),
     right: theme.spacing(1),
+    backgroundColor: '#cce3e3dd',
+    padding: '1px',
     clipPath: `polygon(
       0% 0%,
       100% 0%,
@@ -18,6 +17,18 @@ const useStyles = makeStyles(theme => ({
       calc(100% - 5.75rem) calc(100% - 1rem),
       calc(100% - 6.75rem) 100%,
       calc(100% - 7.75rem) calc(100% - 1rem),
+      0% calc(100% - 1rem)
+    )`,
+  },
+  root: {
+    backgroundColor: '#f2f8f8dd',
+    clipPath: `polygon(
+      0% 0%,
+      100% 0%,
+      100% calc(100% - 1rem),
+      calc(100% - 5.75rem) calc(100% - 1rem),
+      calc(100% - 6.75rem) calc(100% - 1px),
+      calc(100% - 7.6rem) calc(100% - 1rem),
       0% calc(100% - 1rem)
     )`,
   },
