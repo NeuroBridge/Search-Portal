@@ -75,17 +75,19 @@ export const TermDialog = ({ open, closeHandler }) => {
   const [children, setChildren] = useState([])
   const [parents, setParents] = useState([])
 
-  const handleClickNextTerm = event => {
+  const resetDialogState = () => {
     setSelectedNodes([])
     setHelpVisibility(false)
     setSelectionVisibility(false)
+  }
+
+  const handleClickNextTerm = event => {
+    resetDialogState()
     setCurrentTerm(nextTerm)
   }
 
   const handleClickPreviousTerm = event => {
-    setSelectedNodes([])
-    setHelpVisibility(false)
-    setSelectionVisibility(false)
+    resetDialogState()
     setCurrentTerm(previousTerm)
   }
 
