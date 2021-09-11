@@ -8,7 +8,7 @@ const useStyles = makeStyles(theme => ({
     position: 'absolute',
     bottom: theme.spacing(8),
     right: theme.spacing(1),
-    backgroundColor: '#cce3e3dd',
+    backgroundColor: '#cce3e3aa',
     padding: '1px',
     clipPath: `polygon(
       0% 0%,
@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
     )`,
   },
   root: {
-    backgroundColor: '#f2f8f8dd',
+    backgroundColor: '#f2f8f8aa',
     clipPath: `polygon(
       0% 0%,
       100% 0%,
@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
     )`,
   },
   header: {
-    backgroundColor: '#cce3e3dd',
+    backgroundColor: '#cce3e3aa',
     textTransform: 'uppercase',
     textAlign: 'center',
   },
