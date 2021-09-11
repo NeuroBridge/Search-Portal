@@ -1,5 +1,5 @@
 import { forwardRef } from 'react'
-import { Button, Card, CardHeader, CardContent, Divider, Fade, List, ListItem, Slide, Typography } from '@material-ui/core'
+import { Button, Card, CardHeader, CardContent, Divider, Grow, List, ListItem, Slide, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { Close as DeleteIcon } from '@material-ui/icons'
 import { useDialogContext } from './'
@@ -37,8 +37,8 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const FadeTransition = forwardRef(function Transition(props, ref) {
-  return <Fade ref={ ref } { ...props } />
+const GrowTransition = forwardRef(function Transition(props, ref) {
+  return <Grow ref={ ref } { ...props } />
 })
 
 export const NodeSelection = () => {
@@ -46,7 +46,7 @@ export const NodeSelection = () => {
   const classes = useStyles()
 
   return (
-    <FadeTransition in={ selectionVisibility }>
+    <GrowTransition in={ selectionVisibility }>
       <div className={ classes.wrapper }>
         <Card classes={ classes } elevation={ 0 } square>
           <CardHeader disableTypography title="Selected Nodes" className={ classes.header } />
@@ -72,7 +72,7 @@ export const NodeSelection = () => {
           </CardContent>
         </Card>
       </div>
-    </FadeTransition>
+    </GrowTransition>
   )
 }
 

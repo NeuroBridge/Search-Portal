@@ -1,5 +1,5 @@
 import { forwardRef } from 'react'
-import { Card, CardContent, CardHeader, Divider, Fade, List, ListItem, Typography } from '@material-ui/core'
+import { Card, CardContent, CardHeader, Divider, Grow, List, ListItem, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { useDialogContext } from './'
 
@@ -49,8 +49,8 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const FadeTransition = forwardRef(function Transition(props, ref) {
-  return <Fade direction="left" ref={ ref } { ...props } />
+const GrowTransition = forwardRef(function Transition(props, ref) {
+  return <Grow direction="left" ref={ ref } { ...props } />
 })
 
 const Node = ({ color = '#ccc', selected = false }) => {
@@ -66,7 +66,7 @@ export const GraphHelp = () => {
   const classes = useStyles()
 
   return (
-    <FadeTransition in={ helpVisibility }>
+    <GrowTransition in={ helpVisibility }>
       <div className={ classes.wrapper }>
         <Card classes={ classes } elevation={ 0 } square>
           <CardHeader disableTypography title="Help" className={ classes.header } />
@@ -109,7 +109,7 @@ export const GraphHelp = () => {
           </CardContent>
         </Card>
       </div>
-    </FadeTransition>
+    </GrowTransition>
   )
 }
 
