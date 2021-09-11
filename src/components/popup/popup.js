@@ -27,6 +27,9 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'center',
     color: theme.palette.primary.main,
   },
+  cardContent: {
+    padding: theme.spacing(1),
+  },
 }))
 
 const GrowTransition = forwardRef(function Transition(props, ref) {
@@ -42,7 +45,7 @@ export const Popup = ({ children, title, visibility, align }) => {
       <div className={ `${ classes.wrapper } ${ alignmentClass }` }>
         <Card className={ classes.root } elevation={ 0 } square>
           <CardHeader disableTypography title={ title } className={ classes.header } />
-          <CardContent>
+          <CardContent className={ classes.cardContent }>
             { children }
           </CardContent>
         </Card>

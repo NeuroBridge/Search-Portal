@@ -8,7 +8,6 @@ import { Popup } from '../popup'
 const useStyles = makeStyles(theme => ({
   chip: {
     margin: 0,
-    marginBottom: theme.spacing(1) / 2,
     textTransform: 'none',
     '&:hover $deleteIcon': {
       filter: 'opacity(1.0)',
@@ -31,7 +30,7 @@ export const NodeSelection = () => {
 
   return (
     <Popup title="Node Selection" align="top" visibility={ selectionVisibility }>
-      { !selectedNodes.length && <Typography paragraph>No selected nodes</Typography> }
+      { !selectedNodes.length && <Typography paragraph style={{ fontSize: '90%', textAlign: 'center' }}>No selected nodes</Typography> }
       <List dense>
         {
           selectedNodes.map(id => (

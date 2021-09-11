@@ -12,6 +12,9 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(2),
     position: 'relative',
   },
+  listItemText: {
+    fontSize: '90%',
+  },
   selectedNode: {
     '&::after': {
       content: '""',
@@ -20,8 +23,8 @@ const useStyles = makeStyles(theme => ({
       top: '50%',
       borderRadius: '50%',
       transform: 'translate(-50%, -50%)',
-      width: theme.spacing(3),
-      height: theme.spacing(3),
+      width: theme.spacing(7) / 2,
+      height: theme.spacing(7) / 2,
       backgroundColor: 'transparent',
       border: '3px solid #378f91',
     }
@@ -49,36 +52,47 @@ export const GraphHelp = () => {
       <List dense>
         <ListItem>
           <Node color="indianred" />
-          <Typography color="primary">Current term, parents, & children</Typography>
+          <Typography color="primary" className={ classes.listItemText }>
+            Current term,<br />its parents, & children
+          </Typography>
         </ListItem>
         <ListItem>
           <Node color="slategrey" />
-          <Typography color="primary">Term</Typography>
+          <Typography color="primary" className={ classes.listItemText }>
+            General Term
+          </Typography>
         </ListItem>
-      </List>
-      <Divider />
-      <List dense>
-        <ListItem>
-          <Typography color="primary"><strong>Solid:</strong>&nbsp; Has children</Typography>
-        </ListItem>
-        <ListItem>
-          <Typography color="primary"><strong>Empty:</strong>&nbsp; Childless</Typography>
-        </ListItem>
-      </List>
-      <Divider />
-      <List dense>
-        <ListItem>
-          <Typography color="primary"><strong>Left click:</strong>&nbsp; Reveal children</Typography>
-        </ListItem>
-        <ListItem>
-          <Typography color="primary"><strong>Right click:</strong>&nbsp; Select node</Typography>
-        </ListItem>
-      </List>
-      <Divider />
-      <List dense>
         <ListItem>
           <Node selected />
-          <Typography color="primary">Selected node</Typography>
+          <Typography color="primary" className={ classes.listItemText }>
+            Selected term
+          </Typography>
+        </ListItem>
+      </List>
+      <Divider />
+      <List dense>
+        <ListItem>
+          <Typography color="primary" className={ classes.listItemText }>
+            <strong>Solid:</strong>&nbsp; Has children
+          </Typography>
+        </ListItem>
+        <ListItem>
+          <Typography color="primary" className={ classes.listItemText }>
+            <strong>Empty:</strong>&nbsp; Childless
+          </Typography>
+        </ListItem>
+      </List>
+      <Divider />
+      <List dense>
+        <ListItem>
+          <Typography color="primary" className={ classes.listItemText }>
+           <strong>Left click:</strong>&nbsp; Reveal children
+         </Typography>
+        </ListItem>
+        <ListItem>
+          <Typography color="primary" className={ classes.listItemText }>
+           <strong>Right click:</strong>&nbsp; Select term
+         </Typography>
         </ListItem>
       </List>
     </Popup>
