@@ -19,9 +19,11 @@ const SELECTED_NODE_COLOR = '#378f91'
 
 const useStyles = makeStyles(theme => ({
   root: {
-    minHeight: '91%',
+    minHeight: '86%',
     width: '100%',
     position: 'relative',
+    borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+    backgroundColor: '#fff',
     '& > div': {
       width: '100%',
     }

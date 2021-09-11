@@ -26,11 +26,13 @@ const useStyles = makeStyles(theme => ({
   root: {
   },
   termDialog: {
+    backgroundColor: '#ecf3f3',
     overflow: 'hidden',
     height: '100%',
     width: '100%',
   },
   dialogHeader: {
+    backgroundColor: '#ecf3f3',
     width: '100%',
     textAlign: 'center',
     display: 'flex',

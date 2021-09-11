@@ -5,7 +5,7 @@ import { useDialogContext } from './'
 
 const useStyles = makeStyles(theme => ({
   root: {
-    backgroundColor: '#f2f8f899',
+    backgroundColor: '#f2f8f8dd',
   },
   wrapper: {
     position: 'absolute',
@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
     )`,
   },
   header: {
-    backgroundColor: '#cce3e399',
+    backgroundColor: '#cce3e3dd',
     textTransform: 'uppercase',
     textAlign: 'center',
   },
