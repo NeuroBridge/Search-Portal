@@ -93,7 +93,7 @@ export const GraphHelp = () => {
             <Divider />
             <List dense>
               <ListItem>
-                <Typography color="primary"><strong>Left click:</strong>&nbsp; Add children</Typography>
+                <Typography color="primary"><strong>Left click:</strong>&nbsp; Reveal children</Typography>
               </ListItem>
               <ListItem>
                 <Typography color="primary"><strong>Right click:</strong>&nbsp; Select node</Typography>
