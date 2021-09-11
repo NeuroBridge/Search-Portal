@@ -3,33 +3,16 @@ import { Button, Card, CardHeader, CardContent, Divider, Grow, List, ListItem, S
 import { makeStyles } from '@material-ui/core/styles'
 import { Close as DeleteIcon } from '@material-ui/icons'
 import { useDialogContext } from './'
+import { Popup } from '../popup'
 
 const useStyles = makeStyles(theme => ({
-  wrapper: {
-    position: 'absolute',
-    top: theme.spacing(15),
-    right: theme.spacing(1),
-    padding: '1px',
-    backgroundColor: '#cce3e3aa',
-    clipPath: 'polygon(0% 1rem, calc(100% - 3rem) 1rem, calc(100% - 2rem) 0%, calc(100% - 1rem) 1rem, 100% 1rem, 100% 100%, 0 100%)',
-  },
-  root: {
-    backgroundColor: '#f2f8f8aa',
-    clipPath: 'polygon(0% 1rem, calc(100% - 3rem) 1rem, calc(100% - 2rem) 0%, calc(100% - 1rem) 1rem, 100% 1rem, 100% 100%, 0 100%)',
-  },
-  header: {
-    textAlign: 'center',
-    fontSize: '95%',
-    textTransform: 'uppercase',
-    backgroundColor: '#cce3e3aa',
-    paddingTop: '2rem',
-  },
   chip: {
     margin: 0,
     marginBottom: theme.spacing(1) / 2,
     textTransform: 'none',
     '&:hover $deleteIcon': {
       filter: 'opacity(1.0)',
+      fill: 'indianred',
     },
   },
   deleteIcon: {
@@ -47,33 +30,26 @@ export const NodeSelection = () => {
   const classes = useStyles()
 
   return (
-    <GrowTransition in={ selectionVisibility }>
-      <div className={ classes.wrapper }>
-        <Card classes={ classes } elevation={ 0 } square>
-          <CardHeader disableTypography title="Selected Nodes" className={ classes.header } />
-          <CardContent>
-            { !selectedNodes.length && <Typography paragraph>No selected nodes</Typography> }
-            <List dense>
-              {
-                selectedNodes.map(id => (
-                  <Slide key={ `selected_${ id }` } direction="left" in={ true }>
-                    <ListItem
-                      className={ classes.listItem }
-                      component={ Button }
-                      size="small"
-                      color="secondary"
-                      classes={{ root: classes.chip }}
-                      onClick={ () => toggleNodeSelection(id) }
-                      startIcon={ <DeleteIcon className={ classes.deleteIcon } /> }
-                    >{ id }</ListItem>
-                  </Slide>
-                ))
-              }
-            </List>
-          </CardContent>
-        </Card>
-      </div>
-    </GrowTransition>
+    <Popup title="Node Selection" align="top" visibility={ selectionVisibility }>
+      { !selectedNodes.length && <Typography paragraph>No selected nodes</Typography> }
+      <List dense>
+        {
+          selectedNodes.map(id => (
+            <Slide key={ `selected_${ id }` } direction="left" in={ true }>
+              <ListItem
+                className={ classes.listItem }
+                component={ Button }
+                size="small"
+                color="secondary"
+                classes={{ root: classes.chip }}
+                onClick={ () => toggleNodeSelection(id) }
+                startIcon={ <DeleteIcon className={ classes.deleteIcon } /> }
+              >{ id }</ListItem>
+            </Slide>
+          ))
+        }
+      </List>
+    </Popup>
   )
 }
 
