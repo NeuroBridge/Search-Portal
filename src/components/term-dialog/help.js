@@ -86,12 +86,12 @@ export const GraphHelp = () => {
       <List dense>
         <ListItem>
           <Typography color="primary" className={ classes.listItemText }>
-           <strong>Right click:</strong>&nbsp; Reveal children
+           <strong>Left click:</strong>&nbsp; Select term
          </Typography>
         </ListItem>
         <ListItem>
           <Typography color="primary" className={ classes.listItemText }>
-           <strong>Left click:</strong>&nbsp; Select term
+           <strong>Right click:</strong>&nbsp; Reveal children
          </Typography>
         </ListItem>
       </List>
