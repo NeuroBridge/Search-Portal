@@ -39,7 +39,13 @@ export const TermCard = ({ term, clickHandler }) => {
     >
       <Typography variant="h6" component="h2">{ term.label }</Typography>
       <Divider />
-      <Typography paragraph>{ term.comment_annotation || 'N/A' }</Typography>
+      {
+        term.comment_annotation ? (
+          <Typography paragraph color="textPrimary">{ term.comment_annotation }</Typography>
+        ) : (
+          <Typography paragraph color="textSecondary">no comment_annotation present</Typography>
+        )
+      }
       <IconButton
         className={ classes.viewTermButton }
         size="small"
