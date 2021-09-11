@@ -56,7 +56,7 @@ export const NodeSelection = () => {
             <List dense>
               {
                 selectedNodes.map(id => (
-                  <Slide key={ `selected_${ id }` } direction="right" in={ true }>
+                  <Slide key={ `selected_${ id }` } direction="left" in={ true }>
                     <ListItem
                       className={ classes.listItem }
                       component={ Button }
