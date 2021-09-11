@@ -19,9 +19,11 @@ const SELECTED_NODE_COLOR = '#378f91'
 
 const useStyles = makeStyles(theme => ({
   root: {
-    minHeight: '91%',
+    minHeight: '86%',
     width: '100%',
     position: 'relative',
+    borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+    backgroundColor: '#fff',
     '& > div': {
       width: '100%',
     }
@@ -116,7 +118,7 @@ export const TermGraph = ({ term, height, width }) => {
       <p class="${ classes.tooltipDetail }">${ hasChildren ? 'Has children' : 'No children' }</p>
     </div>`
 
-  const handleNodeClick = async (node, event) => {
+  const handleNodeRightClick = async (node, event) => {
     const children = await api.hierarchicalChildren(encodeURIComponent(encodeURIComponent(node.iri)))
     console.log(`"${ node.id }" has ${ children.length } children:`)
     console.table(children.map(child => child.short_form))
@@ -130,7 +132,7 @@ export const TermGraph = ({ term, height, width }) => {
     })
   }
 
-  const handleNodeRightClick = (node, event) => toggleNodeSelection(node.id)
+  const handleNodeLeftClick = (node, event) => toggleNodeSelection(node.id)
 
   const nodePaint = ({ id, x, y, color, hasChildren }, ctx) => {
     if (selectedNodes.includes(id)) {
@@ -176,8 +178,8 @@ export const TermGraph = ({ term, height, width }) => {
               linkDirectionalParticles={ 2 }
               linkDirectionalParticleWidth={ 2 }
               d3VelocityDecay={ 0.5 }
-              onNodeClick={ (node, event) => handleNodeClick(node, event) }
-              onNodeRightClick={ handleNodeRightClick }
+              onNodeClick={ handleNodeLeftClick }
+              onNodeRightClick={ (node, event) => handleNodeRightClick(node, event) }
               nodeLabel={ node => tooltip({ ...node }) }
               nodeCanvasObject={ nodePaint }
             />

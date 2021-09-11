@@ -1,7 +1,7 @@
 import { forwardRef, useEffect, useMemo, useRef, useState } from 'react'
 import axios from 'axios'
 import {
-  AppBar, Button, Card, CardContent, Divider, IconButton, Grid, LinearProgress, Paper, InputBase, Toolbar, Typography
+  AppBar, Button, Card, CardActionArea, CardContent, Divider, IconButton, Grid, LinearProgress, Paper, InputBase, Toolbar, Typography
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import {
@@ -11,18 +11,28 @@ import {
 
 const useStyles = makeStyles(theme => ({
   termCard: {
-    padding: theme.spacing(2),
     fontSize: '80%',
     position: 'relative',
     borderLeft: `0.5rem solid ${ theme.palette.primary.light }`,
     filter: 'opacity(0.8)',
-    transition: 'filter 250ms, border-color 250ms',
+    transition: 'filter 250ms, border-color 250ms, border-width 250ms',
     '&:hover': {
       filter: 'opacity(1.0)',
-      borderColor: theme.palette.secondary.light,
+      borderLeftWidth: `0.75rem`,
+      borderColor: theme.palette.primary.main,
     },
   },
-  viewTermButton: {
+  actionArea: {
+    padding: theme.spacing(2),
+    '&:hover $viewTermIcon': {
+      filter: 'opacity(1.0)',
+      transform: 'scale(1.0)',
+    },
+  },
+  viewTermIcon: {
+    filter: 'opacity(0.1)',
+    transition: 'filter 250ms',
+    transform: 'scale(0.9)',
     position: 'absolute',
     top: theme.spacing(2),
     right: theme.spacing(2),
@@ -37,17 +47,21 @@ export const TermCard = ({ term, clickHandler }) => {
       variant="outlined"
       className={ classes.termCard }
     >
-      <Typography variant="h6" component="h2">{ term.label }</Typography>
-      <Divider />
-      <Typography paragraph>{ term.comment_annotation || 'N/A' }</Typography>
-      <IconButton
-        className={ classes.viewTermButton }
-        size="small"
-        variant="contained"
-        color="primary"
-        onClick={ clickHandler }
-        children={ <ViewTermIcon fontSize="small" /> }
-      />
+      <CardActionArea className={ classes.actionArea } onClick={ clickHandler }>
+        <Typography variant="h6" component="h2">{ term.label }</Typography>
+        <Divider />
+        {
+          term.comment_annotation ? (
+            <Typography paragraph color="textPrimary">{ term.comment_annotation }</Typography>
+          ) : (
+            <Typography paragraph color="textSecondary">no comment_annotation</Typography>
+          )
+        }
+        <ViewTermIcon
+          className={ classes.viewTermIcon }
+          fontSize="small"
+        />
+      </CardActionArea>
     </Card>
   )
 }

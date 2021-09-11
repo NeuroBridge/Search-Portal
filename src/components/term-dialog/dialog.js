@@ -26,11 +26,13 @@ const useStyles = makeStyles(theme => ({
   root: {
   },
   termDialog: {
+    backgroundColor: '#ecf3f3',
     overflow: 'hidden',
     height: '100%',
     width: '100%',
   },
   dialogHeader: {
+    backgroundColor: '#ecf3f3',
     width: '100%',
     textAlign: 'center',
     display: 'flex',
@@ -73,8 +75,21 @@ export const TermDialog = ({ open, closeHandler }) => {
   const [children, setChildren] = useState([])
   const [parents, setParents] = useState([])
 
-  const handleClickNextTerm = event => setCurrentTerm(nextTerm)
-  const handleClickPreviousTerm = event => setCurrentTerm(previousTerm)
+  const resetDialogState = () => {
+    setSelectedNodes([])
+    setHelpVisibility(false)
+    setSelectionVisibility(false)
+  }
+
+  const handleClickNextTerm = event => {
+    resetDialogState()
+    setCurrentTerm(nextTerm)
+  }
+
+  const handleClickPreviousTerm = event => {
+    resetDialogState()
+    setCurrentTerm(previousTerm)
+  }
 
   const toggleNodeSelection = id => {
     const newSelection = new Set(selectedNodes)
