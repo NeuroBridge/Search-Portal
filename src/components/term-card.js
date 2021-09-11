@@ -53,7 +53,7 @@ export const TermCard = ({ term, clickHandler }) => {
           term.comment_annotation ? (
             <Typography paragraph color="textPrimary">{ term.comment_annotation }</Typography>
           ) : (
-            <Typography paragraph color="textSecondary">no comment_annotation present</Typography>
+            <Typography paragraph color="textSecondary">no comment_annotation</Typography>
           )
         }
         <ViewTermIcon
