@@ -62,9 +62,9 @@ export const NodeSelection = () => {
                       component={ Button }
                       size="small"
                       color="secondary"
-                      classes={{ root: classes.chip, label: classes.chipLabel, endIcon: classes.deleteIcon }}
+                      classes={{ root: classes.chip }}
                       onClick={ () => toggleNodeSelection(id) }
-                      endIcon={ <DeleteIcon /> }
+                      startIcon={ <DeleteIcon className={ classes.deleteIcon } /> }
                     >{ id }</ListItem>
                   </Slide>
                 ))
