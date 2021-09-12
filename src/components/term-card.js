@@ -23,6 +23,12 @@ const useStyles = makeStyles(theme => ({
     },
   },
   actionArea: {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    // gap: theme.spacing(1),
     padding: theme.spacing(2),
     '&:hover $viewTermIcon': {
       filter: 'opacity(1.0)',
@@ -43,24 +49,16 @@ export const TermCard = ({ term, clickHandler }) => {
   const classes = useStyles()
   return (
     <Card
-      key={ term.label }
       variant="outlined"
       className={ classes.termCard }
     >
       <CardActionArea className={ classes.actionArea } onClick={ clickHandler }>
-        <Typography variant="h6" component="h2">{ term.label }</Typography>
-        <Divider />
-        {
-          term.comment_annotation ? (
-            <Typography paragraph color="textPrimary">{ term.comment_annotation }</Typography>
-          ) : (
-            <Typography paragraph color="textSecondary">no comment_annotation</Typography>
-          )
-        }
-        <ViewTermIcon
-          className={ classes.viewTermIcon }
-          fontSize="small"
-        />
+        <Typography color="textPrimary"><strong>label:</strong> { term.label }</Typography>
+        <Typography variant="caption" color="textPrimary"><strong>short_form:</strong> { term.short_form }</Typography>
+        <Typography variant="caption" color="textSecondary">
+          <strong>comment_annotation:</strong> { term.comment_annotation ? term.comment_annotation : 'none provided' }
+        </Typography>
+        <ViewTermIcon className={ classes.viewTermIcon } fontSize="small" />
       </CardActionArea>
     </Card>
   )
