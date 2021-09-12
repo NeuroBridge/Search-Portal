@@ -9,7 +9,6 @@ import {
 } from '@material-ui/icons'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import { api } from '../../api'
-import ReactJson from 'react-json-view'
 import ForceGraph2D from 'react-force-graph-2d'
 import { useSearchContext } from '../../context'
 import { useDialogContext } from './'
