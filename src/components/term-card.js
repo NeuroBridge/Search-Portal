@@ -53,8 +53,12 @@ export const TermCard = ({ term, clickHandler }) => {
       className={ classes.termCard }
     >
       <CardActionArea className={ classes.actionArea } onClick={ clickHandler }>
-        <Typography color="textPrimary"><strong>label:</strong> { term.label }</Typography>
-        <Typography variant="caption" color="textPrimary"><strong>short_form:</strong> { term.short_form }</Typography>
+        <Typography color="textPrimary">
+          <strong>label:</strong> { term.label }
+        </Typography>
+        <Typography variant="caption" color="textPrimary">
+          <strong>short_form:</strong> { term.short_form }
+        </Typography>
         <Typography variant="caption" color="textSecondary">
           <strong>comment_annotation:</strong> { term.comment_annotation ? term.comment_annotation : 'none provided' }
         </Typography>
