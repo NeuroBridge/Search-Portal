@@ -11,7 +11,6 @@ import {
   ShoppingBasket as SelectionIcon,
 } from '@material-ui/icons'
 import { api } from '../../api'
-import ReactJson from 'react-json-view'
 import ForceGraph2D from 'react-force-graph-2d'
 import { useSearchContext } from '../../context'
 import { TermGraph } from './graph'
