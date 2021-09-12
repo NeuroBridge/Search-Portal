@@ -30,14 +30,21 @@ const useStyles = makeStyles(theme => ({
   tooltip: {
     padding: theme.spacing(1),
     backgroundColor: 'grey',
+    borderRadius: '4px',
+    fontSize: '75%',
   },
   tooltipTitle: {
     margin: 0,
-    fontSize: '90%',
+    fontSize: '120%',
   },
   tooltipDetail: {
     margin: 0,
-    fontSize: '65%',
+    fontSize: 'inherit',
+  },
+  tooltipDescription: {
+    fontSize: 'inherit',
+    borderTop: '1px solid #ffffff66',
+    paddingTop: theme.spacing(1),
   },
   selection: {
     display: 'flex',
@@ -97,9 +104,9 @@ export const TermGraph = ({ term, height, width }) => {
           const [children, parents] = responses
           const parent = parents[0]
           const nodes = [
-            { id: parent.short_form, name: parent.short_form, val: 15, color: 'indianred', iri: parent.iri, hasChildren: parent.has_children }, // add parent term node
-            { id: term.short_form, name: term.short_form, val: 15, color: 'indianred', iri: term.iri, hasChildren: term.has_children }, // add current term node
-            ...children.map(child => ({ id: child.short_form, name: child.short_form, val: 15, color: 'indianred', iri: child.iri, hasChildren: child.has_children })), // add current term's children nodes
+            { id: parent.short_form, name: parent.label, val: 15, color: 'indianred', iri: parent.iri, hasChildren: parent.has_children, description: parent.comment_annotation }, // add parent term node
+            { id: term.short_form, name: term.label, val: 15, color: 'indianred', iri: term.iri, hasChildren: term.has_children, description: term.comment_annotation }, // add current term node
+            ...children.map(child => ({ id: child.short_form, name: child.label, val: 15, color: 'indianred', iri: child.iri, hasChildren: child.has_children, description: child.comment_annotation })), // add current term's children nodes
           ]
           const links = [
             ...parents.map(parent => ({ source: parent.short_form, target: term.short_form })), // parent-current term edge
@@ -110,11 +117,11 @@ export const TermGraph = ({ term, height, width }) => {
     }
   }, [term])
 
-  const tooltip = ({ name, iri, color, hasChildren }) => `
+  const tooltip = ({ id, name, description, color, hasChildren }) => `
     <div class="${ classes.tooltip }" style="background-color: ${ color }">
       <h3 class="${ classes.tooltipTitle }">${ name }</h3>
-      <p class="${ classes.tooltipDetail }">${ iri }</p>
-      <p class="${ classes.tooltipDetail }">${ hasChildren ? 'Has children' : 'No children' }</p>
+      <p class="${ classes.tooltipDetail }"><em>${ id }</em></p>
+      <p class="${ classes.tooltipDescription }">comment_annotation: ${ description || 'none provided' }</p>
     </div>`
 
   const handleNodeRightClick = async (node, event) => {
@@ -123,7 +130,7 @@ export const TermGraph = ({ term, height, width }) => {
     console.table(children.map(child => child.short_form))
     const newNodes = children
       .filter(child => !visibleNodes.includes(child.short_form))
-      .map(child => ({ id: child.short_form, name: child.short_form, val: 10, color: 'slategrey', iri: child.iri, hasChildren: child.has_children }))
+      .map(child => ({ id: child.short_form, name: child.label, val: 10, color: 'slategrey', iri: child.iri, hasChildren: child.has_children, description: child.comment_annotation }))
     const newLinks = newNodes.map(newNode => ({ source: node.id, target: newNode.id }))
     setGraphData({
       nodes: [...graphData.nodes, ...newNodes],

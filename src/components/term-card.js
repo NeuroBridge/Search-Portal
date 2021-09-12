@@ -57,7 +57,7 @@ export const TermCard = ({ term, clickHandler }) => {
           <strong>label:</strong> { term.label }
         </Typography>
         <Typography variant="caption" color="textPrimary">
-          <strong>short_form:</strong> { term.short_form }
+          <strong>short_form:</strong> <em>{ term.short_form }</em>
         </Typography>
         <Typography variant="caption" color="textSecondary">
           <strong>comment_annotation:</strong> { term.comment_annotation ? term.comment_annotation : 'none provided' }

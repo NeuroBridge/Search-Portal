@@ -126,7 +126,7 @@ export const TermDialog = ({ open, closeHandler }) => {
               <IconButton size="small" color="secondary" onClick={ handleClickPreviousTerm } disabled={ !previousTerm }><PreviousTermIcon /></IconButton>
             </span>
           </Tooltip>
-          <Typography variant="h6" className={ classes.dialogTitle }>{ currentTerm && currentTerm.short_form }</Typography>
+          <Typography variant="h6" className={ classes.dialogTitle }>{ currentTerm && currentTerm.label }</Typography>
           <Tooltip title="View next result">
             <span>
               <IconButton size="small" color="secondary" onClick={ handleClickNextTerm } disabled={ !nextTerm }><NextTermIcon /></IconButton>
