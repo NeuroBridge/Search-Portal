@@ -2,7 +2,7 @@ import { forwardRef } from 'react'
 import { Card, CardContent, CardHeader, Divider, Grow, List, ListItem, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { useDialogContext } from './'
-import { Popup } from '../popup'
+import { Popup } from './popup'
 
 const useStyles = makeStyles(theme => ({
   node: {

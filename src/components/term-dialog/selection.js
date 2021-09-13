@@ -6,7 +6,7 @@ import {
   Send as ActionIcon,
 } from '@material-ui/icons'
 import { useDialogContext } from './'
-import { Popup } from '../popup'
+import { Popup } from './popup'
 
 const useStyles = makeStyles(theme => ({
   chip: {
