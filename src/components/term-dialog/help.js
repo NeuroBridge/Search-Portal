@@ -86,7 +86,7 @@ export const GraphHelp = () => {
       <List dense>
         <ListItem>
           <Typography color="primary" className={ classes.listItemText }>
-           <strong>Left click:</strong>&nbsp; Select term
+           <strong>Left click:</strong>&nbsp; Select/deselect term
          </Typography>
         </ListItem>
         <ListItem>
