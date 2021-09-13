@@ -1,6 +1,6 @@
 import { forwardRef } from 'react'
 import PropTypes from 'prop-types'
-import { Card, CardContent, CardHeader, Divider, Grow, List, ListItem, Typography } from '@material-ui/core'
+import { Card, CardActions, CardContent, CardHeader, Divider, Grow, List, ListItem, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { useDialogContext } from './'
 
@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
     top: theme.spacing(15),
   },
   alignBottom: {
-    bottom: theme.spacing(9),
+    bottom: theme.spacing(10),
   },
   root: {
     transform: 'scale(0.99)',
@@ -30,13 +30,19 @@ const useStyles = makeStyles(theme => ({
   cardContent: {
     padding: theme.spacing(1),
   },
+  cardActions: {
+    backgroundColor: '#cce3e3aa',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 }))
 
 const GrowTransition = forwardRef(function Transition(props, ref) {
   return <Grow direction="left" ref={ ref } { ...props } />
 })
 
-export const Popup = ({ children, title, visibility, align }) => {
+export const Popup = ({ children, title, visibility, align, actions }) => {
   const classes = useStyles()
   const alignmentClass = align === 'top' ? classes.alignTop : align === 'bottom' ? classes.alignBottom : undefined
 
@@ -48,6 +54,7 @@ export const Popup = ({ children, title, visibility, align }) => {
           <CardContent className={ classes.cardContent }>
             { children }
           </CardContent>
+          { actions && <CardActions className={ classes.cardActions }>{ actions }</CardActions> }
         </Card>
       </div>
     </GrowTransition>
