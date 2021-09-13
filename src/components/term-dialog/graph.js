@@ -126,8 +126,6 @@ export const TermGraph = ({ term, height, width }) => {
 
   const handleNodeRightClick = async (node, event) => {
     const children = await api.hierarchicalChildren(encodeURIComponent(encodeURIComponent(node.iri)))
-    console.log(`"${ node.id }" has ${ children.length } children:`)
-    console.table(children.map(child => child.short_form))
     const newNodes = children
       .filter(child => !visibleNodes.includes(child.short_form))
       .map(child => ({ id: child.short_form, name: child.label, val: 10, color: 'slategrey', iri: child.iri, hasChildren: child.has_children, description: child.comment_annotation }))
