@@ -18,7 +18,7 @@ const SELECTED_NODE_COLOR = '#378f91'
 
 const useStyles = makeStyles(theme => ({
   root: {
-    minHeight: '86%',
+    minHeight: 'calc(100% - 11rem)',
     width: '100%',
     position: 'relative',
     borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
