@@ -17,6 +17,7 @@ const useStyles = makeStyles(theme => ({
     bottom: theme.spacing(9),
   },
   root: {
+    minWidth: '300px',
     transform: 'scale(0.99)',
     backgroundColor: '#f2f8f8aa',
     color: theme.palette.primary.main,
@@ -33,7 +34,7 @@ const useStyles = makeStyles(theme => ({
   cardActions: {
     backgroundColor: '#cce3e3aa',
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
 }))

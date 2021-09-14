@@ -90,6 +90,8 @@ export const TermDialog = ({ open, closeHandler }) => {
     setSelectionVisibility(false)
   }
 
+  const emptySelectedNodes = () => setSelectedNodes([])
+
   const handleClickNextTerm = event => setCurrentTerm(nextTerm)
 
   const handleClickPreviousTerm = event => setCurrentTerm(previousTerm)
@@ -119,7 +121,7 @@ export const TermDialog = ({ open, closeHandler }) => {
     >
       <DialogContext.Provider
         value={{
-          selectedNodes, setSelectedNodes, toggleNodeSelection,
+          selectedNodes, setSelectedNodes, toggleNodeSelection, emptySelectedNodes,
           helpVisibility, setHelpVisibility,
           selectionVisibility, setSelectionVisibility,
         }}
