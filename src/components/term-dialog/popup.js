@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
     top: theme.spacing(15),
   },
   alignBottom: {
-    bottom: theme.spacing(10),
+    bottom: theme.spacing(9),
   },
   root: {
     transform: 'scale(0.99)',
