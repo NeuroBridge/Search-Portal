@@ -1,5 +1,5 @@
 import { forwardRef, Fragment } from 'react'
-import { Button, Card, CardHeader, CardContent, Divider, Grow, IconButton, List, ListItem, Slide, Tooltip, Typography } from '@material-ui/core'
+import { Button, Card, CardHeader, CardContent, Divider, Fade, Grow, IconButton, List, ListItem, Tooltip, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import {
   Send as ActionIcon,
@@ -76,7 +76,7 @@ export const NodeSelection = () => {
       <List dense>
         {
           selectedNodes.map(id => (
-            <Slide key={ `selected_${ id }` } direction="left" in={ true }>
+            <Fade key={ `selected_${ id }` } direction="left" in={ true }>
               <ListItem
                 className={ classes.listItem }
                 component={ Button }
@@ -86,7 +86,7 @@ export const NodeSelection = () => {
                 onClick={ () => toggleNodeSelection(id) }
                 startIcon={ <RemoveTermIcon className={ classes.removeTermIcon } /> }
               >{ id }</ListItem>
-            </Slide>
+            </Fade>
           ))
         }
       </List>
