@@ -84,7 +84,7 @@ export const NodeSelection = () => {
                 color="secondary"
                 classes={{ root: classes.chip }}
                 onClick={ () => toggleNodeSelection(id) }
-                startIcon={ <RemoveTermIcon className={ classes.removeTermIcon } /> }
+                endIcon={ <RemoveTermIcon className={ classes.removeTermIcon } /> }
               >{ id }</ListItem>
             </Fade>
           ))
