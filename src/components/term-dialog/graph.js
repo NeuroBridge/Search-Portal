@@ -18,7 +18,7 @@ const SELECTED_NODE_COLOR = '#378f91'
 
 const useStyles = makeStyles(theme => ({
   root: {
-    minHeight: '86%',
+    minHeight: 'calc(100% - 11rem)',
     width: '100%',
     position: 'relative',
     borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
@@ -89,6 +89,7 @@ export const TermGraph = ({ term, height, width }) => {
   const classes = useStyles()
   const [graphData, setGraphData] = useState({ nodes: [], links: [] })
   const container = useRef()
+  const fgRef = useRef()
 
   const visibleNodes = useMemo(() => graphData ? graphData.nodes.map(node => node.id) : [], [graphData.nodes])
 
@@ -170,6 +171,7 @@ export const TermGraph = ({ term, height, width }) => {
         {
           ({ size }) => graphData.nodes.length > 0 && graphData.links && (
             <ForceGraph2D
+              ref={ fgRef }
               width={ size.width }
               height={ container?.current.clientHeight }
               graphData={ graphData }
@@ -179,13 +181,14 @@ export const TermGraph = ({ term, height, width }) => {
               linkColor={ () => 'rgba(0,0,0,0.2)' }
               nodeRelSize={1}
               nodeId="id"
-              linkDirectionalParticles={ 2 }
-              linkDirectionalParticleWidth={ 2 }
               d3VelocityDecay={ 0.5 }
               onNodeClick={ handleNodeLeftClick }
               onNodeRightClick={ (node, event) => handleNodeRightClick(node, event) }
               nodeLabel={ node => tooltip({ ...node }) }
               nodeCanvasObject={ nodePaint }
+              linkDirectionalParticleWidth={ 2 }
+              linkDirectionalParticleColor={ link => link.source.color }
+              onLinkClick={ link => fgRef.current.emitParticle(link) }
             />
           )
         }

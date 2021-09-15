@@ -29,6 +29,7 @@ const useStyles = makeStyles(theme => ({
     overflow: 'hidden',
     height: '100%',
     width: '100%',
+    position: 'relative',
   },
   dialogHeader: {
     backgroundColor: '#ecf3f3',
@@ -40,6 +41,7 @@ const useStyles = makeStyles(theme => ({
   },
   dialogTitle: {
     flex: 1,
+    height: '2rem',
   },
   content: {
     padding: 0,
@@ -50,12 +52,16 @@ const useStyles = makeStyles(theme => ({
     },
   },
   toolbar: {
+    height: '3rem',
     display: 'flex',
     justifyContent: 'flex-end',
     padding: `0 ${ theme.spacing(2) }px`,
   },
   actions: {
+    height: '4rem',
+    backgroundColor: 'transparent',
     display: 'flex',
+    justifyContent: 'flex-end',
   },
 }))
 
@@ -74,21 +80,21 @@ export const TermDialog = ({ open, closeHandler }) => {
   const [children, setChildren] = useState([])
   const [parents, setParents] = useState([])
 
+  useEffect(() => {
+    resetDialogState()
+  }, [currentTerm])
+
   const resetDialogState = () => {
     setSelectedNodes([])
     setHelpVisibility(false)
     setSelectionVisibility(false)
   }
 
-  const handleClickNextTerm = event => {
-    resetDialogState()
-    setCurrentTerm(nextTerm)
-  }
+  const emptySelectedNodes = () => setSelectedNodes([])
 
-  const handleClickPreviousTerm = event => {
-    resetDialogState()
-    setCurrentTerm(previousTerm)
-  }
+  const handleClickNextTerm = event => setCurrentTerm(nextTerm)
+
+  const handleClickPreviousTerm = event => setCurrentTerm(previousTerm)
 
   const toggleNodeSelection = id => {
     const newSelection = new Set(selectedNodes)
@@ -115,7 +121,7 @@ export const TermDialog = ({ open, closeHandler }) => {
     >
       <DialogContext.Provider
         value={{
-          selectedNodes, setSelectedNodes, toggleNodeSelection,
+          selectedNodes, setSelectedNodes, toggleNodeSelection, emptySelectedNodes,
           helpVisibility, setHelpVisibility,
           selectionVisibility, setSelectionVisibility,
         }}
@@ -155,7 +161,6 @@ export const TermDialog = ({ open, closeHandler }) => {
         <NodeSelection />
         
         <DialogActions className={ classes.actions }>
-          <div style={{ flex: 1 }} />
           <IconButton color={ helpVisibility ? 'secondary' : 'primary' } variant="outlined" onClick={ () => setHelpVisibility(!helpVisibility) }><HelpIcon /></IconButton>
           <Button color="primary" variant="contained" onClick={ closeHandler }>Close</Button>
         </DialogActions>

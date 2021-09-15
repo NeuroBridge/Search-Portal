@@ -2,7 +2,7 @@ import { forwardRef } from 'react'
 import { Card, CardContent, CardHeader, Divider, Grow, List, ListItem, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { useDialogContext } from './'
-import { Popup } from '../popup'
+import { Popup } from './popup'
 
 const useStyles = makeStyles(theme => ({
   node: {
@@ -86,7 +86,7 @@ export const GraphHelp = () => {
       <List dense>
         <ListItem>
           <Typography color="primary" className={ classes.listItemText }>
-           <strong>Left click:</strong>&nbsp; Select term
+           <strong>Left click:</strong>&nbsp; Select/deselect term
          </Typography>
         </ListItem>
         <ListItem>
