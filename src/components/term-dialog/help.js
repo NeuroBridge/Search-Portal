@@ -9,8 +9,12 @@ const useStyles = makeStyles(theme => ({
     width: theme.spacing(2),
     height: theme.spacing(2),
     borderRadius: '50%',
+    marginLeft: theme.spacing(1),
     marginRight: theme.spacing(2),
     position: 'relative',
+  },
+  listItem: {
+    padding: theme.spacing(1),
   },
   listItemText: {
     fontSize: '90%',
@@ -50,19 +54,25 @@ export const GraphHelp = () => {
   return (
     <Popup title="Help" align="bottom" visibility={ helpVisibility }>
       <List dense>
-        <ListItem>
+        <ListItem className={ classes.listItem }>
+          <Node color="#333" />
+          <Typography color="primary" className={ classes.listItemText }>
+            Current term
+          </Typography>
+        </ListItem>
+        <ListItem className={ classes.listItem }>
           <Node color="indianred" />
           <Typography color="primary" className={ classes.listItemText }>
-            Current term,<br />its parents, & children
+            Current term's parents & children
           </Typography>
         </ListItem>
-        <ListItem>
+        <ListItem className={ classes.listItem }>
           <Node color="slategrey" />
           <Typography color="primary" className={ classes.listItemText }>
-            General Term
+            Other term
           </Typography>
         </ListItem>
-        <ListItem>
+        <ListItem className={ classes.listItem }>
           <Node selected />
           <Typography color="primary" className={ classes.listItemText }>
             Selected term
@@ -71,12 +81,12 @@ export const GraphHelp = () => {
       </List>
       <Divider />
       <List dense>
-        <ListItem>
+        <ListItem className={ classes.listItem }>
           <Typography color="primary" className={ classes.listItemText }>
             <strong>Solid:</strong>&nbsp; Has children
           </Typography>
         </ListItem>
-        <ListItem>
+        <ListItem className={ classes.listItem }>
           <Typography color="primary" className={ classes.listItemText }>
             <strong>Empty:</strong>&nbsp; Childless
           </Typography>
@@ -84,12 +94,12 @@ export const GraphHelp = () => {
       </List>
       <Divider />
       <List dense>
-        <ListItem>
+        <ListItem className={ classes.listItem }>
           <Typography color="primary" className={ classes.listItemText }>
            <strong>Left click:</strong>&nbsp; Select/deselect term
          </Typography>
         </ListItem>
-        <ListItem>
+        <ListItem className={ classes.listItem }>
           <Typography color="primary" className={ classes.listItemText }>
            <strong>Right click:</strong>&nbsp; Reveal children
          </Typography>
