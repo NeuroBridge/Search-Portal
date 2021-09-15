@@ -181,13 +181,13 @@ export const TermGraph = ({ term, height, width }) => {
               linkColor={ () => 'rgba(0,0,0,0.2)' }
               nodeRelSize={1}
               nodeId="id"
-              linkDirectionalParticleWidth={ 2 }
-              linkDirectionalParticleColor={ link => link.source.color }
               d3VelocityDecay={ 0.5 }
               onNodeClick={ handleNodeLeftClick }
               onNodeRightClick={ (node, event) => handleNodeRightClick(node, event) }
               nodeLabel={ node => tooltip({ ...node }) }
               nodeCanvasObject={ nodePaint }
+              linkDirectionalParticleWidth={ 2 }
+              linkDirectionalParticleColor={ link => link.source.color }
               onLinkClick={ link => fgRef.current.emitParticle(link) }
             />
           )
