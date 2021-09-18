@@ -23,6 +23,9 @@ const useStyles = makeStyles(theme => ({
     padding: `0 ${ theme.spacing(3) }px`,
     alignItems: 'stretch',
   },
+  main: {
+    padding: theme.spacing(4),
+  },
 }))
 
 export const App = () => {
@@ -37,7 +40,9 @@ export const App = () => {
         </Toolbar>
         <SearchBar />
       </AppBar>
-      <Router />
+      <main className={ classes.main }>
+        <Router />
+      </main>
     </div>
   )
 }

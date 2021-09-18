@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react'
+import { Fragment, useCallback, useMemo } from 'react'
 import { useSearchContext } from '../components/search/context'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import { Grid, Typography } from '@material-ui/core'
@@ -6,10 +6,7 @@ import { TermCard } from '../components/search/term-card'
 import { TermDialog } from '../components/search/term-dialog'
 
 const useStyles = makeStyles(theme => ({
-  main: {
-    margin: theme.spacing(4),
-  },
-  terms: {
+  grid: {
     display: 'grid',
     gridTemplateColumns: 'repeat(auto-fit, minmax(500px, 1fr))',
     gap: theme.spacing(2),
@@ -30,17 +27,17 @@ export const SearchView = () => {
   const MemoizedResultsHeader = useCallback(() => <Typography>"{ searchedQuery }" returned { terms.length } results</Typography>, [searchedQuery, terms])
 
   return (
-    <main className={ classes.main }>
+    <Fragment>
       { searchedQuery && <MemoizedResultsHeader /> }
       <br />
       <Grid container spacing={ 3 }>
-        <Grid item xs={ 12 } className={ classes.terms }>
+        <Grid item xs={ 12 } className={ classes.grid }>
           {
             !!terms.length && terms.map((term, index) => <TermCard term={ term } key={ term.label } clickHandler={ handleClickTerm(index) }/>)
           }
           <TermDialog open={ dialogOpen } term={ currentTerm } closeHandler={ handleClickTerm(null) } />
         </Grid>
       </Grid>
-    </main>
+    </Fragment>
   )
 }
