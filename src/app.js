@@ -25,6 +25,9 @@ const useStyles = makeStyles(theme => ({
   },
   main: {
     padding: theme.spacing(4),
+    width: '100%',
+    maxWidth: '1600px',
+    margin: '0 auto',
   },
 }))
 
