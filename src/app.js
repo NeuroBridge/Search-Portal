@@ -12,6 +12,7 @@ import { useSearchContext } from './context'
 import { TermCard } from './components/term-card'
 import { TermDialog } from './components/term-dialog'
 import brainImage from './images/brain.png'
+import { Router } from './router'
 
 const useStyles = makeStyles(theme => ({
   app: {
