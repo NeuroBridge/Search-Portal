@@ -8,9 +8,9 @@ import {
   ArrowForward as ActionIcon,
 } from '@material-ui/icons'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
-import { api } from '../../api'
+import { api } from '../../../api'
 import ForceGraph2D from 'react-force-graph-2d'
-import { useSearchContext } from '../../context'
+import { useSearchContext } from '../context'
 import { useDialogContext } from './'
 import { SizeMe } from 'react-sizeme'
 

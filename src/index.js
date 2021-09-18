@@ -3,8 +3,7 @@ import { App } from './app'
 import './styles/index.scss'
 import { LocationProvider } from '@reach/router'
 import { createTheme, ThemeProvider } from '@material-ui/core/styles'
-import { orange } from '@material-ui/core/colors'
-import { SearchContextProvider } from './context.js'
+import { SearchContextProvider } from './components/search/context.js'
 
 const theme = createTheme({
   palette: {

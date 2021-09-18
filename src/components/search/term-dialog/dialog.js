@@ -10,9 +10,9 @@ import {
   HelpOutline as HelpIcon,
   ShoppingBasket as SelectionIcon,
 } from '@material-ui/icons'
-import { api } from '../../api'
+import { api } from '../../../api'
 import ForceGraph2D from 'react-force-graph-2d'
-import { useSearchContext } from '../../context'
+import { useSearchContext } from '../context'
 import { TermGraph } from './graph'
 import { SizeMe } from 'react-sizeme'
 import { GraphHelp } from './help'
