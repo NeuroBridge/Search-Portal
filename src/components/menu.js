@@ -7,7 +7,7 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'stretch',
   },
   link: {
-    padding: `0 ${ theme.spacing(1) }px`,
+    padding: `0 ${ theme.spacing(2) }px`,
     color: '#fff',
     textDecoration: 'none',
     textTransform: 'uppercase',
@@ -40,7 +40,8 @@ export const Menu = () => {
   const classes = useStyles()
   return (
     <nav className={ classes.root }>
-      <NavLink to="/search" className={ classes.link }>Search</NavLink>
+      <NavLink to="/search">Search</NavLink>
+      <NavLink to="/contact">Contact</NavLink>
     </nav>
   )
 
