@@ -103,12 +103,17 @@ export const TermGraph = ({ term, height, width }) => {
       Promise.all(promises)
         .then(responses => {
           const [children, parents] = responses
-          const parent = parents[0]
-          const nodes = [
-            { id: parent.short_form, name: parent.label, val: 15, color: 'indianred', iri: parent.iri, hasChildren: parent.has_children, description: parent.comment_annotation }, // add parent term node
-            { id: term.short_form, name: term.label, val: 15, color: '#333', iri: term.iri, hasChildren: term.has_children, description: term.comment_annotation }, // add current term node
-            ...children.map(child => ({ id: child.short_form, name: child.label, val: 15, color: 'indianred', iri: child.iri, hasChildren: child.has_children, description: child.comment_annotation })), // add current term's children nodes
+          let nodes = [
+            { id: term.short_form, name: term.label, val: 15, color: '#333', iri: term.iri, hasChildren: term.has_children, description: term.comment_annotation } // current term node
           ]
+          if (parents.length) {
+            const parent = parents[0]
+            nodes = [...nodes, { id: parent.short_form, name: parent.label, val: 15, color: 'indianred', iri: parent.iri, hasChildren: parent.has_children, description: parent.comment_annotation }] // add parent term
+          }
+          const childNodes = children.map(child => ({ id: child.short_form, name: child.label, val: 15, color: 'indianred', iri: child.iri, hasChildren: child.has_children, description: child.comment_annotation })) // current term's children
+          if (childNodes.length) {
+            nodes = [...nodes, ...childNodes]
+          }
           const links = [
             ...parents.map(parent => ({ source: parent.short_form, target: term.short_form })), // parent-current term edge
             ...children.map(child => ({ source: term.short_form, target: child.short_form })), // children-current term edge
