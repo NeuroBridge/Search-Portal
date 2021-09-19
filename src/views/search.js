@@ -8,14 +8,15 @@ import { BugReport as DebugIcon } from '@material-ui/icons';
 import ReactJson from 'react-json-view'
 
 const useStyles = makeStyles(theme => ({
-  '@keyframes spin': {
-    from: { transform: 'rotate(0deg)' },
-    to: { transform: 'rotate(360deg)' },
+  '@keyframes fadeIn': {
+    from: { filter: 'opacity(0.0)' },
+    to: { filter: 'opacity(1.0)' },
   },
   grid: {
     display: 'grid',
     gridTemplateColumns: 'repeat(auto-fit, minmax(500px, 1fr))',
     gap: theme.spacing(2),
+    animation: '$fadeIn 250ms ease-out',
   },
   resultsHeader: {
     display: 'flex',
@@ -24,10 +25,13 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: 'transparent',
   },
   debugIcon: {
-    transformOrigin: '50% 50%',
-    animation: '$spin 500ms ease-out',
+    filter: `opacity(0.25)`,
+  },
+  active: {
+    filter: `opacity(1.0)`,
   },
   debug: {
+    animation: '$fadeIn 250ms ease-out',
     '& .react-json-view': {
       fontSize: '80%',
       borderRadius: theme.spacing(1) / 2,
@@ -55,7 +59,11 @@ export const SearchView = () => {
       <Paper className={ classes.resultsHeader } elevation={ 0 }>
         <Typography>"{ searchedQuery }" returned { terms.length } results</Typography>
         <IconButton onClick={ handleToggleDebugMode } size="small">
-          <DebugIcon fontSize="small" color={ debugMode === true ? 'secondary' : 'action' } className={ classes.debugIcon }/>
+          <DebugIcon
+            fontSize="small"
+            color="primary"
+            className={ `${ classes.debugIcon } ${ debugMode ? classes.active : undefined }` }
+          />
         </IconButton>
       </Paper>
     )
@@ -74,7 +82,7 @@ export const SearchView = () => {
           <Grid container spacing={ 3 }>
             <Grid item xs={ 12 } className={ classes.grid }>
               {
-                !!terms.length && terms.map((term, index) => <TermCard term={ term } key={ term.label } clickHandler={ handleClickTerm(index) }/>)
+                !!terms.length && terms.map((term, index) => <TermCard term={ term } key={ term.label } clickHandler={ handleClickTerm(index) } />)
               }
               <TermDialog open={ dialogOpen } term={ currentTerm } closeHandler={ handleClickTerm(null) } />
             </Grid>
