@@ -8,6 +8,10 @@ import { BugReport as DebugIcon } from '@material-ui/icons';
 import ReactJson from 'react-json-view'
 
 const useStyles = makeStyles(theme => ({
+  '@keyframes spin': {
+    from: { transform: 'rotate(0deg)' },
+    to: { transform: 'rotate(360deg)' },
+  },
   grid: {
     display: 'grid',
     gridTemplateColumns: 'repeat(auto-fit, minmax(500px, 1fr))',
@@ -18,6 +22,10 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: 'transparent',
+  },
+  debugIcon: {
+    transformOrigin: '50% 50%',
+    animation: '$spin 500ms ease-out',
   },
   debug: {
     '& .react-json-view': {
@@ -46,8 +54,8 @@ export const SearchView = () => {
     return (
       <Paper className={ classes.resultsHeader } elevation={ 0 }>
         <Typography>"{ searchedQuery }" returned { terms.length } results</Typography>
-        <IconButton onClick={ handleToggleDebugMode }>
-          <DebugIcon color={ debugMode === true ? 'secondary' : 'action' } />
+        <IconButton onClick={ handleToggleDebugMode } size="small">
+          <DebugIcon fontSize="small" color={ debugMode === true ? 'secondary' : 'action' } className={ classes.debugIcon }/>
         </IconButton>
       </Paper>
     )
