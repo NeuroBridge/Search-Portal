@@ -18,10 +18,10 @@ export const api = {
           queryFields: 'label,short_form,description,type,comment_annotation',
         }
       })
+      console.log(response)
       if (!data) {
         throw new Error('An error occurred while searching terms')
       }
-      console.log(data.response)
       return data.response.docs
     } catch (error) {
       console.log(error)
@@ -30,7 +30,13 @@ export const api = {
 
   select: async q => {
     try {
-      const response = await axios.get(`${ API_ROOT }/select`, { params: { ontology: ONTOLOGY_NAME, q, fieldList: 'iri,label,short_form,obo_id,ontology_name,ontology_prefix,description,type,has_children,comment_annotation' }})
+      const response = await axios.get(`${ API_ROOT }/select`, {
+        params: {
+          q: q,
+          ontology: ONTOLOGY_NAME,
+          fieldList: 'iri,label,short_form,obo_id,ontology_name,ontology_prefix,description,type,has_children,comment_annotation',
+        }
+      })
       console.log(response)
       const { data } = response
       if (!data) {

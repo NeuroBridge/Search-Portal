@@ -4,7 +4,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles'
 import brainImage from './images/brain.png'
 import { Router } from './router'
 import { Brand } from './components/brand'
-import { Menu } from './components/menu'
+import { Menu, MobileMenu } from './components/menu'
 import { SearchBar } from './components/search/search-bar'
 
 const useStyles = makeStyles(theme => ({
@@ -18,9 +18,10 @@ const useStyles = makeStyles(theme => ({
     backgroundPosition: 'center 100%',
     backgroundSize: '800px',
     backgroundRepeat: 'no-repeat',
+    overflowX: 'hidden',
   },
   toolbar: {
-    padding: `0 ${ theme.spacing(3) }px`,
+    padding: `0 0 0 ${ theme.spacing(2) }px`,
     alignItems: 'stretch',
   },
   main: {
@@ -33,13 +34,14 @@ const useStyles = makeStyles(theme => ({
 
 export const App = () => {
   const classes = useStyles()
+  const compact = useMediaQuery('(max-width: 600px)')
 
   return (
     <div className={ classes.app }>
       <AppBar position="sticky">
         <Toolbar disableGutters className={ classes.toolbar }>
           <Brand />
-          <Menu />
+          { compact ? <MobileMenu /> : <Menu /> }
         </Toolbar>
         <SearchBar />
       </AppBar>
