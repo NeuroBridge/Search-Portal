@@ -19,6 +19,7 @@ const useStyles = makeStyles(theme => ({
     paddingTop: theme.spacing(8),
     backgroundColor: theme.palette.primary.dark,
     width: '300px',
+    maxWidth: '100vw',
     zIndex: 3,
     filter: 'drop-shadow(0 0 1rem #00000033)',
   },
