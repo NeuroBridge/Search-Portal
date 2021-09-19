@@ -19,7 +19,7 @@ export const api = {
         }
       })
       if (!data) {
-        throw new Error('An error occurred while fetching terms')
+        throw new Error('An error occurred while searching terms')
       }
       console.log(data.response)
       return data.response.docs
@@ -34,7 +34,7 @@ export const api = {
       console.log(response)
       const { data } = response
       if (!data) {
-        throw new Error('An error occurred while fetching terms')
+        throw new Error('An error occurred while selecting terms')
       }
       return data.response.docs
     } catch (error) {

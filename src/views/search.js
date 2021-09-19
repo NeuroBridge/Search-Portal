@@ -1,7 +1,7 @@
 import { Fragment, useCallback, useMemo, useState } from 'react'
 import { useSearchContext } from '../components/search/context'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
-import { Grid, IconButton, Paper, Typography } from '@material-ui/core'
+import { Grid, IconButton, Paper, Tooltip, Typography } from '@material-ui/core'
 import { TermCard } from '../components/search/term-card'
 import { TermDialog } from '../components/search/term-dialog'
 import { BugReport as DebugIcon } from '@material-ui/icons';
@@ -84,13 +84,15 @@ export const SearchView = () => {
     return (
       <Paper className={ classes.resultsHeader } elevation={ 0 }>
         <Typography>"{ searchedQuery }" returned { terms.length } results</Typography>
-        <IconButton onClick={ handleToggleDebugMode } size="small">
-          <DebugIcon
-            fontSize="small"
-            color="primary"
-            className={ `${ classes.debugIcon } ${ debugMode ? classes.active : undefined }` }
-          />
-        </IconButton>
+        <Tooltip title="Toggle debug mode" placement="left">
+          <IconButton onClick={ handleToggleDebugMode } size="small">
+            <DebugIcon
+              fontSize="small"
+              color="primary"
+              className={ `${ classes.debugIcon } ${ debugMode ? classes.active : undefined }` }
+            />
+          </IconButton>
+        </Tooltip>
       </Paper>
     )
   }, [debugMode, searchedQuery, terms])
@@ -108,7 +110,7 @@ export const SearchView = () => {
       {
         debugMode ? (
           <div className={ classes.debug }>
-            <ReactJson src={ terms } theme="monokai" />
+            <ReactJson src={ terms } theme="monokai" enableClipboard={ false } />
           </div>
         ) : (
           <Grid container spacing={ 3 }>
