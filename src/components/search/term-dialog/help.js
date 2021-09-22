@@ -104,6 +104,11 @@ export const GraphHelp = () => {
            <strong>Right click:</strong>&nbsp; Reveal children
          </Typography>
         </ListItem>
+        <ListItem className={ classes.listItem }>
+          <Typography color="primary" className={ classes.listItemText }>
+           <strong>Scroll:</strong>&nbsp; Zoom
+         </Typography>
+        </ListItem>
       </List>
     </Tray>
   )
