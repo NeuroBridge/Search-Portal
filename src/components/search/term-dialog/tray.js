@@ -14,6 +14,7 @@ const useStyles = makeStyles(theme => ({
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
+    opacity: 0.9,
   },
   header: {
     backgroundColor: theme.palette.grey[400],
