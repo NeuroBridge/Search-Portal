@@ -1,6 +1,6 @@
 import { createContext, useContext, useMemo, useState } from 'react'
-import { api } from './api'
-
+import { api } from '../../api'
+import { navigate } from '@reach/router'
 const SearchContext = createContext({})
 
 export const SearchContextProvider = ({ children }) => {
@@ -13,7 +13,10 @@ export const SearchContextProvider = ({ children }) => {
     setBusy(true)
     setSearchedQuery(query)
     api.select(query)
-      .then(terms => setTerms(terms))
+      .then(terms => {
+        setTerms(terms)
+        navigate('/search')
+      })
       .catch(error => console.error(error))
       .finally(setBusy(false))
   }

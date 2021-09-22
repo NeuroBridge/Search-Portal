@@ -7,7 +7,7 @@ import {
   Close as RemoveTermIcon,
 } from '@material-ui/icons'
 import { useDialogContext } from './'
-import { Popup } from './popup'
+import { Tray } from './tray'
 
 const useStyles = makeStyles(theme => ({
   chip: {
@@ -31,7 +31,7 @@ const GrowTransition = forwardRef(function Transition(props, ref) {
 })
 
 export const NodeSelection = () => {
-  const { selectedNodes, emptySelectedNodes, toggleNodeSelection, selectionVisibility } = useDialogContext()
+  const { selectedNodes, emptySelectedNodes, toggleNodeSelection, openTray } = useDialogContext()
   const classes = useStyles()
 
   const handleClickNodeSelectionAction = () => {
@@ -39,23 +39,25 @@ export const NodeSelection = () => {
   }
 
   return (
-    <Popup
+    <Tray
       title="Node Selection"
       align="top"
-      visibility={ selectionVisibility }
+      visibility={ openTray === 'selection' }
       actions={
         <Fragment>
           <Tooltip title="Clear selection">
-            <IconButton onClick={ emptySelectedNodes } disabled={ selectedNodes.length === 0 }>
-              <ClearTermsIcon />
-            </IconButton>
+            <span>
+              <IconButton onClick={ emptySelectedNodes } disabled={ selectedNodes.length === 0 }>
+                <ClearTermsIcon />
+              </IconButton>
+            </span>
           </Tooltip>
           <Button
             disabled={ !selectedNodes.length }
             disableElevation
             size="small"
             color="secondary"
-            variant="outlined"
+            variant="contained"
             className={ classes.actionButton }
             endIcon={ <ActionIcon /> }
             onClick={ handleClickNodeSelectionAction }
@@ -81,7 +83,7 @@ export const NodeSelection = () => {
                 className={ classes.listItem }
                 component={ Button }
                 size="small"
-                color="secondary"
+                color="primary"
                 classes={{ root: classes.chip }}
                 onClick={ () => toggleNodeSelection(id) }
                 endIcon={ <RemoveTermIcon className={ classes.removeTermIcon } /> }
@@ -90,7 +92,7 @@ export const NodeSelection = () => {
           ))
         }
       </List>
-    </Popup>
+    </Tray>
   )
 }
 

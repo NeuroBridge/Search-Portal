@@ -2,7 +2,7 @@ import { forwardRef } from 'react'
 import { Card, CardContent, CardHeader, Divider, Grow, List, ListItem, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { useDialogContext } from './'
-import { Popup } from './popup'
+import { Tray } from './tray'
 
 const useStyles = makeStyles(theme => ({
   node: {
@@ -48,11 +48,11 @@ const Node = ({ color = '#ccc', selected = false }) => {
 }
 
 export const GraphHelp = () => {
-  const { helpVisibility } = useDialogContext()
+  const { openTray } = useDialogContext()
   const classes = useStyles()
 
   return (
-    <Popup title="Help" align="bottom" visibility={ helpVisibility }>
+    <Tray title="Help" align="bottom" visibility={ openTray === 'help' }>
       <List dense>
         <ListItem className={ classes.listItem }>
           <Node color="#333" />
@@ -104,8 +104,13 @@ export const GraphHelp = () => {
            <strong>Right click:</strong>&nbsp; Reveal children
          </Typography>
         </ListItem>
+        <ListItem className={ classes.listItem }>
+          <Typography color="primary" className={ classes.listItemText }>
+           <strong>Scroll:</strong>&nbsp; Zoom
+         </Typography>
+        </ListItem>
       </List>
-    </Popup>
+    </Tray>
   )
 }
 

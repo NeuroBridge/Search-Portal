@@ -77,6 +77,7 @@ module.exports = {
 
   devServer: {
     contentBase: './dist',
+    historyApiFallback: true,
     hot: true,
     after: function(app, server, compiler) {
       console.log()
