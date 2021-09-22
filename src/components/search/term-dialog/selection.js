@@ -46,9 +46,11 @@ export const NodeSelection = () => {
       actions={
         <Fragment>
           <Tooltip title="Clear selection">
-            <IconButton onClick={ emptySelectedNodes } disabled={ selectedNodes.length === 0 }>
-              <ClearTermsIcon />
-            </IconButton>
+            <span>
+              <IconButton onClick={ emptySelectedNodes } disabled={ selectedNodes.length === 0 }>
+                <ClearTermsIcon />
+              </IconButton>
+            </span>
           </Tooltip>
           <Button
             disabled={ !selectedNodes.length }

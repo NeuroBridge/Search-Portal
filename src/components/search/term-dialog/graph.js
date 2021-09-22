@@ -172,7 +172,7 @@ export const TermGraph = ({ term, height, width }) => {
   }
 
   return (
-    <div className={ classes.root } elevation={ 0 } square ref={ container }>
+    <div className={ classes.root } ref={ container }>
       <SizeMe monitorHeight>
         {
           ({ size }) => graphData.nodes.length > 0 && graphData.links && (
