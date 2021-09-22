@@ -25,14 +25,13 @@ const useStyles = makeStyles(theme => ({
   root: {
   },
   termDialog: {
-    backgroundColor: '#ecf3f3',
+    backgroundColor: '#fff',
     overflow: 'hidden',
     height: '100%',
     width: '100%',
     position: 'relative',
   },
   dialogHeader: {
-    backgroundColor: '#ecf3f3',
     width: '100%',
     textAlign: 'center',
     display: 'flex',
@@ -44,12 +43,17 @@ const useStyles = makeStyles(theme => ({
     height: '2rem',
   },
   content: {
+    position: 'relative',
     padding: 0,
-    '& div': {
-      position: 'absolute',
-      left: '50%',
-      transform: 'translateX(-50%)',
-    },
+    overflow: 'hidden',
+  },
+  graphContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    overflow: 'hidden',
   },
   toolbar: {
     height: '3rem',
@@ -72,8 +76,7 @@ const DialogTransition = forwardRef(function Transition(props, ref) {
 export const TermDialog = ({ open, closeHandler }) => {
   const { currentTerm, setCurrentTerm, previousTerm, nextTerm } = useSearchContext()
   const [selectedNodes, setSelectedNodes] = useState([])
-  const [helpVisibility, setHelpVisibility] = useState(false)
-  const [selectionVisibility, setSelectionVisibility] = useState(false)
+  const [openTray, setOpenTray] = useState()
   const classes = useStyles()
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
@@ -86,8 +89,7 @@ export const TermDialog = ({ open, closeHandler }) => {
 
   const resetDialogState = () => {
     setSelectedNodes([])
-    setHelpVisibility(false)
-    setSelectionVisibility(false)
+    setOpenTray(null)
   }
 
   const emptySelectedNodes = () => setSelectedNodes([])
@@ -106,6 +108,10 @@ export const TermDialog = ({ open, closeHandler }) => {
     setSelectedNodes(Array.from(newSelection))
   }
 
+  const handleToggleTray = trayId => event => {
+    setOpenTray(openTray === trayId ? null : trayId)
+  }
+
   if (!currentTerm) {
     return null
   }
@@ -122,8 +128,7 @@ export const TermDialog = ({ open, closeHandler }) => {
       <DialogContext.Provider
         value={{
           selectedNodes, setSelectedNodes, toggleNodeSelection, emptySelectedNodes,
-          helpVisibility, setHelpVisibility,
-          selectionVisibility, setSelectionVisibility,
+          openTray, setOpenTray,
         }}
       >
         <DialogTitle className={ classes.dialogHeader } disableTypography>
@@ -143,9 +148,12 @@ export const TermDialog = ({ open, closeHandler }) => {
         <Divider />
         
         <div className={ classes.toolbar }>
-          <IconButton variant="outlined" onClick={ () => setSelectionVisibility(!selectionVisibility) } >
+          <IconButton variant="outlined" onClick={ handleToggleTray('help') }>
+            <HelpIcon color={ openTray === 'help' ? 'secondary' : 'primary' } />
+          </IconButton>
+          <IconButton variant="outlined" onClick={ handleToggleTray('selection') } >
             <Badge badgeContent={ selectedNodes.length || 0 } color="secondary">
-              <SelectionIcon color={ selectionVisibility ? 'secondary' : 'primary' } />
+              <SelectionIcon color={ openTray === 'selection' ? 'secondary' : 'primary' } />
             </Badge>
           </IconButton>
         </div>
@@ -153,16 +161,16 @@ export const TermDialog = ({ open, closeHandler }) => {
         <Divider />
 
         <DialogContent className={ classes.content }>
-          <TermGraph term={ currentTerm } />
+          <div className={ classes.graphContainer }>
+            <TermGraph term={ currentTerm } />
+          </div>
+          <GraphHelp />
+          <NodeSelection />
         </DialogContent>
 
-        <GraphHelp />
-        
-        <NodeSelection />
         
         <DialogActions className={ classes.actions }>
-          <IconButton color={ helpVisibility ? 'secondary' : 'primary' } variant="outlined" onClick={ () => setHelpVisibility(!helpVisibility) }><HelpIcon /></IconButton>
-          <Button color="primary" variant="contained" onClick={ closeHandler }>Close</Button>
+          <Button color="primary" variant="outlined" onClick={ closeHandler }>Close</Button>
         </DialogActions>
       </DialogContext.Provider>
     </Dialog>

@@ -20,6 +20,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     minHeight: 'calc(100% - 11rem)',
     width: '100%',
+    height: '100%',
     position: 'relative',
     borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
     backgroundColor: '#fff',
@@ -171,7 +172,7 @@ export const TermGraph = ({ term, height, width }) => {
   }
 
   return (
-    <Paper className={ classes.root } elevation={ 0 } square ref={ container }>
+    <div className={ classes.root } elevation={ 0 } square ref={ container }>
       <SizeMe monitorHeight>
         {
           ({ size }) => graphData.nodes.length > 0 && graphData.links && (
@@ -198,6 +199,6 @@ export const TermGraph = ({ term, height, width }) => {
           )
         }
       </SizeMe>
-    </Paper>
+    </div>
   )
 }
