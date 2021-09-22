@@ -37,6 +37,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
+    backgroundColor: '#eee',
   },
   dialogTitle: {
     flex: 1,
@@ -60,12 +61,14 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'flex-end',
     padding: `0 ${ theme.spacing(2) }px`,
+    backgroundColor: '#eee',
   },
   actions: {
     height: '4rem',
     backgroundColor: 'transparent',
     display: 'flex',
     justifyContent: 'flex-end',
+    backgroundColor: '#eee',
   },
 }))
 

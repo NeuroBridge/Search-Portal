@@ -16,17 +16,17 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
   },
   header: {
-    backgroundColor: '#ccc',
+    backgroundColor: theme.palette.grey[400],
     textTransform: 'uppercase',
     textAlign: 'center',
   },
   content: {
     padding: theme.spacing(1),
-    backgroundColor: '#eee',
+    backgroundColor: theme.palette.grey[300],
     flex: 1,
   },
   actions: {
-    backgroundColor: '#ccc',
+    backgroundColor: theme.palette.grey[400],
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
