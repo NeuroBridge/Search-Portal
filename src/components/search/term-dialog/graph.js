@@ -86,7 +86,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export const TermGraph = ({ term, height, width }) => {
-  const { selectedNodes, setSelectedNodes, selectionPalette, toggleNodeSelection } = useDialogContext()
+  const { nodeLabelVisibility, selectedNodes, setSelectedNodes, selectionPalette, toggleNodeSelection } = useDialogContext()
   const classes = useStyles()
   const [graphData, setGraphData] = useState({ nodes: [], links: [] })
   const container = useRef()
@@ -145,7 +145,20 @@ export const TermGraph = ({ term, height, width }) => {
 
   const handleNodeLeftClick = (node, event) => toggleNodeSelection(node.id)
 
-  const nodePaint = ({ id, x, y, color, hasChildren }, ctx) => {
+  const nodePaint = ({ id, x, y, color, hasChildren }, ctx, globalScale) => {
+    if (nodeLabelVisibility) {
+      const fontSize = globalScale / 2
+      ctx.beginPath()
+      ctx.rect(x + 4, y - 3, ctx.measureText(id).width + 2, -(fontSize + 3))
+      ctx.fillStyle = '#ddd'
+      ctx.strokeStyle = '#222'
+      ctx.lineWidth = 0.1
+      ctx.fill()
+      ctx.stroke()
+      ctx.fillStyle = '#222'
+      ctx.font = `${ fontSize }px Arial`;
+      ctx.fillText(id, x + 5, y - 5);
+    }
     if (id in selectedNodes) {
       ctx.beginPath()
       ctx.strokeStyle = selectionPalette[selectedNodes[id]]
