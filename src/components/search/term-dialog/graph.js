@@ -147,16 +147,16 @@ export const TermGraph = ({ term, height, width }) => {
 
   const nodePaint = ({ id, x, y, color, hasChildren }, ctx, globalScale) => {
     if (nodeLabelVisibility) {
-      const fontSize = globalScale / 2
+      const fontSize = 12 / globalScale
       ctx.beginPath()
-      ctx.rect(x + 4, y - 3, ctx.measureText(id).width + 2, -(fontSize + 3))
+      ctx.rect(x + 4, y - 4, ctx.measureText(id).width + 2, -(fontSize + 2))
       ctx.fillStyle = '#ddd'
       ctx.strokeStyle = '#222'
       ctx.lineWidth = 0.1
       ctx.fill()
       ctx.stroke()
       ctx.fillStyle = '#222'
-      ctx.font = `${ fontSize }px Arial`;
+      ctx.font = `${ fontSize }px sans-serif`;
       ctx.fillText(id, x + 5, y - 5);
     }
     if (id in selectedNodes) {
