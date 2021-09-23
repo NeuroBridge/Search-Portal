@@ -8,9 +8,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     position: 'absolute',
     right: 0,
-    width: '300px',
     minWidth: '300px',
-    maxWidth: '300px',
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
