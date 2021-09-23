@@ -77,6 +77,7 @@ const DialogTransition = forwardRef(function Transition(props, ref) {
 })
 
 export const TermDialog = ({ open, closeHandler }) => {
+  const selectionPalette = { 0: 'teal', 1: 'goldenrod', 2: 'crimson' }
   const { currentTerm, setCurrentTerm, previousTerm, nextTerm } = useSearchContext()
   const [selectedNodes, setSelectedNodes] = useState({})
   const [openTray, setOpenTray] = useState()
@@ -103,14 +104,12 @@ export const TermDialog = ({ open, closeHandler }) => {
 
   const toggleNodeSelection = id => {
     let newSelection = { ...selectedNodes }
-    console.log(selectedNodes)
     if (id in newSelection) {
       newSelection[id] = (newSelection[id] + 1) % 3
     } else {
-      newSelection = { ...newSelection, [id]: 2 }
+      newSelection = { ...newSelection, [id]: 0 }
     }
     setSelectedNodes(newSelection)
-    console.log(newSelection)
   }
 
   const handleToggleTray = trayId => event => {
@@ -132,7 +131,7 @@ export const TermDialog = ({ open, closeHandler }) => {
     >
       <DialogContext.Provider
         value={{
-          selectedNodes, setSelectedNodes, toggleNodeSelection, emptySelectedNodes,
+          selectedNodes, setSelectedNodes, toggleNodeSelection, emptySelectedNodes, selectionPalette,
           openTray, setOpenTray,
         }}
       >

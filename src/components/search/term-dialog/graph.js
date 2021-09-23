@@ -86,7 +86,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export const TermGraph = ({ term, height, width }) => {
-  const { selectedNodes, setSelectedNodes, toggleNodeSelection } = useDialogContext()
+  const { selectedNodes, setSelectedNodes, selectionPalette, toggleNodeSelection } = useDialogContext()
   const classes = useStyles()
   const [graphData, setGraphData] = useState({ nodes: [], links: [] })
   const container = useRef()
@@ -148,7 +148,7 @@ export const TermGraph = ({ term, height, width }) => {
   const nodePaint = ({ id, x, y, color, hasChildren }, ctx) => {
     if (id in selectedNodes) {
       ctx.beginPath()
-      ctx.strokeStyle = SELECTED_NODE_COLOR
+      ctx.strokeStyle = selectionPalette[selectedNodes[id]]
       ctx.fillStyle = 'transparent'
       ctx.lineWidth = 1
       ctx.arc(x, y, 6, 0, 2 * Math.PI, false)
