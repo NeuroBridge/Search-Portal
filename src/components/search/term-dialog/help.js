@@ -5,6 +5,12 @@ import { useDialogContext } from './'
 import { Tray } from './tray'
 
 const useStyles = makeStyles(theme => ({
+  listItem: {
+    padding: theme.spacing(1),
+  },
+  listItemText: {
+    fontSize: '90%',
+  },
   node: {
     width: theme.spacing(2),
     height: theme.spacing(2),
@@ -12,12 +18,6 @@ const useStyles = makeStyles(theme => ({
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(2),
     position: 'relative',
-  },
-  listItem: {
-    padding: theme.spacing(1),
-  },
-  listItemText: {
-    fontSize: '90%',
   },
   selectedNode: {
     '&::after': {
@@ -32,23 +32,56 @@ const useStyles = makeStyles(theme => ({
       backgroundColor: 'transparent',
       border: '3px solid #378f91',
     }
-  }
+  },
+  keep: {
+    '&::after': {
+      borderColor: 'teal',
+    },
+  },
+  irrelevant: {
+    '&::after': {
+      borderColor: 'goldenrod',
+    },
+  },
+  ignore: {
+    '&::after': {
+      borderColor: 'crimson',
+    },
+  },
 }))
 
 const GrowTransition = forwardRef(function Transition(props, ref) {
   return <Grow direction="left" ref={ ref } { ...props } />
 })
 
-const Node = ({ color = '#ccc', selected = false }) => {
+const Node = ({ color = '#ccc' }) => {
   const classes = useStyles()
-
   return (
-    <div className={ `${ classes.node } ${ selected ? classes.selectedNode : undefined }` } style={{ backgroundColor: color }} />
+    <div className={ classes.node } style={{ backgroundColor: color }} />
+  )
+}
+
+const SelectedNode = ({ color = '#ccc', selection = '' }) => {
+  const classes = useStyles()
+  let classNames = `${ classes.node } ${ classes.selectedNode }`
+  switch (selection) {
+    case 'keep':
+      classNames += ` ${ classes.keep }`
+      break;
+    case 'irrelevant':
+      classNames += ` ${ classes.irrelevant }`
+      break;
+    case 'ignore':
+      classNames += ` ${ classes.ignore }`
+      break;
+  }
+  return (
+    <div className={ classNames } style={{ backgroundColor: color }} />
   )
 }
 
 export const GraphHelp = () => {
-  const { openTray } = useDialogContext()
+  const { openTray, selectionPalette } = useDialogContext()
   const classes = useStyles()
 
   return (
@@ -72,10 +105,25 @@ export const GraphHelp = () => {
             Other term
           </Typography>
         </ListItem>
+      </List>
+      <Divider />
+      <List dense>
         <ListItem className={ classes.listItem }>
-          <Node selected />
+          <SelectedNode selection="keep" />
           <Typography color="primary" className={ classes.listItemText }>
-            Selected term
+            Term is used
+          </Typography>
+        </ListItem>
+        <ListItem className={ classes.listItem }>
+          <SelectedNode selection="irrelevant" />
+          <Typography color="primary" className={ classes.listItemText }>
+            Term is irrelevant
+          </Typography>
+        </ListItem>
+        <ListItem className={ classes.listItem }>
+          <SelectedNode selection="ignore" />
+          <Typography color="primary" className={ classes.listItemText }>
+            Term is ignored
           </Typography>
         </ListItem>
       </List>
