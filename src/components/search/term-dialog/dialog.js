@@ -9,6 +9,7 @@ import {
   ChevronRight as NextTermIcon,
   HelpOutline as HelpIcon,
   ShoppingBasket as SelectionIcon,
+  Replay as ResetIcon,
 } from '@material-ui/icons'
 import { api } from '../../../api'
 import ForceGraph2D from 'react-force-graph-2d'
@@ -116,6 +117,10 @@ export const TermDialog = ({ open, closeHandler }) => {
     setOpenTray(openTray === trayId ? null : trayId)
   }
 
+  const handleClickResetGraph = event => {
+    console.log('reset graph')
+  }
+
   if (!currentTerm) {
     return null
   }
@@ -152,6 +157,9 @@ export const TermDialog = ({ open, closeHandler }) => {
         <Divider />
         
         <div className={ classes.toolbar }>
+          <IconButton variant="outlined" onClick={ handleClickResetGraph }>
+            <ResetIcon color="primary" />
+          </IconButton>
           <IconButton variant="outlined" onClick={ handleToggleTray('help') }>
             <HelpIcon color={ openTray === 'help' ? 'secondary' : 'primary' } />
           </IconButton>
