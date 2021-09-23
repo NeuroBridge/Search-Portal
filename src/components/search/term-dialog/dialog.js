@@ -10,6 +10,8 @@ import {
   HelpOutline as HelpIcon,
   ShoppingBasket as SelectionIcon,
   Replay as ResetIcon,
+  Label as LabelOnIcon,
+  LabelOff as LabelOffIcon,
 } from '@material-ui/icons'
 import { api } from '../../../api'
 import ForceGraph2D from 'react-force-graph-2d'
