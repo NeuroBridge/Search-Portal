@@ -10,8 +10,8 @@ import {
   HelpOutline as HelpIcon,
   ShoppingBasket as SelectionIcon,
   Replay as ResetIcon,
-  Label as LabelOnIcon,
-  LabelOff as LabelOffIcon,
+  Label as LabelsOnIcon,
+  LabelOff as LabelsOffIcon,
 } from '@material-ui/icons'
 import { api } from '../../../api'
 import ForceGraph2D from 'react-force-graph-2d'
@@ -90,6 +90,7 @@ export const TermDialog = ({ open, closeHandler }) => {
   const [children, setChildren] = useState([])
   const [parents, setParents] = useState([])
   const [resetFlag, setResetFlag] = useState(false)
+  const [nodeLabelVisibility, setNodeLabelVisibility] = useState(false)
 
   useEffect(() => {
     resetDialogState()
@@ -102,9 +103,9 @@ export const TermDialog = ({ open, closeHandler }) => {
 
   const emptySelectedNodes = () => setSelectedNodes([])
 
-  const handleClickNextTerm = event => setCurrentTerm(nextTerm)
+  const handleClickNextTerm = () => setCurrentTerm(nextTerm)
 
-  const handleClickPreviousTerm = event => setCurrentTerm(previousTerm)
+  const handleClickPreviousTerm = () => setCurrentTerm(previousTerm)
 
   const toggleNodeSelection = id => {
     let newSelection = { ...selectedNodes }
@@ -116,12 +117,16 @@ export const TermDialog = ({ open, closeHandler }) => {
     setSelectedNodes(newSelection)
   }
 
-  const handleToggleTray = trayId => event => {
+  const handleToggleTray = trayId => () => {
     setOpenTray(openTray === trayId ? null : trayId)
   }
 
-  const handleClickResetGraph = event => {
+  const handleClickResetGraph = () => {
     setResetFlag(!resetFlag)
+  }
+
+  const handleClickToggleLabels = () => {
+    setNodeLabelVisibility(!nodeLabelVisibility)
   }
 
   if (!currentTerm) {
@@ -141,6 +146,7 @@ export const TermDialog = ({ open, closeHandler }) => {
         value={{
           selectedNodes, setSelectedNodes, toggleNodeSelection, emptySelectedNodes, selectionPalette,
           openTray, setOpenTray,
+          nodeLabelVisibility,
         }}
       >
         <DialogTitle className={ classes.dialogHeader } disableTypography>
@@ -162,6 +168,9 @@ export const TermDialog = ({ open, closeHandler }) => {
         <div className={ classes.toolbar }>
           <IconButton variant="outlined" onClick={ handleClickResetGraph }>
             <ResetIcon color="primary" />
+          </IconButton>
+          <IconButton variant="outlined" onClick={ handleClickToggleLabels }>
+            { nodeLabelVisibility ? <LabelsOnIcon color="primary" /> : <LabelsOffIcon color="default" /> }
           </IconButton>
           <IconButton variant="outlined" onClick={ handleToggleTray('help') }>
             <HelpIcon color={ openTray === 'help' ? 'secondary' : 'primary' } />
