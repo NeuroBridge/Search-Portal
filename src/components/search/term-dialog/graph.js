@@ -146,7 +146,7 @@ export const TermGraph = ({ term, height, width }) => {
   const handleNodeLeftClick = (node, event) => toggleNodeSelection(node.id)
 
   const nodePaint = ({ id, x, y, color, hasChildren }, ctx) => {
-    if (selectedNodes.includes(id)) {
+    if (id in selectedNodes) {
       ctx.beginPath()
       ctx.strokeStyle = SELECTED_NODE_COLOR
       ctx.fillStyle = 'transparent'

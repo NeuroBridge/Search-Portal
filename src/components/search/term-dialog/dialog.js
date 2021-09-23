@@ -76,24 +76,9 @@ const DialogTransition = forwardRef(function Transition(props, ref) {
   return <Grow direction="up" ref={ ref } { ...props } />
 })
 
-const initialNodeSelection = {
-  keep: {
-    color: 'teal',
-    nodes: [],
-  },
-  ignore: {
-    color: 'crimson',
-    nodes: [],
-  },
-  irrelevant: {
-    color: 'goldenrod',
-    nodes: [],
-  },
-}
-
 export const TermDialog = ({ open, closeHandler }) => {
   const { currentTerm, setCurrentTerm, previousTerm, nextTerm } = useSearchContext()
-  const [selectedNodes, setSelectedNodes] = useState([])
+  const [selectedNodes, setSelectedNodes] = useState({})
   const [openTray, setOpenTray] = useState()
   const classes = useStyles()
   const theme = useTheme()
@@ -117,13 +102,15 @@ export const TermDialog = ({ open, closeHandler }) => {
   const handleClickPreviousTerm = event => setCurrentTerm(previousTerm)
 
   const toggleNodeSelection = id => {
-    const newSelection = new Set(selectedNodes)
-    if (newSelection.has(id)) {
-      newSelection.delete(id)
+    let newSelection = { ...selectedNodes }
+    console.log(selectedNodes)
+    if (id in newSelection) {
+      newSelection[id] = (newSelection[id] + 1) % 3
     } else {
-      newSelection.add(id)
+      newSelection = { ...newSelection, [id]: 2 }
     }
-    setSelectedNodes(Array.from(newSelection))
+    setSelectedNodes(newSelection)
+    console.log(newSelection)
   }
 
   const handleToggleTray = trayId => event => {
@@ -170,7 +157,7 @@ export const TermDialog = ({ open, closeHandler }) => {
             <HelpIcon color={ openTray === 'help' ? 'secondary' : 'primary' } />
           </IconButton>
           <IconButton variant="outlined" onClick={ handleToggleTray('selection') } >
-            <Badge badgeContent={ selectedNodes.length || 0 } color="secondary">
+            <Badge badgeContent={ Object.keys(selectedNodes).length || 0 } color="secondary">
               <SelectionIcon color={ openTray === 'selection' ? 'secondary' : 'primary' } />
             </Badge>
           </IconButton>

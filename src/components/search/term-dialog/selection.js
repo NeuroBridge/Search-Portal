@@ -53,7 +53,7 @@ export const NodeSelection = () => {
             </span>
           </Tooltip>
           <Button
-            disabled={ !selectedNodes.length }
+            disabled={ !Object.keys(selectedNodes).length }
             disableElevation
             size="small"
             color="secondary"
@@ -67,7 +67,7 @@ export const NodeSelection = () => {
       }
     >
       {
-        !selectedNodes.length && (
+        !Object.keys(selectedNodes).length && (
           <Typography
             paragraph
             style={{ fontSize: '90%', textAlign: 'center', marginTop: '2rem' }}
@@ -77,7 +77,7 @@ export const NodeSelection = () => {
       }
       <List dense>
         {
-          selectedNodes.map(id => (
+          Object.keys(selectedNodes).map(id => (
             <Fade key={ `selected_${ id }` } direction="left" in={ true }>
               <ListItem
                 className={ classes.listItem }
@@ -87,7 +87,7 @@ export const NodeSelection = () => {
                 classes={{ root: classes.chip }}
                 onClick={ () => toggleNodeSelection(id) }
                 endIcon={ <RemoveTermIcon className={ classes.removeTermIcon } /> }
-              >{ id }</ListItem>
+              >{ id } ({ selectedNodes[id] })</ListItem>
             </Fade>
           ))
         }
