@@ -1,11 +1,10 @@
 import { Router as ReachRouter } from '@reach/router'
-import { ContactView, HomeView, NotFoundView, SearchView } from './views'
+import { ContactView, NotFoundView, SearchView } from './views'
 
 export const Router = () => {
   return (
     <ReachRouter>
-      <HomeView exact path="/" />
-      <SearchView exact path="/search" />
+      <SearchView exact path="/" />
       <ContactView exact path="/contact" />
       <NotFoundView default />
     </ReachRouter>

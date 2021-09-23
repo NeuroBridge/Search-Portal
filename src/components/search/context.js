@@ -15,7 +15,7 @@ export const SearchContextProvider = ({ children }) => {
     api.select(query)
       .then(terms => {
         setTerms(terms)
-        navigate('/search')
+        navigate('/')
       })
       .catch(error => console.error(error))
       .finally(setBusy(false))

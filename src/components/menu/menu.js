@@ -40,7 +40,7 @@ export const Menu = () => {
   const classes = useStyles()
   return (
     <nav className={ classes.root }>
-      <NavLink to="/search">Search</NavLink>
+      <NavLink to="/">Search</NavLink>
       <NavLink to="/contact">Contact</NavLink>
     </nav>
   )

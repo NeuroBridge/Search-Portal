@@ -83,7 +83,7 @@ export const MobileMenu = () => {
 
       <Slide in={ visibility } direction="left">
         <nav className={ classes.nav } onClick={ handleClickToggleMobileMenu }>
-          <NavLink to="/search">Search</NavLink>
+          <NavLink to="/">Search</NavLink>
           <NavLink to="/contact">Contact</NavLink>
         </nav>
       </Slide>
