@@ -76,6 +76,21 @@ const DialogTransition = forwardRef(function Transition(props, ref) {
   return <Grow direction="up" ref={ ref } { ...props } />
 })
 
+const initialNodeSelection = {
+  keep: {
+    color: 'teal',
+    nodes: [],
+  },
+  ignore: {
+    color: 'crimson',
+    nodes: [],
+  },
+  irrelevant: {
+    color: 'goldenrod',
+    nodes: [],
+  },
+}
+
 export const TermDialog = ({ open, closeHandler }) => {
   const { currentTerm, setCurrentTerm, previousTerm, nextTerm } = useSearchContext()
   const [selectedNodes, setSelectedNodes] = useState([])
