@@ -77,8 +77,9 @@ const DialogTransition = forwardRef(function Transition(props, ref) {
 })
 
 export const TermDialog = ({ open, closeHandler }) => {
+  const selectionPalette = { 0: 'teal', 1: 'goldenrod', 2: 'crimson' }
   const { currentTerm, setCurrentTerm, previousTerm, nextTerm } = useSearchContext()
-  const [selectedNodes, setSelectedNodes] = useState([])
+  const [selectedNodes, setSelectedNodes] = useState({})
   const [openTray, setOpenTray] = useState()
   const classes = useStyles()
   const theme = useTheme()
@@ -102,13 +103,13 @@ export const TermDialog = ({ open, closeHandler }) => {
   const handleClickPreviousTerm = event => setCurrentTerm(previousTerm)
 
   const toggleNodeSelection = id => {
-    const newSelection = new Set(selectedNodes)
-    if (newSelection.has(id)) {
-      newSelection.delete(id)
+    let newSelection = { ...selectedNodes }
+    if (id in newSelection) {
+      newSelection[id] = (newSelection[id] + 1) % 3
     } else {
-      newSelection.add(id)
+      newSelection = { ...newSelection, [id]: 0 }
     }
-    setSelectedNodes(Array.from(newSelection))
+    setSelectedNodes(newSelection)
   }
 
   const handleToggleTray = trayId => event => {
@@ -130,7 +131,7 @@ export const TermDialog = ({ open, closeHandler }) => {
     >
       <DialogContext.Provider
         value={{
-          selectedNodes, setSelectedNodes, toggleNodeSelection, emptySelectedNodes,
+          selectedNodes, setSelectedNodes, toggleNodeSelection, emptySelectedNodes, selectionPalette,
           openTray, setOpenTray,
         }}
       >
@@ -155,7 +156,7 @@ export const TermDialog = ({ open, closeHandler }) => {
             <HelpIcon color={ openTray === 'help' ? 'secondary' : 'primary' } />
           </IconButton>
           <IconButton variant="outlined" onClick={ handleToggleTray('selection') } >
-            <Badge badgeContent={ selectedNodes.length || 0 } color="secondary">
+            <Badge badgeContent={ Object.keys(selectedNodes).length || 0 } color="secondary">
               <SelectionIcon color={ openTray === 'selection' ? 'secondary' : 'primary' } />
             </Badge>
           </IconButton>
