@@ -87,6 +87,7 @@ export const TermDialog = ({ open, closeHandler }) => {
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const [children, setChildren] = useState([])
   const [parents, setParents] = useState([])
+  const [resetFlag, setResetFlag] = useState(false)
 
   useEffect(() => {
     resetDialogState()
@@ -118,7 +119,7 @@ export const TermDialog = ({ open, closeHandler }) => {
   }
 
   const handleClickResetGraph = event => {
-    console.log('reset graph')
+    setResetFlag(!resetFlag)
   }
 
   if (!currentTerm) {
@@ -174,7 +175,7 @@ export const TermDialog = ({ open, closeHandler }) => {
 
         <DialogContent className={ classes.content }>
           <div className={ classes.graphContainer }>
-            <TermGraph term={ currentTerm } />
+            <TermGraph term={ currentTerm } key={ resetFlag } />
           </div>
           <GraphHelp />
           <NodeSelection />
