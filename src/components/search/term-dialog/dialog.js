@@ -166,20 +166,28 @@ export const TermDialog = ({ open, closeHandler }) => {
         <Divider />
         
         <div className={ classes.toolbar }>
-          <IconButton variant="outlined" onClick={ handleClickResetGraph }>
-            <ResetIcon color="primary" />
-          </IconButton>
-          <IconButton variant="outlined" onClick={ handleClickToggleLabels }>
-            { nodeLabelVisibility ? <LabelsOnIcon color="primary" /> : <LabelsOffIcon color="default" /> }
-          </IconButton>
-          <IconButton variant="outlined" onClick={ handleToggleTray('help') }>
-            <HelpIcon color={ openTray === 'help' ? 'secondary' : 'primary' } />
-          </IconButton>
-          <IconButton variant="outlined" onClick={ handleToggleTray('selection') } >
-            <Badge badgeContent={ Object.keys(selectedNodes).length || 0 } color="secondary">
-              <SelectionIcon color={ openTray === 'selection' ? 'secondary' : 'primary' } />
-            </Badge>
-          </IconButton>
+          <Tooltip title="Reset graph">
+            <IconButton variant="outlined" onClick={ handleClickResetGraph }>
+              <ResetIcon color="primary" />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Toggle node labels">
+            <IconButton variant="outlined" onClick={ handleClickToggleLabels }>
+              { nodeLabelVisibility ? <LabelsOnIcon color="secondary" /> : <LabelsOffIcon color="default" /> }
+            </IconButton>
+          </Tooltip>
+          <Tooltip title={ `${ openTray === 'help' ? 'Hide' : 'Show' } help` }>
+            <IconButton variant="outlined" onClick={ handleToggleTray('help') }>
+              <HelpIcon color={ openTray === 'help' ? 'secondary' : 'primary' } />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title={ `${ openTray === 'selection' ? 'Hide' : 'Show' } node selection` }>
+            <IconButton variant="outlined" onClick={ handleToggleTray('selection') } >
+              <Badge badgeContent={ Object.keys(selectedNodes).length || 0 } color="secondary">
+                <SelectionIcon color={ openTray === 'selection' ? 'secondary' : 'primary' } />
+              </Badge>
+            </IconButton>
+          </Tooltip>
         </div>
 
         <Divider />
