@@ -18,7 +18,11 @@ export const SearchContextProvider = ({ children }) => {
       api.select(query)
         .then(terms => {
           setTerms(terms)
-          setSearchHistory([query, ...searchHistory])
+          const newHistoryItem = {
+            query: query,
+            timestamp: new Date(),
+          }
+          setSearchHistory([newHistoryItem, ...searchHistory])
           navigate('/')
         })
         .catch(error => console.error(error))
