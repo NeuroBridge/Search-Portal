@@ -1,11 +1,12 @@
 import { Fragment, useCallback, useMemo, useState } from 'react'
 import { useSearchContext } from '../components/search/context'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
-import { Grid, IconButton, Paper, Tooltip, Typography } from '@material-ui/core'
+import { Card, CardHeader, CardContent, Grid, IconButton, Paper, Tooltip, Typography } from '@material-ui/core'
 import { TermCard } from '../components/search/term-card'
 import { TermDialog } from '../components/search/term-dialog'
 import { BugReport as DebugIcon } from '@material-ui/icons';
 import ReactJson from 'react-json-view'
+import { SearchHistoryList } from '../components/search/history-list'
 
 const useStyles = makeStyles(theme => ({
   '@keyframes fadeIn': {
@@ -42,27 +43,31 @@ const useStyles = makeStyles(theme => ({
 
 const SearchLanding = () => {
   return (
-    <Fragment>
-      <Typography variant="h4" align="center">Search the NeuroBridge Ontology</Typography>
-      
-      <br />
-      <br />
+    <Grid container spacing={ 10 }>
+      <Grid item xs={ 12 }>
+        <br />
+        <Typography variant="h4" align="center">Search the NeuroBridge Ontology</Typography>
+      </Grid>
+      <Grid item xs={ 12 } md={ 8 }>
+        <Typography paragraph>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+          consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+          cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+          proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </Typography>
 
-      <Typography paragraph>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-      </Typography>
-
-      <Typography paragraph>
-        Duis aute irure dolor in reprehenderit in voluptate velit esse
-        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-      </Typography>
-    </Fragment>
+        <Typography paragraph>
+          Duis aute irure dolor in reprehenderit in voluptate velit esse
+          cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+          proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </Typography>
+      </Grid>
+      <Grid item xs={ 12 } md={ 4 }>
+        <SearchHistoryList />
+      </Grid>
+    </Grid>
   )
 }
 

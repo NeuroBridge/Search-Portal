@@ -36,6 +36,7 @@
     "react-force-graph-2d": "^1.23.8",
     "react-json-view": "^1.21.3",
     "react-sizeme": "^3.0.2",
+    "react-timeago": "^6.2.1",
     "sass": "^1.35.1",
     "sass-loader": "^12.1.0"
   }
