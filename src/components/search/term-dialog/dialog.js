@@ -170,7 +170,7 @@ export const TermDialog = ({ open, closeHandler }) => {
             <ResetIcon color="primary" />
           </IconButton>
           <IconButton variant="outlined" onClick={ handleClickToggleLabels }>
-            { nodeLabelVisibility ? <LabelsOnIcon color="primary" /> : <LabelsOffIcon color="default" /> }
+            { nodeLabelVisibility ? <LabelsOnIcon color="secondary" /> : <LabelsOffIcon color="default" /> }
           </IconButton>
           <IconButton variant="outlined" onClick={ handleToggleTray('help') }>
             <HelpIcon color={ openTray === 'help' ? 'secondary' : 'primary' } />
