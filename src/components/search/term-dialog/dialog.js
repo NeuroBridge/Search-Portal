@@ -79,6 +79,16 @@ const DialogTransition = forwardRef(function Transition(props, ref) {
   return <Grow direction="up" ref={ ref } { ...props } />
 })
 
+const graphModes = [
+  { td: 'top-down' },
+  { bu: 'button-up' },
+  { lr: 'left-to-right' },
+  { rl: 'right-to-left' },
+  { zout: 'near-to-far' },
+  { zin: 'far-to-near' },
+  { radialin: 'inwards radially' },
+]
+
 export const TermDialog = ({ open, closeHandler }) => {
   const selectionPalette = { 0: 'teal', 1: 'goldenrod', 2: 'crimson' }
   const { currentTerm, setCurrentTerm, previousTerm, nextTerm } = useSearchContext()
@@ -91,6 +101,7 @@ export const TermDialog = ({ open, closeHandler }) => {
   const [parents, setParents] = useState([])
   const [resetFlag, setResetFlag] = useState(false)
   const [nodeLabelVisibility, setNodeLabelVisibility] = useState(false)
+  const [graphMode, setGraphMode] = useState('td')
 
   useEffect(() => {
     resetDialogState()
