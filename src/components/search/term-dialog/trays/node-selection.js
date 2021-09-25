@@ -9,8 +9,8 @@ import {
   CheckCircleOutlined as KeepTermIcon,
   DoNotDisturb as IrrelevantTermIcon,
 } from '@material-ui/icons'
-import { useDialogContext } from './'
-import { Tray } from './tray'
+import { useDialogContext } from '../'
+import { Tray } from '../tray'
 
 const useStyles = makeStyles(theme => ({
   chip: {
@@ -42,7 +42,7 @@ const GrowTransition = forwardRef(function Transition(props, ref) {
   return <Grow ref={ ref } { ...props } />
 })
 
-export const NodeSelection = () => {
+export const NodeSelectionTray = () => {
   const { selectedNodes, emptySelectedNodes, selectionPalette, toggleNodeSelection, openTray } = useDialogContext()
   const classes = useStyles()
 

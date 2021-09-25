@@ -19,9 +19,7 @@ import ForceGraph2D from 'react-force-graph-2d'
 import { useSearchContext } from '../context'
 import { TermGraph } from './graph'
 import { SizeMe } from 'react-sizeme'
-import { GraphHelp } from './help'
-import { SettingsTray } from './settings'
-import { NodeSelection } from './selection'
+import { HelpTray, NodeSelectionTray, SettingsTray } from './trays'
 
 const DialogContext = createContext({})
 export const useDialogContext = () => useContext(DialogContext)
@@ -209,8 +207,8 @@ export const TermDialog = ({ open, closeHandler }) => {
           <div className={ classes.graphContainer }>
             <TermGraph term={ currentTerm } key={ resetFlag } />
           </div>
-          <GraphHelp />
-          <NodeSelection />
+          <HelpTray />
+          <NodeSelectionTray />
           <SettingsTray />
         </DialogContent>
 
