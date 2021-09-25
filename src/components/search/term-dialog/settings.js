@@ -1,12 +1,15 @@
 import { forwardRef } from 'react'
-import { Card, CardContent, CardHeader, Divider, Grow, List, ListItem, MenuItem, Select, Switch, Typography } from '@material-ui/core'
+import { Card, CardContent, CardHeader, Divider, FormControl, FormGroup, FormControlLabel, Grow, InputLabel, List, ListItem, MenuItem, Select, Switch, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { useDialogContext } from './'
 import { Tray } from './tray'
 
 const useStyles = makeStyles(theme => ({
-  listItem: {
+  formGroup: {
     padding: theme.spacing(1),
+    display: 'flex',
+    flexDirection: 'column',
+    gap: theme.spacing(1),
   },
 }))
 
@@ -18,13 +21,11 @@ export const SettingsTray = () => {
     setGraphMode(event.target.value)
   }
 
-  console.log(graphMode)
-
   return (
     <Tray title="Settings" align="bottom" visibility={ openTray === 'settings' }>
-      <List dense>
-        <ListItem className={ classes.listItem }>
-          Graph Mode
+      <FormGroup className={ classes.formGroup }>
+        <FormControl>
+          <InputLabel htmlFor="graph-mode-select">Graph Mode</InputLabel>
           <Select
             labelId="graph-mode"
             id="graph-mode-select"
@@ -35,18 +36,23 @@ export const SettingsTray = () => {
               graphModes.map((mode, i) => <MenuItem key={ mode.id } value={ mode.id }>{ mode.name }</MenuItem>)
             }
           </Select>
-        </ListItem>
-        <ListItem className={ classes.listItem }>
-          Node Labels
-          <Switch
-            name="node-labels"
-            inputProps={{ 'aria-label': 'toggle node labels' }}
-            checked={ nodeLabelVisibility }
-            onChange={ () => setNodeLabelVisibility(!nodeLabelVisibility) }
-          />
-        </ListItem>
-      </List>
-      <Divider />
+        </FormControl>
+
+        <br />
+
+        <FormControlLabel
+          label="Node Labels"
+          control={
+            <Switch
+              name="node-labels"
+              inputProps={{ 'aria-label': 'toggle node labels' }}
+              checked={ nodeLabelVisibility }
+              onChange={ () => setNodeLabelVisibility(!nodeLabelVisibility) }
+            />
+          }
+        />
+      </FormGroup>
+
     </Tray>
   )
 }
