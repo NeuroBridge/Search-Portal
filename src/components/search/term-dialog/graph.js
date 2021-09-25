@@ -198,7 +198,6 @@ export const TermGraph = ({ term, height, width }) => {
               height={ container?.current.clientHeight }
               graphData={ graphData }
               dagMode={ graphMode }
-              dagLevelDistance={ graphLevelDistance }
               backgroundColor="transparent"
               linkColor={ () => 'rgba(0,0,0,0.2)' }
               nodeRelSize={ 1 }

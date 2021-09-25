@@ -13,7 +13,7 @@ import { Tray } from '../tray'
 import {
   Label as LabelsOnIcon,
   LabelOff as LabelsOffIcon,
-  Height as RankDistanceIcon,
+  FormatLineSpacing as RankDistanceIcon,
 } from '@material-ui/icons'
 
 const useStyles = makeStyles(theme => ({
