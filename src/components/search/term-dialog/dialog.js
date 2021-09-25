@@ -82,13 +82,12 @@ const DialogTransition = forwardRef(function Transition(props, ref) {
 })
 
 const graphModes = [
-  { td: 'top-down' },
-  { bu: 'button-up' },
-  { lr: 'left-to-right' },
-  { rl: 'right-to-left' },
-  { zout: 'near-to-far' },
-  { zin: 'far-to-near' },
-  { radialin: 'inwards radially' },
+  { id: 'td',        name: 'top-down' },
+  { id: 'bu',        name: 'bottom-up' },
+  { id: 'lr',        name: 'left-to-right' },
+  { id: 'rl',        name: 'right-to-left' },
+  { id: 'radialin',  name: 'radially inward' },
+  { id: 'radialout', name: 'radially outward' },
 ]
 
 export const TermDialog = ({ open, closeHandler }) => {
@@ -160,6 +159,7 @@ export const TermDialog = ({ open, closeHandler }) => {
           selectedNodes, setSelectedNodes, toggleNodeSelection, emptySelectedNodes, selectionPalette,
           openTray, setOpenTray,
           nodeLabelVisibility, setNodeLabelVisibility,
+          graphMode, setGraphMode, graphModes,
         }}
       >
         <DialogTitle className={ classes.dialogHeader } disableTypography>
@@ -182,11 +182,6 @@ export const TermDialog = ({ open, closeHandler }) => {
           <Tooltip title="Reset graph">
             <IconButton variant="outlined" onClick={ handleClickResetGraph }>
               <ResetIcon color="primary" />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Toggle node labels">
-            <IconButton variant="outlined" onClick={ handleClickToggleLabels }>
-              { nodeLabelVisibility ? <LabelsOnIcon color="secondary" /> : <LabelsOffIcon color="default" /> }
             </IconButton>
           </Tooltip>
           <Tooltip title={ `${ openTray === 'settings' ? 'Hide' : 'Show' } settings` }>
