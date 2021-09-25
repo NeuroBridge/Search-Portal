@@ -6,10 +6,8 @@ import { Tray } from './tray'
 
 const useStyles = makeStyles(theme => ({
   formGroup: {
-    padding: theme.spacing(1),
-    display: 'flex',
-    flexDirection: 'column',
-    gap: theme.spacing(1),
+    padding: `${ theme.spacing(2) }px ${ theme.spacing(1) }px`,
+    gap: theme.spacing(2),
   },
 }))
 
@@ -52,6 +50,8 @@ export const SettingsTray = () => {
           }
         />
       </FormGroup>
+
+      <Divider />
 
     </Tray>
   )
