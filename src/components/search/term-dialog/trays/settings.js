@@ -26,9 +26,6 @@ export const SettingsTray = () => {
   const handleChangeGraphMode = event => setGraphMode(event.target.value)
   const handleChangeRankDistance = (event, newValue) => setGraphRankDistance(newValue)
 
-  console.log(graphMode)
-  console.log(graphRankDistance)
-
   return (
     <Tray title="Settings" align="bottom" visibility={ openTray === 'settings' }>
 
