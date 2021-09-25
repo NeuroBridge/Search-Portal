@@ -4,7 +4,8 @@ import { Link } from '../link'
 import TimeAgo from 'react-timeago'
 import { useSearchContext } from './context'
 import {
-  Close as DeleteIcon,
+  Delete as DeleteIcon,
+  DeleteSweep as DeleteAllIcon,
   Search as SearchIcon,
 } from '@material-ui/icons'
 
@@ -24,7 +25,14 @@ export const SearchHistoryList = () => {
 
   return (
     <Card>
-      <CardHeader title="Recent Searches" />
+      <CardHeader
+        title="Recent Searches"
+        action={
+          <IconButton aria-label="clear search history" onClick={ () => setSearchHistory([]) }>
+            <DeleteAllIcon />
+          </IconButton>
+        }
+      />
       <Divider />
       {
         searchHistory.length
@@ -36,7 +44,7 @@ export const SearchHistoryList = () => {
                   key={ `history-${ query }-${ timestamp }`}
                   onClick={ () => doSearch(query) }
                 >
-                  <ListItemIcon><SearchIcon /></ListItemIcon>
+                  <ListItemIcon size="small"><SearchIcon /></ListItemIcon>
                   <ListItemText
                     primary={ query }
                     secondary={ <TimeAgo date={ timestamp } /> }
