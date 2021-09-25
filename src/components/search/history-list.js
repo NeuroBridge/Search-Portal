@@ -35,7 +35,7 @@ export const SearchHistoryList = () => {
       />
       <Divider />
       {
-        searchHistory.length
+        searchHistory?.length
         ? (
           <List>
             {
