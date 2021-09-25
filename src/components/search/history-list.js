@@ -65,7 +65,14 @@ export const SearchHistoryList = () => {
       }
       <Divider />
       <CardActions>
-        <Button aria-label="clear search history" onClick={ () => setSearchHistory([]) } variant="outlined" color="secondary" fullWidth>
+        <Button
+          fullWidth
+          color="secondary"
+          variant="outlined"
+          aria-label="clear search history"
+          onClick={ () => setSearchHistory([]) }
+          disabled={ !searchHistory.length }
+        >
           Clear History &nbsp; <DeleteAllIcon />
         </Button>
       </CardActions>
