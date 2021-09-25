@@ -1,5 +1,6 @@
 import { forwardRef } from 'react'
 import {
+  Button,
   Card, CardContent, CardHeader,
   Divider,
   Grow,
@@ -7,28 +8,25 @@ import {
   MenuItem, Select, Slider, Switch,
   Typography,
 } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
 import { useDialogContext } from '../'
 import { Tray } from '../tray'
 import {
   Label as LabelsOnIcon,
   LabelOff as LabelsOffIcon,
   FormatLineSpacing as RankDistanceIcon,
+  Replay as ResetIcon,
 } from '@material-ui/icons'
-
-const useStyles = makeStyles(theme => ({
-}))
 
 export const SettingsTray = () => {
   const {
     openTray,
     selectionPalette,
     nodeLabelVisibility, setNodeLabelVisibility,
+    resetGraph,
     graphMode, graphModes, setGraphMode,
     graphRankDistance, setGraphRankDistance,
     graphForce, setGraphForce,
   } = useDialogContext()
-  const classes = useStyles()
 
   const handleChangeGraphMode = event => setGraphMode(event.target.value)
   const handleChangeRankDistance = (event, newValue) => setGraphRankDistance(newValue)
@@ -37,9 +35,9 @@ export const SettingsTray = () => {
   return (
     <Tray title="Settings" align="bottom" visibility={ openTray === 'settings' }>
 
-      <List subheader={ <ListSubheader>Graph Settings</ListSubheader> } className={classes.root}>
+      <List subheader={ <ListSubheader>Graph Settings</ListSubheader> }>
         <ListItem>
-          <ListItemText>MODE</ListItemText>
+          <ListItemText>GRAPH MODE</ListItemText>
           <ListItemSecondaryAction>
             <Select
               labelId="graph-mode"
@@ -80,7 +78,7 @@ export const SettingsTray = () => {
           <ListItemText>
             <Typography gutterBottom>Distance between levels</Typography>
             <Slider
-              min={ 50 }
+              min={ 25 }
               max={ 250 }
               value={ graphRankDistance }
               aria-label="Rank distance"
@@ -109,10 +107,17 @@ export const SettingsTray = () => {
           </ListItemText>
         </ListItem>
         
-        <br />
-
       </List>
 
+      <Divider />
+
+      <List>
+        <ListItem>
+          <Button fullWidth variant="outlined" color="primary" onClick={ resetGraph }>
+            <ResetIcon /> &nbsp; Reset Graph
+          </Button>
+        </ListItem>
+      </List>
 
       <Divider />
 
