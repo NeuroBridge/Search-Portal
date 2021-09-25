@@ -102,6 +102,7 @@ export const TermDialog = ({ open, closeHandler }) => {
   const [nodeLabelVisibility, setNodeLabelVisibility] = useState(false)
   const [graphMode, setGraphMode] = useState('td')
   const [graphRankDistance, setGraphRankDistance] = useState(50)
+  const [graphForce, setGraphForce] = useState(20)
 
   useEffect(() => {
     resetDialogState()
@@ -160,6 +161,7 @@ export const TermDialog = ({ open, closeHandler }) => {
           nodeLabelVisibility, setNodeLabelVisibility,
           graphMode, graphModes, setGraphMode,
           graphRankDistance, setGraphRankDistance,
+          graphForce, setGraphForce,
         }}
       >
         <DialogTitle className={ classes.dialogHeader } disableTypography>
