@@ -52,9 +52,9 @@ export const SearchHistoryList = () => {
           }
         </List>
         ) : (
-        <CardContent>
-          <Typography paragraph align="center">No search history!</Typography>
-        </CardContent>
+          <CardContent>
+            <Typography paragraph align="center">No search history!</Typography>
+          </CardContent>
         )
       }
       <CardActions />
