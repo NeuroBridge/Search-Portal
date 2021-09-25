@@ -88,7 +88,7 @@ const useStyles = makeStyles(theme => ({
 export const TermGraph = ({ term, height, width }) => {
   const {
     nodeLabelVisibility, selectedNodes, setSelectedNodes, selectionPalette, toggleNodeSelection,
-    graphMode, graphLevelDistance, setGraphLevelDistance
+    graphMode, graphRankDistance, setGraphRankDistance
   } = useDialogContext()
   const classes = useStyles()
   const [graphData, setGraphData] = useState({ nodes: [], links: [] })
@@ -198,6 +198,7 @@ export const TermGraph = ({ term, height, width }) => {
               height={ container?.current.clientHeight }
               graphData={ graphData }
               dagMode={ graphMode }
+              dagLevelDistance={ graphRankDistance }
               backgroundColor="transparent"
               linkColor={ () => 'rgba(0,0,0,0.2)' }
               nodeRelSize={ 1 }
