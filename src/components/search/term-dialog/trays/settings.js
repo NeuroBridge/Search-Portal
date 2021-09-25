@@ -1,8 +1,12 @@
 import { forwardRef } from 'react'
-import { Card, CardContent, CardHeader, Divider, FormControl, FormGroup, FormControlLabel, Grow, InputLabel, List, ListItem, MenuItem, Select, Switch, Typography } from '@material-ui/core'
+import { Card, CardContent, CardHeader, Divider, FormControl, FormGroup, FormControlLabel, Grow, InputLabel, List, ListItem, ListItemIcon, ListItemText, ListItemSecondaryAction, ListSubheader, MenuItem, Select, Switch, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { useDialogContext } from '../'
 import { Tray } from '../tray'
+import {
+  Label as LabelsOnIcon,
+  LabelOff as LabelsOffIcon,
+} from '@material-ui/icons'
 
 const useStyles = makeStyles(theme => ({
   formGroup: {
@@ -21,35 +25,45 @@ export const SettingsTray = () => {
 
   return (
     <Tray title="Settings" align="bottom" visibility={ openTray === 'settings' }>
-      <FormGroup className={ classes.formGroup }>
-        <FormControl>
-          <InputLabel htmlFor="graph-mode-select">Graph Mode</InputLabel>
-          <Select
-            labelId="graph-mode"
-            id="graph-mode-select"
-            value={ graphMode }
-            onChange={ handleChangeGraphMode }
-          >
-            {
-              graphModes.map((mode, i) => <MenuItem key={ mode.id } value={ mode.id }>{ mode.name }</MenuItem>)
-            }
-          </Select>
-        </FormControl>
+
+      <List subheader={ <ListSubheader>Graph Settings</ListSubheader> } className={classes.root}>
+        <ListItem>
+          <ListItemText>MODE</ListItemText>
+          <ListItemSecondaryAction>
+            <Select
+              labelId="graph-mode"
+              id="graph-mode-select"
+              value={ graphMode }
+              onChange={ handleChangeGraphMode }
+            >
+              {
+                graphModes.map((mode, i) => <MenuItem key={ mode.id } value={ mode.id }>{ mode.name }</MenuItem>)
+              }
+            </Select>
+          </ListItemSecondaryAction>
+        </ListItem>
 
         <br />
 
-        <FormControlLabel
-          label="Node Labels"
-          control={
+        <ListItem>
+          <ListItemIcon>
+            { nodeLabelVisibility ? <LabelsOnIcon color="secondary" /> : <LabelsOffIcon color="primary" /> }
+          </ListItemIcon>
+          <ListItemText>NODE LABELS</ListItemText>
+          <ListItemSecondaryAction>
             <Switch
-              name="node-labels"
+              edge="end"
               inputProps={{ 'aria-label': 'toggle node labels' }}
               checked={ nodeLabelVisibility }
               onChange={ () => setNodeLabelVisibility(!nodeLabelVisibility) }
             />
-          }
-        />
-      </FormGroup>
+          </ListItemSecondaryAction>
+        </ListItem>
+        
+        <br />
+
+      </List>
+
 
       <Divider />
 
