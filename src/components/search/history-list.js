@@ -59,6 +59,7 @@ export const SearchHistoryList = () => {
         </List>
         ) : (
           <CardContent>
+            <br />
             <Typography paragraph align="center">No search history!</Typography>
           </CardContent>
         )
