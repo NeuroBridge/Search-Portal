@@ -5,13 +5,14 @@ import {
 } from '@material-ui/core'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import {
-  ChevronLeft as PreviousTermIcon,
-  ChevronRight as NextTermIcon,
   HelpOutline as HelpIcon,
-  ShoppingBasket as SelectionIcon,
-  Replay as ResetIcon,
   Label as LabelsOnIcon,
   LabelOff as LabelsOffIcon,
+  ChevronRight as NextTermIcon,
+  ChevronLeft as PreviousTermIcon,
+  Replay as ResetIcon,
+  Settings as SettingsIcon,
+  ShoppingBasket as SelectionIcon,
 } from '@material-ui/icons'
 import { api } from '../../../api'
 import ForceGraph2D from 'react-force-graph-2d'
@@ -19,6 +20,7 @@ import { useSearchContext } from '../context'
 import { TermGraph } from './graph'
 import { SizeMe } from 'react-sizeme'
 import { GraphHelp } from './help'
+import { SettingsTray } from './settings'
 import { NodeSelection } from './selection'
 
 const DialogContext = createContext({})
@@ -79,6 +81,15 @@ const DialogTransition = forwardRef(function Transition(props, ref) {
   return <Grow direction="up" ref={ ref } { ...props } />
 })
 
+const graphModes = [
+  { id: 'td',        name: 'top-down' },
+  { id: 'bu',        name: 'bottom-up' },
+  { id: 'lr',        name: 'left-to-right' },
+  { id: 'rl',        name: 'right-to-left' },
+  { id: 'radialin',  name: 'radially inward' },
+  { id: 'radialout', name: 'radially outward' },
+]
+
 export const TermDialog = ({ open, closeHandler }) => {
   const selectionPalette = { 0: 'teal', 1: 'goldenrod', 2: 'crimson' }
   const { currentTerm, setCurrentTerm, previousTerm, nextTerm } = useSearchContext()
@@ -91,6 +102,7 @@ export const TermDialog = ({ open, closeHandler }) => {
   const [parents, setParents] = useState([])
   const [resetFlag, setResetFlag] = useState(false)
   const [nodeLabelVisibility, setNodeLabelVisibility] = useState(false)
+  const [graphMode, setGraphMode] = useState('td')
 
   useEffect(() => {
     resetDialogState()
@@ -146,7 +158,8 @@ export const TermDialog = ({ open, closeHandler }) => {
         value={{
           selectedNodes, setSelectedNodes, toggleNodeSelection, emptySelectedNodes, selectionPalette,
           openTray, setOpenTray,
-          nodeLabelVisibility,
+          nodeLabelVisibility, setNodeLabelVisibility,
+          graphMode, setGraphMode, graphModes,
         }}
       >
         <DialogTitle className={ classes.dialogHeader } disableTypography>
@@ -171,9 +184,9 @@ export const TermDialog = ({ open, closeHandler }) => {
               <ResetIcon color="primary" />
             </IconButton>
           </Tooltip>
-          <Tooltip title="Toggle node labels">
-            <IconButton variant="outlined" onClick={ handleClickToggleLabels }>
-              { nodeLabelVisibility ? <LabelsOnIcon color="secondary" /> : <LabelsOffIcon color="default" /> }
+          <Tooltip title={ `${ openTray === 'settings' ? 'Hide' : 'Show' } settings` }>
+            <IconButton variant="outlined" onClick={ handleToggleTray('settings') }>
+              <SettingsIcon color={ openTray === 'settings' ? 'secondary' : 'primary' } />
             </IconButton>
           </Tooltip>
           <Tooltip title={ `${ openTray === 'help' ? 'Hide' : 'Show' } help` }>
@@ -198,6 +211,7 @@ export const TermDialog = ({ open, closeHandler }) => {
           </div>
           <GraphHelp />
           <NodeSelection />
+          <SettingsTray />
         </DialogContent>
 
         
