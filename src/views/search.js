@@ -44,11 +44,10 @@ const useStyles = makeStyles(theme => ({
 const SearchLanding = () => {
   return (
     <Grid container spacing={ 10 }>
-      <Grid item xs={ 12 }>
+      <Grid item xs={ 12 } md={ 8 }>
         <br />
         <Typography variant="h4" align="center">Search the NeuroBridge Ontology</Typography>
-      </Grid>
-      <Grid item xs={ 12 } md={ 8 }>
+        <br />
         <Typography paragraph>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
           tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,

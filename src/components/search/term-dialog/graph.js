@@ -86,7 +86,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export const TermGraph = ({ term, height, width }) => {
-  const { nodeLabelVisibility, selectedNodes, setSelectedNodes, selectionPalette, toggleNodeSelection } = useDialogContext()
+  const { nodeLabelVisibility, selectedNodes, setSelectedNodes, selectionPalette, toggleNodeSelection, graphMode } = useDialogContext()
   const classes = useStyles()
   const [graphData, setGraphData] = useState({ nodes: [], links: [] })
   const container = useRef()
@@ -194,7 +194,7 @@ export const TermGraph = ({ term, height, width }) => {
               width={ size.width }
               height={ container?.current.clientHeight }
               graphData={ graphData }
-              dagMode="td"
+              dagMode={ graphMode }
               dagLevelDistance={ 50 }
               backgroundColor="transparent"
               linkColor={ () => 'rgba(0,0,0,0.2)' }
