@@ -1,8 +1,8 @@
 import { forwardRef } from 'react'
 import { Card, CardContent, CardHeader, Divider, Grow, List, ListItem, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import { useDialogContext } from './'
-import { Tray } from './tray'
+import { useDialogContext } from '../'
+import { Tray } from '../tray'
 
 const useStyles = makeStyles(theme => ({
   listItem: {
@@ -80,7 +80,7 @@ const SelectedNode = ({ color = '#ccc', selection = '' }) => {
   )
 }
 
-export const GraphHelp = () => {
+export const HelpTray = () => {
   const { openTray, selectionPalette } = useDialogContext()
   const classes = useStyles()
 

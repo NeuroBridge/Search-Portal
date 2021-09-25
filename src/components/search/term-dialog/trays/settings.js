@@ -1,8 +1,8 @@
 import { forwardRef } from 'react'
 import { Card, CardContent, CardHeader, Divider, FormControl, FormGroup, FormControlLabel, Grow, InputLabel, List, ListItem, MenuItem, Select, Switch, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import { useDialogContext } from './'
-import { Tray } from './tray'
+import { useDialogContext } from '../'
+import { Tray } from '../tray'
 
 const useStyles = makeStyles(theme => ({
   formGroup: {
