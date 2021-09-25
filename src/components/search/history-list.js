@@ -1,4 +1,4 @@
-import { Card, CardActions, CardContent, CardHeader, Divider, IconButton, List, ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText, Typography } from '@material-ui/core'
+import { Avatar, Button, Card, CardActions, CardContent, CardHeader, Divider, IconButton, List, ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText, Typography } from '@material-ui/core'
 import { useLocalStorage } from '../../hooks'
 import { Link } from '../link'
 import TimeAgo from 'react-timeago'
@@ -7,6 +7,7 @@ import {
   Delete as DeleteIcon,
   DeleteSweep as DeleteAllIcon,
   Search as SearchIcon,
+  AccessTime as HistoryIcon,
 } from '@material-ui/icons'
 
 export const SearchHistoryList = () => {
@@ -26,12 +27,9 @@ export const SearchHistoryList = () => {
   return (
     <Card>
       <CardHeader
-        title="Recent Searches"
-        action={
-          <IconButton aria-label="clear search history" onClick={ () => setSearchHistory([]) }>
-            <DeleteAllIcon />
-          </IconButton>
-        }
+        avatar={ <HistoryIcon fontSize="medium" color="primary" /> }
+        title="Search History"
+        titleTypographyProps={{ variant: 'h6' }}
       />
       <Divider />
       {
@@ -65,7 +63,12 @@ export const SearchHistoryList = () => {
           </CardContent>
         )
       }
-      <CardActions />
+      <Divider />
+      <CardActions>
+        <Button aria-label="clear search history" onClick={ () => setSearchHistory([]) } variant="outlined" color="secondary" fullWidth>
+          Clear History &nbsp; <DeleteAllIcon />
+        </Button>
+      </CardActions>
     </Card>
 
   )
