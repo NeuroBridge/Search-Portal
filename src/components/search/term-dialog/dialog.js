@@ -101,6 +101,7 @@ export const TermDialog = ({ open, closeHandler }) => {
   const [resetFlag, setResetFlag] = useState(false)
   const [nodeLabelVisibility, setNodeLabelVisibility] = useState(false)
   const [graphMode, setGraphMode] = useState('td')
+  const [graphRankDistance, setGraphRankDistance] = useState(50)
 
   useEffect(() => {
     resetDialogState()
@@ -157,7 +158,8 @@ export const TermDialog = ({ open, closeHandler }) => {
           selectedNodes, setSelectedNodes, toggleNodeSelection, emptySelectedNodes, selectionPalette,
           openTray, setOpenTray,
           nodeLabelVisibility, setNodeLabelVisibility,
-          graphMode, setGraphMode, graphModes,
+          graphMode, graphModes, setGraphMode,
+          graphRankDistance, setGraphRankDistance,
         }}
       >
         <DialogTitle className={ classes.dialogHeader } disableTypography>
