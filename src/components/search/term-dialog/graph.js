@@ -86,7 +86,10 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export const TermGraph = ({ term, height, width }) => {
-  const { nodeLabelVisibility, selectedNodes, setSelectedNodes, selectionPalette, toggleNodeSelection, graphMode } = useDialogContext()
+  const {
+    nodeLabelVisibility, selectedNodes, setSelectedNodes, selectionPalette, toggleNodeSelection,
+    graphMode, graphRankDistance, setGraphRankDistance
+  } = useDialogContext()
   const classes = useStyles()
   const [graphData, setGraphData] = useState({ nodes: [], links: [] })
   const container = useRef()
@@ -195,10 +198,10 @@ export const TermGraph = ({ term, height, width }) => {
               height={ container?.current.clientHeight }
               graphData={ graphData }
               dagMode={ graphMode }
-              dagLevelDistance={ 50 }
+              dagLevelDistance={ graphRankDistance }
               backgroundColor="transparent"
               linkColor={ () => 'rgba(0,0,0,0.2)' }
-              nodeRelSize={1}
+              nodeRelSize={ 1 }
               nodeId="id"
               d3VelocityDecay={ 0.5 }
               onNodeClick={ handleNodeLeftClick }
