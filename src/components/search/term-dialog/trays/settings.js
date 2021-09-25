@@ -20,14 +20,19 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export const SettingsTray = () => {
-  const { openTray, selectionPalette, nodeLabelVisibility, setNodeLabelVisibility, graphModes, graphMode, setGraphMode, graphRankDistance, setGraphRankDistance } = useDialogContext()
+  const {
+    openTray,
+    selectionPalette,
+    nodeLabelVisibility, setNodeLabelVisibility,
+    graphMode, graphModes, setGraphMode,
+    graphRankDistance, setGraphRankDistance,
+    graphForce, setGraphForce,
+  } = useDialogContext()
   const classes = useStyles()
 
   const handleChangeGraphMode = event => setGraphMode(event.target.value)
   const handleChangeRankDistance = (event, newValue) => setGraphRankDistance(newValue)
-
-  console.log(graphMode)
-  console.log(graphRankDistance)
+  const handleChangeGraphForce = (event, newValue) => setGraphForce(newValue)
 
   return (
     <Tray title="Settings" align="bottom" visibility={ openTray === 'settings' }>
@@ -75,12 +80,31 @@ export const SettingsTray = () => {
           <ListItemText>
             <Typography gutterBottom>Distance between levels</Typography>
             <Slider
-              min={ 25 }
-              max={ 100 }
+              min={ 50 }
+              max={ 250 }
               value={ graphRankDistance }
               aria-label="Rank distance"
               valueLabelDisplay="auto"
               onChange={ handleChangeRankDistance }
+            />
+          </ListItemText>
+        </ListItem>
+        
+        <br />
+
+        <ListItem>
+          <ListItemIcon>
+            <RankDistanceIcon color="primary" />
+          </ListItemIcon>
+          <ListItemText>
+            <Typography gutterBottom>Force</Typography>
+            <Slider
+              min={ 20 }
+              max={ 500 }
+              value={ graphForce }
+              aria-label="Graph force"
+              valueLabelDisplay="auto"
+              onChange={ handleChangeGraphForce }
             />
           </ListItemText>
         </ListItem>

@@ -88,7 +88,8 @@ const useStyles = makeStyles(theme => ({
 export const TermGraph = ({ term, height, width }) => {
   const {
     nodeLabelVisibility, selectedNodes, setSelectedNodes, selectionPalette, toggleNodeSelection,
-    graphMode, graphRankDistance, setGraphRankDistance
+    graphMode, graphRankDistance, setGraphRankDistance,
+    graphForce, setGraphForce,
   } = useDialogContext()
   const classes = useStyles()
   const [graphData, setGraphData] = useState({ nodes: [], links: [] })
@@ -96,6 +97,14 @@ export const TermGraph = ({ term, height, width }) => {
   const fgRef = useRef()
 
   const visibleNodes = useMemo(() => graphData ? graphData.nodes.map(node => node.id) : [], [graphData.nodes])
+
+  useEffect(() => {
+    if (fgRef.current) {
+      fgRef.current.d3Force('charge')
+        .strength(-graphForce)
+        .distanceMax(1000)
+    }
+  }, [fgRef.current, graphForce])
 
   useEffect(() => {
     if (term) {
