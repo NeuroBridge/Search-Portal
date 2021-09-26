@@ -151,7 +151,7 @@ export const TermDialog = ({ open, closeHandler }) => {
   return (
     <Dialog
       fullScreen={ fullScreen }
-      maxWidth={ 'md' }
+      maxWidth={ 'lg' }
       open={ open }
       onClose={ closeHandler }
       TransitionComponent={ DialogTransition }
