@@ -157,25 +157,12 @@ export const TermGraph = ({ term, height, width }) => {
   const handleNodeLeftClick = (node, event) => toggleNodeSelection(node.id)
 
   const nodePaint = ({ id, x, y, color, hasChildren }, ctx, globalScale) => {
-    if (graphSettings.nodeLabels) {
-      const fontSize = 12 / globalScale
-      ctx.beginPath()
-      ctx.rect(x + 4, y - 4, ctx.measureText(id).width + 2, -(fontSize + 2))
-      ctx.fillStyle = '#ddd'
-      ctx.strokeStyle = '#222'
-      ctx.lineWidth = 0.1
-      ctx.fill()
-      ctx.stroke()
-      ctx.fillStyle = '#222'
-      ctx.font = `${ fontSize }px sans-serif`;
-      ctx.fillText(id, x + 5, y - 5);
-    }
     if (id in selectedNodes) {
       ctx.beginPath()
       ctx.strokeStyle = selectionPalette[selectedNodes[id]]
       ctx.fillStyle = 'transparent'
-      ctx.lineWidth = 1
-      ctx.arc(x, y, 6, 0, 2 * Math.PI, false)
+      ctx.lineWidth = 2
+      ctx.arc(x, y, graphSettings.nodeSize + 2, 0, 2 * Math.PI, false)
       ctx.stroke()
       ctx.fill()
     }
@@ -183,9 +170,22 @@ export const TermGraph = ({ term, height, width }) => {
     ctx.fillStyle = hasChildren ? color : '#eee'
     ctx.strokeStyle = hasChildren ? '#eee' : color
     ctx.lineWidth = hasChildren ? 0.25 : 1
-    ctx.arc(x, y, 4, 0, 2 * Math.PI, false)
+    ctx.arc(x, y, graphSettings.nodeSize, 0, 2 * Math.PI, false)
     ctx.stroke()
     ctx.fill()
+    if (graphSettings.nodeLabels) {
+      const fontSize = 12 / globalScale
+      ctx.beginPath()
+      ctx.rect(x + graphSettings.nodeSize, y - graphSettings.nodeSize, ctx.measureText(id).width + 2, -(fontSize + 2))
+      ctx.fillStyle = '#ddd'
+      ctx.strokeStyle = '#222'
+      ctx.lineWidth = 0.1
+      ctx.fill()
+      ctx.stroke()
+      ctx.fillStyle = '#222'
+      ctx.font = `${ fontSize }px sans-serif`;
+      ctx.fillText(id, x + graphSettings.nodeSize + 1, y - graphSettings.nodeSize - 1);
+    }
   }
 
   const nodePointerAreaPaint = ({ id, x, y, hasChildren }, color, ctx) => {
