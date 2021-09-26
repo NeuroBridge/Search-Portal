@@ -9,8 +9,17 @@ import {
   Search as SearchIcon,
   AccessTime as HistoryIcon,
 } from '@material-ui/icons'
+import { makeStyles } from '@material-ui/styles'
+
+const useStyles = makeStyles(theme => ({
+  list: {
+    maxHeight: '600px',
+    overflow: 'scroll',
+  }
+}))
 
 export const SearchHistoryList = () => {
+  const classes = useStyles()
   const [searchHistory, setSearchHistory] = useLocalStorage('search-history')
   const { doSearch } = useSearchContext()
 
@@ -35,7 +44,7 @@ export const SearchHistoryList = () => {
       {
         searchHistory?.length
         ? (
-          <List>
+          <List className={ classes.list }>
             {
               searchHistory.map(({ query, timestamp }) => (
                 <ListItem button
