@@ -11,6 +11,7 @@ import {
 import { useDialogContext } from '../'
 import { Tray } from '../tray'
 import {
+  FlashOn as ForceIcon,
   Label as LabelsOnIcon,
   LabelOff as LabelsOffIcon,
   FormatLineSpacing as RankDistanceIcon,
@@ -90,7 +91,7 @@ export const SettingsTray = () => {
 
         <ListItem>
           <ListItemIcon>
-            <RankDistanceIcon color="primary" />
+            <ForceIcon color="primary" />
           </ListItemIcon>
           <ListItemText>
             <Typography gutterBottom>Force</Typography>
