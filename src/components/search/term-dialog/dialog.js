@@ -92,6 +92,7 @@ const defaultGraphSettings = {
   mode: 'td',
   graphRankDistance: 50,
   graphForce: 20,
+  nodeSize: 3,
 }
 
 export const TermDialog = ({ open, closeHandler }) => {

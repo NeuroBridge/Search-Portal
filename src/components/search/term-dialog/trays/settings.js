@@ -16,6 +16,7 @@ import {
   LabelOff as LabelsOffIcon,
   FormatLineSpacing as RankDistanceIcon,
   Replay as ResetIcon,
+  FiberManualRecord as NodeSizeIcon,
 } from '@material-ui/icons'
 
 export const SettingsTray = () => {
@@ -27,14 +28,15 @@ export const SettingsTray = () => {
   } = useDialogContext()
 
   const handleChangeGraphMode = event => setGraphSettings({ ...graphSettings, mode: event.target.value })
-  const handleChangeRankDistance = (event, newValue) => setGraphSettings({ ...graphSettings, graphRankDistance: newValue })
   const handleChangeGraphForce = (event, newValue) => setGraphSettings({ ...graphSettings, graphForce: newValue })
   const handleToggleNodeLabelVisibility = () => setGraphSettings({ ...graphSettings, nodeLabels: !graphSettings.nodeLabels })
+  const handleChangeNodeSize = (event, newValue) => setGraphSettings({ ...graphSettings, nodeSize: newValue })
+  const handleChangeRankDistance = (event, newValue) => setGraphSettings({ ...graphSettings, graphRankDistance: newValue })
 
   return (
-    <Tray title="Settings" align="bottom" visibility={ openTray === 'settings' }>
+    <Tray title="Graph Settings" align="bottom" visibility={ openTray === 'settings' }>
 
-      <List subheader={ <ListSubheader>Graph Settings</ListSubheader> }>
+      <List>
         <ListItem>
           <ListItemText>GRAPH MODE</ListItemText>
           <ListItemSecondaryAction>
@@ -69,13 +71,34 @@ export const SettingsTray = () => {
         </ListItem>
         
         <br />
+        <Divider />
+        <br />
+
+        <ListItem>
+          <ListItemIcon>
+            <NodeSizeIcon color="primary" />
+          </ListItemIcon>
+          <ListItemText>
+            <Typography>NODE SIZE</Typography>
+            <Slider
+              min={ 1 }
+              max={ 10 }
+              value={ graphSettings.nodeSize }
+              aria-label="Rank distance"
+              valueLabelDisplay="auto"
+              onChange={ handleChangeNodeSize }
+            />
+          </ListItemText>
+        </ListItem>
+        
+        <br />
 
         <ListItem>
           <ListItemIcon>
             <RankDistanceIcon color="primary" />
           </ListItemIcon>
           <ListItemText>
-            <Typography gutterBottom>Distance between levels</Typography>
+            <Typography>DISTANCE BETWEEN LEVELS</Typography>
             <Slider
               min={ 25 }
               max={ 250 }
@@ -94,7 +117,7 @@ export const SettingsTray = () => {
             <ForceIcon color="primary" />
           </ListItemIcon>
           <ListItemText>
-            <Typography gutterBottom>Force</Typography>
+            <Typography>FORCE</Typography>
             <Slider
               min={ 20 }
               max={ 500 }
