@@ -88,8 +88,7 @@ const useStyles = makeStyles(theme => ({
 export const TermGraph = ({ term, height, width }) => {
   const {
     nodeLabelVisibility, selectedNodes, setSelectedNodes, selectionPalette, toggleNodeSelection,
-    graphMode, graphRankDistance, setGraphRankDistance,
-    graphForce, setGraphForce,
+    graphSettings,
   } = useDialogContext()
   const classes = useStyles()
   const [graphData, setGraphData] = useState({ nodes: [], links: [] })
@@ -101,10 +100,10 @@ export const TermGraph = ({ term, height, width }) => {
   useEffect(() => {
     if (fgRef.current) {
       fgRef.current.d3Force('charge')
-        .strength(-graphForce)
+        .strength(-graphSettings.graphForce)
         .distanceMax(1000)
     }
-  }, [fgRef.current, graphForce])
+  }, [fgRef.current, graphSettings.graphForce])
 
   useEffect(() => {
     if (term) {
@@ -158,7 +157,7 @@ export const TermGraph = ({ term, height, width }) => {
   const handleNodeLeftClick = (node, event) => toggleNodeSelection(node.id)
 
   const nodePaint = ({ id, x, y, color, hasChildren }, ctx, globalScale) => {
-    if (nodeLabelVisibility) {
+    if (graphSettings.nodeLabelVisibility) {
       const fontSize = 12 / globalScale
       ctx.beginPath()
       ctx.rect(x + 4, y - 4, ctx.measureText(id).width + 2, -(fontSize + 2))
@@ -206,8 +205,8 @@ export const TermGraph = ({ term, height, width }) => {
               width={ size.width }
               height={ container?.current.clientHeight }
               graphData={ graphData }
-              dagMode={ graphMode }
-              dagLevelDistance={ graphRankDistance }
+              dagMode={ graphSettings.mode }
+              dagLevelDistance={ graphSettings.graphRankDistance }
               backgroundColor="transparent"
               linkColor={ () => 'rgba(0,0,0,0.2)' }
               nodeRelSize={ 1 }
@@ -217,9 +216,6 @@ export const TermGraph = ({ term, height, width }) => {
               onNodeRightClick={ (node, event) => handleNodeRightClick(node, event) }
               nodeLabel={ node => tooltip({ ...node }) }
               nodeCanvasObject={ nodePaint }
-              linkDirectionalParticleWidth={ 2 }
-              linkDirectionalParticleColor={ link => link.source.color }
-              onLinkClick={ link => fgRef.current.emitParticle(link) }
             />
           )
         }
