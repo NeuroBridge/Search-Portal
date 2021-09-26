@@ -144,12 +144,12 @@ export const HelpTray = () => {
       <List dense>
         <ListItem className={ classes.listItem }>
           <Typography color="primary" className={ classes.listItemText }>
-           <strong>Left click:</strong>&nbsp; Select/deselect term
+           <strong>Left click:</strong>&nbsp; Toggle nose state
          </Typography>
         </ListItem>
         <ListItem className={ classes.listItem }>
           <Typography color="primary" className={ classes.listItemText }>
-           <strong>Right click:</strong>&nbsp; Reveal children
+           <strong>Right click:</strong>&nbsp; Fetch & reveal children
          </Typography>
         </ListItem>
         <ListItem className={ classes.listItem }>

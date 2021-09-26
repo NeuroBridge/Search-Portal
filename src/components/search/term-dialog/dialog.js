@@ -87,6 +87,13 @@ const graphModes = [
   { id: 'radialout', name: 'radially outward' },
 ]
 
+const defaultGraphSettings = {
+  nodeLabels: false,
+  mode: 'bu',
+  graphRankDistance: 50,
+  graphForce: 20,
+}
+
 export const TermDialog = ({ open, closeHandler }) => {
   const selectionPalette = { 0: 'teal', 1: 'goldenrod', 2: 'crimson' }
   const { currentTerm, setCurrentTerm, previousTerm, nextTerm } = useSearchContext()
@@ -98,10 +105,7 @@ export const TermDialog = ({ open, closeHandler }) => {
   const [children, setChildren] = useState([])
   const [parents, setParents] = useState([])
   const [resetFlag, setResetFlag] = useState(false)
-  const [nodeLabelVisibility, setNodeLabelVisibility] = useState(false)
-  const [graphMode, setGraphMode] = useState('td')
-  const [graphRankDistance, setGraphRankDistance] = useState(50)
-  const [graphForce, setGraphForce] = useState(20)
+  const [graphSettings, setGraphSettings] = useState({ ...defaultGraphSettings })
 
   useEffect(() => {
     resetDialogState()
@@ -132,14 +136,6 @@ export const TermDialog = ({ open, closeHandler }) => {
     setOpenTray(openTray === trayId ? null : trayId)
   }
 
-  const handleClickResetGraph = () => {
-    setResetFlag(!resetFlag)
-  }
-
-  const handleClickToggleLabels = () => {
-    setNodeLabelVisibility(!nodeLabelVisibility)
-  }
-
   const resetGraph = () => {
     setResetFlag(!resetFlag)
   }
@@ -151,7 +147,7 @@ export const TermDialog = ({ open, closeHandler }) => {
   return (
     <Dialog
       fullScreen={ fullScreen }
-      maxWidth={ 'md' }
+      maxWidth={ 'lg' }
       open={ open }
       onClose={ closeHandler }
       TransitionComponent={ DialogTransition }
@@ -162,10 +158,8 @@ export const TermDialog = ({ open, closeHandler }) => {
           selectedNodes, setSelectedNodes, toggleNodeSelection, emptySelectedNodes, selectionPalette,
           openTray, setOpenTray,
           resetGraph,
-          nodeLabelVisibility, setNodeLabelVisibility,
-          graphMode, graphModes, setGraphMode,
-          graphRankDistance, setGraphRankDistance,
-          graphForce, setGraphForce,
+          graphSettings, setGraphSettings,
+          graphModes,
         }}
       >
         <DialogTitle className={ classes.dialogHeader } disableTypography>

@@ -21,16 +21,14 @@ export const SettingsTray = () => {
   const {
     openTray,
     selectionPalette,
-    nodeLabelVisibility, setNodeLabelVisibility,
-    resetGraph,
-    graphMode, graphModes, setGraphMode,
-    graphRankDistance, setGraphRankDistance,
-    graphForce, setGraphForce,
+    resetGraph, graphModes,
+    graphSettings, setGraphSettings,
   } = useDialogContext()
 
-  const handleChangeGraphMode = event => setGraphMode(event.target.value)
-  const handleChangeRankDistance = (event, newValue) => setGraphRankDistance(newValue)
-  const handleChangeGraphForce = (event, newValue) => setGraphForce(newValue)
+  const handleChangeGraphMode = event => setGraphSettings({ ...graphSettings, mode: event.target.value })
+  const handleChangeRankDistance = (event, newValue) => setGraphSettings({ ...graphSettings, graphRankDistance: newValue })
+  const handleChangeGraphForce = (event, newValue) => setGraphSettings({ ...graphSettings, graphForce: newValue })
+  const handleToggleNodeLabelVisibility = () => setGraphSettings({ ...graphSettings, nodeLabels: !graphSettings.nodeLabels })
 
   return (
     <Tray title="Settings" align="bottom" visibility={ openTray === 'settings' }>
@@ -42,7 +40,7 @@ export const SettingsTray = () => {
             <Select
               labelId="graph-mode"
               id="graph-mode-select"
-              value={ graphMode }
+              value={ graphSettings.mode }
               onChange={ handleChangeGraphMode }
             >
               {
@@ -56,15 +54,15 @@ export const SettingsTray = () => {
 
         <ListItem>
           <ListItemIcon>
-            { nodeLabelVisibility ? <LabelsOnIcon color="secondary" /> : <LabelsOffIcon color="primary" /> }
+            { graphSettings.nodeLabels ? <LabelsOnIcon color="secondary" /> : <LabelsOffIcon color="primary" /> }
           </ListItemIcon>
           <ListItemText>NODE LABELS</ListItemText>
           <ListItemSecondaryAction>
             <Switch
               edge="end"
               inputProps={{ 'aria-label': 'toggle node labels' }}
-              checked={ nodeLabelVisibility }
-              onChange={ () => setNodeLabelVisibility(!nodeLabelVisibility) }
+              checked={ graphSettings.nodeLabels }
+              onChange={ handleToggleNodeLabelVisibility }
             />
           </ListItemSecondaryAction>
         </ListItem>
@@ -80,7 +78,7 @@ export const SettingsTray = () => {
             <Slider
               min={ 25 }
               max={ 250 }
-              value={ graphRankDistance }
+              value={ graphSettings.graphRankDistance }
               aria-label="Rank distance"
               valueLabelDisplay="auto"
               onChange={ handleChangeRankDistance }
@@ -99,7 +97,7 @@ export const SettingsTray = () => {
             <Slider
               min={ 20 }
               max={ 500 }
-              value={ graphForce }
+              value={ graphSettings.graphForce }
               aria-label="Graph force"
               valueLabelDisplay="auto"
               onChange={ handleChangeGraphForce }
