@@ -32,8 +32,6 @@ export const SearchContextProvider = ({ children }) => {
     }
   }
 
-  console.log(searchHistory)
-
   const previousTerm = useMemo(() => {
     if (currentTerm) {
       const index = terms.findIndex(term => term.short_form === currentTerm.short_form)

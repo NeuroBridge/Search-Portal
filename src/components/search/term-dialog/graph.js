@@ -87,7 +87,7 @@ const useStyles = makeStyles(theme => ({
 
 export const TermGraph = ({ term, height, width }) => {
   const {
-    nodeLabelVisibility, selectedNodes, setSelectedNodes, selectionPalette, toggleNodeSelection,
+    selectedNodes, setSelectedNodes, selectionPalette, toggleNodeSelection,
     graphSettings,
   } = useDialogContext()
   const classes = useStyles()
@@ -157,7 +157,7 @@ export const TermGraph = ({ term, height, width }) => {
   const handleNodeLeftClick = (node, event) => toggleNodeSelection(node.id)
 
   const nodePaint = ({ id, x, y, color, hasChildren }, ctx, globalScale) => {
-    if (graphSettings.nodeLabelVisibility) {
+    if (graphSettings.nodeLabels) {
       const fontSize = 12 / globalScale
       ctx.beginPath()
       ctx.rect(x + 4, y - 4, ctx.measureText(id).width + 2, -(fontSize + 2))

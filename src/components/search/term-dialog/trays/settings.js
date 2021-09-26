@@ -21,7 +21,6 @@ export const SettingsTray = () => {
   const {
     openTray,
     selectionPalette,
-    nodeLabelVisibility, setNodeLabelVisibility,
     resetGraph,
     graphSettings, setGraphSettings, graphModes,
   } = useDialogContext()
@@ -29,7 +28,7 @@ export const SettingsTray = () => {
   const handleChangeGraphMode = event => setGraphSettings({ ...graphSettings, mode: event.target.value })
   const handleChangeRankDistance = (event, newValue) => setGraphSettings({ ...graphSettings, graphRankDistance: newValue })
   const handleChangeGraphForce = (event, newValue) => setGraphSettings({ ...graphSettings, graphForce: newValue })
-  const handleToggleNodeLabelVisibility = () => setGraphSettings({ ...graphSettings, nodeLabelVisibility: !graphSettings.nodeLabelVisibility })
+  const handleToggleNodeLabelVisibility = () => setGraphSettings({ ...graphSettings, nodeLabels: !graphSettings.nodeLabels })
 
   return (
     <Tray title="Settings" align="bottom" visibility={ openTray === 'settings' }>
@@ -55,14 +54,14 @@ export const SettingsTray = () => {
 
         <ListItem>
           <ListItemIcon>
-            { graphSettings.nodeLabelVisibility ? <LabelsOnIcon color="secondary" /> : <LabelsOffIcon color="primary" /> }
+            { graphSettings.nodeLabels ? <LabelsOnIcon color="secondary" /> : <LabelsOffIcon color="primary" /> }
           </ListItemIcon>
           <ListItemText>NODE LABELS</ListItemText>
           <ListItemSecondaryAction>
             <Switch
               edge="end"
               inputProps={{ 'aria-label': 'toggle node labels' }}
-              checked={ graphSettings.nodeLabelVisibility }
+              checked={ graphSettings.nodeLabels }
               onChange={ handleToggleNodeLabelVisibility }
             />
           </ListItemSecondaryAction>

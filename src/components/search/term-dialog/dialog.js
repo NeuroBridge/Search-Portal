@@ -136,14 +136,6 @@ export const TermDialog = ({ open, closeHandler }) => {
     setOpenTray(openTray === trayId ? null : trayId)
   }
 
-  const handleClickResetGraph = () => {
-    setResetFlag(!resetFlag)
-  }
-
-  const handleClickToggleLabels = () => {
-    setNodeLabelVisibility(!nodeLabelVisibility)
-  }
-
   const resetGraph = () => {
     setResetFlag(!resetFlag)
   }
