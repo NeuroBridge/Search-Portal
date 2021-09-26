@@ -32,6 +32,11 @@ export const SearchContextProvider = ({ children }) => {
     }
   }
 
+  const resetSearch = () => {
+    setTerms([])
+    setSearchedQuery('')
+  }
+
   const previousTerm = useMemo(() => {
     if (currentTerm) {
       const index = terms.findIndex(term => term.short_form === currentTerm.short_form)
@@ -55,7 +60,7 @@ export const SearchContextProvider = ({ children }) => {
   return (
     <SearchContext.Provider
       value={{
-        busy,
+        busy, resetSearch,
         doSearch,
         terms,
         currentTerm, setCurrentTerm,

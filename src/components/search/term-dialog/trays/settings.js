@@ -1,5 +1,6 @@
 import { forwardRef } from 'react'
 import {
+  Button,
   Card, CardContent, CardHeader,
   Divider,
   Grow,
@@ -7,31 +8,36 @@ import {
   MenuItem, Select, Slider, Switch,
   Typography,
 } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
 import { useDialogContext } from '../'
 import { Tray } from '../tray'
 import {
   Label as LabelsOnIcon,
   LabelOff as LabelsOffIcon,
   FormatLineSpacing as RankDistanceIcon,
+  Replay as ResetIcon,
 } from '@material-ui/icons'
 
-const useStyles = makeStyles(theme => ({
-}))
-
 export const SettingsTray = () => {
-  const { openTray, selectionPalette, nodeLabelVisibility, setNodeLabelVisibility, graphModes, graphMode, setGraphMode, graphRankDistance, setGraphRankDistance } = useDialogContext()
-  const classes = useStyles()
+  const {
+    openTray,
+    selectionPalette,
+    nodeLabelVisibility, setNodeLabelVisibility,
+    resetGraph,
+    graphMode, graphModes, setGraphMode,
+    graphRankDistance, setGraphRankDistance,
+    graphForce, setGraphForce,
+  } = useDialogContext()
 
   const handleChangeGraphMode = event => setGraphMode(event.target.value)
   const handleChangeRankDistance = (event, newValue) => setGraphRankDistance(newValue)
+  const handleChangeGraphForce = (event, newValue) => setGraphForce(newValue)
 
   return (
     <Tray title="Settings" align="bottom" visibility={ openTray === 'settings' }>
 
-      <List subheader={ <ListSubheader>Graph Settings</ListSubheader> } className={classes.root}>
+      <List subheader={ <ListSubheader>Graph Settings</ListSubheader> }>
         <ListItem>
-          <ListItemText>MODE</ListItemText>
+          <ListItemText>GRAPH MODE</ListItemText>
           <ListItemSecondaryAction>
             <Select
               labelId="graph-mode"
@@ -73,7 +79,7 @@ export const SettingsTray = () => {
             <Typography gutterBottom>Distance between levels</Typography>
             <Slider
               min={ 25 }
-              max={ 100 }
+              max={ 250 }
               value={ graphRankDistance }
               aria-label="Rank distance"
               valueLabelDisplay="auto"
@@ -84,8 +90,34 @@ export const SettingsTray = () => {
         
         <br />
 
+        <ListItem>
+          <ListItemIcon>
+            <RankDistanceIcon color="primary" />
+          </ListItemIcon>
+          <ListItemText>
+            <Typography gutterBottom>Force</Typography>
+            <Slider
+              min={ 20 }
+              max={ 500 }
+              value={ graphForce }
+              aria-label="Graph force"
+              valueLabelDisplay="auto"
+              onChange={ handleChangeGraphForce }
+            />
+          </ListItemText>
+        </ListItem>
+        
       </List>
 
+      <Divider />
+
+      <List>
+        <ListItem>
+          <Button fullWidth variant="outlined" color="primary" onClick={ resetGraph }>
+            <ResetIcon /> &nbsp; Reset Graph
+          </Button>
+        </ListItem>
+      </List>
 
       <Divider />
 

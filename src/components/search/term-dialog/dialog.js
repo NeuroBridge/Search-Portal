@@ -10,7 +10,6 @@ import {
   LabelOff as LabelsOffIcon,
   ChevronRight as NextTermIcon,
   ChevronLeft as PreviousTermIcon,
-  Replay as ResetIcon,
   Settings as SettingsIcon,
   ShoppingBasket as SelectionIcon,
 } from '@material-ui/icons'
@@ -102,6 +101,7 @@ export const TermDialog = ({ open, closeHandler }) => {
   const [nodeLabelVisibility, setNodeLabelVisibility] = useState(false)
   const [graphMode, setGraphMode] = useState('td')
   const [graphRankDistance, setGraphRankDistance] = useState(50)
+  const [graphForce, setGraphForce] = useState(20)
 
   useEffect(() => {
     resetDialogState()
@@ -140,6 +140,10 @@ export const TermDialog = ({ open, closeHandler }) => {
     setNodeLabelVisibility(!nodeLabelVisibility)
   }
 
+  const resetGraph = () => {
+    setResetFlag(!resetFlag)
+  }
+
   if (!currentTerm) {
     return null
   }
@@ -157,9 +161,11 @@ export const TermDialog = ({ open, closeHandler }) => {
         value={{
           selectedNodes, setSelectedNodes, toggleNodeSelection, emptySelectedNodes, selectionPalette,
           openTray, setOpenTray,
+          resetGraph,
           nodeLabelVisibility, setNodeLabelVisibility,
           graphMode, graphModes, setGraphMode,
           graphRankDistance, setGraphRankDistance,
+          graphForce, setGraphForce,
         }}
       >
         <DialogTitle className={ classes.dialogHeader } disableTypography>
@@ -179,19 +185,14 @@ export const TermDialog = ({ open, closeHandler }) => {
         <Divider />
         
         <div className={ classes.toolbar }>
-          <Tooltip title="Reset graph">
-            <IconButton variant="outlined" onClick={ handleClickResetGraph }>
-              <ResetIcon color="primary" />
+          <Tooltip title={ `${ openTray === 'help' ? 'Hide' : 'Show' } help` }>
+            <IconButton variant="outlined" onClick={ handleToggleTray('help') }>
+              <HelpIcon color={ openTray === 'help' ? 'secondary' : 'primary' } />
             </IconButton>
           </Tooltip>
           <Tooltip title={ `${ openTray === 'settings' ? 'Hide' : 'Show' } settings` }>
             <IconButton variant="outlined" onClick={ handleToggleTray('settings') }>
               <SettingsIcon color={ openTray === 'settings' ? 'secondary' : 'primary' } />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title={ `${ openTray === 'help' ? 'Hide' : 'Show' } help` }>
-            <IconButton variant="outlined" onClick={ handleToggleTray('help') }>
-              <HelpIcon color={ openTray === 'help' ? 'secondary' : 'primary' } />
             </IconButton>
           </Tooltip>
           <Tooltip title={ `${ openTray === 'selection' ? 'Hide' : 'Show' } node selection` }>
