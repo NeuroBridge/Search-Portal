@@ -21,8 +21,8 @@ export const SettingsTray = () => {
   const {
     openTray,
     selectionPalette,
-    resetGraph,
-    graphSettings, setGraphSettings, graphModes,
+    resetGraph, graphModes,
+    graphSettings, setGraphSettings,
   } = useDialogContext()
 
   const handleChangeGraphMode = event => setGraphSettings({ ...graphSettings, mode: event.target.value })

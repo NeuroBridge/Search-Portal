@@ -88,7 +88,7 @@ const graphModes = [
 ]
 
 const defaultGraphSettings = {
-  nodeLabelVisibility: false,
+  nodeLabels: false,
   mode: 'bu',
   graphRankDistance: 50,
   graphForce: 20,
