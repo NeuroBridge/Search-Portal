@@ -188,13 +188,6 @@ export const TermGraph = ({ term, height, width }) => {
     }
   }
 
-  const nodePointerAreaPaint = ({ id, x, y, hasChildren }, color, ctx) => {
-    ctx.beginPath()
-    ctx.fillStyle = color
-    ctx.arc(x, y, 4, 0, 2 * Math.PI, false)
-    ctx.fill()
-  }
-
   return (
     <div className={ classes.root } ref={ container }>
       <SizeMe monitorHeight>
