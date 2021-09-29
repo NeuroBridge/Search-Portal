@@ -81,7 +81,7 @@ export const SearchHistoryList = () => {
           variant="outlined"
           aria-label="clear search history"
           onClick={ () => setSearchHistory([]) }
-          disabled={ !searchHistory.length }
+          disabled={ !searchHistory || !searchHistory.length }
         >
           Clear History &nbsp; <DeleteAllIcon />
         </Button>
