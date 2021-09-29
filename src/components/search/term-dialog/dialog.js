@@ -133,6 +133,14 @@ export const TermDialog = ({ open, closeHandler }) => {
     setSelectedNodes(newSelection)
   }
 
+  const deselectNode = id => {
+    console.log(id)
+    console.log(selectedNodes)
+    const newSelection = { ...selectedNodes }
+    delete newSelection[id]
+    setSelectedNodes(newSelection)
+  }
+
   const handleToggleTray = trayId => () => {
     setOpenTray(openTray === trayId ? null : trayId)
   }
@@ -156,7 +164,7 @@ export const TermDialog = ({ open, closeHandler }) => {
     >
       <DialogContext.Provider
         value={{
-          selectedNodes, setSelectedNodes, toggleNodeSelection, emptySelectedNodes, selectionPalette,
+          selectedNodes, setSelectedNodes, toggleNodeSelection, deselectNode ,emptySelectedNodes, selectionPalette,
           openTray, setOpenTray,
           resetGraph,
           graphSettings, setGraphSettings,
