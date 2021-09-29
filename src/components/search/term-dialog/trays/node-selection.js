@@ -14,12 +14,8 @@ import { Tray } from '../tray'
 
 const useStyles = makeStyles(theme => ({
   chip: {
-    margin: 0,
-    textTransform: 'none',
-    '&:hover $removeTermIcon': {
-      filter: 'opacity(1.0)',
-      fill: 'indianred',
-    },
+    display: 'flex',
+    justifyContent: 'space-between',
   },
   selectionList: {
     width: '100%',
@@ -43,7 +39,7 @@ const GrowTransition = forwardRef(function Transition(props, ref) {
 })
 
 export const NodeSelectionTray = () => {
-  const { selectedNodes, emptySelectedNodes, selectionPalette, toggleNodeSelection, openTray } = useDialogContext()
+  const { selectedNodes, deselectNode, emptySelectedNodes, selectionPalette, toggleNodeSelection, openTray } = useDialogContext()
   const classes = useStyles()
 
   const handleClickNodeSelectionAction = () => {
@@ -97,6 +93,7 @@ export const NodeSelectionTray = () => {
                 classes={{ root: classes.selectionChip }}
                 style={{ backgroundColor: selectionPalette[selectedNodes[id]] }}
                 onClick={ () => toggleNodeSelection(id) }
+                onDelete={ () => deselectNode(id) }
               />
             </Fade>
           ))
