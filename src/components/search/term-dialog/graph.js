@@ -175,16 +175,22 @@ export const TermGraph = ({ term, height, width }) => {
     ctx.fill()
     if (graphSettings.nodeLabels) {
       const fontSize = 12 / globalScale
+      const offset = {
+        x: graphSettings.nodeSize + 2,
+        y: hasChildren ? graphSettings.nodeSize : -graphSettings.nodeSize / 2 - 1,
+      }
+      // label box
       ctx.beginPath()
-      ctx.rect(x + graphSettings.nodeSize, y - graphSettings.nodeSize, ctx.measureText(id).width + 2, -(fontSize + 2))
+      ctx.rect(x + offset.x, y - offset.y, ctx.measureText(id).width + 2, -(fontSize + 2))
       ctx.fillStyle = '#ddd'
       ctx.strokeStyle = '#222'
       ctx.lineWidth = 0.1
       ctx.fill()
       ctx.stroke()
+      // label text
       ctx.fillStyle = '#222'
       ctx.font = `${ fontSize }px sans-serif`;
-      ctx.fillText(id, x + graphSettings.nodeSize + 1, y - graphSettings.nodeSize - 1);
+      ctx.fillText(id, x + (offset.x + 1), y - (offset.y + 1));
     }
   }
 
