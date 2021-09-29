@@ -13,10 +13,6 @@ import { useDialogContext } from '../'
 import { Tray } from '../tray'
 
 const useStyles = makeStyles(theme => ({
-  chip: {
-    display: 'flex',
-    justifyContent: 'space-between',
-  },
   selectionList: {
     width: '100%',
     display: 'flex',
@@ -24,7 +20,8 @@ const useStyles = makeStyles(theme => ({
     gap: theme.spacing(1),
   },
   selectionChip: {
-    backgroundColor: 'crimson'
+    display: 'flex',
+    justifyContent: 'space-between',
   },
   removeTermIcon: {
     filter: 'opacity(0.25)',
