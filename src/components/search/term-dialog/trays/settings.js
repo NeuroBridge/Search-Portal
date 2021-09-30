@@ -2,6 +2,7 @@ import { forwardRef } from 'react'
 import {
   Button,
   Card, CardContent, CardHeader,
+  Collapse,
   Divider,
   Grow,
   List, ListItem, ListItemIcon, ListItemText, ListItemSecondaryAction, ListSubheader,
@@ -94,55 +95,52 @@ export const SettingsTray = () => {
       <Divider />
       <br />
 
-      <List subheader={ <ListSubheader>Node Labels</ListSubheader> }>
-        <ListItem>
-          <ListItemIcon>
-            { graphSettings.nodeLabels ? <LabelsOnIcon color="secondary" /> : <LabelsOffIcon color="primary" /> }
-          </ListItemIcon>
-          <ListItemText>Labels { graphSettings.node.labels.on ? 'on' : 'off' }</ListItemText>
-          <ListItemSecondaryAction>
-            <Switch
-              edge="end"
-              inputProps={{ 'aria-label': 'toggle node labels' }}
-              checked={ graphSettings.nodeLabels }
-              onChange={ handleToggleNodeLabelVisibility }
-            />
-          </ListItemSecondaryAction>
-        </ListItem>
-        
-        <ListItem>
-          <ListItemIcon>
-            <LabelFontIcon color="primary" />
-          </ListItemIcon>
-          <ListItemText>
-            <Typography>Label font size</Typography>
-            <Slider
-              min={ 8 }
-              max={ 20 }
-              value={ graphSettings.node.labels.font.size }
-              aria-label="Node label font size"
-              valueLabelDisplay="auto"
-              onChange={ handleChangeNodeLabelFontSize }
-            />
-          </ListItemText>
-        </ListItem>
+      <List subheader={
+        <ListSubheader style={{ display: 'flex' }}>
+          <span style={{ flex: 1 }}>Node Labels</span>
+          <Switch
+            edge="end"
+            inputProps={{ 'aria-label': 'toggle node labels' }}
+            checked={ graphSettings.nodeLabels }
+            onChange={ handleToggleNodeLabelVisibility }
+          />
+        </ListSubheader>
+      }>
+        <Collapse in={ graphSettings.node.labels.on }>
+          <ListItem>
+            <ListItemIcon>
+              <LabelFontIcon color="primary" />
+            </ListItemIcon>
+            <ListItemText>
+              <Typography>Label font size</Typography>
+              <Slider
+                min={ 8 }
+                max={ 20 }
+                value={ graphSettings.node.labels.font.size }
+                aria-label="Node label font size"
+                valueLabelDisplay="auto"
+                onChange={ handleChangeNodeLabelFontSize }
+              />
+            </ListItemText>
+          </ListItem>
 
-        <ListItem>
-          <ListItemIcon>
-            <LabelHeightIcon color="primary" />
-          </ListItemIcon>
-          <ListItemText>
-            <Typography>Label height</Typography>
-            <Slider
-              min={ -10 }
-              max={ 10 }
-              value={ graphSettings.node.labels.height }
-              aria-label="Node label vertical placement"
-              valueLabelDisplay="auto"
-              onChange={ handleChangeNodeLabelHeight }
-            />
-          </ListItemText>
-        </ListItem>
+          <ListItem>
+            <ListItemIcon>
+              <LabelHeightIcon color="primary" />
+            </ListItemIcon>
+            <ListItemText>
+              <Typography>Label height</Typography>
+              <Slider
+                min={ -10 }
+                max={ 10 }
+                value={ graphSettings.node.labels.height }
+                aria-label="Node label vertical placement"
+                valueLabelDisplay="auto"
+                onChange={ handleChangeNodeLabelHeight }
+              />
+            </ListItemText>
+          </ListItem>
+        </Collapse>
       </List>
 
       <br />
