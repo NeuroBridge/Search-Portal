@@ -6,7 +6,7 @@ import { Tray } from '../tray'
 
 const useStyles = makeStyles(theme => ({
   listItem: {
-    padding: theme.spacing(1),
+    padding: `${ theme.spacing(1) }px ${ theme.spacing(2) }px`,
   },
   listItemText: {
     fontSize: '90%',
@@ -86,7 +86,7 @@ export const HelpTray = () => {
 
   return (
     <Tray title="Help" align="bottom" visibility={ openTray === 'help' }>
-      <List dense>
+      <List>
         <ListItem className={ classes.listItem }>
           <Node color="#333" />
           <Typography color="primary" className={ classes.listItemText }>
@@ -107,7 +107,7 @@ export const HelpTray = () => {
         </ListItem>
       </List>
       <Divider />
-      <List dense>
+      <List>
         <ListItem className={ classes.listItem }>
           <SelectedNode selection="keep" />
           <Typography color="primary" className={ classes.listItemText }>
@@ -128,7 +128,7 @@ export const HelpTray = () => {
         </ListItem>
       </List>
       <Divider />
-      <List dense>
+      <List>
         <ListItem className={ classes.listItem }>
           <Typography color="primary" className={ classes.listItemText }>
             <strong>Solid:</strong>&nbsp; Has children
@@ -141,7 +141,7 @@ export const HelpTray = () => {
         </ListItem>
       </List>
       <Divider />
-      <List dense>
+      <List>
         <ListItem className={ classes.listItem }>
           <Typography color="primary" className={ classes.listItemText }>
            <strong>Left click:</strong>&nbsp; Toggle node state

@@ -22,8 +22,16 @@ import {
   Replay as ResetIcon,
   Settings as GraphModeIcon,
 } from '@material-ui/icons'
+import { makeStyles } from '@material-ui/styles'
+
+const useStyles = makeStyles(theme => ({
+  listHeading: {
+    backgroundColor: theme.palette.grey[400],
+  },
+}))
 
 export const SettingsTray = () => {
+  const classes = useStyles()
   const {
     openTray,
     selectionPalette,
@@ -72,7 +80,11 @@ export const SettingsTray = () => {
   return (
     <Tray title="Graph Settings" align="bottom" visibility={ openTray === 'settings' }>
 
-      <List subheader={ <ListSubheader>Graph Mode</ListSubheader> }>
+      <List
+        subheader={
+          <ListSubheader className={ classes.listHeading }>Graph Mode</ListSubheader>
+        }
+      >
         <ListItem style={{ display: 'flex', justifyContent: 'center' }}>
           <ListItemIcon>
             <GraphModeIcon color="primary" />
@@ -96,7 +108,10 @@ export const SettingsTray = () => {
       <br />
 
       <List subheader={
-        <ListSubheader style={{ display: 'flex' }}>
+        <ListSubheader
+          style={{ display: 'flex' }}
+          className={ classes.listHeading }
+        >
           <span style={{ flex: 1 }}>Node Labels</span>
           <Switch
             edge="end"
@@ -147,7 +162,11 @@ export const SettingsTray = () => {
       <Divider />
       <br />
 
-      <List subheader={ <ListSubheader>Miscellaneous</ListSubheader> }>
+      <List
+        subheader={
+          <ListSubheader className={ classes.listHeading }>Miscellaneous</ListSubheader>
+        }
+      >
         <ListItem>
           <ListItemIcon>
             <NodeSizeIcon color="primary" />
