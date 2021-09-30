@@ -94,7 +94,7 @@ const defaultGraphSettings = {
       on: false,
       height: 0,
       font: {
-        size: 18,
+        size: 12,
       }
     }
   },
