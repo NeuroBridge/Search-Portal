@@ -14,6 +14,7 @@ import {
   FlashOn as ForceIcon,
   Label as LabelsOnIcon,
   LabelOff as LabelsOffIcon,
+  FontDownload as LabelFontIcon,
   Height as LabelHeightIcon,
   FormatLineSpacing as LevelDistanceIcon,
   FiberManualRecord as NodeSizeIcon,
@@ -38,6 +39,19 @@ export const SettingsTray = () => {
       labels: {
         ...graphSettings.node.labels,
         on: !graphSettings.node.labels.on,
+      },
+    },
+  })
+  const handleChangeNodeLabelFontSize = (event, newValue) => setGraphSettings({
+    ...graphSettings,
+    node: {
+      ...graphSettings.node,
+      labels: {
+        ...graphSettings.node.labels,
+        font: {
+          ...graphSettings.node.labels.font,
+          size: newValue,
+        }
       },
     },
   })
@@ -96,6 +110,23 @@ export const SettingsTray = () => {
           </ListItemSecondaryAction>
         </ListItem>
         
+        <ListItem>
+          <ListItemIcon>
+            <LabelFontIcon color="primary" />
+          </ListItemIcon>
+          <ListItemText>
+            <Typography>Label font size</Typography>
+            <Slider
+              min={ 8 }
+              max={ 20 }
+              value={ graphSettings.node.labels.font.size }
+              aria-label="Node label font size"
+              valueLabelDisplay="auto"
+              onChange={ handleChangeNodeLabelFontSize }
+            />
+          </ListItemText>
+        </ListItem>
+
         <ListItem>
           <ListItemIcon>
             <LabelHeightIcon color="primary" />

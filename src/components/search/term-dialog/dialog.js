@@ -93,6 +93,9 @@ const defaultGraphSettings = {
     labels: {
       on: false,
       height: 0,
+      font: {
+        size: 18,
+      }
     }
   },
   mode: 'td',

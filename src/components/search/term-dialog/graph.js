@@ -176,7 +176,7 @@ export const TermGraph = ({ term, height, width }) => {
     ctx.stroke()
     ctx.fill()
     if (graphSettings.node.labels.on) {
-      const fontSize = 12 / globalScale
+      const fontSize = graphSettings.node.labels.font.size / globalScale
       const offset = {
         x: graphSettings.node.size + 2,
         y: -graphSettings.node.size / 2 - 1,
