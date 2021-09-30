@@ -14,9 +14,11 @@ import {
   FlashOn as ForceIcon,
   Label as LabelsOnIcon,
   LabelOff as LabelsOffIcon,
-  FormatLineSpacing as RankDistanceIcon,
-  Replay as ResetIcon,
+  Height as LabelHeightIcon,
+  FormatLineSpacing as LevelDistanceIcon,
   FiberManualRecord as NodeSizeIcon,
+  Replay as ResetIcon,
+  Settings as GraphModeIcon,
 } from '@material-ui/icons'
 
 export const SettingsTray = () => {
@@ -28,7 +30,7 @@ export const SettingsTray = () => {
   } = useDialogContext()
 
   const handleChangeGraphMode = event => setGraphSettings({ ...graphSettings, mode: event.target.value })
-  const handleChangeGraphForce = (event, newValue) => setGraphSettings({ ...graphSettings, graphForce: newValue })
+  const handleChangeforce = (event, newValue) => setGraphSettings({ ...graphSettings, force: newValue })
   const handleToggleNodeLabelVisibility = () => setGraphSettings({
     ...graphSettings,
     node: {
@@ -39,36 +41,51 @@ export const SettingsTray = () => {
       },
     },
   })
-  const handleChangeNodeSize = (event, newValue) => setGraphSettings({ ...graphSettings, nodeSize: newValue })
-  const handleChangeRankDistance = (event, newValue) => setGraphSettings({ ...graphSettings, graphRankDistance: newValue })
+  const handleChangeNodeLabelHeight = (event, newValue) => setGraphSettings({
+    ...graphSettings,
+    node: {
+      ...graphSettings.node,
+      labels: {
+        ...graphSettings.node.labels,
+        height: newValue,
+      },
+    },
+  })
+  const handleChangeNodeSize = (event, newValue) => setGraphSettings({ ...graphSettings, node: { ...graphSettings.node, size: newValue } })
+  const handleChangeLevelDistance = (event, newValue) => setGraphSettings({ ...graphSettings, levelDistance: newValue })
 
   return (
     <Tray title="Graph Settings" align="bottom" visibility={ openTray === 'settings' }>
 
-      <List>
-        <ListItem>
-          <ListItemText>GRAPH MODE</ListItemText>
-          <ListItemSecondaryAction>
-            <Select
-              labelId="graph-mode"
-              id="graph-mode-select"
-              value={ graphSettings.mode }
-              onChange={ handleChangeGraphMode }
-            >
-              {
-                graphModes.map((mode, i) => <MenuItem key={ mode.id } value={ mode.id }>{ mode.name }</MenuItem>)
-              }
-            </Select>
-          </ListItemSecondaryAction>
+      <List subheader={ <ListSubheader>Graph Mode</ListSubheader> }>
+        <ListItem style={{ display: 'flex', justifyContent: 'center' }}>
+          <ListItemIcon>
+            <GraphModeIcon color="primary" />
+          </ListItemIcon>
+          <Select
+            style={{ width: '100%' }}
+            labelId="graph-mode"
+            id="graph-mode-select"
+            value={ graphSettings.mode }
+            onChange={ handleChangeGraphMode }
+          >
+            {
+              graphModes.map((mode, i) => <MenuItem key={ mode.id } value={ mode.id }>{ mode.name }</MenuItem>)
+            }
+          </Select>
         </ListItem>
+      </List>
 
-        <br />
+      <br />
+      <Divider />
+      <br />
 
+      <List subheader={ <ListSubheader>Node Labels</ListSubheader> }>
         <ListItem>
           <ListItemIcon>
             { graphSettings.nodeLabels ? <LabelsOnIcon color="secondary" /> : <LabelsOffIcon color="primary" /> }
           </ListItemIcon>
-          <ListItemText>NODE LABELS</ListItemText>
+          <ListItemText>Labels { graphSettings.node.labels.on ? 'on' : 'off' }</ListItemText>
           <ListItemSecondaryAction>
             <Switch
               edge="end"
@@ -79,61 +96,76 @@ export const SettingsTray = () => {
           </ListItemSecondaryAction>
         </ListItem>
         
-        <br />
-        <Divider />
-        <br />
+        <ListItem>
+          <ListItemIcon>
+            <LabelHeightIcon color="primary" />
+          </ListItemIcon>
+          <ListItemText>
+            <Typography>Label height</Typography>
+            <Slider
+              min={ -10 }
+              max={ 10 }
+              value={ graphSettings.node.labels.height }
+              aria-label="Node label vertical placement"
+              valueLabelDisplay="auto"
+              onChange={ handleChangeNodeLabelHeight }
+            />
+          </ListItemText>
+        </ListItem>
+      </List>
 
+      <br />
+      <Divider />
+      <br />
+
+      <List subheader={ <ListSubheader>Miscellaneous</ListSubheader> }>
         <ListItem>
           <ListItemIcon>
             <NodeSizeIcon color="primary" />
           </ListItemIcon>
           <ListItemText>
-            <Typography>NODE SIZE</Typography>
+            <Typography>Node size</Typography>
             <Slider
               min={ 1 }
               max={ 10 }
-              value={ graphSettings.nodeSize }
-              aria-label="Rank distance"
+              value={ graphSettings.node.size }
+              aria-label="Level distance"
               valueLabelDisplay="auto"
               onChange={ handleChangeNodeSize }
             />
           </ListItemText>
         </ListItem>
         
-        <br />
-
         <ListItem>
           <ListItemIcon>
-            <RankDistanceIcon color="primary" />
+            <LevelDistanceIcon color="primary" />
           </ListItemIcon>
           <ListItemText>
-            <Typography>DISTANCE BETWEEN LEVELS</Typography>
+            <Typography>Distance between levels</Typography>
             <Slider
               min={ 25 }
               max={ 250 }
-              value={ graphSettings.graphRankDistance }
+              value={ graphSettings.levelDistance }
               aria-label="Rank distance"
               valueLabelDisplay="auto"
-              onChange={ handleChangeRankDistance }
+              onChange={ handleChangeLevelDistance }
             />
           </ListItemText>
         </ListItem>
         
-        <br />
-
         <ListItem>
           <ListItemIcon>
             <ForceIcon color="primary" />
           </ListItemIcon>
           <ListItemText>
-            <Typography>FORCE</Typography>
+            <Typography>Force</Typography>
             <Slider
               min={ 20 }
               max={ 500 }
-              value={ graphSettings.graphForce }
+              value={ graphSettings.force }
               aria-label="Graph force"
               valueLabelDisplay="auto"
-              onChange={ handleChangeGraphForce }
+              onChange={ handleChangeforce }
             />
           </ListItemText>
         </ListItem>

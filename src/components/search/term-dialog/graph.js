@@ -100,10 +100,10 @@ export const TermGraph = ({ term, height, width }) => {
   useEffect(() => {
     if (fgRef.current) {
       fgRef.current.d3Force('charge')
-        .strength(-graphSettings.graphForce)
+        .strength(-graphSettings.force)
         .distanceMax(1000)
     }
-  }, [fgRef.current, graphSettings.graphForce])
+  }, [fgRef.current, graphSettings.force])
 
   useEffect(() => {
     if (term) {
@@ -162,7 +162,7 @@ export const TermGraph = ({ term, height, width }) => {
       ctx.strokeStyle = selectionPalette[selectedNodes[id]]
       ctx.fillStyle = 'transparent'
       ctx.lineWidth = 2
-      ctx.arc(x, y, graphSettings.nodeSize + 2, 0, 2 * Math.PI, false)
+      ctx.arc(x, y, graphSettings.node.size + 2, 0, 2 * Math.PI, false)
       ctx.stroke()
       ctx.fill()
     }
@@ -170,18 +170,18 @@ export const TermGraph = ({ term, height, width }) => {
     ctx.fillStyle = hasChildren ? color : '#eee'
     ctx.strokeStyle = hasChildren ? '#eee' : color
     ctx.lineWidth = hasChildren ? 0.25 : 1
-    ctx.arc(x, y, graphSettings.nodeSize, 0, 2 * Math.PI, false)
+    ctx.arc(x, y, graphSettings.node.size, 0, 2 * Math.PI, false)
     ctx.stroke()
     ctx.fill()
     if (graphSettings.node.labels.on) {
       const fontSize = 12 / globalScale
       const offset = {
-        x: graphSettings.nodeSize + 2,
-        y: hasChildren ? graphSettings.nodeSize : -graphSettings.nodeSize / 2 - 1,
+        x: graphSettings.node.size + 2,
+        y: -graphSettings.node.size / 2 - 1,
       }
       // label box
       ctx.beginPath()
-      ctx.rect(x + offset.x, y - offset.y, ctx.measureText(id).width + 2, -(fontSize + 2))
+      ctx.rect(x + offset.x, y - offset.y - graphSettings.node.labels.height, ctx.measureText(id).width + 2, -(fontSize + 2))
       ctx.fillStyle = '#ddd'
       ctx.strokeStyle = '#222'
       ctx.lineWidth = 0.1
@@ -190,7 +190,7 @@ export const TermGraph = ({ term, height, width }) => {
       // label text
       ctx.fillStyle = '#222'
       ctx.font = `${ fontSize }px sans-serif`;
-      ctx.fillText(id, x + (offset.x + 1), y - (offset.y + 1));
+      ctx.fillText(id, x + (offset.x + 1), y - (offset.y + 1) - graphSettings.node.labels.height);
     }
   }
 
@@ -205,7 +205,7 @@ export const TermGraph = ({ term, height, width }) => {
               height={ container?.current.clientHeight }
               graphData={ graphData }
               dagMode={ graphSettings.mode }
-              dagLevelDistance={ graphSettings.graphRankDistance }
+              dagLevelDistance={ graphSettings.levelDistance }
               backgroundColor="transparent"
               linkColor={ () => 'rgba(0,0,0,0.2)' }
               nodeRelSize={ 1 }
