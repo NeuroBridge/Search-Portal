@@ -13,6 +13,7 @@ import ForceGraph2D from 'react-force-graph-2d'
 import { useSearchContext } from '../context'
 import { useDialogContext } from './'
 import { SizeMe } from 'react-sizeme'
+import * as d3Force from 'd3-force'
 
 const SELECTED_NODE_COLOR = '#378f91'
 
@@ -99,6 +100,7 @@ export const TermGraph = ({ term, height, width }) => {
 
   useEffect(() => {
     if (fgRef.current) {
+      fgRef.current.d3Force('collide', d3Force.forceCollide(graphSettings.node.size));
       fgRef.current.d3Force('charge')
         .strength(-graphSettings.force)
         .distanceMax(1000)
