@@ -29,7 +29,16 @@ export const SettingsTray = () => {
 
   const handleChangeGraphMode = event => setGraphSettings({ ...graphSettings, mode: event.target.value })
   const handleChangeGraphForce = (event, newValue) => setGraphSettings({ ...graphSettings, graphForce: newValue })
-  const handleToggleNodeLabelVisibility = () => setGraphSettings({ ...graphSettings, nodeLabels: !graphSettings.nodeLabels })
+  const handleToggleNodeLabelVisibility = () => setGraphSettings({
+    ...graphSettings,
+    node: {
+      ...graphSettings.node,
+      labels: {
+        ...graphSettings.node.labels,
+        on: !graphSettings.node.labels.on,
+      },
+    },
+  })
   const handleChangeNodeSize = (event, newValue) => setGraphSettings({ ...graphSettings, nodeSize: newValue })
   const handleChangeRankDistance = (event, newValue) => setGraphSettings({ ...graphSettings, graphRankDistance: newValue })
 

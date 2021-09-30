@@ -88,7 +88,11 @@ const graphModes = [
 ]
 
 const defaultGraphSettings = {
-  nodeLabels: false,
+  node: {
+    labels: {
+      on: false,
+    }
+  },
   mode: 'td',
   graphRankDistance: 50,
   graphForce: 20,
