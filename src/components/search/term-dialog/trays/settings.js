@@ -25,6 +25,17 @@ import {
 import { makeStyles } from '@material-ui/styles'
 
 const useStyles = makeStyles(theme => ({
+  list: {
+    paddingBottom: theme.spacing(2),
+    '& li:not(:first-child)': {
+      marginTop: theme.spacing(1),
+    },
+    '& li': {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+    }
+  },
   listHeading: {
     backgroundColor: theme.palette.grey[400],
   },
@@ -81,11 +92,12 @@ export const SettingsTray = () => {
     <Tray title="Graph Settings" align="bottom" visibility={ openTray === 'settings' }>
 
       <List
+        className={ classes.list }
         subheader={
           <ListSubheader className={ classes.listHeading }>Graph Mode</ListSubheader>
         }
       >
-        <ListItem style={{ display: 'flex', justifyContent: 'center' }}>
+        <ListItem>
           <ListItemIcon>
             <GraphModeIcon color="primary" />
           </ListItemIcon>
@@ -103,24 +115,23 @@ export const SettingsTray = () => {
         </ListItem>
       </List>
 
-      <br />
-      <Divider />
-      <br />
-
-      <List subheader={
-        <ListSubheader
-          style={{ display: 'flex' }}
-          className={ classes.listHeading }
-        >
-          <span style={{ flex: 1 }}>Node Labels</span>
-          <Switch
-            edge="end"
-            inputProps={{ 'aria-label': 'toggle node labels' }}
-            checked={ graphSettings.nodeLabels }
-            onChange={ handleToggleNodeLabelVisibility }
-          />
-        </ListSubheader>
-      }>
+      <List
+        className={ classes.list }
+        subheader={
+          <ListSubheader
+            style={{ display: 'flex' }}
+            className={ classes.listHeading }
+          >
+            <span>Node Labels</span>
+            <Switch
+              edge="end"
+              inputProps={{ 'aria-label': 'toggle node labels' }}
+              checked={ graphSettings.nodeLabels }
+              onChange={ handleToggleNodeLabelVisibility }
+            />
+          </ListSubheader>
+        }
+      >
         <Collapse in={ graphSettings.node.labels.on }>
           <ListItem>
             <ListItemIcon>
@@ -158,11 +169,8 @@ export const SettingsTray = () => {
         </Collapse>
       </List>
 
-      <br />
-      <Divider />
-      <br />
-
       <List
+        className={ classes.list }
         subheader={
           <ListSubheader className={ classes.listHeading }>Miscellaneous</ListSubheader>
         }
