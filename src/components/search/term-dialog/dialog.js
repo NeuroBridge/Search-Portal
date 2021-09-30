@@ -10,7 +10,7 @@ import {
   LabelOff as LabelsOffIcon,
   ChevronRight as NextTermIcon,
   ChevronLeft as PreviousTermIcon,
-  Settings as SettingsIcon,
+  Tune as SettingsIcon,
   ShoppingBasket as SelectionIcon,
 } from '@material-ui/icons'
 import { api } from '../../../api'
@@ -88,11 +88,19 @@ const graphModes = [
 ]
 
 const defaultGraphSettings = {
-  nodeLabels: false,
+  node: {
+    size: 3,
+    labels: {
+      on: false,
+      height: 0,
+      font: {
+        size: 18,
+      }
+    }
+  },
   mode: 'td',
-  graphRankDistance: 50,
-  graphForce: 20,
-  nodeSize: 3,
+  levelDistance: 50,
+  force: 20,
 }
 
 export const TermDialog = ({ open, closeHandler }) => {
