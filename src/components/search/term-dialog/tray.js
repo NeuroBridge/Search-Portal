@@ -13,15 +13,16 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     opacity: 0.9,
+    overflowY: 'scroll',
   },
   header: {
-    backgroundColor: theme.palette.grey[400],
+    backgroundColor: theme.palette.grey[500],
     textTransform: 'uppercase',
     textAlign: 'center',
   },
   content: {
-    padding: theme.spacing(1),
     backgroundColor: theme.palette.grey[300],
+    padding: 0,
     flex: 1,
   },
   actions: {
