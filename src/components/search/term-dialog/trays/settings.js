@@ -126,7 +126,7 @@ export const SettingsTray = () => {
             <Switch
               edge="end"
               inputProps={{ 'aria-label': 'toggle node labels' }}
-              checked={ graphSettings.nodeLabels }
+              checked={ graphSettings.node.labels.on }
               onChange={ handleToggleNodeLabelVisibility }
             />
           </ListSubheader>
