@@ -2,23 +2,39 @@ import { createContext, useContext, useMemo, useState } from 'react'
 import { api } from '../../api'
 import { navigate } from '@reach/router'
 const SearchContext = createContext({})
+import { useLocalStorage} from '../../hooks'
 
 export const SearchContextProvider = ({ children }) => {
+  const [searchHistory, setSearchHistory] = useLocalStorage('search-history', [])
   const [terms, setTerms] = useState([])
   const [currentTerm, setCurrentTerm] = useState(null)
   const [searchedQuery, setSearchedQuery] = useState(null)
   const [busy, setBusy] = useState(false)
 
   const doSearch = query => {
-    setBusy(true)
-    setSearchedQuery(query)
-    api.select(query)
-      .then(terms => {
-        setTerms(terms)
-        navigate('/')
-      })
-      .catch(error => console.error(error))
-      .finally(setBusy(false))
+    if (query.trim()) {
+      setBusy(true)
+      setSearchedQuery(query)
+      api.select(query)
+        .then(terms => {
+          setTerms(terms)
+          const newHistoryItem = {
+            query: query,
+            timestamp: new Date(),
+          }
+          setSearchHistory([newHistoryItem, ...searchHistory])
+          navigate('/')
+        })
+        .catch(error => console.error(error))
+        .finally(() => {
+          setBusy(false)
+        })
+    }
+  }
+
+  const resetSearch = () => {
+    setTerms([])
+    setSearchedQuery('')
   }
 
   const previousTerm = useMemo(() => {
@@ -44,7 +60,7 @@ export const SearchContextProvider = ({ children }) => {
   return (
     <SearchContext.Provider
       value={{
-        busy,
+        busy, resetSearch,
         doSearch,
         terms,
         currentTerm, setCurrentTerm,

@@ -5,9 +5,12 @@ import {
 } from '@material-ui/core'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import {
-  ChevronLeft as PreviousTermIcon,
-  ChevronRight as NextTermIcon,
   HelpOutline as HelpIcon,
+  Label as LabelsOnIcon,
+  LabelOff as LabelsOffIcon,
+  ChevronRight as NextTermIcon,
+  ChevronLeft as PreviousTermIcon,
+  Tune as SettingsIcon,
   ShoppingBasket as SelectionIcon,
 } from '@material-ui/icons'
 import { api } from '../../../api'
@@ -15,8 +18,8 @@ import ForceGraph2D from 'react-force-graph-2d'
 import { useSearchContext } from '../context'
 import { TermGraph } from './graph'
 import { SizeMe } from 'react-sizeme'
-import { GraphHelp } from './help'
-import { NodeSelection } from './selection'
+import { HelpTray, NodeSelectionTray, SettingsTray } from './trays'
+import { useLocalStorage } from '../../../hooks'
 
 const DialogContext = createContext({})
 export const useDialogContext = () => useContext(DialogContext)
@@ -76,15 +79,43 @@ const DialogTransition = forwardRef(function Transition(props, ref) {
   return <Grow direction="up" ref={ ref } { ...props } />
 })
 
+const graphModes = [
+  { id: 'td',        name: 'top-down' },
+  { id: 'bu',        name: 'bottom-up' },
+  { id: 'lr',        name: 'left-to-right' },
+  { id: 'rl',        name: 'right-to-left' },
+  { id: 'radialin',  name: 'radially inward' },
+  { id: 'radialout', name: 'radially outward' },
+]
+
+const defaultGraphSettings = {
+  node: {
+    size: 3,
+    labels: {
+      on: false,
+      height: 0,
+      font: {
+        size: 12,
+      }
+    }
+  },
+  mode: 'td',
+  levelDistance: 50,
+  force: 20,
+}
+
 export const TermDialog = ({ open, closeHandler }) => {
+  const selectionPalette = { 0: 'teal', 1: 'goldenrod', 2: 'crimson' }
   const { currentTerm, setCurrentTerm, previousTerm, nextTerm } = useSearchContext()
-  const [selectedNodes, setSelectedNodes] = useState([])
+  const [selectedNodes, setSelectedNodes] = useState({})
   const [openTray, setOpenTray] = useState()
   const classes = useStyles()
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const [children, setChildren] = useState([])
   const [parents, setParents] = useState([])
+  const [resetFlag, setResetFlag] = useState(false)
+  const [graphSettings, setGraphSettings] = useLocalStorage('settings', { ...defaultGraphSettings })
 
   useEffect(() => {
     resetDialogState()
@@ -97,22 +128,34 @@ export const TermDialog = ({ open, closeHandler }) => {
 
   const emptySelectedNodes = () => setSelectedNodes([])
 
-  const handleClickNextTerm = event => setCurrentTerm(nextTerm)
+  const handleClickNextTerm = () => setCurrentTerm(nextTerm)
 
-  const handleClickPreviousTerm = event => setCurrentTerm(previousTerm)
+  const handleClickPreviousTerm = () => setCurrentTerm(previousTerm)
 
   const toggleNodeSelection = id => {
-    const newSelection = new Set(selectedNodes)
-    if (newSelection.has(id)) {
-      newSelection.delete(id)
+    let newSelection = { ...selectedNodes }
+    if (id in newSelection) {
+      newSelection[id] = (newSelection[id] + 1) % 3
     } else {
-      newSelection.add(id)
+      newSelection = { ...newSelection, [id]: 0 }
     }
-    setSelectedNodes(Array.from(newSelection))
+    setSelectedNodes(newSelection)
   }
 
-  const handleToggleTray = trayId => event => {
+  const deselectNode = id => {
+    console.log(id)
+    console.log(selectedNodes)
+    const newSelection = { ...selectedNodes }
+    delete newSelection[id]
+    setSelectedNodes(newSelection)
+  }
+
+  const handleToggleTray = trayId => () => {
     setOpenTray(openTray === trayId ? null : trayId)
+  }
+
+  const resetGraph = () => {
+    setResetFlag(!resetFlag)
   }
 
   if (!currentTerm) {
@@ -122,7 +165,7 @@ export const TermDialog = ({ open, closeHandler }) => {
   return (
     <Dialog
       fullScreen={ fullScreen }
-      maxWidth={ 'md' }
+      maxWidth={ 'lg' }
       open={ open }
       onClose={ closeHandler }
       TransitionComponent={ DialogTransition }
@@ -130,8 +173,11 @@ export const TermDialog = ({ open, closeHandler }) => {
     >
       <DialogContext.Provider
         value={{
-          selectedNodes, setSelectedNodes, toggleNodeSelection, emptySelectedNodes,
+          selectedNodes, setSelectedNodes, toggleNodeSelection, deselectNode ,emptySelectedNodes, selectionPalette,
           openTray, setOpenTray,
+          resetGraph,
+          graphSettings, setGraphSettings,
+          graphModes,
         }}
       >
         <DialogTitle className={ classes.dialogHeader } disableTypography>
@@ -151,24 +197,34 @@ export const TermDialog = ({ open, closeHandler }) => {
         <Divider />
         
         <div className={ classes.toolbar }>
-          <IconButton variant="outlined" onClick={ handleToggleTray('help') }>
-            <HelpIcon color={ openTray === 'help' ? 'secondary' : 'primary' } />
-          </IconButton>
-          <IconButton variant="outlined" onClick={ handleToggleTray('selection') } >
-            <Badge badgeContent={ selectedNodes.length || 0 } color="secondary">
-              <SelectionIcon color={ openTray === 'selection' ? 'secondary' : 'primary' } />
-            </Badge>
-          </IconButton>
+          <Tooltip title={ `${ openTray === 'help' ? 'Hide' : 'Show' } help` }>
+            <IconButton variant="outlined" onClick={ handleToggleTray('help') }>
+              <HelpIcon color={ openTray === 'help' ? 'secondary' : 'primary' } />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title={ `${ openTray === 'settings' ? 'Hide' : 'Show' } settings` }>
+            <IconButton variant="outlined" onClick={ handleToggleTray('settings') }>
+              <SettingsIcon color={ openTray === 'settings' ? 'secondary' : 'primary' } />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title={ `${ openTray === 'selection' ? 'Hide' : 'Show' } node selection` }>
+            <IconButton variant="outlined" onClick={ handleToggleTray('selection') } >
+              <Badge badgeContent={ Object.keys(selectedNodes).length || 0 } color="secondary">
+                <SelectionIcon color={ openTray === 'selection' ? 'secondary' : 'primary' } />
+              </Badge>
+            </IconButton>
+          </Tooltip>
         </div>
 
         <Divider />
 
         <DialogContent className={ classes.content }>
           <div className={ classes.graphContainer }>
-            <TermGraph term={ currentTerm } />
+            <TermGraph term={ currentTerm } key={ resetFlag } />
           </div>
-          <GraphHelp />
-          <NodeSelection />
+          <HelpTray />
+          <NodeSelectionTray />
+          <SettingsTray />
         </DialogContent>
 
         

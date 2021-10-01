@@ -13,6 +13,7 @@ import ForceGraph2D from 'react-force-graph-2d'
 import { useSearchContext } from '../context'
 import { useDialogContext } from './'
 import { SizeMe } from 'react-sizeme'
+import * as d3Force from 'd3-force'
 
 const SELECTED_NODE_COLOR = '#378f91'
 
@@ -86,13 +87,25 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export const TermGraph = ({ term, height, width }) => {
-  const { selectedNodes, setSelectedNodes, toggleNodeSelection } = useDialogContext()
+  const {
+    selectedNodes, setSelectedNodes, selectionPalette, toggleNodeSelection,
+    graphSettings,
+  } = useDialogContext()
   const classes = useStyles()
   const [graphData, setGraphData] = useState({ nodes: [], links: [] })
   const container = useRef()
   const fgRef = useRef()
 
   const visibleNodes = useMemo(() => graphData ? graphData.nodes.map(node => node.id) : [], [graphData.nodes])
+
+  useEffect(() => {
+    if (fgRef.current) {
+      fgRef.current.d3Force('collide', d3Force.forceCollide(graphSettings.node.size));
+      fgRef.current.d3Force('charge')
+        .strength(-graphSettings.force)
+        .distanceMax(1000)
+    }
+  }, [fgRef.current, graphSettings.force])
 
   useEffect(() => {
     if (term) {
@@ -145,13 +158,13 @@ export const TermGraph = ({ term, height, width }) => {
 
   const handleNodeLeftClick = (node, event) => toggleNodeSelection(node.id)
 
-  const nodePaint = ({ id, x, y, color, hasChildren }, ctx) => {
-    if (selectedNodes.includes(id)) {
+  const nodePaint = ({ id, x, y, color, hasChildren }, ctx, globalScale) => {
+    if (id in selectedNodes) {
       ctx.beginPath()
-      ctx.strokeStyle = SELECTED_NODE_COLOR
+      ctx.strokeStyle = selectionPalette[selectedNodes[id]]
       ctx.fillStyle = 'transparent'
-      ctx.lineWidth = 1
-      ctx.arc(x, y, 6, 0, 2 * Math.PI, false)
+      ctx.lineWidth = 2
+      ctx.arc(x, y, graphSettings.node.size + 2, 0, 2 * Math.PI, false)
       ctx.stroke()
       ctx.fill()
     }
@@ -159,16 +172,28 @@ export const TermGraph = ({ term, height, width }) => {
     ctx.fillStyle = hasChildren ? color : '#eee'
     ctx.strokeStyle = hasChildren ? '#eee' : color
     ctx.lineWidth = hasChildren ? 0.25 : 1
-    ctx.arc(x, y, 4, 0, 2 * Math.PI, false)
+    ctx.arc(x, y, graphSettings.node.size, 0, 2 * Math.PI, false)
     ctx.stroke()
     ctx.fill()
-  }
-
-  const nodePointerAreaPaint = ({ id, x, y, hasChildren }, color, ctx) => {
-    ctx.beginPath()
-    ctx.fillStyle = color
-    ctx.arc(x, y, 4, 0, 2 * Math.PI, false)
-    ctx.fill()
+    if (graphSettings.node.labels.on) {
+      const fontSize = graphSettings.node.labels.font.size / globalScale
+      const offset = {
+        x: graphSettings.node.size + 2,
+        y: -graphSettings.node.size / 2 - 1,
+      }
+      // label box
+      ctx.beginPath()
+      ctx.rect(x + offset.x, y - offset.y - graphSettings.node.labels.height, ctx.measureText(id).width + 2, -(fontSize + 2))
+      ctx.fillStyle = '#ddd'
+      ctx.strokeStyle = '#222'
+      ctx.lineWidth = 0.1
+      ctx.fill()
+      ctx.stroke()
+      // label text
+      ctx.fillStyle = '#222'
+      ctx.font = `${ fontSize }px sans-serif`;
+      ctx.fillText(id, x + (offset.x + 1), y - (offset.y + 1) - graphSettings.node.labels.height);
+    }
   }
 
   return (
@@ -181,20 +206,17 @@ export const TermGraph = ({ term, height, width }) => {
               width={ size.width }
               height={ container?.current.clientHeight }
               graphData={ graphData }
-              dagMode="td"
-              dagLevelDistance={ 50 }
+              dagMode={ graphSettings.mode }
+              dagLevelDistance={ graphSettings.levelDistance }
               backgroundColor="transparent"
               linkColor={ () => 'rgba(0,0,0,0.2)' }
-              nodeRelSize={1}
+              nodeRelSize={ 1 }
               nodeId="id"
               d3VelocityDecay={ 0.5 }
               onNodeClick={ handleNodeLeftClick }
               onNodeRightClick={ (node, event) => handleNodeRightClick(node, event) }
               nodeLabel={ node => tooltip({ ...node }) }
               nodeCanvasObject={ nodePaint }
-              linkDirectionalParticleWidth={ 2 }
-              linkDirectionalParticleColor={ link => link.source.color }
-              onLinkClick={ link => fgRef.current.emitParticle(link) }
             />
           )
         }

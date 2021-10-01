@@ -31,11 +31,13 @@
     "@reach/router": "^1.3.4",
     "axios": "^0.21.1",
     "babel-polyfill": "^6.26.0",
+    "d3-force": "^3.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-force-graph-2d": "^1.23.8",
     "react-json-view": "^1.21.3",
     "react-sizeme": "^3.0.2",
+    "react-timeago": "^6.2.1",
     "sass": "^1.35.1",
     "sass-loader": "^12.1.0"
   }
