@@ -19,6 +19,7 @@ import { useSearchContext } from '../context'
 import { TermGraph } from './graph'
 import { SizeMe } from 'react-sizeme'
 import { HelpTray, NodeSelectionTray, SettingsTray } from './trays'
+import { useLocalStorage } from '../../../hooks'
 
 const DialogContext = createContext({})
 export const useDialogContext = () => useContext(DialogContext)
@@ -94,7 +95,7 @@ const defaultGraphSettings = {
       on: false,
       height: 0,
       font: {
-        size: 18,
+        size: 12,
       }
     }
   },
@@ -114,7 +115,7 @@ export const TermDialog = ({ open, closeHandler }) => {
   const [children, setChildren] = useState([])
   const [parents, setParents] = useState([])
   const [resetFlag, setResetFlag] = useState(false)
-  const [graphSettings, setGraphSettings] = useState({ ...defaultGraphSettings })
+  const [graphSettings, setGraphSettings] = useLocalStorage('settings', { ...defaultGraphSettings })
 
   useEffect(() => {
     resetDialogState()
