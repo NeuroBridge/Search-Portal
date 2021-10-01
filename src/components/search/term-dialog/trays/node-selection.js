@@ -18,6 +18,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     gap: theme.spacing(1),
+    padding: theme.spacing(2),
   },
   selectionChip: {
     display: 'flex',
