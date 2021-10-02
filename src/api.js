@@ -48,9 +48,10 @@ export const api = {
     }
   },
 
-  hierarchicalChildren: async q => {
+  children: async term => {
+    const q = encodeURIComponent(encodeURIComponent(term.iri))
     try {
-      const { data } = await axios.get(`${ API_ROOT }/ontologies/${ ONTOLOGY_NAME }/terms/${ q }/hierarchicalChildren`)
+      const { data } = await axios.get(`${ API_ROOT }/ontologies/${ ONTOLOGY_NAME }/terms/${ q }/children`)
       if (!data) {
         throw new Error('An error occurred while fetching children')
       }
@@ -63,9 +64,10 @@ export const api = {
     return []
   },
 
-  hierarchicalParents: async q => {
+  parents: async term => {
+    const q = encodeURIComponent(encodeURIComponent(term.iri))
     try {
-      const { data } = await axios.get(`${ API_ROOT }/ontologies/${ ONTOLOGY_NAME }/terms/${ q }/hierarchicalParents`)
+      const { data } = await axios.get(`${ API_ROOT }/ontologies/${ ONTOLOGY_NAME }/terms/${ q }/parents`)
       if (!data) {
         throw new Error('An error occurred while fetching children')
       }

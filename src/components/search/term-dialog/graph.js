@@ -98,6 +98,16 @@ export const TermGraph = ({ term, height, width }) => {
 
   const visibleNodes = useMemo(() => graphData ? graphData.nodes.map(node => node.id) : [], [graphData.nodes])
 
+  const createNode = useCallback(term => ({
+    id: term.short_form,
+    name: term.label,
+    color: '#334',
+    iri: term.iri,
+    hasChildren: term.has_children,
+    description: term.comment_annotation,
+  }), [])
+  const createLink = useCallback((parent, child) => ({ source: parent.short_form, target: child.short_form }), [])
+  
   useEffect(() => {
     if (fgRef.current) {
       fgRef.current.d3Force('collide', d3Force.forceCollide(graphSettings.node.size));
@@ -107,34 +117,27 @@ export const TermGraph = ({ term, height, width }) => {
     }
   }, [fgRef.current, graphSettings.force])
 
+
   useEffect(() => {
-    if (term) {
-      setSelectedNodes([])
-      const promises = [
-        api.hierarchicalChildren(encodeURIComponent(encodeURIComponent(term.iri))),
-        api.hierarchicalParents(encodeURIComponent(encodeURIComponent(term.iri))),
-      ]
-      Promise.all(promises)
-        .then(responses => {
-          const [children, parents] = responses
-          let nodes = [
-            { id: term.short_form, name: term.label, val: 15, color: '#333', iri: term.iri, hasChildren: term.has_children, description: term.comment_annotation } // current term node
-          ]
-          if (parents.length) {
-            const parent = parents[0]
-            nodes = [...nodes, { id: parent.short_form, name: parent.label, val: 15, color: 'indianred', iri: parent.iri, hasChildren: parent.has_children, description: parent.comment_annotation }] // add parent term
-          }
-          const childNodes = children.map(child => ({ id: child.short_form, name: child.label, val: 15, color: 'indianred', iri: child.iri, hasChildren: child.has_children, description: child.comment_annotation })) // current term's children
-          if (childNodes.length) {
-            nodes = [...nodes, ...childNodes]
-          }
-          const links = [
-            ...parents.map(parent => ({ source: parent.short_form, target: term.short_form })), // parent-current term edge
-            ...children.map(child => ({ source: term.short_form, target: child.short_form })), // children-current term edge
-          ]
-          setGraphData({ nodes, links })
-        }).catch(error => console.log(error))
+    setSelectedNodes([])
+    
+    if (!term) {
+      return
     }
+
+    const fetchAndGraphChildren = async root => {
+      console.log(root.label)
+      api.children(root)
+        .then(children => {
+          const nodes = [createNode(root), ...children.map(createNode)]
+          const links = children.map(child => createLink(term, child))
+          setGraphData({ nodes, links })
+        })
+        .catch(error => console.log(error))
+    }
+    
+    fetchAndGraphChildren(term)
+    
   }, [term])
 
   const tooltip = ({ id, name, description, color, hasChildren }) => `
@@ -145,10 +148,10 @@ export const TermGraph = ({ term, height, width }) => {
     </div>`
 
   const handleNodeRightClick = async (node, event) => {
-    const children = await api.hierarchicalChildren(encodeURIComponent(encodeURIComponent(node.iri)))
+    const children = await api.children(node)
     const newNodes = children
       .filter(child => !visibleNodes.includes(child.short_form))
-      .map(child => ({ id: child.short_form, name: child.label, val: 10, color: 'slategrey', iri: child.iri, hasChildren: child.has_children, description: child.comment_annotation }))
+      .map(createNode)
     const newLinks = newNodes.map(newNode => ({ source: node.id, target: newNode.id }))
     setGraphData({
       nodes: [...graphData.nodes, ...newNodes],
