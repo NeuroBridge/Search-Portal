@@ -98,14 +98,20 @@ export const TermGraph = ({ term, height, width }) => {
 
   const visibleNodes = useMemo(() => graphData ? graphData.nodes.map(node => node.id) : [], [graphData.nodes])
 
-  const createNode = useCallback(term => ({
-    id: term.short_form,
-    name: term.label,
-    color: '#334',
-    iri: term.iri,
-    hasChildren: term.has_children,
-    description: term.comment_annotation,
-  }), [])
+  const createNode = useCallback((color = '#334') => {
+    return term => {
+      return ({
+        id: term.short_form,
+        name: term.label,
+        color: color,
+        iri: term.iri,
+        hasChildren: term.has_children,
+        description: term.comment_annotation,
+      })      
+    }
+  }, [])
+  const createRootNode = createNode('firebrick')
+
   const createLink = useCallback((parent, child) => ({ source: parent.short_form, target: child.short_form }), [])
   
   useEffect(() => {
@@ -129,7 +135,7 @@ export const TermGraph = ({ term, height, width }) => {
       console.log(root.label)
       api.children(root)
         .then(children => {
-          const nodes = [createNode(root), ...children.map(createNode)]
+          const nodes = [createRootNode(root), ...children.map(createNode())]
           const links = children.map(child => createLink(term, child))
           setGraphData({ nodes, links })
         })
