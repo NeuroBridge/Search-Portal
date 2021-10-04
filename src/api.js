@@ -64,6 +64,22 @@ export const api = {
     return []
   },
 
+  descendants: async term => {
+    const q = encodeURIComponent(encodeURIComponent(term.iri))
+    try {
+      const { data } = await axios.get(`${ API_ROOT }/ontologies/${ ONTOLOGY_NAME }/terms/${ q }/descendants`)
+      if (!data) {
+        throw new Error('An error occurred while fetching children')
+      }
+      if (data?._embedded?.terms) {
+        return data._embedded.terms
+      }
+    } catch (error) {
+      console.log(error)
+    }
+    return []
+  },
+
   parents: async term => {
     const q = encodeURIComponent(encodeURIComponent(term.iri))
     try {
