@@ -157,7 +157,7 @@ export const TermGraph = ({ term, height, width }) => {
     const children = await api.children(node)
     const newNodes = children
       .filter(child => !visibleNodes.includes(child.short_form))
-      .map(createNode)
+      .map(createNode())
     const newLinks = newNodes.map(newNode => ({ source: node.id, target: newNode.id }))
     setGraphData({
       nodes: [...graphData.nodes, ...newNodes],
@@ -179,8 +179,8 @@ export const TermGraph = ({ term, height, width }) => {
     }
     ctx.beginPath()
     ctx.fillStyle = hasChildren ? color : '#eee'
-    ctx.strokeStyle = hasChildren ? '#eee' : color
-    ctx.lineWidth = hasChildren ? 0.25 : 1
+    ctx.strokeStyle = color
+    ctx.lineWidth = 0.5
     ctx.arc(x, y, graphSettings.node.size, 0, 2 * Math.PI, false)
     ctx.stroke()
     ctx.fill()
