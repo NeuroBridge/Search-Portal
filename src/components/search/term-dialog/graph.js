@@ -241,6 +241,6 @@ TermGraph.propTypes = {
     short_form: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
     has_children: PropTypes.bool.isRequired,
-    comment_annotation: PropTypes.string.isRequired,
+    comment_annotation: PropTypes.string,
   }).isRequired,
 }
