@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Link as ReachLink } from '@reach/router'
 
 export const ExternalLink = ({ to, children, ...props }) => {
@@ -19,3 +20,10 @@ export const Link = ({ to, children, ...props }) => {
   const LinkComponent = externalUrlMatch || mailtoMatch ? ExternalLink : ReachLink
   return <LinkComponent to={to} {...props}>{children}</LinkComponent>
 }
+
+Link.propTypes = {
+  to: PropTypes.string.isRequired
+  children: PropTypes.node.isRequired
+}
+
+ExternalLink.propTypes = Link.propTypes

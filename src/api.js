@@ -18,7 +18,6 @@ export const api = {
           queryFields: 'label,short_form,description,type,comment_annotation',
         }
       })
-      console.log(response)
       if (!data) {
         throw new Error('An error occurred while searching terms')
       }
@@ -48,9 +47,10 @@ export const api = {
     }
   },
 
-  hierarchicalChildren: async q => {
+  children: async term => {
+    const q = encodeURIComponent(encodeURIComponent(term.iri))
     try {
-      const { data } = await axios.get(`${ API_ROOT }/ontologies/${ ONTOLOGY_NAME }/terms/${ q }/hierarchicalChildren`)
+      const { data } = await axios.get(`${ API_ROOT }/ontologies/${ ONTOLOGY_NAME }/terms/${ q }/children?size=250`)
       if (!data) {
         throw new Error('An error occurred while fetching children')
       }
@@ -63,9 +63,26 @@ export const api = {
     return []
   },
 
-  hierarchicalParents: async q => {
+  descendants: async term => {
+    const q = encodeURIComponent(encodeURIComponent(term.iri))
     try {
-      const { data } = await axios.get(`${ API_ROOT }/ontologies/${ ONTOLOGY_NAME }/terms/${ q }/hierarchicalParents`)
+      const { data } = await axios.get(`${ API_ROOT }/ontologies/${ ONTOLOGY_NAME }/terms/${ q }/descendants?size=250`)
+      if (!data) {
+        throw new Error('An error occurred while fetching children')
+      }
+      if (data?._embedded?.terms) {
+        return data._embedded.terms
+      }
+    } catch (error) {
+      console.log(error)
+    }
+    return []
+  },
+
+  parents: async term => {
+    const q = encodeURIComponent(encodeURIComponent(term.iri))
+    try {
+      const { data } = await axios.get(`${ API_ROOT }/ontologies/${ ONTOLOGY_NAME }/terms/${ q }/parents`)
       if (!data) {
         throw new Error('An error occurred while fetching children')
       }

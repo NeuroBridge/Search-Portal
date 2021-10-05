@@ -1,21 +1,11 @@
-import { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import axios from 'axios'
-import { Button, Slide, Paper, Typography } from '@material-ui/core'
-import {
-  ChevronLeft as PreviousTermIcon,
-  ChevronRight as NextTermIcon,
-  Close as DeleteIcon,
-  ArrowForward as ActionIcon,
-} from '@material-ui/icons'
-import { makeStyles, useTheme } from '@material-ui/core/styles'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import PropTypes from 'prop-types'
+import { makeStyles } from '@material-ui/core/styles'
 import { api } from '../../../api'
 import ForceGraph2D from 'react-force-graph-2d'
-import { useSearchContext } from '../context'
 import { useDialogContext } from './'
 import { SizeMe } from 'react-sizeme'
 import * as d3Force from 'd3-force'
-
-const SELECTED_NODE_COLOR = '#378f91'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -86,7 +76,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export const TermGraph = ({ term, height, width }) => {
+export const TermGraph = ({ term }) => {
   const {
     selectedNodes, setSelectedNodes, selectionPalette, toggleNodeSelection,
     graphSettings,
@@ -98,6 +88,17 @@ export const TermGraph = ({ term, height, width }) => {
 
   const visibleNodes = useMemo(() => graphData ? graphData.nodes.map(node => node.id) : [], [graphData.nodes])
 
+  const createNode = useCallback((color = '#334') => term => ({
+    id: term.short_form,
+    name: term.label,
+    color: color,
+    iri: term.iri,
+    hasChildren: term.has_children,
+    description: term.comment_annotation,
+  }), [])
+  const createRootNode = createNode('firebrick')
+  const createLink = useCallback((parent, child) => ({ source: parent.short_form, target: child.short_form }), [])
+  
   useEffect(() => {
     if (fgRef.current) {
       fgRef.current.d3Force('collide', d3Force.forceCollide(graphSettings.node.size));
@@ -107,48 +108,57 @@ export const TermGraph = ({ term, height, width }) => {
     }
   }, [fgRef.current, graphSettings.force])
 
+
   useEffect(() => {
-    if (term) {
-      setSelectedNodes([])
-      const promises = [
-        api.hierarchicalChildren(encodeURIComponent(encodeURIComponent(term.iri))),
-        api.hierarchicalParents(encodeURIComponent(encodeURIComponent(term.iri))),
-      ]
-      Promise.all(promises)
-        .then(responses => {
-          const [children, parents] = responses
-          let nodes = [
-            { id: term.short_form, name: term.label, val: 15, color: '#333', iri: term.iri, hasChildren: term.has_children, description: term.comment_annotation } // current term node
-          ]
-          if (parents.length) {
-            const parent = parents[0]
-            nodes = [...nodes, { id: parent.short_form, name: parent.label, val: 15, color: 'indianred', iri: parent.iri, hasChildren: parent.has_children, description: parent.comment_annotation }] // add parent term
-          }
-          const childNodes = children.map(child => ({ id: child.short_form, name: child.label, val: 15, color: 'indianred', iri: child.iri, hasChildren: child.has_children, description: child.comment_annotation })) // current term's children
-          if (childNodes.length) {
-            nodes = [...nodes, ...childNodes]
-          }
-          const links = [
-            ...parents.map(parent => ({ source: parent.short_form, target: term.short_form })), // parent-current term edge
-            ...children.map(child => ({ source: term.short_form, target: child.short_form })), // children-current term edge
-          ]
-          setGraphData({ nodes, links })
-        }).catch(error => console.log(error))
+    setSelectedNodes([])
+    
+    if (!term) {
+      return
     }
+
+    const graphDescendants = async root => {
+      console.log(root.label)
+
+      api.descendants(root)
+        .then(async descendants => {
+          let nodes = []
+          let links = []
+
+          // add node for each descendant term
+          nodes = [createRootNode(root), ...descendants.map(createNode())]
+          
+          // construct root-children edges
+          const children = await api.children(root)
+          const childLinks = await children.map(child => createLink(root, child))
+          links = [...childLinks]
+
+          // dynamically construct edges between other descendants
+          const nonLeaves = descendants.filter(descendant => descendant.has_children)
+          const responses = await Promise.all(nonLeaves.map(api.children))
+          responses.map((children, i) => {
+            links = [...links, ...children.map(child => createLink(nonLeaves[i], child))]
+          })
+          setGraphData({ nodes, links })
+        })
+        .catch(error => console.log(error))
+    }
+    
+    graphDescendants(term)
+    
   }, [term])
 
-  const tooltip = ({ id, name, description, color, hasChildren }) => `
+  const tooltip = ({ id, name, description, color }) => `
     <div class="${ classes.tooltip }" style="background-color: ${ color }">
       <h3 class="${ classes.tooltipTitle }">${ name }</h3>
       <p class="${ classes.tooltipDetail }"><em>${ id }</em></p>
       <p class="${ classes.tooltipDescription }">comment_annotation: ${ description || 'none provided' }</p>
     </div>`
 
-  const handleNodeRightClick = async (node, event) => {
-    const children = await api.hierarchicalChildren(encodeURIComponent(encodeURIComponent(node.iri)))
+  const handleNodeRightClick = async node => {
+    const children = await api.children(node)
     const newNodes = children
       .filter(child => !visibleNodes.includes(child.short_form))
-      .map(child => ({ id: child.short_form, name: child.label, val: 10, color: 'slategrey', iri: child.iri, hasChildren: child.has_children, description: child.comment_annotation }))
+      .map(createNode())
     const newLinks = newNodes.map(newNode => ({ source: node.id, target: newNode.id }))
     setGraphData({
       nodes: [...graphData.nodes, ...newNodes],
@@ -156,7 +166,7 @@ export const TermGraph = ({ term, height, width }) => {
     })
   }
 
-  const handleNodeLeftClick = (node, event) => toggleNodeSelection(node.id)
+  const handleNodeLeftClick = node => toggleNodeSelection(node.id)
 
   const nodePaint = ({ id, x, y, color, hasChildren }, ctx, globalScale) => {
     if (id in selectedNodes) {
@@ -170,8 +180,8 @@ export const TermGraph = ({ term, height, width }) => {
     }
     ctx.beginPath()
     ctx.fillStyle = hasChildren ? color : '#eee'
-    ctx.strokeStyle = hasChildren ? '#eee' : color
-    ctx.lineWidth = hasChildren ? 0.25 : 1
+    ctx.strokeStyle = color
+    ctx.lineWidth = 0.5
     ctx.arc(x, y, graphSettings.node.size, 0, 2 * Math.PI, false)
     ctx.stroke()
     ctx.fill()
@@ -223,4 +233,14 @@ export const TermGraph = ({ term, height, width }) => {
       </SizeMe>
     </div>
   )
+}
+
+TermGraph.propTypes = {
+  term: PropTypes.shape({
+    iri: PropTypes.string.isRequired,
+    short_form: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+    has_children: PropTypes.bool.isRequired,
+    comment_annotation: PropTypes.string.isRequired,
+  }).isRequired,
 }

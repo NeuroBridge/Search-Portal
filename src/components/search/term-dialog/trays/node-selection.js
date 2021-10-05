@@ -1,13 +1,9 @@
-import { forwardRef, Fragment } from 'react'
-import { Button, Card, CardHeader, CardContent, Chip, Divider, Fade, Grow, IconButton, Tooltip, Typography } from '@material-ui/core'
+import { Fragment } from 'react'
+import { Button, Chip, Fade, IconButton, Tooltip, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import {
   Send as ActionIcon,
   Delete as ClearTermsIcon,
-  Close as RemoveTermIcon,
-  DoNotDisturb as IgnoreTermIcon,
-  CheckCircleOutlined as KeepTermIcon,
-  DoNotDisturb as IrrelevantTermIcon,
 } from '@material-ui/icons'
 import { useDialogContext } from '../'
 import { Tray } from '../tray'
@@ -31,10 +27,6 @@ const useStyles = makeStyles(theme => ({
   actionButton: {
   }
 }))
-
-const GrowTransition = forwardRef(function Transition(props, ref) {
-  return <Grow ref={ ref } { ...props } />
-})
 
 export const NodeSelectionTray = () => {
   const { selectedNodes, deselectNode, emptySelectedNodes, selectionPalette, toggleNodeSelection, openTray } = useDialogContext()
@@ -67,8 +59,9 @@ export const NodeSelectionTray = () => {
             className={ classes.actionButton }
             endIcon={ <ActionIcon /> }
             onClick={ handleClickNodeSelectionAction }
-            children={ 'Go' }
-          />
+          >
+            Go
+          </Button>
         </Fragment>
       }
     >
@@ -77,8 +70,9 @@ export const NodeSelectionTray = () => {
           <Typography
             paragraph
             style={{ fontSize: '90%', textAlign: 'center', marginTop: '2rem' }}
-            children={ `No selected nodes` }
-          />
+          >
+            No selected nodes
+          </Typography>
         )
       }
       <div className={ classes.selectionList }>

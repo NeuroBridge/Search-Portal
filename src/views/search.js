@@ -1,7 +1,7 @@
 import { Fragment, useCallback, useMemo, useState } from 'react'
 import { useSearchContext } from '../components/search/context'
-import { makeStyles, useTheme } from '@material-ui/core/styles'
-import { Card, CardHeader, CardContent, Grid, IconButton, Paper, Tooltip, Typography } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
+import { Grid, IconButton, Paper, Tooltip, Typography } from '@material-ui/core'
 import { TermCard } from '../components/search/term-card'
 import { TermDialog } from '../components/search/term-dialog'
 import { BugReport as DebugIcon } from '@material-ui/icons';
@@ -72,11 +72,11 @@ const SearchLanding = () => {
 
 export const SearchView = () => {
   const classes = useStyles()
-  const { busy, doSearch, terms, currentTerm, setCurrentTerm, previousTerm, nextTerm, searchedQuery } = useSearchContext()
+  const { terms, currentTerm, setCurrentTerm, searchedQuery } = useSearchContext()
   const dialogOpen = useMemo(() => !!currentTerm, [currentTerm])
   const [debugMode, setDebugMode] = useState(false)
 
-  const handleClickTerm = index => event => {
+  const handleClickTerm = index => () => {
     if (0 <= index && index < terms.length) {
       setCurrentTerm(terms[index])
     }
