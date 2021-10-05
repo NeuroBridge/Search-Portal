@@ -50,7 +50,7 @@ export const api = {
   children: async term => {
     const q = encodeURIComponent(encodeURIComponent(term.iri))
     try {
-      const { data } = await axios.get(`${ API_ROOT }/ontologies/${ ONTOLOGY_NAME }/terms/${ q }/children`)
+      const { data } = await axios.get(`${ API_ROOT }/ontologies/${ ONTOLOGY_NAME }/terms/${ q }/children?size=250`)
       if (!data) {
         throw new Error('An error occurred while fetching children')
       }
@@ -66,7 +66,7 @@ export const api = {
   descendants: async term => {
     const q = encodeURIComponent(encodeURIComponent(term.iri))
     try {
-      const { data } = await axios.get(`${ API_ROOT }/ontologies/${ ONTOLOGY_NAME }/terms/${ q }/descendants`)
+      const { data } = await axios.get(`${ API_ROOT }/ontologies/${ ONTOLOGY_NAME }/terms/${ q }/descendants?size=250`)
       if (!data) {
         throw new Error('An error occurred while fetching children')
       }
