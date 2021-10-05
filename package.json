@@ -5,6 +5,8 @@
     "watch": "webpack --watch",
     "build": "NODE_ENV=production webpack",
     "build-dev": "webpack",
+    "lint": "eslint ./src/app.js ./src/components/**/*.js",
+    "lint:fix": "eslint --fix ./src/index.js ./src/components/**/*.js",
     "clean": "rm -rf dist"
   },
   "devDependencies": {
@@ -26,12 +28,16 @@
     "webpack-dev-server": "^3.11.2"
   },
   "dependencies": {
+    "@babel/eslint-parser": "^7.15.7",
     "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
     "@reach/router": "^1.3.4",
     "axios": "^0.21.1",
     "babel-polyfill": "^6.26.0",
     "d3-force": "^3.0.0",
+    "eslint": "^7.32.0",
+    "eslint-plugin-react": "^7.26.1",
+    "eslint-webpack-plugin": "^3.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-force-graph-2d": "^1.23.8",

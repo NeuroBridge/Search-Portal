@@ -1,11 +1,8 @@
-import { forwardRef } from 'react'
 import {
   Button,
-  Card, CardContent, CardHeader,
   Collapse,
   Divider,
-  Grow,
-  List, ListItem, ListItemIcon, ListItemText, ListItemSecondaryAction, ListSubheader,
+  List, ListItem, ListItemIcon, ListItemText, ListSubheader,
   MenuItem, Select, Slider, Switch,
   Typography,
 } from '@material-ui/core'
@@ -13,8 +10,6 @@ import { useDialogContext } from '../'
 import { Tray } from '../tray'
 import {
   FlashOn as ForceIcon,
-  Label as LabelsOnIcon,
-  LabelOff as LabelsOffIcon,
   FontDownload as LabelFontIcon,
   Height as LabelHeightIcon,
   FormatLineSpacing as LevelDistanceIcon,
@@ -45,7 +40,6 @@ export const SettingsTray = () => {
   const classes = useStyles()
   const {
     openTray,
-    selectionPalette,
     resetGraph, graphModes,
     graphSettings, setGraphSettings,
   } = useDialogContext()
@@ -109,7 +103,7 @@ export const SettingsTray = () => {
             onChange={ handleChangeGraphMode }
           >
             {
-              graphModes.map((mode, i) => <MenuItem key={ mode.id } value={ mode.id }>{ mode.name }</MenuItem>)
+              graphModes.map(mode => <MenuItem key={ mode.id } value={ mode.id }>{ mode.name }</MenuItem>)
             }
           </Select>
         </ListItem>

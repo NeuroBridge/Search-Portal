@@ -1,8 +1,7 @@
 import { forwardRef } from 'react'
 import PropTypes from 'prop-types'
-import { Card, CardActions, CardContent, CardHeader, Divider, List, ListItem, Slide, Typography } from '@material-ui/core'
+import { Card, CardActions, CardContent, CardHeader, Slide } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import { useDialogContext } from './'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -37,9 +36,8 @@ const SlideTransition = forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ ref } { ...props } />
 })
 
-export const Tray = ({ children, title, visibility, align, actions }) => {
+export const Tray = ({ children, title, visibility, actions }) => {
   const classes = useStyles()
-  const alignmentClass = align === 'top' ? classes.alignTop : align === 'bottom' ? classes.alignBottom : undefined
 
   return (
     <SlideTransition in={ visibility } direction="left">
@@ -58,4 +56,5 @@ Tray.propTypes = {
   children: PropTypes.node.isRequired,
   title: PropTypes.string.isRequired,
   visibility: PropTypes.bool.isRequired,
+  actions: PropTypes.node,
 }

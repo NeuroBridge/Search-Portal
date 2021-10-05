@@ -1,6 +1,5 @@
-import { Avatar, Button, Card, CardActions, CardContent, CardHeader, Divider, IconButton, List, ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText, Typography } from '@material-ui/core'
+import { Button, Card, CardActions, CardContent, CardHeader, Divider, IconButton, List, ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText, Typography } from '@material-ui/core'
 import { useLocalStorage } from '../../hooks'
-import { Link } from '../link'
 import TimeAgo from 'react-timeago'
 import { useSearchContext } from './context'
 import {
@@ -11,7 +10,7 @@ import {
 } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/styles'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   list: {
     maxHeight: '600px',
     overflow: 'scroll',

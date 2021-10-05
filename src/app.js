@@ -1,6 +1,5 @@
-import { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { AppBar, Toolbar, Typography, useMediaQuery } from '@material-ui/core'
-import { makeStyles, useTheme } from '@material-ui/core/styles'
+import { AppBar, Toolbar, useMediaQuery } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
 import brainImage from './images/brain.png'
 import { Router } from './router'
 import { Brand } from './components/brand'

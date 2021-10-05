@@ -18,7 +18,6 @@ export const api = {
           queryFields: 'label,short_form,description,type,comment_annotation',
         }
       })
-      console.log(response)
       if (!data) {
         throw new Error('An error occurred while searching terms')
       }

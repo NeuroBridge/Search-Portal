@@ -1,21 +1,11 @@
-import { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import axios from 'axios'
-import { Button, Slide, Paper, Typography } from '@material-ui/core'
-import {
-  ChevronLeft as PreviousTermIcon,
-  ChevronRight as NextTermIcon,
-  Close as DeleteIcon,
-  ArrowForward as ActionIcon,
-} from '@material-ui/icons'
-import { makeStyles, useTheme } from '@material-ui/core/styles'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import PropTypes from 'prop-types'
+import { makeStyles } from '@material-ui/core/styles'
 import { api } from '../../../api'
 import ForceGraph2D from 'react-force-graph-2d'
-import { useSearchContext } from '../context'
 import { useDialogContext } from './'
 import { SizeMe } from 'react-sizeme'
 import * as d3Force from 'd3-force'
-
-const SELECTED_NODE_COLOR = '#378f91'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -86,7 +76,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export const TermGraph = ({ term, height, width }) => {
+export const TermGraph = ({ term }) => {
   const {
     selectedNodes, setSelectedNodes, selectionPalette, toggleNodeSelection,
     graphSettings,
@@ -157,7 +147,7 @@ export const TermGraph = ({ term, height, width }) => {
     
   }, [term])
 
-  const tooltip = ({ id, name, description, color, hasChildren }) => `
+  const tooltip = ({ id, name, description, color }) => `
     <div class="${ classes.tooltip }" style="background-color: ${ color }">
       <h3 class="${ classes.tooltipTitle }">${ name }</h3>
       <p class="${ classes.tooltipDetail }"><em>${ id }</em></p>
@@ -176,7 +166,7 @@ export const TermGraph = ({ term, height, width }) => {
     })
   }
 
-  const handleNodeLeftClick = (node, event) => toggleNodeSelection(node.id)
+  const handleNodeLeftClick = node => toggleNodeSelection(node.id)
 
   const nodePaint = ({ id, x, y, color, hasChildren }, ctx, globalScale) => {
     if (id in selectedNodes) {
@@ -243,4 +233,14 @@ export const TermGraph = ({ term, height, width }) => {
       </SizeMe>
     </div>
   )
+}
+
+TermGraph.propTypes = {
+  term: PropTypes.shape({
+    iri: PropTypes.string.isRequired,
+    short_form: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+    has_children: PropTypes.bool.isRequired,
+    comment_annotation: PropTypes.string.isRequired,
+  }).isRequired,
 }
