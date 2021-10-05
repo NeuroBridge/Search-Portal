@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/core/styles'
 import { api } from '../../../api'
@@ -154,7 +154,7 @@ export const TermGraph = ({ term }) => {
       <p class="${ classes.tooltipDescription }">comment_annotation: ${ description || 'none provided' }</p>
     </div>`
 
-  const handleNodeRightClick = async (node, event) => {
+  const handleNodeRightClick = async node => {
     const children = await api.children(node)
     const newNodes = children
       .filter(child => !visibleNodes.includes(child.short_form))
