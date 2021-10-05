@@ -1,4 +1,5 @@
 import { forwardRef } from 'react'
+import PropTypes from 'prop-types'
 import { Card, CardContent, CardHeader, Divider, Grow, List, ListItem, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { useDialogContext } from '../'
@@ -61,6 +62,10 @@ const Node = ({ color = '#ccc' }) => {
   )
 }
 
+Node.propTypes = {
+  color: PropTypes.string,
+}
+
 const SelectedNode = ({ color = '#ccc', selection = '' }) => {
   const classes = useStyles()
   let classNames = `${ classes.node } ${ classes.selectedNode }`
@@ -78,6 +83,11 @@ const SelectedNode = ({ color = '#ccc', selection = '' }) => {
   return (
     <div className={ classNames } style={{ backgroundColor: color }} />
   )
+}
+
+SelectedNode.propTypes = {
+  color: PropTypes.string,
+  selection: PropTypes.string,
 }
 
 export const HelpTray = () => {

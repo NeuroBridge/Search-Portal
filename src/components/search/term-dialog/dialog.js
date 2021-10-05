@@ -1,4 +1,5 @@
 import { createContext, forwardRef, useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import PropTypes from 'prop-types'
 import axios from 'axios'
 import {
   Badge, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Grow, IconButton, Paper, Tooltip, Typography, useMediaQuery
@@ -68,7 +69,6 @@ const useStyles = makeStyles(theme => ({
   },
   actions: {
     height: '4rem',
-    backgroundColor: 'transparent',
     display: 'flex',
     justifyContent: 'flex-end',
     backgroundColor: '#eee',
@@ -234,4 +234,9 @@ export const TermDialog = ({ open, closeHandler }) => {
       </DialogContext.Provider>
     </Dialog>
   )
+}
+
+TermDialog.propTypes = {
+  open: PropTypes.bool.isRequired,
+  closeHandler: PropTypes.func.isRequired,
 }

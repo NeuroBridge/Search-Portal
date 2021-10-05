@@ -25,7 +25,7 @@ export const SearchBar = () => {
   const classes = useStyles()
   const theme = useTheme()
   const mobile = useMediaQuery(theme.breakpoints.down('xs'))
-  const { busy, doSearch, terms, currentTerm, setCurrentTerm, previousTerm, nextTerm, searchedQuery } = useSearchContext()
+  const { busy, doSearch } = useSearchContext()
   const inputRef = useRef() // used for programatic focus of text input
 
   useEffect(() => {

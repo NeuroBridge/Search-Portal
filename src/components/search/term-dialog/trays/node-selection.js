@@ -67,8 +67,9 @@ export const NodeSelectionTray = () => {
             className={ classes.actionButton }
             endIcon={ <ActionIcon /> }
             onClick={ handleClickNodeSelectionAction }
-            children={ 'Go' }
-          />
+          >
+            Go
+          </Button>
         </Fragment>
       }
     >
@@ -77,8 +78,9 @@ export const NodeSelectionTray = () => {
           <Typography
             paragraph
             style={{ fontSize: '90%', textAlign: 'center', marginTop: '2rem' }}
-            children={ `No selected nodes` }
-          />
+          >
+            No selected nodes
+          </Typography>
         )
       }
       <div className={ classes.selectionList }>

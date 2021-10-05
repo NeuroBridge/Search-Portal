@@ -1,12 +1,10 @@
-import { forwardRef, useEffect, useMemo, useRef, useState } from 'react'
-import axios from 'axios'
+import PropTypes from 'prop-types'
 import {
-  AppBar, Button, Card, CardActionArea, CardContent, Divider, IconButton, Grid, LinearProgress, Paper, InputBase, Toolbar, Typography
+  Card, CardActionArea, Typography
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import {
   ZoomOutMap as ViewTermIcon,
-  Search as SearchIcon,
 } from '@material-ui/icons'
 
 const useStyles = makeStyles(theme => ({
@@ -67,4 +65,9 @@ export const TermCard = ({ term, clickHandler }) => {
       </CardActionArea>
     </Card>
   )
+}
+
+TermCard.propTypes = {
+  term: PropTypes.string.isRequired,
+  clickHandler: PropTypes.func.isRequired,
 }

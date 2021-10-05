@@ -24,6 +24,7 @@
   ],
   "rules": {
     "no-unused-vars": "warn",
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "react/no-unescaped-entities": [2, { "forbid": [">", "}"] }],
   }
 }

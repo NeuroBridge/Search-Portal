@@ -1,4 +1,5 @@
 import { createContext, useContext, useMemo, useState } from 'react'
+import PropTypes from 'prop-types'
 import { api } from '../../api'
 import { navigate } from '@reach/router'
 const SearchContext = createContext({})
@@ -71,6 +72,10 @@ export const SearchContextProvider = ({ children }) => {
       { children }
     </SearchContext.Provider>
   )
+}
+
+SearchContextProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 }
 
 export const useSearchContext = () => useContext(SearchContext)

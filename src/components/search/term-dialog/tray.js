@@ -37,9 +37,8 @@ const SlideTransition = forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ ref } { ...props } />
 })
 
-export const Tray = ({ children, title, visibility, align, actions }) => {
+export const Tray = ({ children, title, visibility, actions }) => {
   const classes = useStyles()
-  const alignmentClass = align === 'top' ? classes.alignTop : align === 'bottom' ? classes.alignBottom : undefined
 
   return (
     <SlideTransition in={ visibility } direction="left">
@@ -58,4 +57,5 @@ Tray.propTypes = {
   children: PropTypes.node.isRequired,
   title: PropTypes.string.isRequired,
   visibility: PropTypes.bool.isRequired,
+  actions: PropTypes.node,
 }

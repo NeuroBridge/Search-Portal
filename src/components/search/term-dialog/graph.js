@@ -1,4 +1,5 @@
 import { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import PropTypes from 'prop-types'
 import axios from 'axios'
 import { Button, Slide, Paper, Typography } from '@material-ui/core'
 import {
@@ -223,4 +224,16 @@ export const TermGraph = ({ term, height, width }) => {
       </SizeMe>
     </div>
   )
+}
+
+TermGraph.propTypes = {
+  term: PropTypes.shape({
+    iri: PropTypes.string.isRequired,
+    short_form: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+    has_children: PropTypes.bool.isRequired,
+    comment_annotation: PropTypes.string.isRequired,
+  }).isRequired,
+  height: PropTypes.number.isRequired,
+  width: PropTypes.number.isRequired,
 }
