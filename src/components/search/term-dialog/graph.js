@@ -98,14 +98,15 @@ export const TermGraph = ({ term, height, width }) => {
 
   const visibleNodes = useMemo(() => graphData ? graphData.nodes.map(node => node.id) : [], [graphData.nodes])
 
-  const createNode = useCallback(term => ({
+  const createNode = useCallback((color = '#334') => term => ({
     id: term.short_form,
     name: term.label,
-    color: '#334',
+    color: color,
     iri: term.iri,
     hasChildren: term.has_children,
     description: term.comment_annotation,
   }), [])
+  const createRootNode = createNode('firebrick')
   const createLink = useCallback((parent, child) => ({ source: parent.short_form, target: child.short_form }), [])
   
   useEffect(() => {
@@ -125,18 +126,34 @@ export const TermGraph = ({ term, height, width }) => {
       return
     }
 
-    const fetchAndGraphChildren = async root => {
+    const graphDescendants = async root => {
       console.log(root.label)
-      api.children(root)
-        .then(children => {
-          const nodes = [createNode(root), ...children.map(createNode)]
-          const links = children.map(child => createLink(term, child))
+
+      api.descendants(root)
+        .then(async descendants => {
+          let nodes = []
+          let links = []
+
+          // add node for each descendant term
+          nodes = [createRootNode(root), ...descendants.map(createNode())]
+          
+          // construct root-children edges
+          const children = await api.children(root)
+          const childLinks = await children.map(child => createLink(root, child))
+          links = [...childLinks]
+
+          // dynamically construct edges between other descendants
+          const nonLeaves = descendants.filter(descendant => descendant.has_children)
+          const responses = await Promise.all(nonLeaves.map(api.children))
+          responses.map((children, i) => {
+            links = [...links, ...children.map(child => createLink(nonLeaves[i], child))]
+          })
           setGraphData({ nodes, links })
         })
         .catch(error => console.log(error))
     }
     
-    fetchAndGraphChildren(term)
+    graphDescendants(term)
     
   }, [term])
 
@@ -151,7 +168,7 @@ export const TermGraph = ({ term, height, width }) => {
     const children = await api.children(node)
     const newNodes = children
       .filter(child => !visibleNodes.includes(child.short_form))
-      .map(createNode)
+      .map(createNode())
     const newLinks = newNodes.map(newNode => ({ source: node.id, target: newNode.id }))
     setGraphData({
       nodes: [...graphData.nodes, ...newNodes],
@@ -173,8 +190,8 @@ export const TermGraph = ({ term, height, width }) => {
     }
     ctx.beginPath()
     ctx.fillStyle = hasChildren ? color : '#eee'
-    ctx.strokeStyle = hasChildren ? '#eee' : color
-    ctx.lineWidth = hasChildren ? 0.25 : 1
+    ctx.strokeStyle = color
+    ctx.lineWidth = 0.5
     ctx.arc(x, y, graphSettings.node.size, 0, 2 * Math.PI, false)
     ctx.stroke()
     ctx.fill()
