@@ -1,24 +1,18 @@
-import { createContext, forwardRef, useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { createContext, forwardRef, useContext, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import axios from 'axios'
 import {
-  Badge, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Grow, IconButton, Paper, Tooltip, Typography, useMediaQuery
+  Badge, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Grow, IconButton, Tooltip, Typography, useMediaQuery
 } from '@material-ui/core'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import {
   HelpOutline as HelpIcon,
-  Label as LabelsOnIcon,
-  LabelOff as LabelsOffIcon,
   ChevronRight as NextTermIcon,
   ChevronLeft as PreviousTermIcon,
   Tune as SettingsIcon,
   ShoppingBasket as SelectionIcon,
 } from '@material-ui/icons'
-import { api } from '../../../api'
-import ForceGraph2D from 'react-force-graph-2d'
 import { useSearchContext } from '../context'
 import { TermGraph } from './graph'
-import { SizeMe } from 'react-sizeme'
 import { HelpTray, NodeSelectionTray, SettingsTray } from './trays'
 import { useLocalStorage } from '../../../hooks'
 
@@ -112,8 +106,6 @@ export const TermDialog = ({ open, closeHandler }) => {
   const classes = useStyles()
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
-  const [children, setChildren] = useState([])
-  const [parents, setParents] = useState([])
   const [resetFlag, setResetFlag] = useState(false)
   const [graphSettings, setGraphSettings] = useLocalStorage('settings', { ...defaultGraphSettings })
 

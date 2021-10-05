@@ -1,22 +1,11 @@
-import { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
-import axios from 'axios'
-import { Button, Slide, Paper, Typography } from '@material-ui/core'
-import {
-  ChevronLeft as PreviousTermIcon,
-  ChevronRight as NextTermIcon,
-  Close as DeleteIcon,
-  ArrowForward as ActionIcon,
-} from '@material-ui/icons'
-import { makeStyles, useTheme } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles'
 import { api } from '../../../api'
 import ForceGraph2D from 'react-force-graph-2d'
-import { useSearchContext } from '../context'
 import { useDialogContext } from './'
 import { SizeMe } from 'react-sizeme'
 import * as d3Force from 'd3-force'
-
-const SELECTED_NODE_COLOR = '#378f91'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -87,7 +76,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export const TermGraph = ({ term, height, width }) => {
+export const TermGraph = ({ term }) => {
   const {
     selectedNodes, setSelectedNodes, selectionPalette, toggleNodeSelection,
     graphSettings,
@@ -138,14 +127,14 @@ export const TermGraph = ({ term, height, width }) => {
     }
   }, [term])
 
-  const tooltip = ({ id, name, description, color, hasChildren }) => `
+  const tooltip = ({ id, name, description, color }) => `
     <div class="${ classes.tooltip }" style="background-color: ${ color }">
       <h3 class="${ classes.tooltipTitle }">${ name }</h3>
       <p class="${ classes.tooltipDetail }"><em>${ id }</em></p>
       <p class="${ classes.tooltipDescription }">comment_annotation: ${ description || 'none provided' }</p>
     </div>`
 
-  const handleNodeRightClick = async (node, event) => {
+  const handleNodeRightClick = async node => {
     const children = await api.hierarchicalChildren(encodeURIComponent(encodeURIComponent(node.iri)))
     const newNodes = children
       .filter(child => !visibleNodes.includes(child.short_form))
@@ -157,7 +146,7 @@ export const TermGraph = ({ term, height, width }) => {
     })
   }
 
-  const handleNodeLeftClick = (node, event) => toggleNodeSelection(node.id)
+  const handleNodeLeftClick = node => toggleNodeSelection(node.id)
 
   const nodePaint = ({ id, x, y, color, hasChildren }, ctx, globalScale) => {
     if (id in selectedNodes) {
@@ -234,6 +223,4 @@ TermGraph.propTypes = {
     has_children: PropTypes.bool.isRequired,
     comment_annotation: PropTypes.string.isRequired,
   }).isRequired,
-  height: PropTypes.number.isRequired,
-  width: PropTypes.number.isRequired,
 }

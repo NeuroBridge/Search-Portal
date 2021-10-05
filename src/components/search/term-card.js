@@ -68,6 +68,12 @@ export const TermCard = ({ term, clickHandler }) => {
 }
 
 TermCard.propTypes = {
-  term: PropTypes.string.isRequired,
+  term: PropTypes.shape({
+    iri: PropTypes.string.isRequired,
+    short_form: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+    has_children: PropTypes.bool.isRequired,
+    comment_annotation: PropTypes.string,
+  }).isRequired,
   clickHandler: PropTypes.func.isRequired,
 }

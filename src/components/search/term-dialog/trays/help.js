@@ -1,6 +1,5 @@
-import { forwardRef } from 'react'
 import PropTypes from 'prop-types'
-import { Card, CardContent, CardHeader, Divider, Grow, List, ListItem, Typography } from '@material-ui/core'
+import { Divider, List, ListItem, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { useDialogContext } from '../'
 import { Tray } from '../tray'
@@ -51,10 +50,6 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const GrowTransition = forwardRef(function Transition(props, ref) {
-  return <Grow direction="left" ref={ ref } { ...props } />
-})
-
 const Node = ({ color = '#ccc' }) => {
   const classes = useStyles()
   return (
@@ -91,7 +86,7 @@ SelectedNode.propTypes = {
 }
 
 export const HelpTray = () => {
-  const { openTray, selectionPalette } = useDialogContext()
+  const { openTray } = useDialogContext()
   const classes = useStyles()
 
   return (

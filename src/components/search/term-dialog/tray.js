@@ -1,8 +1,7 @@
 import { forwardRef } from 'react'
 import PropTypes from 'prop-types'
-import { Card, CardActions, CardContent, CardHeader, Divider, List, ListItem, Slide, Typography } from '@material-ui/core'
+import { Card, CardActions, CardContent, CardHeader, Slide } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import { useDialogContext } from './'
 
 const useStyles = makeStyles(theme => ({
   root: {
