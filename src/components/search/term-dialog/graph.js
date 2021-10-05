@@ -80,6 +80,7 @@ export const TermGraph = ({ term }) => {
   const {
     selectedNodes, setSelectedNodes, selectionPalette, toggleNodeSelection,
     graphSettings,
+    busy, setBusy,
   } = useDialogContext()
   const classes = useStyles()
   const [graphData, setGraphData] = useState({ nodes: [], links: [] })
@@ -117,6 +118,7 @@ export const TermGraph = ({ term }) => {
     }
 
     const graphDescendants = async root => {
+      setBusy(true)
       console.log(root.label)
 
       api.descendants(root)
@@ -139,6 +141,7 @@ export const TermGraph = ({ term }) => {
             links = [...links, ...children.map(child => createLink(nonLeaves[i], child))]
           })
           setGraphData({ nodes, links })
+          setBusy(false)
         })
         .catch(error => console.log(error))
     }

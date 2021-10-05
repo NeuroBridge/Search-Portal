@@ -1,7 +1,7 @@
 import { createContext, forwardRef, useContext, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import {
-  Badge, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Grow, IconButton, Tooltip, Typography, useMediaQuery
+  Badge, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Grow, IconButton, LinearProgress, Tooltip, Typography, useMediaQuery
 } from '@material-ui/core'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import {
@@ -108,6 +108,7 @@ export const TermDialog = ({ open, closeHandler }) => {
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const [resetFlag, setResetFlag] = useState(false)
   const [graphSettings, setGraphSettings] = useLocalStorage('settings', { ...defaultGraphSettings })
+  const [busy, setBusy] = useState(true)
 
   useEffect(() => {
     resetDialogState()
@@ -170,6 +171,7 @@ export const TermDialog = ({ open, closeHandler }) => {
           resetGraph,
           graphSettings, setGraphSettings,
           graphModes,
+          busy, setBusy,
         }}
       >
         <DialogTitle className={ classes.dialogHeader } disableTypography>
@@ -186,6 +188,7 @@ export const TermDialog = ({ open, closeHandler }) => {
           </Tooltip>
         </DialogTitle>
 
+        <LinearProgress variant={ busy ? 'indeterminate' : 'determinate' } value={ 100 } />
         <Divider />
         
         <div className={ classes.toolbar }>
