@@ -215,7 +215,7 @@ export const TermDialog = ({ open, closeHandler }) => {
 
         <DialogContent className={ classes.content }>
           <div className={ classes.graphContainer }>
-            <TermGraph term={ currentTerm } key={ resetFlag } />
+            <TermGraph term={ currentTerm } key={ currentTerm.short_form } />
           </div>
           <HelpTray />
           <NodeSelectionTray />

@@ -73,7 +73,7 @@ TermCard.propTypes = {
     short_form: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
     has_children: PropTypes.bool.isRequired,
-    comment_annotation: PropTypes.string,
+    comment_annotation: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   }).isRequired,
   clickHandler: PropTypes.func.isRequired,
 }
