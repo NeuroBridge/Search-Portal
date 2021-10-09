@@ -12,7 +12,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     opacity: 0.9,
-    overflowY: 'scroll',
+    overflowY: 'auto',
   },
   header: {
     backgroundColor: theme.palette.grey[500],

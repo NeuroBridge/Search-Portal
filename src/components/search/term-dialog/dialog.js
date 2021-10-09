@@ -1,4 +1,4 @@
-import { createContext, forwardRef, useContext, useEffect, useState } from 'react'
+import { createContext, forwardRef, useContext, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import {
   Badge, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Grow, IconButton, LinearProgress, Tooltip, Typography, useMediaQuery
@@ -46,14 +46,6 @@ const useStyles = makeStyles(theme => ({
     padding: 0,
     overflow: 'hidden',
   },
-  graphContainer: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    overflow: 'hidden',
-  },
   toolbar: {
     height: '3rem',
     display: 'flex',
@@ -85,17 +77,11 @@ const graphModes = [
 const defaultGraphSettings = {
   node: {
     size: 3,
-    labels: {
-      on: false,
-      height: 0,
-      font: {
-        size: 12,
-      }
-    }
+    separation: 50,
   },
-  mode: 'td',
-  levelDistance: 50,
-  force: 20,
+  level: {
+    separation: 50,
+  }
 }
 
 export const TermDialog = ({ open, closeHandler }) => {
@@ -115,29 +101,29 @@ export const TermDialog = ({ open, closeHandler }) => {
   }, [currentTerm])
 
   const resetDialogState = () => {
-    setSelectedNodes([])
+    emptySelectedNodes({})
     setOpenTray(null)
   }
 
-  const emptySelectedNodes = () => setSelectedNodes([])
+  const emptySelectedNodes = () => setSelectedNodes({})
 
   const handleClickNextTerm = () => setCurrentTerm(nextTerm)
 
   const handleClickPreviousTerm = () => setCurrentTerm(previousTerm)
 
-  const toggleNodeSelection = id => {
-    let newSelection = { ...selectedNodes }
-    if (id in newSelection) {
-      newSelection[id] = (newSelection[id] + 1) % 3
+  const toggleNodeSelection = useRef()
+  toggleNodeSelection.current = id => {
+    const newSelectedNodes = { ...selectedNodes }
+    if (id in newSelectedNodes) {
+      newSelectedNodes[id] = (newSelectedNodes[id] + 1 ) % 3
+      setSelectedNodes(newSelectedNodes)
     } else {
-      newSelection = { ...newSelection, [id]: 0 }
+      newSelectedNodes[id] = 0
+      setSelectedNodes(newSelectedNodes)
     }
-    setSelectedNodes(newSelection)
   }
 
   const deselectNode = id => {
-    console.log(id)
-    console.log(selectedNodes)
     const newSelection = { ...selectedNodes }
     delete newSelection[id]
     setSelectedNodes(newSelection)
@@ -214,9 +200,7 @@ export const TermDialog = ({ open, closeHandler }) => {
         <Divider />
 
         <DialogContent className={ classes.content }>
-          <div className={ classes.graphContainer }>
-            <TermGraph term={ currentTerm } key={ currentTerm.short_form } />
-          </div>
+          <TermGraph term={ currentTerm } />
           <HelpTray />
           <NodeSelectionTray />
           <SettingsTray />

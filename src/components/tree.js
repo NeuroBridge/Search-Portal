@@ -1,25 +1,30 @@
-import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
-import { CircularProgress } from '@material-ui/core'
+import { useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import * as d3 from 'd3'
 
-export const Tree = ({ relations, height, width }) => {
-  const svgContainer = useRef()
+export const Tree = ({
+  relations,
+  height = 500,
+  width = 500,
+  onNodeLeftClick,
+  nodeColor,
+  settings,
+}) => {
+  const svgElement = useRef()
 
-  useEffect(async () => {
-    if (!relations || !svgContainer.current) {
+  useEffect(() => {
+    if (!relations || !svgElement.current) {
       return
     }
 
     // construct hierarchical tree data from flat list of child-parent relations
-    const tree = data => {
-      const root = d3.hierarchy(relations)
-      root.dx = 10
-      root.dy = width / (root.height + 1)
+    const tree = () => {
+      const root = d3.stratify()(relations)
+      root.dx = settings.node.separation
+      root.dy = settings.level.separation
       return d3.tree().nodeSize([root.dx, root.dy])(root)
     }
     const treeData = tree(relations)
-    console.log(treeData)
 
     //
 
@@ -30,17 +35,28 @@ export const Tree = ({ relations, height, width }) => {
       if (d.x < x0) { x0 = d.x }
     })
 
-    const svg = d3.create('svg')
+    const drag = d3.drag()
+      .on('start', () => { console.log('+ START DRAG') })
+      .on('drag', function(event) {
+        console.log('event', event)
+        console.log('this', this)
+      })
+      .on('end', () => { console.log('+ END DRAG') })
+
+    const svg = d3.select(svgElement.current)
         .attr('width', width)
         .attr('height', height)
         .attr('viewBox', [0, 0, width, x1 - x0 + treeData.dx * 2])
+        .style('z-index', '-1')
+        .style('border', '1px dashed red') // temp
+        .call(drag)
 
     const g = svg.append('g')
         .attr('font-family', 'sans-serif')
         .attr('font-size', 10)
-        .attr('transform', `translate(${ treeData.dy / 3 },${ treeData.dx - x0 })`)
+        .attr('transform', `translate(${ treeData.dy },${ treeData.dx - x0 })`)
 
-    const link = g.append('g')
+    g.append('g')
         .attr('fill', 'none')
         .attr('stroke', '#555')
         .attr('stroke-opacity', 0.4)
@@ -56,34 +72,48 @@ export const Tree = ({ relations, height, width }) => {
         .attr('stroke-linejoin', 'round')
         .attr('stroke-width', 3)
       .selectAll('g')
-      .data(treeData.descendants())
-      .join('g')
-        .attr('transform', d => `translate(${ d.y },${ d.x })`)
+        .data(treeData.descendants())
+        .join('g')
+          .attr('transform', d => `translate(${ d.y },${ d.x })`)
 
     node.append('circle')
-        .attr('fill', d => d.children ? '#555' : '#999')
-        .attr('r', 2.5)
+        .attr('fill', nodeColor)
+        .attr('stroke', '#333')
+        .attr('stroke-width', 1)
+        .attr('r', settings.node.size)
+        .style('cursor', 'pointer')
+        .on('click', (event, d) => onNodeLeftClick(d.data.id))
 
     node.append('text')
-        .attr('dy', '0.31em')
-        .attr('x', d => d.children ? -6 : 6)
+        .attr('y', -6)
+        .attr('x', d => d.children ? -6 - settings.node.size : 6 + settings.node.size)
         .attr('text-anchor', d => d.children ? 'end' : 'start')
-        .text(d => d.data.name)
+        .text(d => d.data.id)
+        .attr('fill', '#333')
       .clone(true).lower()
-        .attr('stroke', 'white')
-
-      svgContainer.current.appendChild(svg.node())
+        .attr('stroke', nodeColor)
+        .style('filter', 'opacity(0.33)')
+        .attr('stroke-width', 8)
   }, [relations])
 
   return (
-    <Fragment>
-      <div ref={ svgContainer } />
-    </Fragment>
+    <svg ref={ svgElement } />
   )
 }
 
 Tree.propTypes = {
-  relations: PropTypes.array.isRequired,
+  relations: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      parentId: PropTypes.string,
+    })
+  ).isRequired,
   height: PropTypes.number.isRequired,
   width: PropTypes.number.isRequired,
+  onNodeLeftClick: PropTypes.func,
+  nodeColor: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.func,
+  ]).isRequired,
+  settings:PropTypes.object,
 }

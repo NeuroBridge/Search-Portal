@@ -154,7 +154,7 @@ export const HelpTray = () => {
         </ListItem>
         <ListItem className={ classes.listItem }>
           <Typography color="primary" className={ classes.listItemText }>
-           <strong>Right click:</strong>&nbsp; Fetch & reveal children
+           <strong>Right click:</strong>&nbsp; Show/hide children
          </Typography>
         </ListItem>
         <ListItem className={ classes.listItem }>

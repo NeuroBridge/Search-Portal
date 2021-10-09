@@ -84,7 +84,7 @@ export const NodeSelectionTray = () => {
                 color="primary"
                 classes={{ root: classes.selectionChip }}
                 style={{ backgroundColor: selectionPalette[selectedNodes[id]] }}
-                onClick={ () => toggleNodeSelection(id) }
+                onClick={ () => toggleNodeSelection.current(id) }
                 onDelete={ () => deselectNode(id) }
               />
             </Fade>
