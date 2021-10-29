@@ -209,6 +209,13 @@ export const TermGraph = ({ term }) => {
     }
   }
 
+  const nodeAreaPaint = ({ id, x, y }, color, ctx, globalScale) => {
+    ctx.fillStyle = color
+    ctx.beginPath()
+    ctx.arc(x, y, graphSettings.node.size, 0, 2 * Math.PI, false)
+    ctx.fill()
+  }
+
   return (
     <div className={ classes.root } ref={ container }>
       <SizeMe monitorHeight>
@@ -230,6 +237,7 @@ export const TermGraph = ({ term }) => {
               onNodeRightClick={ (node, event) => handleNodeRightClick(node, event) }
               nodeLabel={ node => tooltip({ ...node }) }
               nodeCanvasObject={ nodePaint }
+              nodePointerAreaPaint={ nodeAreaPaint }
             />
           )
         }
