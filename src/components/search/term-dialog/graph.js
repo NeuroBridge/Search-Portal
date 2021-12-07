@@ -48,10 +48,11 @@ export const TermGraph = ({ term }) => {
             setPercentComplete(100 * rels.length / (descendants.length + 1))
           }
           setRelations(rels)
-          setBusy(false)
         })
         .catch(error => {
           console.log(error)
+        })
+        .finally(() => {
           setBusy(false)
         })
     }

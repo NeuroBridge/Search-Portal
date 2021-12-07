@@ -35,13 +35,10 @@ export const Tree = ({
       if (d.x < x0) { x0 = d.x }
     })
 
-    const drag = d3.drag()
-      .on('start', () => { console.log('+ START DRAG') })
-      .on('drag', function(event) {
-        console.log('event', event)
-        console.log('this', this)
+    const drag = d3.zoom()
+      .on('zoom', () => {
+        d3.select('.transform-group').attr('transform', event.originalTarget.__zoom)
       })
-      .on('end', () => { console.log('+ END DRAG') })
 
     const svg = d3.select(svgElement.current)
         .attr('width', width)
@@ -51,10 +48,14 @@ export const Tree = ({
         .style('border', '1px dashed red') // temp
         .call(drag)
 
-    const g = svg.append('g')
+    const gTransform = svg.append('g')
+        .attr('class', 'transform-group')
+
+    const g = gTransform.append('g')
+        .attr('class', 'wrapper')
         .attr('font-family', 'sans-serif')
         .attr('font-size', 10)
-        .attr('transform', `translate(${ treeData.dy },${ treeData.dx - x0 })`)
+        // .attr('transform', `translate(${ treeData.dy },${ treeData.dx - x0 })`)
 
     g.append('g')
         .attr('fill', 'none')
@@ -107,7 +108,7 @@ Tree.propTypes = {
       id: PropTypes.string.isRequired,
       parentId: PropTypes.string,
     })
-  ).isRequired,
+  ),
   height: PropTypes.number.isRequired,
   width: PropTypes.number.isRequired,
   onNodeLeftClick: PropTypes.func,
