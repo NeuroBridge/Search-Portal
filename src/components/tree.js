@@ -9,8 +9,12 @@ export const Tree = ({
   onNodeLeftClick,
   nodeColor,
   settings,
+  offset,
+  setOffset,
 }) => {
   const svgElement = useRef()
+
+  console.log('rendering tree')
 
   useEffect(() => {
     if (!relations || !svgElement.current) {
@@ -38,6 +42,7 @@ export const Tree = ({
     const drag = d3.zoom()
       .on('zoom', () => {
         d3.select('.transform-group').attr('transform', event.originalTarget.__zoom)
+        setOffset(event.originalTarget.__zoom)
       })
 
     const svg = d3.select(svgElement.current)
@@ -53,8 +58,7 @@ export const Tree = ({
 
     const g = gTransform.append('g')
         .attr('class', 'wrapper')
-        .attr('font-family', 'sans-serif')
-        .attr('font-size', 10)
+        .attr('transform', offset)
         // .attr('transform', `translate(${ treeData.dy },${ treeData.dx - x0 })`)
 
     g.append('g')
@@ -62,6 +66,8 @@ export const Tree = ({
         .attr('stroke', '#555')
         .attr('stroke-opacity', 0.4)
         .attr('stroke-width', 1.5)
+        .attr('font-family', 'sans-serif')
+        .attr('font-size', 10)
       .selectAll('path')
         .data(treeData.links())
         .join('path')
@@ -116,5 +122,11 @@ Tree.propTypes = {
     PropTypes.string,
     PropTypes.func,
   ]).isRequired,
-  settings:PropTypes.object,
+  settings: PropTypes.object,
+  offset: PropTypes.object,
+  setOffset: PropTypes.func,
+}
+
+Tree.defaultProps = {
+  offset: { x: 0, y: 0, z: 0 },
 }

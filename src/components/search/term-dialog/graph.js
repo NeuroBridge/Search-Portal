@@ -20,7 +20,7 @@ const useStyles = makeStyles(() => ({
 }))
 
 export const TermGraph = ({ term }) => {
-  const { graphSettings, busy, setBusy, selectedNodes, setSelectedNodes, selectionPalette, toggleNodeSelection } = useDialogContext()
+  const { graphSettings, busy, setBusy, selectedNodes, setSelectedNodes, selectionPalette, toggleNodeSelection, graphOffset, setGraphOffset } = useDialogContext()
   const classes = useStyles()
   const [relations, setRelations] = useState(null)
   const [svgDimensions, setSvgDimensions] = useState({ width: 500, height: 500 })
@@ -67,18 +67,18 @@ export const TermGraph = ({ term }) => {
 
   return (
     <div className={ classes.root }>
-      {
-        !busy && (
-          <Tree
-            key={ Date.now() }
-            relations={ relations }
-            { ...svgDimensions }
-            onNodeLeftClick={ toggleNodeSelection.current }
-            nodeColor={ d => d.data.id in selectedNodes ? selectionPalette[selectedNodes[d.data.id]] : '#a9abb0' }
-            settings={ graphSettings }
-          />
-        )
-      }
+      { !busy && (
+        <Tree
+          key={ JSON.stringify({ graphSettings, relations, selectedNodes }) }
+          { ...svgDimensions }
+          relations={ relations }
+          onNodeLeftClick={ toggleNodeSelection.current }
+          nodeColor={ d => d.data.id in selectedNodes ? selectionPalette[selectedNodes[d.data.id]] : '#a9abb0' }
+          settings={ graphSettings }
+          offset={ graphOffset }
+          setOffset={ setGraphOffset }
+        />
+      ) }
       <ResizeObserver
         onResize={ container => {
           setSvgDimensions({ width: container.width, height: container.height })

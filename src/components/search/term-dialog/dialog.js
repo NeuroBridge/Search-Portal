@@ -65,15 +65,6 @@ const DialogTransition = forwardRef(function Transition(props, ref) {
   return <Grow direction="up" ref={ ref } { ...props } />
 })
 
-const graphModes = [
-  { id: 'td',        name: 'top-down' },
-  { id: 'bu',        name: 'bottom-up' },
-  { id: 'lr',        name: 'left-to-right' },
-  { id: 'rl',        name: 'right-to-left' },
-  { id: 'radialin',  name: 'radially inward' },
-  { id: 'radialout', name: 'radially outward' },
-]
-
 const defaultGraphSettings = {
   node: {
     size: 3,
@@ -94,7 +85,9 @@ export const TermDialog = ({ open, closeHandler }) => {
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const [resetFlag, setResetFlag] = useState(false)
   const [graphSettings, setGraphSettings] = useLocalStorage('settings', { ...defaultGraphSettings })
+  const [graphOffset, setGraphOffset] = useState({ x: 0, y: 0, z: 0 })
   const [busy, setBusy] = useState(true)
+  console.log('rendering dialog')
 
   useEffect(() => {
     resetDialogState()
@@ -156,8 +149,8 @@ export const TermDialog = ({ open, closeHandler }) => {
           openTray, setOpenTray,
           resetGraph,
           graphSettings, setGraphSettings,
-          graphModes,
           busy, setBusy,
+          graphOffset, setGraphOffset,
         }}
       >
         <DialogTitle className={ classes.dialogHeader } disableTypography>
