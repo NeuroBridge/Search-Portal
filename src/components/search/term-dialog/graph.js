@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/core/styles'
 import { useDialogContext } from './'
@@ -20,14 +20,20 @@ const useStyles = makeStyles(() => ({
 }))
 
 export const TermGraph = ({ term }) => {
-  const { graphSettings, busy, setBusy, selectedNodes, setSelectedNodes, selectionPalette, toggleNodeSelection, graphOffset, setGraphOffset } = useDialogContext()
+  const {
+    busy, setBusy, graphSettings,
+    selectedNodes, emptySelectedNodes, selectionPalette,
+    toggleNodeSelection, graphOffset, setGraphOffset
+  } = useDialogContext()
   const classes = useStyles()
   const [relations, setRelations] = useState(null)
   const [svgDimensions, setSvgDimensions] = useState({ width: 500, height: 500 })
   const [percentComplete, setPercentComplete] = useState(0)
 
+  console.log('\nrendering graph\n')
+
   useEffect(() => {
-    setSelectedNodes({})
+    emptySelectedNodes()
     
     if (!term) {
       return
@@ -56,10 +62,10 @@ export const TermGraph = ({ term }) => {
           setBusy(false)
         })
     }
-    
     buildHierarchicalData(term)
-    
   }, [term])
+
+  const nodeColor = useCallback(d => d.data.id in selectedNodes ? selectionPalette[selectedNodes[d.data.id]] : '#a9abb0', [selectedNodes, selectionPalette])
 
   if (busy) {
     return `Loading... ${ percentComplete > 0 ? `${ Math.floor(percentComplete) }%` : '' }`
@@ -67,18 +73,16 @@ export const TermGraph = ({ term }) => {
 
   return (
     <div className={ classes.root }>
-      { !busy && (
-        <Tree
-          key={ JSON.stringify({ graphSettings, relations, selectedNodes }) }
-          { ...svgDimensions }
-          relations={ relations }
-          onNodeLeftClick={ toggleNodeSelection.current }
-          nodeColor={ d => d.data.id in selectedNodes ? selectionPalette[selectedNodes[d.data.id]] : '#a9abb0' }
-          settings={ graphSettings }
-          offset={ graphOffset }
-          setOffset={ setGraphOffset }
-        />
-      ) }
+      <Tree
+        key={ JSON.stringify({ graphSettings, relations, selectedNodes }) } // changing these will trigger a rerender
+        { ...svgDimensions }
+        relations={ relations }
+        onNodeLeftClick={ toggleNodeSelection }
+        nodeColor={ nodeColor }
+        settings={ graphSettings }
+        offset={ graphOffset }
+        setOffset={ setGraphOffset }
+      />
       <ResizeObserver
         onResize={ container => {
           setSvgDimensions({ width: container.width, height: container.height })

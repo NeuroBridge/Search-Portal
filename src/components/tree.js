@@ -14,8 +14,6 @@ export const Tree = ({
 }) => {
   const svgElement = useRef()
 
-  console.log('rendering tree')
-
   useEffect(() => {
     if (!relations || !svgElement.current) {
       return
@@ -40,9 +38,16 @@ export const Tree = ({
     })
 
     const drag = d3.zoom()
-      .on('zoom', () => {
-        d3.select('.transform-group').attr('transform', event.originalTarget.__zoom)
-        setOffset(event.originalTarget.__zoom)
+      .on('zoom', event => {
+        console.log(Object.keys(event))
+        console.log(event.sourceEvent)
+        console.table(event.transform)
+        d3.select('.transform-group').attr('transform', event.transform)
+        setOffset(offset => ({
+          x: offset.x + event.transform.x,
+          y: offset.y + event.transform.y,
+          k: offset.k + event.transform.k,
+        }))
       })
 
     const svg = d3.select(svgElement.current)
@@ -128,5 +133,5 @@ Tree.propTypes = {
 }
 
 Tree.defaultProps = {
-  offset: { x: 0, y: 0, z: 0 },
+  offset: { x: 0, y: 0, k: 1 },
 }

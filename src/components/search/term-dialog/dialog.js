@@ -1,4 +1,4 @@
-import { createContext, forwardRef, useContext, useEffect, useRef, useState } from 'react'
+import { createContext, forwardRef, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import {
   Badge, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Grow, IconButton, LinearProgress, Tooltip, Typography, useMediaQuery
@@ -76,7 +76,7 @@ const defaultGraphSettings = {
 }
 
 export const TermDialog = ({ open, closeHandler }) => {
-  const selectionPalette = { 0: 'teal', 1: 'goldenrod', 2: 'crimson' }
+  const selectionPalette = { 0: 'teal', 1: 'crimson' }
   const { currentTerm, setCurrentTerm, previousTerm, nextTerm } = useSearchContext()
   const [selectedNodes, setSelectedNodes] = useState({})
   const [openTray, setOpenTray] = useState()
@@ -85,10 +85,11 @@ export const TermDialog = ({ open, closeHandler }) => {
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const [resetFlag, setResetFlag] = useState(false)
   const [graphSettings, setGraphSettings] = useLocalStorage('settings', { ...defaultGraphSettings })
-  const [graphOffset, setGraphOffset] = useState({ x: 0, y: 0, z: 0 })
+  const [graphOffset, setGraphOffset] = useState({ x: 0, y: 0, k: 1 })
   const [busy, setBusy] = useState(true)
-  console.log('rendering dialog')
 
+  console.log('\nrendering dialog\n')
+  
   useEffect(() => {
     resetDialogState()
   }, [currentTerm])
@@ -96,6 +97,7 @@ export const TermDialog = ({ open, closeHandler }) => {
   const resetDialogState = () => {
     emptySelectedNodes({})
     setOpenTray(null)
+    setGraphOffset({ x: 0, y: 0, k: 1 })
   }
 
   const emptySelectedNodes = () => setSelectedNodes({})
@@ -104,11 +106,10 @@ export const TermDialog = ({ open, closeHandler }) => {
 
   const handleClickPreviousTerm = () => setCurrentTerm(previousTerm)
 
-  const toggleNodeSelection = useRef()
-  toggleNodeSelection.current = id => {
+  const toggleNodeSelection = id => {
     const newSelectedNodes = { ...selectedNodes }
     if (id in newSelectedNodes) {
-      newSelectedNodes[id] = (newSelectedNodes[id] + 1 ) % 3
+      newSelectedNodes[id] = (newSelectedNodes[id] + 1 ) % Object.keys(selectionPalette).length
       setSelectedNodes(newSelectedNodes)
     } else {
       newSelectedNodes[id] = 0
@@ -122,13 +123,13 @@ export const TermDialog = ({ open, closeHandler }) => {
     setSelectedNodes(newSelection)
   }
 
-  const handleToggleTray = trayId => () => {
+  const handleToggleTray = useCallback(trayId => () => {
     setOpenTray(openTray === trayId ? null : trayId)
-  }
+  }, [])
 
-  const resetGraph = () => {
-    setResetFlag(!resetFlag)
-  }
+  const MemoizedTermGraph = useMemo(() => {
+    return <TermGraph term={ currentTerm } />
+  }, [currentTerm, graphOffset])
 
   if (!currentTerm) {
     return null
@@ -147,7 +148,6 @@ export const TermDialog = ({ open, closeHandler }) => {
         value={{
           selectedNodes, setSelectedNodes, toggleNodeSelection, deselectNode ,emptySelectedNodes, selectionPalette,
           openTray, setOpenTray,
-          resetGraph,
           graphSettings, setGraphSettings,
           busy, setBusy,
           graphOffset, setGraphOffset,
@@ -193,7 +193,7 @@ export const TermDialog = ({ open, closeHandler }) => {
         <Divider />
 
         <DialogContent className={ classes.content }>
-          <TermGraph term={ currentTerm } />
+          { MemoizedTermGraph }
           <HelpTray />
           <NodeSelectionTray />
           <SettingsTray />
