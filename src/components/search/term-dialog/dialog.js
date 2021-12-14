@@ -1,4 +1,4 @@
-import { createContext, forwardRef, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
+import { createContext, forwardRef, memo, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import {
   Badge, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Grow, IconButton, LinearProgress, Tooltip, Typography, useMediaQuery
@@ -18,6 +18,8 @@ import { useLocalStorage } from '../../../hooks'
 
 const DialogContext = createContext({})
 export const useDialogContext = () => useContext(DialogContext)
+
+const NODE_SELECTION_PALETTE = ['teal', 'crimson']
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -75,38 +77,47 @@ const defaultGraphSettings = {
   }
 }
 
+const MemoizedTermGraph = memo(
+  function TG(props) { return <TermGraph term={ props.term } /> },
+  (prevProps, nextProps) => JSON.stringify(prevProps.term) !== JSON.stringify(nextProps.term)
+)
+
+MemoizedTermGraph.propTypes = {
+  term: PropTypes.object,
+}
+
 export const TermDialog = ({ open, closeHandler }) => {
-  const selectionPalette = { 0: 'teal', 1: 'crimson' }
+  const selectionPalette = [...NODE_SELECTION_PALETTE]
   const { currentTerm, setCurrentTerm, previousTerm, nextTerm } = useSearchContext()
-  const [selectedNodes, setSelectedNodes] = useState({})
+  const selection = useRef({})
+  const setSelectedNodes = newNodes => selection.current = newNodes
+  const selectedNodes = useMemo(() => selection.current, [selection.current])
   const [openTray, setOpenTray] = useState()
   const classes = useStyles()
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
-  const [resetFlag, setResetFlag] = useState(false)
   const [graphSettings, setGraphSettings] = useLocalStorage('settings', { ...defaultGraphSettings })
   const [graphOffset, setGraphOffset] = useState({ x: 0, y: 0, k: 1 })
   const [busy, setBusy] = useState(true)
 
   console.log('\nrendering dialog\n')
+  console.log(selection)
+  console.log(selectedNodes)
   
   useEffect(() => {
     resetDialogState()
   }, [currentTerm])
 
   const resetDialogState = () => {
-    emptySelectedNodes({})
+    emptySelectedNodes()
     setOpenTray(null)
-    setGraphOffset({ x: 0, y: 0, k: 1 })
   }
 
-  const emptySelectedNodes = () => setSelectedNodes({})
+  const handleClickNextTerm = useCallback(() => setCurrentTerm(nextTerm), [nextTerm])
+  const handleClickPreviousTerm = useCallback(() => setCurrentTerm(previousTerm), [previousTerm])
 
-  const handleClickNextTerm = () => setCurrentTerm(nextTerm)
-
-  const handleClickPreviousTerm = () => setCurrentTerm(previousTerm)
-
-  const toggleNodeSelection = id => {
+  const emptySelectedNodes = useCallback(() => setSelectedNodes({}), [])
+  const toggleNodeSelection = useCallback(id => {
     const newSelectedNodes = { ...selectedNodes }
     if (id in newSelectedNodes) {
       newSelectedNodes[id] = (newSelectedNodes[id] + 1 ) % Object.keys(selectionPalette).length
@@ -115,8 +126,7 @@ export const TermDialog = ({ open, closeHandler }) => {
       newSelectedNodes[id] = 0
       setSelectedNodes(newSelectedNodes)
     }
-  }
-
+  }, [selectedNodes])
   const deselectNode = id => {
     const newSelection = { ...selectedNodes }
     delete newSelection[id]
@@ -125,11 +135,7 @@ export const TermDialog = ({ open, closeHandler }) => {
 
   const handleToggleTray = useCallback(trayId => () => {
     setOpenTray(openTray === trayId ? null : trayId)
-  }, [])
-
-  const MemoizedTermGraph = useMemo(() => {
-    return <TermGraph term={ currentTerm } />
-  }, [currentTerm, graphOffset])
+  }, [openTray])
 
   if (!currentTerm) {
     return null
@@ -193,7 +199,7 @@ export const TermDialog = ({ open, closeHandler }) => {
         <Divider />
 
         <DialogContent className={ classes.content }>
-          { MemoizedTermGraph }
+          <TermGraph term={ currentTerm } />
           <HelpTray />
           <NodeSelectionTray />
           <SettingsTray />

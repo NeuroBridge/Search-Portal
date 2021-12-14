@@ -30,8 +30,6 @@ export const TermGraph = ({ term }) => {
   const [svgDimensions, setSvgDimensions] = useState({ width: 500, height: 500 })
   const [percentComplete, setPercentComplete] = useState(0)
 
-  console.log('\nrendering graph\n')
-
   useEffect(() => {
     emptySelectedNodes()
     

@@ -40,7 +40,6 @@ export const Tree = ({
     const drag = d3.zoom()
       .on('zoom', event => {
         console.log(Object.keys(event))
-        console.log(event.sourceEvent)
         console.table(event.transform)
         d3.select('.transform-group').attr('transform', event.transform)
         setOffset(offset => ({
@@ -94,7 +93,10 @@ export const Tree = ({
         .attr('stroke-width', 1)
         .attr('r', settings.node.size)
         .style('cursor', 'pointer')
-        .on('click', (event, d) => onNodeLeftClick(d.data.id))
+        .on('click', (event, d) => {
+          event.preventDefault()
+          onNodeLeftClick(d.data.id)
+        })
 
     node.append('text')
         .attr('y', -6)
