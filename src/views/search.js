@@ -3,7 +3,7 @@ import { useSearchContext } from '../components/search/context'
 import { makeStyles } from '@material-ui/core/styles'
 import { Grid, IconButton, Paper, Tooltip, Typography } from '@material-ui/core'
 import { TermCard } from '../components/search/term-card'
-import { TermDialog } from '../components/search/term-dialog'
+import { TermBrowser } from '../components/search/term-browser'
 import { BugReport as DebugIcon } from '@material-ui/icons';
 import ReactJson from 'react-json-view'
 import { SearchHistoryList } from '../components/search/history-list'
@@ -122,7 +122,7 @@ export const SearchView = () => {
               {
                 !!terms.length && terms.map((term, index) => <TermCard term={ term } key={ term.label } clickHandler={ handleClickTerm(index) } />)
               }
-              <TermDialog open={ dialogOpen } term={ currentTerm } closeHandler={ handleClickTerm(null) } />
+              <TermBrowser open={ dialogOpen } term={ currentTerm } closeHandler={ handleClickTerm(null) } />
             </Grid>
           </Grid>
         )

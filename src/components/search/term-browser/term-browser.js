@@ -1,4 +1,4 @@
-import { createContext, forwardRef, memo, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
+import { createContext, forwardRef, useCallback, useContext, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import {
   Badge, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Grow, IconButton, LinearProgress, Tooltip, Typography, useMediaQuery
@@ -12,7 +12,7 @@ import {
   ShoppingBasket as SelectionIcon,
 } from '@material-ui/icons'
 import { useSearchContext } from '../context'
-import { TermGraph } from './graph'
+import { Graph } from './graph'
 import { HelpTray, NodeSelectionTray, SettingsTray } from './trays'
 import { useLocalStorage } from '../../../hooks'
 
@@ -77,21 +77,12 @@ const defaultGraphSettings = {
   }
 }
 
-const MemoizedTermGraph = memo(
-  function TG(props) { return <TermGraph term={ props.term } /> },
-  (prevProps, nextProps) => JSON.stringify(prevProps.term) !== JSON.stringify(nextProps.term)
-)
-
-MemoizedTermGraph.propTypes = {
-  term: PropTypes.object,
-}
-
-export const TermDialog = ({ open, closeHandler }) => {
+export const TermBrowser = ({ open, closeHandler }) => {
   const selectionPalette = [...NODE_SELECTION_PALETTE]
   const { currentTerm, setCurrentTerm, previousTerm, nextTerm } = useSearchContext()
   const selection = useRef({})
   const setSelectedNodes = newNodes => selection.current = newNodes
-  const selectedNodes = useMemo(() => selection.current, [selection.current])
+  const selectedNodes = { ...selection.current }
   const [openTray, setOpenTray] = useState()
   const classes = useStyles()
   const theme = useTheme()
@@ -99,10 +90,6 @@ export const TermDialog = ({ open, closeHandler }) => {
   const [graphSettings, setGraphSettings] = useLocalStorage('settings', { ...defaultGraphSettings })
   const [graphOffset, setGraphOffset] = useState({ x: 0, y: 0, k: 1 })
   const [busy, setBusy] = useState(true)
-
-  console.log('\nrendering dialog\n')
-  console.log(selection)
-  console.log(selectedNodes)
   
   useEffect(() => {
     resetDialogState()
@@ -174,32 +161,12 @@ export const TermDialog = ({ open, closeHandler }) => {
         </DialogTitle>
 
         <LinearProgress variant={ busy ? 'indeterminate' : 'determinate' } value={ 100 } />
-        <Divider />
-        
-        <div className={ classes.toolbar }>
-          <Tooltip title={ `${ openTray === 'help' ? 'Hide' : 'Show' } help` }>
-            <IconButton variant="outlined" onClick={ handleToggleTray('help') }>
-              <HelpIcon color={ openTray === 'help' ? 'secondary' : 'primary' } />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title={ `${ openTray === 'settings' ? 'Hide' : 'Show' } settings` }>
-            <IconButton variant="outlined" onClick={ handleToggleTray('settings') }>
-              <SettingsIcon color={ openTray === 'settings' ? 'secondary' : 'primary' } />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title={ `${ openTray === 'selection' ? 'Hide' : 'Show' } node selection` }>
-            <IconButton variant="outlined" onClick={ handleToggleTray('selection') } >
-              <Badge badgeContent={ Object.keys(selectedNodes).length || 0 } color="secondary">
-                <SelectionIcon color={ openTray === 'selection' ? 'secondary' : 'primary' } />
-              </Badge>
-            </IconButton>
-          </Tooltip>
-        </div>
 
         <Divider />
 
         <DialogContent className={ classes.content }>
-          <TermGraph term={ currentTerm } />
+          <Graph term={ currentTerm } />
+          
           <HelpTray />
           <NodeSelectionTray />
           <SettingsTray />
@@ -214,7 +181,7 @@ export const TermDialog = ({ open, closeHandler }) => {
   )
 }
 
-TermDialog.propTypes = {
+TermBrowser.propTypes = {
   open: PropTypes.bool.isRequired,
   closeHandler: PropTypes.func.isRequired,
 }

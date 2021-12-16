@@ -1,8 +1,9 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/core/styles'
 import { useDialogContext } from './'
-import { Tree } from '../../tree'
+import { useSearchContext } from '../context'
+import { TermTree } from '../../term-tree'
 import { api } from '../../../api'
 import ResizeObserver from 'react-resize-observer'
 
@@ -19,21 +20,18 @@ const useStyles = makeStyles(() => ({
   },
 }))
 
-export const TermGraph = ({ term }) => {
-  const {
-    busy, setBusy, graphSettings,
-    selectedNodes, emptySelectedNodes, selectionPalette,
-    toggleNodeSelection, graphOffset, setGraphOffset
-  } = useDialogContext()
+export const Graph = () => {
+  const { graphSettings, busy, setBusy, selectedNodes, setSelectedNodes, selectionPalette, toggleNodeSelection } = useDialogContext()
+  const { currentTerm, setCurrentTerm, previousTerm, nextTerm } = useSearchContext()
   const classes = useStyles()
   const [relations, setRelations] = useState(null)
   const [svgDimensions, setSvgDimensions] = useState({ width: 500, height: 500 })
   const [percentComplete, setPercentComplete] = useState(0)
 
   useEffect(() => {
-    emptySelectedNodes()
+    setSelectedNodes({})
     
-    if (!term) {
+    if (!currentTerm) {
       return
     }
 
@@ -60,10 +58,10 @@ export const TermGraph = ({ term }) => {
           setBusy(false)
         })
     }
-    buildHierarchicalData(term)
-  }, [term])
-
-  const nodeColor = useCallback(d => d.data.id in selectedNodes ? selectionPalette[selectedNodes[d.data.id]] : '#a9abb0', [selectedNodes, selectionPalette])
+    
+    buildHierarchicalData(currentTerm)
+    
+  }, [currentTerm])
 
   if (busy) {
     return `Loading... ${ percentComplete > 0 ? `${ Math.floor(percentComplete) }%` : '' }`
@@ -71,15 +69,10 @@ export const TermGraph = ({ term }) => {
 
   return (
     <div className={ classes.root }>
-      <Tree
-        key={ JSON.stringify({ graphSettings, relations, selectedNodes }) } // changing these will trigger a rerender
+      <TermTree
+        term={ currentTerm }
         { ...svgDimensions }
-        relations={ relations }
-        onNodeLeftClick={ toggleNodeSelection }
-        nodeColor={ nodeColor }
         settings={ graphSettings }
-        offset={ graphOffset }
-        setOffset={ setGraphOffset }
       />
       <ResizeObserver
         onResize={ container => {
@@ -90,7 +83,7 @@ export const TermGraph = ({ term }) => {
   )
 }
 
-TermGraph.propTypes = {
+Graph.propTypes = {
   term: PropTypes.shape({
     iri: PropTypes.string.isRequired,
     short_form: PropTypes.string.isRequired,
