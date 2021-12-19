@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useMemo, useState } from 'react'
+import { Fragment, useCallback, useState } from 'react'
 import { useSearchContext } from '../components/search/context'
 import { makeStyles } from '@material-ui/core/styles'
 import { Grid, IconButton, Paper, Tooltip, Typography } from '@material-ui/core'
@@ -40,7 +40,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const SearchLanding = () => {
+const LandingPageContent = () => {
   return (
     <Grid container spacing={ 10 }>
       <Grid item xs={ 12 } md={ 8 }>
@@ -71,14 +71,12 @@ const SearchLanding = () => {
 
 export const SearchView = () => {
   const classes = useStyles()
-  const { terms, currentTerm, setCurrentTerm, searchedQuery } = useSearchContext()
-  const dialogOpen = useMemo(() => !!currentTerm, [currentTerm])
+  const { terms, searchedQuery } = useSearchContext()
   const [debugMode, setDebugMode] = useState(false)
 
   const handleClickTerm = index => () => {
-    if (0 <= index && index < terms.length) {
-      setCurrentTerm(terms[index])
-    }
+    console.log(index)
+    console.log(terms[index])
   }
 
   const handleToggleDebugMode = () => setDebugMode(!debugMode)
@@ -102,7 +100,7 @@ export const SearchView = () => {
 
   if (!searchedQuery) {
     return (
-      <SearchLanding />
+      <LandingPageContent />
     )
   }
 
