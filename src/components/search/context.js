@@ -1,16 +1,29 @@
-import { createContext, useContext, useMemo, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { api } from '../../api'
 import { navigate } from '@reach/router'
 const SearchContext = createContext({})
-import { useLocalStorage} from '../../hooks'
+import { useLocalStorage } from '../../hooks'
 
 export const SearchContextProvider = ({ children }) => {
   const [searchHistory, setSearchHistory] = useLocalStorage('search-history', [])
-  const [terms, setTerms] = useState([])
-  const [currentTerm, setCurrentTerm] = useState(null)
-  const [searchedQuery, setSearchedQuery] = useState(null)
   const [busy, setBusy] = useState(false)
+  const [terms, setTerms] = useState([])
+  const [selectedTerms, setSelectedTerms] = useState({})
+  const [searchedQuery, setSearchedQuery] = useState(null)
+
+  useEffect(() => console.log(selectedTerms), [selectedTerms])
+
+  const toggleTermSelection = newTerm => {
+    let newTerms = { ...selectedTerms }
+    const id = newTerm.short_form
+    if (id in newTerms) {
+      delete newTerms[id]
+    } else {
+      newTerms[id] = newTerm
+    }
+    setSelectedTerms({ ...newTerms })
+  }
 
   const doSearch = query => {
     if (query.trim()) {
@@ -38,34 +51,12 @@ export const SearchContextProvider = ({ children }) => {
     setSearchedQuery('')
   }
 
-  const previousTerm = useMemo(() => {
-    if (currentTerm) {
-      const index = terms.findIndex(term => term.short_form === currentTerm.short_form)
-      if (0 <= index - 1) {
-        return terms[index - 1]
-      }
-    }
-    return null
-  }, [currentTerm])
-
-  const nextTerm = useMemo(() => {
-    if (currentTerm) {
-      const index = terms.findIndex(term => term.short_form === currentTerm.short_form)
-      if (index + 1 < terms.length) {
-        return terms[index + 1]
-      }
-    }
-    return null
-  }, [currentTerm])
-
   return (
     <SearchContext.Provider
       value={{
         busy, resetSearch,
         doSearch,
-        terms,
-        currentTerm, setCurrentTerm,
-        previousTerm, nextTerm,
+        terms, selectedTerms, toggleTermSelection,
         searchedQuery,
       }}
     >

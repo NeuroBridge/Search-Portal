@@ -71,12 +71,12 @@ const LandingPageContent = () => {
 
 export const SearchView = () => {
   const classes = useStyles()
-  const { terms, searchedQuery } = useSearchContext()
+  const { terms, selectedTerms, toggleTermSelection, searchedQuery } = useSearchContext()
   const [debugMode, setDebugMode] = useState(false)
 
-  const handleClickTerm = index => () => {
-    console.log(index)
-    console.log(terms[index])
+  const handleClickTerm = term => event => {
+    toggleTermSelection(term)
+    console.log(term)
   }
 
   const handleToggleDebugMode = () => setDebugMode(!debugMode)
@@ -117,7 +117,14 @@ export const SearchView = () => {
           <Grid container spacing={ 3 }>
             <Grid item xs={ 12 } className={ classes.grid }>
               {
-                !!terms.length && terms.map((term, index) => <TermCard term={ term } key={ term.label } clickHandler={ handleClickTerm(index) } />)
+                !!terms.length && terms.map((term, index) => (
+                  <TermCard
+                    key={ term.label }
+                    term={ term }
+                    selected={ term.short_form in selectedTerms }
+                    clickHandler={ handleClickTerm(term) }
+                  />
+                ))
               }
             </Grid>
           </Grid>

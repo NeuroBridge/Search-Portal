@@ -1,11 +1,13 @@
 import PropTypes from 'prop-types'
 import {
-  Card, CardActionArea, Typography
+  Card, CardActionArea, IconButton, Typography
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import {
-  ZoomOutMap as ViewTermIcon,
+  CheckBox as CheckedIcon,
+  CheckBoxOutlineBlank as UncheckedIcon,
 } from '@material-ui/icons'
+import { useSearchContext } from './context'
 
 const useStyles = makeStyles(theme => ({
   termCard: {
@@ -29,23 +31,33 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'flex-start',
     // gap: theme.spacing(1),
     padding: theme.spacing(2),
-    '&:hover $viewTermIcon': {
+    '&:hover $checkboxIcon': {
       filter: 'opacity(1.0)',
       transform: 'scale(1.0)',
     },
   },
-  viewTermIcon: {
-    filter: 'opacity(0.1)',
+  checkbox: {
+    filter: 'opacity(0.25)',
     transition: 'filter 250ms',
-    transform: 'scale(0.9)',
+    // transform: 'scale(0.9)',
     position: 'absolute',
-    top: theme.spacing(2),
-    right: theme.spacing(2),
+    top: theme.spacing(1),
+    right: theme.spacing(1),
+  },
+  checkboxIcon: {
   },
 }))
 
-export const TermCard = ({ term, clickHandler }) => {
+export const TermCard = ({ term, clickHandler, selected }) => {
   const classes = useStyles()
+  const { selectedTerms, toggleTermSelection } = useSearchContext()
+
+  const handleClickToggleTerm = term => event => {
+    console.log(event)
+    console.log(term)
+    toggleTermSelection(term)
+  }
+
   return (
     <Card
       variant="outlined"
@@ -61,7 +73,13 @@ export const TermCard = ({ term, clickHandler }) => {
         <Typography variant="caption" color="textSecondary">
           <strong>comment_annotation:</strong> { term.comment_annotation ? term.comment_annotation : 'none provided' }
         </Typography>
-        <ViewTermIcon className={ classes.viewTermIcon } fontSize="small" />
+        <IconButton aria-label="toggle term selection" onClick={ handleClickToggleTerm(term) } className={ classes.checkbox }>
+          {
+            selected
+            ? <CheckedIcon className={ classes.checkboxIcon } fontSize="small" />
+            : <UncheckedIcon className={ classes.checkboxIcon } fontSize="small" />
+          }
+        </IconButton>
       </CardActionArea>
     </Card>
   )
@@ -76,4 +94,9 @@ TermCard.propTypes = {
     comment_annotation: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   }).isRequired,
   clickHandler: PropTypes.func.isRequired,
+  selected: PropTypes.bool.isRequired,
+}
+
+TermCard.defaultProps = {
+  selected: false,
 }
