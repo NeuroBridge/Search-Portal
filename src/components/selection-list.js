@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export const SelectionList = ({ items, onItemDelete }) => {
+export const SelectionList = ({ items, onItemDelete, onItemClick }) => {
   const classes = useStyles()
 
   return (
@@ -30,7 +30,12 @@ export const SelectionList = ({ items, onItemDelete }) => {
     >
       {
         items.map(item => (
-          <Chip key={ `selected-${ item.label }` } label={ item.label } onDelete={ () => onItemDelete(item) } />
+          <Chip
+            key={ `selected-${ item.label }` }
+            label={ item.label }
+            onDelete={ () => onItemDelete(item) }
+            onClick={ () => onItemClick(item) }
+          />
         ))
       }
     </div>
@@ -39,6 +44,7 @@ export const SelectionList = ({ items, onItemDelete }) => {
 
 SelectionList.propTypes = {
   items: PropTypes.array.isRequired,
+  onItemClick: PropTypes.func,
   onItemDelete: PropTypes.func,
   onDeleteSelection: PropTypes.func,
 }

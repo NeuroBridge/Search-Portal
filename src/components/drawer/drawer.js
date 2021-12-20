@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import { IconButton, Drawer as MuiDrawer } from '@material-ui/core'
+import { Button, Drawer as MuiDrawer } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 
 const useStyles = makeStyles(theme => ({
@@ -7,10 +7,10 @@ const useStyles = makeStyles(theme => ({
     position: 'relative',
   },
   drawerPaper: {
+    overflow: 'hidden',
     height: '200px',
-    borderTop: '4px solid #373f51',
     filter: 'drop-shadow(0 0 1rem #00000033)',
-    backgroundColor: '#bbb',
+    backgroundColor: '#676f81',
     paddingRight: theme.spacing(8),
     display: 'flex',
     flexDirection: 'row',
@@ -20,22 +20,27 @@ const useStyles = makeStyles(theme => ({
     overflow: 'auto',
   },
   actions: {
+    '& $Button': {
+      borderRadius: 0,
+    },
     position: 'absolute',
-    padding: theme.spacing(1),
     right: 0,
     top: 0,
     bottom: 0,
     width: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
-    backgroundColor: '#373f5133',
-    borderLeft: '4px solid #373f51',
+    backgroundColor: '#373f51',
+    filter: 'opacity(0.5)',
+    transition: 'filter 250ms',
+    '&:hover': {
+      filter: 'opacity(1.0)',
+    },
   },
 }))
 
 export const Drawer = ({ open, actions, children }) => {
   const classes = useStyles()
-  console.log(actions)
 
   return (
     <MuiDrawer
@@ -50,14 +55,14 @@ export const Drawer = ({ open, actions, children }) => {
       <div className={ classes.actions }>
         {
           actions.map(action => (
-            <IconButton
+            <Button
               key={ `drawer-action-${ action.ariaLabel}`}
               aria-label={ action.ariaLabel }
               onClick={ action.onClick }
               disabled={ action.disabled }
             >
               { action.icon }
-            </IconButton>
+            </Button>
           ))
         }
       </div>

@@ -10,6 +10,7 @@ import { Drawer } from '../components/drawer'
 import { SelectionList } from '../components/selection-list'
 import {
   DeleteSweep as ClearSelectionIcon,
+  Send as SendIcon,
 } from '@material-ui/icons'
 
 const useStyles = makeStyles(theme => ({
@@ -76,11 +77,12 @@ const LandingPageContent = () => {
 
 export const SearchView = () => {
   const classes = useStyles()
-  const { terms, selectedTerms, clearTermSelection, deselectTerm, toggleTermSelection, searchedQuery } = useSearchContext()
+  const { terms, selectedTerms, clearTermSelection, clickSelectedTerm, deselectTerm, toggleTermSelection, searchedQuery } = useSearchContext()
   const [debugMode, setDebugMode] = useState(false)
 
-  const handleClickTerm = term => () => {
-    toggleTermSelection(term)
+  const handleClickTerm = term => () => toggleTermSelection(term)
+  const sendSelection = () => {
+    console.log(selectedTerms)
   }
 
   const handleToggleDebugMode = () => setDebugMode(!debugMode)
@@ -137,13 +139,15 @@ export const SearchView = () => {
       <Drawer
         open={ true }
         actions={[
-          { ariaLabel: 'Clear selection', icon: <ClearSelectionIcon />, onClick: clearTermSelection, disabled: !Object.keys(selectedTerms).length },
+          { ariaLabel: 'Clear selection', icon: <ClearSelectionIcon style={{ fill: 'crimson' }} />, onClick: clearTermSelection, disabled: !Object.keys(selectedTerms).length },
+          { ariaLabel: 'Send', icon: <SendIcon color="secondary" />, onClick: sendSelection, disabled: !Object.keys(selectedTerms).length },
         ]}
       >
         <SelectionList
           items={ Object.keys(selectedTerms).map(key => selectedTerms[key]) }
           onDeleteSelection={ clearTermSelection }
           onItemDelete={ term => deselectTerm(term) }
+          onItemClick={ clickSelectedTerm }
         />
       </Drawer>
     </Fragment>

@@ -45,6 +45,10 @@ export const SearchContextProvider = ({ children }) => {
     setSelectedTerms({})
   }
 
+  const clickSelectedTerm = term => {
+    console.log(`clicked ${ term.label }`)
+  }
+
   const doSearch = query => {
     if (query.trim()) {
       setBusy(true)
@@ -77,7 +81,7 @@ export const SearchContextProvider = ({ children }) => {
         busy, resetSearch,
         doSearch,
         terms, selectedTerms,
-        selectTerm, deselectTerm, toggleTermSelection, clearTermSelection,
+        selectTerm, deselectTerm, toggleTermSelection, clearTermSelection, clickSelectedTerm,
         searchedQuery,
       }}
     >
