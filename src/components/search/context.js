@@ -12,7 +12,7 @@ export const SearchContextProvider = ({ children }) => {
   const [selectedTerms, setSelectedTerms] = useState({})
   const [searchedQuery, setSearchedQuery] = useState(null)
 
-  useEffect(() => console.log(selectedTerms), [selectedTerms])
+  useEffect(() => console.log(Object.keys(selectedTerms)), [selectedTerms])
 
   const toggleTermSelection = newTerm => {
     let newTerms = { ...selectedTerms }
@@ -23,6 +23,26 @@ export const SearchContextProvider = ({ children }) => {
       newTerms[id] = newTerm
     }
     setSelectedTerms({ ...newTerms })
+  }
+
+  const selectTerm = newTerm => {
+    let newTerms = { ...selectedTerms }
+    const id = newTerm.short_form
+    newTerms[id] = newTerm
+    setSelectedTerms({ ...newTerms })
+  }
+
+  const deselectTerm = newTerm => {
+    let newTerms = { ...selectedTerms }
+    const id = newTerm.short_form
+    if (id in newTerms) {
+      delete newTerms[id]
+    }
+    setSelectedTerms({ ...newTerms })
+  }
+
+  const clearTermSelection = () => {
+    setSelectedTerms({})
   }
 
   const doSearch = query => {
@@ -56,7 +76,8 @@ export const SearchContextProvider = ({ children }) => {
       value={{
         busy, resetSearch,
         doSearch,
-        terms, selectedTerms, toggleTermSelection,
+        terms, selectedTerms,
+        selectTerm, deselectTerm, toggleTermSelection, clearTermSelection,
         searchedQuery,
       }}
     >

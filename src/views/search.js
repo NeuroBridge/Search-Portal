@@ -6,6 +6,11 @@ import { TermCard } from '../components/search/term-card'
 import { BugReport as DebugIcon } from '@material-ui/icons';
 import ReactJson from 'react-json-view'
 import { SearchHistoryList } from '../components/search/history-list'
+import { Drawer } from '../components/drawer'
+import { SelectionList } from '../components/selection-list'
+import {
+  DeleteSweep as ClearSelectionIcon,
+} from '@material-ui/icons'
 
 const useStyles = makeStyles(theme => ({
   '@keyframes fadeIn': {
@@ -71,12 +76,11 @@ const LandingPageContent = () => {
 
 export const SearchView = () => {
   const classes = useStyles()
-  const { terms, selectedTerms, toggleTermSelection, searchedQuery } = useSearchContext()
+  const { terms, selectedTerms, clearTermSelection, deselectTerm, toggleTermSelection, searchedQuery } = useSearchContext()
   const [debugMode, setDebugMode] = useState(false)
 
-  const handleClickTerm = term => event => {
+  const handleClickTerm = term => () => {
     toggleTermSelection(term)
-    console.log(term)
   }
 
   const handleToggleDebugMode = () => setDebugMode(!debugMode)
@@ -117,7 +121,7 @@ export const SearchView = () => {
           <Grid container spacing={ 3 }>
             <Grid item xs={ 12 } className={ classes.grid }>
               {
-                !!terms.length && terms.map((term, index) => (
+                !!terms.length && terms.map(term => (
                   <TermCard
                     key={ term.label }
                     term={ term }
@@ -130,6 +134,18 @@ export const SearchView = () => {
           </Grid>
         )
       }
+      <Drawer
+        open={ true }
+        actions={[
+          { ariaLabel: 'Clear selection', icon: <ClearSelectionIcon />, onClick: clearTermSelection, disabled: !Object.keys(selectedTerms).length },
+        ]}
+      >
+        <SelectionList
+          items={ Object.keys(selectedTerms).map(key => selectedTerms[key]) }
+          onDeleteSelection={ clearTermSelection }
+          onItemDelete={ term => deselectTerm(term) }
+        />
+      </Drawer>
     </Fragment>
   )
 }

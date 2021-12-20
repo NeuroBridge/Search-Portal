@@ -1,13 +1,12 @@
 import PropTypes from 'prop-types'
 import {
-  Card, CardActionArea, IconButton, Typography
+  Card, CardActionArea, Typography
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import {
   CheckBox as CheckedIcon,
   CheckBoxOutlineBlank as UncheckedIcon,
 } from '@material-ui/icons'
-import { useSearchContext } from './context'
 
 const useStyles = makeStyles(theme => ({
   termCard: {
@@ -31,8 +30,8 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'flex-start',
     // gap: theme.spacing(1),
     padding: theme.spacing(2),
-    '&:hover $checkboxIcon': {
-      filter: 'opacity(1.0)',
+    '&:hover $checkbox': {
+      filter: 'opacity(0.7)',
       transform: 'scale(1.0)',
     },
   },
@@ -50,13 +49,6 @@ const useStyles = makeStyles(theme => ({
 
 export const TermCard = ({ term, clickHandler, selected }) => {
   const classes = useStyles()
-  const { selectedTerms, toggleTermSelection } = useSearchContext()
-
-  const handleClickToggleTerm = term => event => {
-    console.log(event)
-    console.log(term)
-    toggleTermSelection(term)
-  }
 
   return (
     <Card
@@ -73,13 +65,11 @@ export const TermCard = ({ term, clickHandler, selected }) => {
         <Typography variant="caption" color="textSecondary">
           <strong>comment_annotation:</strong> { term.comment_annotation ? term.comment_annotation : 'none provided' }
         </Typography>
-        <IconButton aria-label="toggle term selection" onClick={ handleClickToggleTerm(term) } className={ classes.checkbox }>
-          {
-            selected
-            ? <CheckedIcon className={ classes.checkboxIcon } fontSize="small" />
-            : <UncheckedIcon className={ classes.checkboxIcon } fontSize="small" />
-          }
-        </IconButton>
+        {
+          selected
+          ? <CheckedIcon className={ classes.checkbox } />
+          : <UncheckedIcon className={ classes.checkbox } />
+        }
       </CardActionArea>
     </Card>
   )

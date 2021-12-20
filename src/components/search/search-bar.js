@@ -50,12 +50,27 @@ export const SearchBar = () => {
   return (
       <div>
         <form className={ classes.form } noValidate autoComplete="off" onSubmit={ handleSubmit }>
-          <InputBase className={ classes.input } id="query-field" label="Enter Query" type="search" variant="filled" inputRef={ inputRef } endAdornment={ !mobile && <small className={ classes.inputTip }>Press \ to focus</small> }/>
-          <IconButton type="submit" className={classes.iconButton} aria-label="search">
+          <InputBase
+            className={ classes.input }
+            id="query-field"
+            label="Enter Query"
+            type="search"
+            variant="filled"
+            inputRef={ inputRef }
+            endAdornment={ !mobile && <small className={ classes.inputTip }>Press \ to focus</small> }
+          />
+          <IconButton
+            type="submit"
+            className={ classes.iconButton }
+            aria-label="search"
+          >
             <SearchIcon />
           </IconButton>
         </form>
-        <LinearProgress variant={ busy ? 'indeterminate' : 'determinate' } value={ 100 } />
+        <LinearProgress
+          variant={ busy ? 'indeterminate' : 'determinate' }
+          value={ 100 }
+        />
       </div>
   )
 }
