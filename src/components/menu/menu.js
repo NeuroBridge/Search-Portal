@@ -41,6 +41,7 @@ export const Menu = () => {
   return (
     <nav className={ classes.root }>
       <NavLink to="/">Search</NavLink>
+      <NavLink to="/select">Select</NavLink>
     </nav>
   )
 

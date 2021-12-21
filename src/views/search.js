@@ -1,4 +1,5 @@
 import { Fragment, useCallback, useState } from 'react'
+import { navigate } from '@reach/router'
 import { useSearchContext } from '../components/search/context'
 import { makeStyles } from '@material-ui/core/styles'
 import { Grid, IconButton, Paper, Tooltip, Typography } from '@material-ui/core'
@@ -82,7 +83,7 @@ export const SearchView = () => {
 
   const handleClickTerm = term => () => toggleTermSelection(term)
   const sendSelection = () => {
-    console.log(selectedTerms)
+    navigate('/select')
   }
 
   const handleToggleDebugMode = () => setDebugMode(!debugMode)

@@ -5,13 +5,16 @@ import { makeStyles } from '@material-ui/styles'
 const useStyles = makeStyles(theme => ({
   drawer: {
     position: 'relative',
+    '&:hover $actions': {
+      filter: 'opacity(1.0)',
+    },
   },
   drawerPaper: {
     overflow: 'hidden',
     height: '200px',
     filter: 'drop-shadow(0 0 1rem #00000033)',
     backgroundColor: '#676f81',
-    paddingRight: theme.spacing(8),
+    paddingRight: theme.spacing(10),
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'stretch',
@@ -20,21 +23,36 @@ const useStyles = makeStyles(theme => ({
     overflow: 'auto',
   },
   actions: {
-    '& $Button': {
-      borderRadius: 0,
-    },
     position: 'absolute',
     right: 0,
     top: 0,
     bottom: 0,
-    width: theme.spacing(8),
+    width: theme.spacing(10),
     display: 'flex',
     flexDirection: 'column',
-    backgroundColor: '#373f51',
+    justifyContent: 'flex-start',
+    alignItems: 'stretch',
+    backgroundColor: '#272f41',
     filter: 'opacity(0.5)',
     transition: 'filter 250ms',
+    padding: '1px 0 3px 0',
     '&:hover': {
       filter: 'opacity(1.0)',
+    },
+    '& $Button': {
+      borderRadius: 0,
+      margin: '1px 2px',
+      backgroundColor: '#474f61',
+      '& svg': {
+        filter: 'saturate(0.5)',
+        transition: 'filter 250ms',
+      },
+      '&:hover': {
+        backgroundColor: '#171f31',
+        '& svg': {
+          filter: 'saturate(1.0)',
+        },
+      },
     },
   },
 }))

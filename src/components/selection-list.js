@@ -1,8 +1,13 @@
+import { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Chip } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 
 const useStyles = makeStyles(theme => ({
+  '@keyframes fadeIn': {
+    from: { filter: 'opacity(0.0)' },
+    to: { filter: 'opacity(1.0)' },
+  },
   list: {
     maxWidth: '100%',
     margin: theme.spacing(1),
@@ -12,6 +17,21 @@ const useStyles = makeStyles(theme => ({
     gap: theme.spacing(1),
     position: 'relative',
   },
+  termChip: {
+    borderRadius: '2px',
+    padding: `${ theme.spacing(1) }px ${ theme.spacing(1) / 2 }px`,
+    height: 'unset',
+    borderLeft: '4px solid #272f41',
+    animation: '$fadeIn 250ms ease-out',
+  },
+  chipLabelPrimary: {
+    fontSize: '110%',
+    textTransform: 'uppercase',
+  },
+  chipLabelSecondary: {
+    fontStyle: 'italic',
+    color: 'dimgrey',
+  },
   clearButton: {
     position: 'absolute',
     top: -theme.spacing(1),
@@ -19,6 +39,20 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: '#eee',
   },
 }))
+
+const ChipLabel = ({ term }) => {
+  const classes = useStyles()
+  return (
+    <Fragment>
+      <div className={ classes.chipLabelPrimary }>{ term.label }</div>
+      <div className={ classes.chipLabelSecondary }>{ term.short_form }</div>
+    </Fragment>
+  )
+}
+
+ChipLabel.propTypes = {
+  term: PropTypes.object.isRequired,
+}
 
 export const SelectionList = ({ items, onItemDelete, onItemClick }) => {
   const classes = useStyles()
@@ -32,7 +66,8 @@ export const SelectionList = ({ items, onItemDelete, onItemClick }) => {
         items.map(item => (
           <Chip
             key={ `selected-${ item.label }` }
-            label={ item.label }
+            className={ classes.termChip }
+            label={ <ChipLabel term={ item } /> }
             onDelete={ () => onItemDelete(item) }
             onClick={ () => onItemClick(item) }
           />
