@@ -1,5 +1,5 @@
 import { Link } from "@reach/router";
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from '@mui/styles'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -7,7 +7,7 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'stretch',
   },
   link: {
-    padding: `0 ${ theme.spacing(2) }px`,
+    padding: `0 1rem`,
     color: '#fff',
     textDecoration: 'none',
     textTransform: 'uppercase',

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
-import { Button, Drawer as MuiDrawer } from '@material-ui/core'
-import { makeStyles } from '@material-ui/styles'
+import { Button, Drawer as MuiDrawer } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 
 const useStyles = makeStyles(theme => ({
   drawer: {
@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
     height: '200px',
     filter: 'drop-shadow(0 0 1rem #00000033)',
     backgroundColor: '#676f81',
-    paddingRight: theme.spacing(10),
+    paddingRight: '5rem',
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'stretch',
@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
     right: 0,
     top: 0,
     bottom: 0,
-    width: theme.spacing(10),
+    width: '5rem',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-start',

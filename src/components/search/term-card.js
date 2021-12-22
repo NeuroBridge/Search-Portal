@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types'
 import {
   Card, CardActionArea, Typography
-} from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+} from '@mui/material'
+import makeStyles from '@mui/styles/makeStyles';
 import {
   CheckBox as CheckedIcon,
   CheckBoxOutlineBlank as UncheckedIcon,
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 
 const useStyles = makeStyles(theme => ({
   termCard: {
@@ -27,8 +27,7 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    // gap: theme.spacing(1),
-    padding: theme.spacing(2),
+    padding: '1rem',
     '&:hover $checkbox': {
       filter: 'opacity(0.7)',
       transform: 'scale(1.0)',
@@ -37,12 +36,9 @@ const useStyles = makeStyles(theme => ({
   checkbox: {
     filter: 'opacity(0.25)',
     transition: 'filter 250ms',
-    // transform: 'scale(0.9)',
     position: 'absolute',
-    top: theme.spacing(1),
-    right: theme.spacing(1),
-  },
-  checkboxIcon: {
+    top: '0.5rem',
+    right: '0.5rem',
   },
 }))
 

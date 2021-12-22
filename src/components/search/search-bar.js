@@ -1,7 +1,8 @@
 import { useEffect, useRef } from 'react'
-import { makeStyles, useTheme } from '@material-ui/core/styles'
-import { IconButton, LinearProgress, InputBase, useMediaQuery } from '@material-ui/core'
-import { Search as SearchIcon } from '@material-ui/icons'
+import { useTheme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
+import { IconButton, LinearProgress, InputBase, useMediaQuery } from '@mui/material'
+import { Search as SearchIcon } from '@mui/icons-material'
 import { useSearchContext } from './context'
 
 const useStyles = makeStyles(theme => ({
@@ -11,7 +12,7 @@ const useStyles = makeStyles(theme => ({
   },
   input: {
     backgroundColor: '#fff',
-    padding: `0 ${ theme.spacing(3) }px`,
+    padding: `0 1rem`,
     flex: 1,
   },
   inputTip: {
@@ -24,7 +25,7 @@ const useStyles = makeStyles(theme => ({
 export const SearchBar = () => {
   const classes = useStyles()
   const theme = useTheme()
-  const mobile = useMediaQuery(theme.breakpoints.down('xs'))
+  const mobile = useMediaQuery(theme.breakpoints.down('sm'))
   const { busy, doSearch } = useSearchContext()
   const inputRef = useRef() // used for programatic focus of text input
 
@@ -48,29 +49,29 @@ export const SearchBar = () => {
   }
   
   return (
-      <div>
-        <form className={ classes.form } noValidate autoComplete="off" onSubmit={ handleSubmit }>
-          <InputBase
-            className={ classes.input }
-            id="query-field"
-            label="Enter Query"
-            type="search"
-            variant="filled"
-            inputRef={ inputRef }
-            endAdornment={ !mobile && <small className={ classes.inputTip }>Press \ to focus</small> }
-          />
-          <IconButton
-            type="submit"
-            className={ classes.iconButton }
-            aria-label="search"
-          >
-            <SearchIcon />
-          </IconButton>
-        </form>
-        <LinearProgress
-          variant={ busy ? 'indeterminate' : 'determinate' }
-          value={ 100 }
+    <div>
+      <form className={ classes.form } noValidate autoComplete="off" onSubmit={ handleSubmit }>
+        <InputBase
+          className={ classes.input }
+          id="query-field"
+          label="Enter Query"
+          type="search"
+          variant="filled"
+          inputRef={ inputRef }
+          endAdornment={ !mobile && <small className={ classes.inputTip }>Press \ to focus</small> }
         />
-      </div>
-  )
+        <IconButton
+          type="submit"
+          className={ classes.iconButton }
+          aria-label="search"
+          size="large">
+          <SearchIcon />
+        </IconButton>
+      </form>
+      <LinearProgress
+        variant={ busy ? 'indeterminate' : 'determinate' }
+        value={ 100 }
+      />
+    </div>
+  );
 }

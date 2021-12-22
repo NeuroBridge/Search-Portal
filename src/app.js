@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
-import { AppBar, Toolbar, useMediaQuery } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import { AppBar, Toolbar, useMediaQuery } from '@mui/material'
+import makeStyles from '@mui/styles/makeStyles';
 import {
   DeleteSweep as ClearSelectionIcon,
   KeyboardArrowDown as CloseDrawerIcon,
   KeyboardArrowUp as OpenDrawerIcon,
   Send as SendIcon,
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 import { navigate } from '@reach/router'
 import brainImage from './images/brain.png'
 import { Router } from './router'
@@ -31,14 +31,15 @@ const useStyles = makeStyles(theme => ({
     overflowX: 'hidden',
   },
   toolbar: {
-    padding: `0 0 0 ${ theme.spacing(2) }px`,
+    padding: `0 0 0 1rem`,
     alignItems: 'stretch',
   },
   main: {
-    padding: theme.spacing(4),
+    padding: '2rem',
     width: '100%',
     maxWidth: '1600px',
     margin: '0 auto',
+    position: 'relative',
   },
   drawerHeader: {
     position: 'fixed',
@@ -64,7 +65,7 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
   },
   drawerIconContainer: {
-    width: theme.spacing(10),
+    width: '5rem',
     backgroundColor: '#81676f',
     display: 'flex',
     justifyContent: 'center',

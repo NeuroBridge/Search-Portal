@@ -1,11 +1,11 @@
 import { Fragment, useCallback, useState } from 'react'
 import { useSearchContext } from '../components/search/context'
-import { makeStyles } from '@material-ui/core/styles'
-import { Grid, IconButton, Paper, Tooltip, Typography } from '@material-ui/core'
+import makeStyles from '@mui/styles/makeStyles';
+import { Grid, IconButton, Paper, Tooltip, Typography } from '@mui/material'
 import { TermCard } from '../components/search/term-card'
 import {
   BugReport as DebugIcon,
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 import ReactJson from 'react-json-view'
 import { SearchHistoryList } from '../components/search/history-list'
 
@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
   grid: {
     display: 'grid',
     gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))',
-    gap: theme.spacing(2),
+    gap: '1rem',
     animation: '$fadeIn 250ms ease-out',
   },
   resultsHeader: {
@@ -36,8 +36,7 @@ const useStyles = makeStyles(theme => ({
     animation: '$fadeIn 250ms ease-out',
     '& .react-json-view': {
       fontSize: '80%',
-      borderRadius: theme.spacing(1) / 2,
-      padding: theme.spacing(2),
+      padding: '1rem',
     }
   },
 }))

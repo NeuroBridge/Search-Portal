@@ -1,7 +1,7 @@
 import { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { Chip } from '@material-ui/core'
-import { makeStyles } from '@material-ui/styles'
+import { Chip } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 
 const useStyles = makeStyles(theme => ({
   '@keyframes fadeIn': {
@@ -10,19 +10,24 @@ const useStyles = makeStyles(theme => ({
   },
   list: {
     maxWidth: '100%',
-    margin: theme.spacing(2),
+    margin: '1rem',
     display: 'flex',
     flexWrap: 'wrap',
     flexDirection: 'row',
-    gap: theme.spacing(1),
+    gap: '1rem',
     position: 'relative',
   },
   termChip: {
     borderRadius: '2px',
-    padding: `${ theme.spacing(1) }px ${ theme.spacing(1) / 2 }px`,
+    padding: `8px`,
     height: 'unset',
     borderLeft: '4px solid #272f41',
     animation: '$fadeIn 350ms ease-in',
+    backgroundColor: '#dde',
+    transition: 'background-color 250ms',
+    '&:hover': {
+      backgroundColor: '#eee !important',
+    },
   },
   chipLabelPrimary: {
     fontSize: '110%',
@@ -32,25 +37,28 @@ const useStyles = makeStyles(theme => ({
     fontStyle: 'italic',
     color: 'dimgrey',
   },
-  clearButton: {
-    position: 'absolute',
-    top: -theme.spacing(1),
-    right: -theme.spacing(1),
-    backgroundColor: '#eee',
-  },
 }))
 
-const ChipLabel = ({ term }) => {
+const TermChip = ({ term, ...props }) => {
   const classes = useStyles()
   return (
-    <Fragment>
-      <div className={ classes.chipLabelPrimary }>{ term.label }</div>
-      <div className={ classes.chipLabelSecondary }>{ term.short_form }</div>
-    </Fragment>
+    <Chip
+      variant="outlined"
+      color="primary"
+      size="medium"
+      className={ classes.termChip }
+      label={
+        <div className={ classes.chipLabel }>
+          <div className={ classes.chipLabelPrimary }>{ term.label }</div>
+          <div className={ classes.chipLabelSecondary }>{ term.short_form }</div>
+        </div>
+      }
+      { ...props }
+    />
   )
 }
 
-ChipLabel.propTypes = {
+TermChip.propTypes = {
   term: PropTypes.object.isRequired,
 }
 
@@ -61,10 +69,9 @@ export const SelectionList = ({ items, onItemDelete, onItemClick }) => {
     <div className={ classes.list }>
       {
         items.map(item => (
-          <Chip
+          <TermChip
             key={ `selected-${ item.label }` }
-            className={ classes.termChip }
-            label={ <ChipLabel term={ item } /> }
+            term={ item }
             onDelete={ () => onItemDelete(item) }
             onClick={ () => onItemClick(item) }
           />

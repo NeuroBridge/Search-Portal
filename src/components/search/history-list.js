@@ -1,4 +1,4 @@
-import { Button, Card, CardActions, CardContent, CardHeader, Divider, IconButton, List, ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText, Typography } from '@material-ui/core'
+import { Button, Card, CardActions, CardContent, CardHeader, Divider, IconButton, List, ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText, Typography } from '@mui/material'
 import { useLocalStorage } from '../../hooks'
 import TimeAgo from 'react-timeago'
 import { useSearchContext } from './context'
@@ -7,8 +7,8 @@ import {
   DeleteSweep as DeleteAllIcon,
   Search as SearchIcon,
   AccessTime as HistoryIcon,
-} from '@material-ui/icons'
-import { makeStyles } from '@material-ui/styles'
+} from '@mui/icons-material'
+import { makeStyles } from '@mui/styles'
 
 const useStyles = makeStyles(() => ({
   list: {
@@ -21,6 +21,7 @@ export const SearchHistoryList = () => {
   const classes = useStyles()
   const [searchHistory, setSearchHistory] = useLocalStorage('search-history')
   const { doSearch } = useSearchContext()
+  console.log(searchHistory)
 
   const deleteHistoryItem = timestamp => () => {
     const index = searchHistory.findIndex(item => item.timestamp === timestamp)
@@ -56,7 +57,11 @@ export const SearchHistoryList = () => {
                     secondary={ <TimeAgo date={ timestamp } /> }
                   />
                   <ListItemSecondaryAction>
-                    <IconButton edge="end" aria-label="delete" onClick={ deleteHistoryItem(timestamp) }>
+                    <IconButton
+                      edge="end"
+                      aria-label="delete"
+                      onClick={ deleteHistoryItem(timestamp) }
+                      size="large">
                       <DeleteIcon />
                     </IconButton>
                   </ListItemSecondaryAction>
@@ -86,6 +91,5 @@ export const SearchHistoryList = () => {
         </Button>
       </CardActions>
     </Card>
-
-  )
+  );
 }

@@ -1,6 +1,7 @@
 import { Link } from '@reach/router'
-import { Typography, useMediaQuery } from '@material-ui/core'
-import { makeStyles, useTheme } from '@material-ui/core/styles'
+import { Typography, useMediaQuery } from '@mui/material'
+import { useTheme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import { useSearchContext } from './search/context'
 
 const useStyles = makeStyles(theme => ({
@@ -27,7 +28,7 @@ const useStyles = makeStyles(theme => ({
 export const Brand = () => {
   const classes = useStyles()
   const theme = useTheme()
-  const mobile = useMediaQuery(theme.breakpoints.down('xs'))
+  const mobile = useMediaQuery(theme.breakpoints.down('sm'))
   const { resetSearch } = useSearchContext()
   
   return (

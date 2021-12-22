@@ -1,11 +1,11 @@
 import { Fragment, useState } from 'react'
 import { Link } from "@reach/router";
-import { Button, Fade, Slide } from '@material-ui/core'
-import { makeStyles } from '@material-ui/styles'
+import { Button, Fade, Slide } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import {
   Close as CloseIcon,
   Menu as HamburgerIcon,
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 
 const useStyles = makeStyles(theme => ({
   nav: {
@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'stretch',
-    paddingTop: theme.spacing(8),
+    paddingTop: '4rem',
     backgroundColor: theme.palette.primary.dark,
     width: '300px',
     maxWidth: '100vw',
@@ -36,7 +36,7 @@ const useStyles = makeStyles(theme => ({
     zIndex: 2,
   },
   link: {
-    padding: theme.spacing(2),
+    padding: '1rem',
     color: '#fff',
     textDecoration: 'none',
     textTransform: 'uppercase',
