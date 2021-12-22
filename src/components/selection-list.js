@@ -10,7 +10,7 @@ const useStyles = makeStyles(theme => ({
   },
   list: {
     maxWidth: '100%',
-    margin: theme.spacing(1),
+    margin: theme.spacing(2),
     display: 'flex',
     flexWrap: 'wrap',
     flexDirection: 'row',

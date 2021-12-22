@@ -52,6 +52,7 @@ export const TermCard = ({ term, clickHandler, selected }) => {
   return (
     <Card
       variant="outlined"
+      square
       className={ classes.termCard }
     >
       <CardActionArea className={ classes.actionArea } onClick={ clickHandler }>

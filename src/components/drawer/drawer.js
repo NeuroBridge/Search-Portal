@@ -42,6 +42,7 @@ const useStyles = makeStyles(theme => ({
     '& button': {
       borderRadius: 0,
       margin: '1px 2px',
+      height: '3rem',
       backgroundColor: '#474f61',
       '& svg': {
         filter: 'saturate(0.5)',

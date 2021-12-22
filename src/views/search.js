@@ -49,26 +49,37 @@ const useStyles = makeStyles(theme => ({
       padding: theme.spacing(2),
     }
   },
-  drawerToggler: {
+  drawerHeader: {
     position: 'fixed',
     bottom: '-1px',
-    right: '-2px',
-    width: theme.spacing(10),
-    borderRadius: 0,
-    margin: '1px 2px',
+    left: 0,
+    right: 0,
+    height: '3rem',
     backgroundColor: '#474f61',
+    transition: 'transform 225ms, filter 250ms',
+    display: 'flex',
+    flexDirection: 'row',
+    filter: 'brightness(1.0)',
     '&:hover': {
-      backgroundColor: '#676f81',
+      filter: 'brightness(0.9)',
     },
+    cursor: 'pointer',
+  },
+  drawerTitle: {
+    color: '#eee',
+    flex: 1,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  drawerIconContainer: {
+    width: theme.spacing(10),
+    backgroundColor: '#81676f',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     '& svg': {
       fill: '#eee',
-    },
-    transition: 'transform 250ms, background-color 250ms',
-  },
-  drawerTogglerOpen: {
-    backgroundColor: '#b73932',
-    '&:hover': {
-      backgroundColor: '#973932',
     },
   },
 }))
@@ -170,7 +181,7 @@ export const SearchView = () => {
       <Drawer
         open={ drawerOpen }
         actions={[
-          { ariaLabel: 'Clear selection', icon: <ClearSelectionIcon style={{ fill: 'lightgrey' }} />, onClick: clearTermSelection, disabled: !Object.keys(selectedTerms).length },
+          { ariaLabel: 'Clear selection', icon: <ClearSelectionIcon style={{ fill: 'var(--color-unc-davie-green)' }} />, onClick: clearTermSelection, disabled: !Object.keys(selectedTerms).length },
           { ariaLabel: 'Send', icon: <SendIcon color="secondary" />, onClick: sendSelection, disabled: !Object.keys(selectedTerms).length },
         ]}
       >
@@ -181,14 +192,16 @@ export const SearchView = () => {
           onItemClick={ clickSelectedTerm }
         />
       </Drawer>
-      <Button
+      <div
+        className={ classes.drawerHeader }
+        role="button"
+        aria-label={ `${ open ? 'Close' : 'Open' } drawer` }
         onClick={ () => setDrawerOpen(!drawerOpen) }
-        aria-label="open drawer"
-        className={ `${ classes.drawerToggler } ${ drawerOpen ? classes.drawerTogglerOpen : undefined }` }
         style={{ transform: `translateY(${ drawerOpen ? '-200px' : 0 })` }}
       >
-        { drawerOpen ? <CloseDrawerIcon /> : <OpenDrawerIcon /> }
-      </Button>
+        <div className={ classes.drawerTitle }>Term Selection</div>
+        <div className={ `${ classes.drawerIconContainer }` }>{ drawerOpen ? <CloseDrawerIcon /> : <OpenDrawerIcon /> }</div>
+      </div>
     </Fragment>
   )
 }
