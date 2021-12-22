@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
     padding: `${ theme.spacing(1) }px ${ theme.spacing(1) / 2 }px`,
     height: 'unset',
     borderLeft: '4px solid #272f41',
-    animation: '$fadeIn 250ms ease-out',
+    animation: '$fadeIn 350ms ease-in',
   },
   chipLabelPrimary: {
     fontSize: '110%',
@@ -58,10 +58,7 @@ export const SelectionList = ({ items, onItemDelete, onItemClick }) => {
   const classes = useStyles()
 
   return (
-    <div
-      elevation={ 1 }
-      className={ classes.list }
-    >
+    <div className={ classes.list }>
       {
         items.map(item => (
           <Chip

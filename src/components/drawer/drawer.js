@@ -39,7 +39,7 @@ const useStyles = makeStyles(theme => ({
     '&:hover': {
       filter: 'opacity(1.0)',
     },
-    '& $Button': {
+    '& button': {
       borderRadius: 0,
       margin: '1px 2px',
       backgroundColor: '#474f61',
@@ -66,9 +66,7 @@ export const Drawer = ({ open, actions, children }) => {
       variant="persistent"
       open={ open }
       className={ classes.drawer }
-      classes={{
-        paper: classes.drawerPaper,
-      }}
+      classes={{ paper: classes.drawerPaper }}
     >
       <div className={ classes.actions }>
         {
@@ -98,6 +96,7 @@ Drawer.propTypes = {
     action: PropTypes.func.isRequired,
     ariaLabel: PropTypes.string.isRequired,
     icon: PropTypes.node.isRequired,
-    disabled: PropTypes.bool.isRequired,
+    disabled: PropTypes.bool,
+    onClick: PropTypes.func,
   }).isRequired,
 }

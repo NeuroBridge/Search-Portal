@@ -18,7 +18,6 @@ const useStyles = makeStyles(theme => ({
     transition: 'filter 250ms, border-color 250ms, border-width 250ms',
     '&:hover': {
       filter: 'opacity(1.0)',
-      borderLeftWidth: `0.75rem`,
       borderColor: theme.palette.primary.main,
     },
   },

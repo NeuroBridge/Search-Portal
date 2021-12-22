@@ -1,10 +1,14 @@
-import { Fragment, useCallback, useState } from 'react'
+import { Fragment, useCallback, useEffect, useState } from 'react'
 import { navigate } from '@reach/router'
 import { useSearchContext } from '../components/search/context'
 import { makeStyles } from '@material-ui/core/styles'
-import { Grid, IconButton, Paper, Tooltip, Typography } from '@material-ui/core'
+import { Button, Grid, IconButton, Paper, Tooltip, Typography } from '@material-ui/core'
 import { TermCard } from '../components/search/term-card'
-import { BugReport as DebugIcon } from '@material-ui/icons';
+import {
+  BugReport as DebugIcon,
+  KeyboardArrowUp as OpenDrawerIcon,
+  KeyboardArrowDown as CloseDrawerIcon,
+} from '@material-ui/icons';
 import ReactJson from 'react-json-view'
 import { SearchHistoryList } from '../components/search/history-list'
 import { Drawer } from '../components/drawer'
@@ -21,7 +25,7 @@ const useStyles = makeStyles(theme => ({
   },
   grid: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(500px, 1fr))',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))',
     gap: theme.spacing(2),
     animation: '$fadeIn 250ms ease-out',
   },
@@ -44,6 +48,28 @@ const useStyles = makeStyles(theme => ({
       borderRadius: theme.spacing(1) / 2,
       padding: theme.spacing(2),
     }
+  },
+  drawerToggler: {
+    position: 'fixed',
+    bottom: '-1px',
+    right: '-2px',
+    width: theme.spacing(10),
+    borderRadius: 0,
+    margin: '1px 2px',
+    backgroundColor: '#474f61',
+    '&:hover': {
+      backgroundColor: '#676f81',
+    },
+    '& svg': {
+      fill: '#eee',
+    },
+    transition: 'transform 250ms, background-color 250ms',
+  },
+  drawerTogglerOpen: {
+    backgroundColor: '#b73932',
+    '&:hover': {
+      backgroundColor: '#973932',
+    },
   },
 }))
 
@@ -80,13 +106,17 @@ export const SearchView = () => {
   const classes = useStyles()
   const { terms, selectedTerms, clearTermSelection, clickSelectedTerm, deselectTerm, toggleTermSelection, searchedQuery } = useSearchContext()
   const [debugMode, setDebugMode] = useState(false)
-
-  const handleClickTerm = term => () => toggleTermSelection(term)
-  const sendSelection = () => {
-    navigate('/select')
-  }
+  const [drawerOpen, setDrawerOpen] = useState(true)
 
   const handleToggleDebugMode = () => setDebugMode(!debugMode)
+  const handleClickTerm = term => () => toggleTermSelection(term)
+  const sendSelection = () => navigate('/select')
+
+  useEffect(() => {
+    if (Object.keys(selectedTerms).length > 0) {
+      setDrawerOpen(true)
+    }
+  }, [selectedTerms])
 
   const MemoizedResultsHeader = useCallback(() => {
     return (
@@ -138,9 +168,9 @@ export const SearchView = () => {
         )
       }
       <Drawer
-        open={ true }
+        open={ drawerOpen }
         actions={[
-          { ariaLabel: 'Clear selection', icon: <ClearSelectionIcon style={{ fill: 'crimson' }} />, onClick: clearTermSelection, disabled: !Object.keys(selectedTerms).length },
+          { ariaLabel: 'Clear selection', icon: <ClearSelectionIcon style={{ fill: 'lightgrey' }} />, onClick: clearTermSelection, disabled: !Object.keys(selectedTerms).length },
           { ariaLabel: 'Send', icon: <SendIcon color="secondary" />, onClick: sendSelection, disabled: !Object.keys(selectedTerms).length },
         ]}
       >
@@ -151,6 +181,14 @@ export const SearchView = () => {
           onItemClick={ clickSelectedTerm }
         />
       </Drawer>
+      <Button
+        onClick={ () => setDrawerOpen(!drawerOpen) }
+        aria-label="open drawer"
+        className={ `${ classes.drawerToggler } ${ drawerOpen ? classes.drawerTogglerOpen : undefined }` }
+        style={{ transform: `translateY(${ drawerOpen ? '-200px' : 0 })` }}
+      >
+        { drawerOpen ? <CloseDrawerIcon /> : <OpenDrawerIcon /> }
+      </Button>
     </Fragment>
   )
 }
