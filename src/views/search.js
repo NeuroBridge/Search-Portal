@@ -178,6 +178,20 @@ export const SearchView = () => {
           </Grid>
         )
       }
+      <div
+        className={ classes.drawerHeader }
+        role="button"
+        aria-label={ `${ open ? 'Close' : 'Open' } drawer` }
+        onClick={ () => setDrawerOpen(!drawerOpen) }
+        style={{ transform: `translateY(${ drawerOpen ? '-200px' : 0 })` }}
+      >
+        <div className={ classes.drawerTitle }>
+          Term Selection
+          { Object.keys(selectedTerms).length > 0 &&
+            ` — ${ Object.keys(selectedTerms).length } term${ Object.keys(selectedTerms).length !== 1 ? 's' : '' } selected` }
+        </div>
+        <div className={ `${ classes.drawerIconContainer }` }>{ drawerOpen ? <CloseDrawerIcon /> : <OpenDrawerIcon /> }</div>
+      </div>
       <Drawer
         open={ drawerOpen }
         actions={[
@@ -192,16 +206,6 @@ export const SearchView = () => {
           onItemClick={ clickSelectedTerm }
         />
       </Drawer>
-      <div
-        className={ classes.drawerHeader }
-        role="button"
-        aria-label={ `${ open ? 'Close' : 'Open' } drawer` }
-        onClick={ () => setDrawerOpen(!drawerOpen) }
-        style={{ transform: `translateY(${ drawerOpen ? '-200px' : 0 })` }}
-      >
-        <div className={ classes.drawerTitle }>Term Selection</div>
-        <div className={ `${ classes.drawerIconContainer }` }>{ drawerOpen ? <CloseDrawerIcon /> : <OpenDrawerIcon /> }</div>
-      </div>
     </Fragment>
   )
 }
