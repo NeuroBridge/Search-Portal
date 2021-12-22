@@ -1,6 +1,13 @@
+import { Fragment, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Button, Drawer as MuiDrawer } from '@mui/material'
 import { makeStyles } from '@mui/styles'
+import {
+  Lock as LockedIcon,
+  LockOpen as UnlockedIcon,
+  KeyboardArrowDown as CloseDrawerIcon,
+  KeyboardArrowUp as OpenDrawerIcon,
+} from '@mui/icons-material'
 
 const useStyles = makeStyles(theme => ({
   drawer: {
@@ -56,43 +63,109 @@ const useStyles = makeStyles(theme => ({
       },
     },
   },
+  drawerHeader: {
+    position: 'fixed',
+    bottom: '-1px',
+    left: 0,
+    right: 0,
+    height: '3rem',
+    backgroundColor: '#474f61',
+    transition: 'transform 225ms, filter 250ms',
+    display: 'flex',
+    flexDirection: 'row',
+    filter: 'brightness(1.0)',
+    '&:hover': {
+      filter: 'brightness(0.9)',
+    },
+    cursor: 'pointer',
+  },
+  drawerTitleArea: {
+    flex: 1,
+    padding: 0,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'stretch',
+  },
+  drawerTitle: {
+    color: '#eee',
+    flex: 1,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  drawerIconContainer: {
+    width: '5rem',
+    backgroundColor: '#81676f',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    '& svg': {
+      fill: '#eee',
+    },
+  },
 }))
 
-export const Drawer = ({ open, actions, children }) => {
+export const Drawer = ({ open, setOpen, title, actions, children }) => {
   const classes = useStyles()
+  const [locked, setLocked] = useState(false)
+
+  const handleToggleOpen = () => {
+    if (locked) {
+      return
+    }
+    setOpen(!open)
+  }
+  const handleToggleLocked = () => setLocked(!locked)
 
   return (
-    <MuiDrawer
-      anchor="bottom"
-      variant="persistent"
-      open={ open }
-      className={ classes.drawer }
-      classes={{ paper: classes.drawerPaper }}
-    >
-      <div className={ classes.actions }>
-        {
-          actions.map(action => (
-            <Button
-              key={ `drawer-action-${ action.ariaLabel}`}
-              aria-label={ action.ariaLabel }
-              onClick={ action.onClick }
-              disabled={ action.disabled }
-            >
-              { action.icon }
-            </Button>
-          ))
-        }
+    <Fragment>
+      <div
+        className={ classes.drawerHeader }
+        role="button"
+        aria-label={ `${ open ? 'Close' : 'Open' } drawer` }
+        style={{ transform: `translateY(${ open ? '-200px' : 0 })` }}
+      >
+        <Button onClick={ handleToggleLocked } color={ locked ? 'warning' : 'secondary' } className={ `${ classes.drawerButton }` }>{ locked ? <LockedIcon /> : <UnlockedIcon /> }</Button>
+        <Button className={ classes.drawerTitleArea } onClick={ handleToggleOpen }>
+          <span className={ classes.drawerTitle }>{ title }</span>
+          <span className={ `${ classes.drawerIconContainer }` }>{ open ? <CloseDrawerIcon /> : <OpenDrawerIcon /> }</span>
+        </Button>
       </div>
-      <div className={ classes.contents }>
-        { children }
-      </div>
-    </MuiDrawer>
+      <MuiDrawer
+        elevation={ 0 }
+        anchor="bottom"
+        variant="persistent"
+        open={ open }
+        className={ classes.drawer }
+        classes={{ paper: classes.drawerPaper }}
+      >
+        <div className={ classes.actions }>
+          {
+            actions.map(action => (
+              <Button
+                key={ `drawer-action-${ action.ariaLabel}`}
+                aria-label={ action.ariaLabel }
+                onClick={ action.onClick }
+                disabled={ action.disabled }
+              >
+                { action.icon }
+              </Button>
+            ))
+          }
+        </div>
+        <div className={ classes.contents }>
+          { children }
+        </div>
+      </MuiDrawer>
+    </Fragment>
   )
 }
 
 Drawer.propTypes = {
   open: PropTypes.bool.isRequired,
+  setOpen: PropTypes.func.isRequired,
   children: PropTypes.node,
+  title: PropTypes.node,
   actions: PropTypes.arrayOf({
     action: PropTypes.func.isRequired,
     ariaLabel: PropTypes.string.isRequired,

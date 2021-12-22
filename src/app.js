@@ -3,8 +3,6 @@ import { AppBar, Toolbar, useMediaQuery } from '@mui/material'
 import makeStyles from '@mui/styles/makeStyles';
 import {
   DeleteSweep as ClearSelectionIcon,
-  KeyboardArrowDown as CloseDrawerIcon,
-  KeyboardArrowUp as OpenDrawerIcon,
   Send as SendIcon,
 } from '@mui/icons-material';
 import { navigate } from '@reach/router'
@@ -41,39 +39,6 @@ const useStyles = makeStyles(theme => ({
     margin: '0 auto',
     position: 'relative',
   },
-  drawerHeader: {
-    position: 'fixed',
-    bottom: '-1px',
-    left: 0,
-    right: 0,
-    height: '3rem',
-    backgroundColor: '#474f61',
-    transition: 'transform 225ms, filter 250ms',
-    display: 'flex',
-    flexDirection: 'row',
-    filter: 'brightness(1.0)',
-    '&:hover': {
-      filter: 'brightness(0.9)',
-    },
-    cursor: 'pointer',
-  },
-  drawerTitle: {
-    color: '#eee',
-    flex: 1,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  drawerIconContainer: {
-    width: '5rem',
-    backgroundColor: '#81676f',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    '& svg': {
-      fill: '#eee',
-    },
-  },
 }))
 
 export const App = () => {
@@ -102,22 +67,16 @@ export const App = () => {
       <main className={ classes.main }>
         <Router />
       </main>
-      <div
-        className={ classes.drawerHeader }
-        role="button"
-        aria-label={ `${ open ? 'Close' : 'Open' } drawer` }
-        onClick={ () => setDrawerOpen(!drawerOpen) }
-        style={{ transform: `translateY(${ drawerOpen ? '-200px' : 0 })` }}
-      >
-        <div className={ classes.drawerTitle }>
-          Term Selection
-          { Object.keys(selectedTerms).length > 0 &&
-            ` — ${ Object.keys(selectedTerms).length } term${ Object.keys(selectedTerms).length !== 1 ? 's' : '' } selected` }
-        </div>
-        <div className={ `${ classes.drawerIconContainer }` }>{ drawerOpen ? <CloseDrawerIcon /> : <OpenDrawerIcon /> }</div>
-      </div>
       <Drawer
         open={ drawerOpen }
+        setOpen={ setDrawerOpen }
+        title={ `
+          Term Selection ${
+            Object.keys(selectedTerms).length > 0
+            ? ` — ${ Object.keys(selectedTerms).length } term${ Object.keys(selectedTerms).length !== 1 ? 's' : '' } selected`
+            : ''
+          }`
+        }
         actions={[
           { ariaLabel: 'Clear selection', icon: <ClearSelectionIcon style={{ fill: 'var(--color-unc-davie-green)' }} />, onClick: clearTermSelection, disabled: !Object.keys(selectedTerms).length },
           { ariaLabel: 'Send', icon: <SendIcon color="secondary" />, onClick: sendSelection, disabled: !Object.keys(selectedTerms).length },
