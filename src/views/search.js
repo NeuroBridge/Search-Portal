@@ -1,22 +1,13 @@
-import { Fragment, useCallback, useEffect, useState } from 'react'
-import { navigate } from '@reach/router'
+import { Fragment, useCallback, useState } from 'react'
 import { useSearchContext } from '../components/search/context'
 import { makeStyles } from '@material-ui/core/styles'
-import { Button, Grid, IconButton, Paper, Tooltip, Typography } from '@material-ui/core'
+import { Grid, IconButton, Paper, Tooltip, Typography } from '@material-ui/core'
 import { TermCard } from '../components/search/term-card'
 import {
   BugReport as DebugIcon,
-  KeyboardArrowUp as OpenDrawerIcon,
-  KeyboardArrowDown as CloseDrawerIcon,
 } from '@material-ui/icons';
 import ReactJson from 'react-json-view'
 import { SearchHistoryList } from '../components/search/history-list'
-import { Drawer } from '../components/drawer'
-import { SelectionList } from '../components/selection-list'
-import {
-  DeleteSweep as ClearSelectionIcon,
-  Send as SendIcon,
-} from '@material-ui/icons'
 
 const useStyles = makeStyles(theme => ({
   '@keyframes fadeIn': {
@@ -48,39 +39,6 @@ const useStyles = makeStyles(theme => ({
       borderRadius: theme.spacing(1) / 2,
       padding: theme.spacing(2),
     }
-  },
-  drawerHeader: {
-    position: 'fixed',
-    bottom: '-1px',
-    left: 0,
-    right: 0,
-    height: '3rem',
-    backgroundColor: '#474f61',
-    transition: 'transform 225ms, filter 250ms',
-    display: 'flex',
-    flexDirection: 'row',
-    filter: 'brightness(1.0)',
-    '&:hover': {
-      filter: 'brightness(0.9)',
-    },
-    cursor: 'pointer',
-  },
-  drawerTitle: {
-    color: '#eee',
-    flex: 1,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  drawerIconContainer: {
-    width: theme.spacing(10),
-    backgroundColor: '#81676f',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    '& svg': {
-      fill: '#eee',
-    },
   },
 }))
 
@@ -115,19 +73,11 @@ const LandingPageContent = () => {
 
 export const SearchView = () => {
   const classes = useStyles()
-  const { terms, selectedTerms, clearTermSelection, clickSelectedTerm, deselectTerm, toggleTermSelection, searchedQuery } = useSearchContext()
+  const { terms, selectedTerms, toggleTermSelection, searchedQuery } = useSearchContext()
   const [debugMode, setDebugMode] = useState(false)
-  const [drawerOpen, setDrawerOpen] = useState(true)
 
   const handleToggleDebugMode = () => setDebugMode(!debugMode)
   const handleClickTerm = term => () => toggleTermSelection(term)
-  const sendSelection = () => navigate('/select')
-
-  useEffect(() => {
-    if (Object.keys(selectedTerms).length > 0) {
-      setDrawerOpen(true)
-    }
-  }, [selectedTerms])
 
   const MemoizedResultsHeader = useCallback(() => {
     return (
@@ -178,34 +128,6 @@ export const SearchView = () => {
           </Grid>
         )
       }
-      <div
-        className={ classes.drawerHeader }
-        role="button"
-        aria-label={ `${ open ? 'Close' : 'Open' } drawer` }
-        onClick={ () => setDrawerOpen(!drawerOpen) }
-        style={{ transform: `translateY(${ drawerOpen ? '-200px' : 0 })` }}
-      >
-        <div className={ classes.drawerTitle }>
-          Term Selection
-          { Object.keys(selectedTerms).length > 0 &&
-            ` — ${ Object.keys(selectedTerms).length } term${ Object.keys(selectedTerms).length !== 1 ? 's' : '' } selected` }
-        </div>
-        <div className={ `${ classes.drawerIconContainer }` }>{ drawerOpen ? <CloseDrawerIcon /> : <OpenDrawerIcon /> }</div>
-      </div>
-      <Drawer
-        open={ drawerOpen }
-        actions={[
-          { ariaLabel: 'Clear selection', icon: <ClearSelectionIcon style={{ fill: 'var(--color-unc-davie-green)' }} />, onClick: clearTermSelection, disabled: !Object.keys(selectedTerms).length },
-          { ariaLabel: 'Send', icon: <SendIcon color="secondary" />, onClick: sendSelection, disabled: !Object.keys(selectedTerms).length },
-        ]}
-      >
-        <SelectionList
-          items={ Object.keys(selectedTerms).map(key => selectedTerms[key]) }
-          onDeleteSelection={ clearTermSelection }
-          onItemDelete={ term => deselectTerm(term) }
-          onItemClick={ clickSelectedTerm }
-        />
-      </Drawer>
     </Fragment>
   )
 }
