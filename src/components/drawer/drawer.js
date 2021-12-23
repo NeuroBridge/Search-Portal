@@ -91,20 +91,20 @@ const useStyles = makeStyles(theme => ({
 
 export const Drawer = ({ title, actions, children }) => {
   const classes = useStyles()
-  const { open, toggleOpen, locked, toggleLocked } = useDrawer()
+  const { drawerOpen, toggleOpen, drawerLocked, toggleLocked } = useDrawer()
 
   return (
     <Fragment>
       <div
         className={ classes.drawerHeader }
         role="button"
-        aria-label={ `${ open ? 'Close' : 'Open' } drawer` }
-        style={{ transform: `translateY(${ open ? '-200px' : 0 })` }}
+        aria-label={ `${ drawerOpen ? 'Close' : 'Open' } drawer` }
+        style={{ transform: `translateY(${ drawerOpen ? '-200px' : 0 })` }}
       >
         <div className={ classes.actions }>
-          <Tooltip title={ `${ locked ? 'Unlock' : 'Lock' } drawer` } placement="top">
-            <Button onClick={ toggleLocked } color={ locked ? 'warning' : 'secondary' } className={ `${ classes.drawerButton }` }>
-              { locked ? <LockedIcon /> : <UnlockedIcon /> }
+          <Tooltip title={ `${ drawerLocked ? 'Unlock' : 'Lock' } drawer` } placement="top">
+            <Button onClick={ toggleLocked } color={ drawerLocked ? 'warning' : 'secondary' } className={ `${ classes.drawerButton }` }>
+              { drawerLocked ? <LockedIcon /> : <UnlockedIcon /> }
             </Button>
           </Tooltip>
           {
@@ -125,14 +125,14 @@ export const Drawer = ({ title, actions, children }) => {
         </div>
         <Button className={ classes.drawerTitleArea } onClick={ toggleOpen }>
           <span className={ classes.drawerTitle }>{ title }</span>
-          <span className={ `${ classes.drawerIconContainer }` }>{ open ? <CloseDrawerIcon /> : <OpenDrawerIcon /> }</span>
+          <span className={ `${ classes.drawerIconContainer }` }>{ drawerOpen ? <CloseDrawerIcon /> : <OpenDrawerIcon /> }</span>
         </Button>
       </div>
       <MuiDrawer
         elevation={ 0 }
         anchor="bottom"
         variant="persistent"
-        open={ open }
+        open={ drawerOpen }
         className={ classes.drawer }
         classes={{ paper: classes.drawerPaper }}
       >
@@ -143,12 +143,9 @@ export const Drawer = ({ title, actions, children }) => {
 }
 
 Drawer.propTypes = {
-  open: PropTypes.bool.isRequired,
-  setOpen: PropTypes.func.isRequired,
   children: PropTypes.node,
   title: PropTypes.node,
   actions: PropTypes.arrayOf({
-    action: PropTypes.func.isRequired,
     ariaLabel: PropTypes.string.isRequired,
     icon: PropTypes.node.isRequired,
     disabled: PropTypes.bool,

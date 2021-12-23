@@ -7,10 +7,9 @@ import { Router } from './router'
 import { Brand } from './components/brand'
 import { Menu, MobileMenu } from './components/menu'
 import { SearchBar } from './components/search/search-bar'
-import { Drawer } from './components/drawer'
 import { useSearchContext } from './components/search/context'
+import { Drawer, useDrawer } from './components/drawer'
 import { SelectionList } from './components/selection-list'
-import { useDrawer } from './components/drawer'
 
 const useStyles = makeStyles(theme => ({
   app: {
@@ -42,7 +41,7 @@ export const App = () => {
   const classes = useStyles()
   const compact = useMediaQuery('(max-width: 600px)')
   const { selectedTerms, clearTermSelection, clickSelectedTerm, deselectTerm } = useSearchContext()
-  const { open, locked, toggleOpen } = useDrawer()
+  const { drawerOpen, locked, toggleOpen } = useDrawer()
   
   const drawerActions = useMemo(() => [{
     ariaLabel: 'Clear selection',
@@ -51,17 +50,17 @@ export const App = () => {
     disabled: !Object.keys(selectedTerms).length,
   }], [selectedTerms])
 
-  const drawerTitle = useMemo(() => `
-    Term Selection ${
-      Object.keys(selectedTerms).length > 0
+  const drawerTitle = useMemo(() => `Term Selection ${
+    Object.keys(selectedTerms).length > 0
       ? ` — ${ Object.keys(selectedTerms).length } term${ Object.keys(selectedTerms).length !== 1 ? 's' : '' }`
       : ''
-    }`, [selectedTerms])
+  }`, [selectedTerms])
 
   useEffect(() => {
-    if (!open && !locked) {
-      toggleOpen(true)
+    if (drawerOpen || locked) {
+      return
     }
+    toggleOpen(true)
   }, [selectedTerms])
 
   return (
