@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { AppBar, Toolbar, useMediaQuery } from '@mui/material'
 import makeStyles from '@mui/styles/makeStyles';
 import {
@@ -14,6 +14,7 @@ import { SearchBar } from './components/search/search-bar'
 import { Drawer } from './components/drawer'
 import { useSearchContext } from './components/search/context'
 import { SelectionList } from './components/selection-list'
+import { useDrawer } from './components/drawer'
 
 const useStyles = makeStyles(theme => ({
   app: {
@@ -44,14 +45,14 @@ const useStyles = makeStyles(theme => ({
 export const App = () => {
   const classes = useStyles()
   const compact = useMediaQuery('(max-width: 600px)')
-  const [drawerOpen, setDrawerOpen] = useState(false)
   const { selectedTerms, clearTermSelection, clickSelectedTerm, deselectTerm } = useSearchContext()
+  const { open, locked, toggleOpen } = useDrawer()
   
   const sendSelection = () => navigate('/select')
 
   useEffect(() => {
-    if (Object.keys(selectedTerms).length > 0) {
-      setDrawerOpen(true)
+    if (!open && !locked) {
+      toggleOpen(true)
     }
   }, [selectedTerms])
 
@@ -68,8 +69,6 @@ export const App = () => {
         <Router />
       </main>
       <Drawer
-        open={ drawerOpen }
-        setOpen={ setDrawerOpen }
         title={ `
           Term Selection ${
             Object.keys(selectedTerms).length > 0

@@ -1,9 +1,10 @@
 import { render } from 'react-dom'
 import { App } from './app'
-import './styles/index.scss'
 import { LocationProvider } from '@reach/router'
 import { createTheme, ThemeProvider, StyledEngineProvider, adaptV4Theme } from '@mui/material/styles';
+import { DrawerProvider } from './components/drawer'
 import { SearchContextProvider } from './components/search/context.js'
+import './styles/index.scss'
 
 const theme = createTheme(adaptV4Theme({
   palette: {
@@ -20,11 +21,13 @@ const theme = createTheme(adaptV4Theme({
 render(
   <LocationProvider>
     <SearchContextProvider>
-      <StyledEngineProvider injectFirst>
-        <ThemeProvider theme={theme}>
-          <App />
-        </ThemeProvider>
-      </StyledEngineProvider>
+      <DrawerProvider>
+        <StyledEngineProvider injectFirst>
+          <ThemeProvider theme={theme}>
+            <App />
+          </ThemeProvider>
+        </StyledEngineProvider>
+      </DrawerProvider>
     </SearchContextProvider>
   </LocationProvider>,
   document.getElementById('root')

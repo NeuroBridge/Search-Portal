@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Button, Drawer as MuiDrawer } from '@mui/material'
 import { makeStyles } from '@mui/styles'
@@ -8,6 +8,7 @@ import {
   KeyboardArrowDown as CloseDrawerIcon,
   KeyboardArrowUp as OpenDrawerIcon,
 } from '@mui/icons-material'
+import { useDrawer } from './context'
 
 const useStyles = makeStyles(theme => ({
   drawer: {
@@ -105,17 +106,9 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export const Drawer = ({ open, setOpen, title, actions, children }) => {
+export const Drawer = ({ title, actions, children }) => {
   const classes = useStyles()
-  const [locked, setLocked] = useState(false)
-
-  const handleToggleOpen = () => {
-    if (locked) {
-      return
-    }
-    setOpen(!open)
-  }
-  const handleToggleLocked = () => setLocked(!locked)
+  const { open, toggleOpen, locked, toggleLocked } = useDrawer()
 
   return (
     <Fragment>
@@ -125,8 +118,8 @@ export const Drawer = ({ open, setOpen, title, actions, children }) => {
         aria-label={ `${ open ? 'Close' : 'Open' } drawer` }
         style={{ transform: `translateY(${ open ? '-200px' : 0 })` }}
       >
-        <Button onClick={ handleToggleLocked } color={ locked ? 'warning' : 'secondary' } className={ `${ classes.drawerButton }` }>{ locked ? <LockedIcon /> : <UnlockedIcon /> }</Button>
-        <Button className={ classes.drawerTitleArea } onClick={ handleToggleOpen }>
+        <Button onClick={ toggleLocked } color={ locked ? 'warning' : 'secondary' } className={ `${ classes.drawerButton }` }>{ locked ? <LockedIcon /> : <UnlockedIcon /> }</Button>
+        <Button className={ classes.drawerTitleArea } onClick={ toggleOpen }>
           <span className={ classes.drawerTitle }>{ title }</span>
           <span className={ `${ classes.drawerIconContainer }` }>{ open ? <CloseDrawerIcon /> : <OpenDrawerIcon /> }</span>
         </Button>
