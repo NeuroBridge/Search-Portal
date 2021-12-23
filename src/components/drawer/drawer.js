@@ -96,7 +96,7 @@ const useStyles = makeStyles(theme => ({
   },
   drawerIconContainer: {
     width: '5rem',
-    backgroundColor: '#81676f',
+    backgroundColor: 'var(--color-renci)',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -118,7 +118,9 @@ export const Drawer = ({ title, actions, children }) => {
         aria-label={ `${ open ? 'Close' : 'Open' } drawer` }
         style={{ transform: `translateY(${ open ? '-200px' : 0 })` }}
       >
-        <Button onClick={ toggleLocked } color={ locked ? 'warning' : 'secondary' } className={ `${ classes.drawerButton }` }>{ locked ? <LockedIcon /> : <UnlockedIcon /> }</Button>
+        <Button onClick={ toggleLocked } color={ locked ? 'warning' : 'secondary' } className={ `${ classes.drawerButton }` }>
+          { locked ? <LockedIcon /> : <UnlockedIcon /> }
+        </Button>
         <Button className={ classes.drawerTitleArea } onClick={ toggleOpen }>
           <span className={ classes.drawerTitle }>{ title }</span>
           <span className={ `${ classes.drawerIconContainer }` }>{ open ? <CloseDrawerIcon /> : <OpenDrawerIcon /> }</span>

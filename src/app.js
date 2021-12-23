@@ -77,7 +77,7 @@ export const App = () => {
           }`
         }
         actions={[
-          { ariaLabel: 'Clear selection', icon: <ClearSelectionIcon style={{ fill: 'var(--color-unc-davie-green)' }} />, onClick: clearTermSelection, disabled: !Object.keys(selectedTerms).length },
+          { ariaLabel: 'Clear selection', icon: <ClearSelectionIcon style={{ fill: '#f99' }} />, onClick: clearTermSelection, disabled: !Object.keys(selectedTerms).length },
           { ariaLabel: 'Send', icon: <SendIcon color="secondary" />, onClick: sendSelection, disabled: !Object.keys(selectedTerms).length },
         ]}
       >
