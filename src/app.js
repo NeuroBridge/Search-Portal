@@ -1,11 +1,7 @@
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import { AppBar, Toolbar, useMediaQuery } from '@mui/material'
 import makeStyles from '@mui/styles/makeStyles';
-import {
-  DeleteSweep as ClearSelectionIcon,
-  Send as SendIcon,
-} from '@mui/icons-material';
-import { navigate } from '@reach/router'
+import { DeleteSweep as ClearSelectionIcon } from '@mui/icons-material';
 import brainImage from './images/brain.png'
 import { Router } from './router'
 import { Brand } from './components/brand'
@@ -48,7 +44,19 @@ export const App = () => {
   const { selectedTerms, clearTermSelection, clickSelectedTerm, deselectTerm } = useSearchContext()
   const { open, locked, toggleOpen } = useDrawer()
   
-  const sendSelection = () => navigate('/select')
+  const drawerActions = useMemo(() => [{
+    ariaLabel: 'Clear selection',
+    icon: <ClearSelectionIcon style={{ fill: '#f99' }} />,
+    onClick: clearTermSelection,
+    disabled: !Object.keys(selectedTerms).length,
+  }], [selectedTerms])
+
+  const drawerTitle = useMemo(() => `
+    Term Selection ${
+      Object.keys(selectedTerms).length > 0
+      ? ` — ${ Object.keys(selectedTerms).length } term${ Object.keys(selectedTerms).length !== 1 ? 's' : '' }`
+      : ''
+    }`, [selectedTerms])
 
   useEffect(() => {
     if (!open && !locked) {
@@ -68,19 +76,7 @@ export const App = () => {
       <main className={ classes.main }>
         <Router />
       </main>
-      <Drawer
-        title={ `
-          Term Selection ${
-            Object.keys(selectedTerms).length > 0
-            ? ` — ${ Object.keys(selectedTerms).length } term${ Object.keys(selectedTerms).length !== 1 ? 's' : '' } selected`
-            : ''
-          }`
-        }
-        actions={[
-          { ariaLabel: 'Clear selection', icon: <ClearSelectionIcon style={{ fill: '#f99' }} />, onClick: clearTermSelection, disabled: !Object.keys(selectedTerms).length },
-          { ariaLabel: 'Send', icon: <SendIcon color="secondary" />, onClick: sendSelection, disabled: !Object.keys(selectedTerms).length },
-        ]}
-      >
+      <Drawer title={ drawerTitle } actions={ drawerActions }>
         <SelectionList
           items={ Object.keys(selectedTerms).map(key => selectedTerms[key]) }
           onDeleteSelection={ clearTermSelection }

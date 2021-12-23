@@ -1,6 +1,6 @@
 import { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { Button, Drawer as MuiDrawer } from '@mui/material'
+import { Button, Drawer as MuiDrawer, Tooltip } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import {
   Lock as LockedIcon,
@@ -25,43 +25,26 @@ const useStyles = makeStyles(theme => ({
     paddingRight: '5rem',
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'stretch',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
   },
   contents: {
     overflow: 'auto',
   },
   actions: {
-    position: 'absolute',
-    right: 0,
-    top: 0,
-    bottom: 0,
-    width: '5rem',
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'stretch',
-    backgroundColor: '#272f41',
-    filter: 'opacity(0.5)',
-    transition: 'filter 250ms',
-    padding: '1px 0 3px 0',
-    '&:hover': {
-      filter: 'opacity(1.0)',
-    },
+    padding: '0 1px 0 0',
     '& button': {
       borderRadius: 0,
       marginBottom: '1px',
       height: '3rem',
-      backgroundColor: '#474f61',
-      '& svg': {
-        filter: 'saturate(0.5)',
-        transition: 'filter 250ms',
-      },
-      '&:hover': {
-        backgroundColor: '#171f31',
-        '& svg': {
-          filter: 'saturate(1.0)',
-        },
-      },
+      backgroundColor: '#373f51 !important',
+      '&:disabled': {
+        filter: 'saturate(0.5) opacity(0.5)',
+      }
     },
   },
   drawerHeader: {
@@ -118,9 +101,28 @@ export const Drawer = ({ title, actions, children }) => {
         aria-label={ `${ open ? 'Close' : 'Open' } drawer` }
         style={{ transform: `translateY(${ open ? '-200px' : 0 })` }}
       >
-        <Button onClick={ toggleLocked } color={ locked ? 'warning' : 'secondary' } className={ `${ classes.drawerButton }` }>
-          { locked ? <LockedIcon /> : <UnlockedIcon /> }
-        </Button>
+        <div className={ classes.actions }>
+          <Tooltip title={ `${ locked ? 'Unlock' : 'Lock' } drawer` } placement="top">
+            <Button onClick={ toggleLocked } color={ locked ? 'warning' : 'secondary' } className={ `${ classes.drawerButton }` }>
+              { locked ? <LockedIcon /> : <UnlockedIcon /> }
+            </Button>
+          </Tooltip>
+          {
+            actions.map(action => (
+              <Tooltip key={ `drawer-action-${ action.ariaLabel }`} title={ action.ariaLabel } placement="top">
+                <span>
+                  <Button
+                    aria-label={ action.ariaLabel }
+                    onClick={ action.onClick }
+                    disabled={ action.disabled }
+                  >
+                    { action.icon }
+                  </Button>
+                </span>
+              </Tooltip>
+            ))
+          }
+        </div>
         <Button className={ classes.drawerTitleArea } onClick={ toggleOpen }>
           <span className={ classes.drawerTitle }>{ title }</span>
           <span className={ `${ classes.drawerIconContainer }` }>{ open ? <CloseDrawerIcon /> : <OpenDrawerIcon /> }</span>
@@ -134,23 +136,7 @@ export const Drawer = ({ title, actions, children }) => {
         className={ classes.drawer }
         classes={{ paper: classes.drawerPaper }}
       >
-        <div className={ classes.actions }>
-          {
-            actions.map(action => (
-              <Button
-                key={ `drawer-action-${ action.ariaLabel}`}
-                aria-label={ action.ariaLabel }
-                onClick={ action.onClick }
-                disabled={ action.disabled }
-              >
-                { action.icon }
-              </Button>
-            ))
-          }
-        </div>
-        <div className={ classes.contents }>
           { children }
-        </div>
       </MuiDrawer>
     </Fragment>
   )
