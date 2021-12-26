@@ -7,11 +7,11 @@ import { useSearchContext } from './context'
 
 const useStyles = makeStyles(theme => ({
   form: {
-    backgroundColor: '#fff',
+    backgroundColor: theme.palette.common.white,
     display: 'flex',
   },
   input: {
-    backgroundColor: '#fff',
+    backgroundColor: theme.palette.common.white,
     padding: `0 1rem`,
     flex: 1,
   },

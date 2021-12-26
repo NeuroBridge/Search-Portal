@@ -7,7 +7,7 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'stretch',
   },
   link: {
-    padding: `0 1rem`,
+    padding: `0 ${ theme.spacing(2) }`,
     color: '#fff',
     textDecoration: 'none',
     textTransform: 'uppercase',

@@ -37,7 +37,7 @@ const useStyles = makeStyles(theme => ({
   },
   link: {
     padding: '1rem',
-    color: '#fff',
+    color: theme.palette.common.white,
     textDecoration: 'none',
     textTransform: 'uppercase',
     display: 'flex',

@@ -25,11 +25,11 @@ const useStyles = makeStyles(theme => ({
     overflowX: 'hidden',
   },
   toolbar: {
-    padding: `0 0 0 1rem`,
+    padding: `0 0 0 ${ theme.spacing(2) }`,
     alignItems: 'stretch',
   },
   main: {
-    padding: '2rem',
+    padding: theme.spacing(4),
     width: '100%',
     maxWidth: '1600px',
     margin: '0 auto',
@@ -43,6 +43,11 @@ export const App = () => {
   const { selectedTerms, clearTermSelection, clickSelectedTerm, deselectTerm } = useSearchContext()
   const { drawerOpen, locked, toggleOpen } = useDrawer()
   
+  /**
+   *
+   * memoized array of drawer actions.
+   *
+   */
   const drawerActions = useMemo(() => [{
     ariaLabel: 'Clear selection',
     icon: <ClearSelectionIcon style={{ fill: '#f99' }} />,
@@ -50,12 +55,23 @@ export const App = () => {
     disabled: !Object.keys(selectedTerms).length,
   }], [selectedTerms])
 
+  /**
+   *
+   * memoized string for the drawer title
+   *
+   */
   const drawerTitle = useMemo(() => `Term Selection ${
     Object.keys(selectedTerms).length > 0
       ? ` — ${ Object.keys(selectedTerms).length } term${ Object.keys(selectedTerms).length !== 1 ? 's' : '' }`
       : ''
   }`, [selectedTerms])
 
+  /**
+   *
+   * show the drawer's contents whenever they change,
+   * ...unless it's locked.
+   *
+   */
   useEffect(() => {
     if (drawerOpen || locked) {
       return

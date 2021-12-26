@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
     overflow: 'hidden',
     height: '200px',
     filter: 'drop-shadow(0 0 1rem #00000033)',
-    backgroundColor: '#676f81',
+    backgroundColor: theme.palette.primary.light,
     paddingRight: '5rem',
     display: 'flex',
     flexDirection: 'row',
@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => ({
       borderRadius: 0,
       marginBottom: '1px',
       height: '3rem',
-      backgroundColor: '#373f51 !important',
+      backgroundColor: `${ theme.palette.primary.dark } !important`,
       '&:disabled': {
         filter: 'saturate(0.5) opacity(0.5)',
       }
@@ -53,7 +53,7 @@ const useStyles = makeStyles(theme => ({
     left: 0,
     right: 0,
     height: '3rem',
-    backgroundColor: '#474f61',
+    backgroundColor: theme.palette.primary.main,
     transition: 'transform 225ms, filter 250ms',
     display: 'flex',
     flexDirection: 'row',
@@ -71,7 +71,7 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'stretch',
   },
   drawerTitle: {
-    color: '#eee',
+    color: theme.palette.common.white,
     flex: 1,
     display: 'flex',
     justifyContent: 'center',
@@ -79,12 +79,12 @@ const useStyles = makeStyles(theme => ({
   },
   drawerIconContainer: {
     width: '5rem',
-    backgroundColor: 'var(--color-renci)',
+    backgroundColor: theme.palette.secondary.main,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     '& svg': {
-      fill: '#eee',
+      fill: theme.palette.common.white,
     },
   },
 }))

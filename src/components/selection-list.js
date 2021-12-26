@@ -9,7 +9,7 @@ const useStyles = makeStyles(theme => ({
   },
   list: {
     maxWidth: '100%',
-    margin: '1rem',
+    margin: theme.spacing(2),
     display: 'flex',
     flexWrap: 'wrap',
     flexDirection: 'row',
@@ -17,10 +17,10 @@ const useStyles = makeStyles(theme => ({
     position: 'relative',
   },
   termChip: {
-    borderRadius: '2px',
+    borderRadius: theme.shape.borderRadius,
     padding: `8px`,
     height: 'unset',
-    borderLeft: '4px solid #272f41',
+    border: `1px solid ${ theme.palette.primary.dark }`,
     animation: '$fadeIn 350ms ease-in',
     backgroundColor: '#dde',
     transition: 'background-color 250ms',

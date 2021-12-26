@@ -1,73 +1,87 @@
+import { Fragment, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 import {
-  Card, CardActionArea, Typography
+  Button, Card, CardActions, CardActionArea, CardContent, Typography
 } from '@mui/material'
 import makeStyles from '@mui/styles/makeStyles';
 import {
   CheckBox as CheckedIcon,
   CheckBoxOutlineBlank as UncheckedIcon,
+  Preview as InspectIcon,
 } from '@mui/icons-material'
+import { TermDialog, useSearchContext } from './'
 
 const useStyles = makeStyles(theme => ({
   termCard: {
     fontSize: '80%',
     position: 'relative',
-    borderLeft: `0.5rem solid ${ theme.palette.primary.light }`,
+    border: `1px solid #afb9c099`,
     filter: 'opacity(0.8)',
     width: '100%',
     transition: 'filter 250ms, border-color 250ms, border-width 250ms',
+    display: 'flex',
     '&:hover': {
       filter: 'opacity(1.0)',
-      borderColor: theme.palette.primary.main,
+      borderColor: theme.palette.secondary.main,
     },
   },
-  actionArea: {
+  selected: {
+    borderColor: `${ theme.palette.primary.main }`,
+  },
+  content: {
+    padding: theme.spacing(2),
+  },
+  actions: {
+    padding: 0,
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    padding: '1rem',
-    '&:hover $checkbox': {
-      filter: 'opacity(0.7)',
-      transform: 'scale(1.0)',
-    },
-  },
-  checkbox: {
-    filter: 'opacity(0.25)',
-    transition: 'filter 250ms',
-    position: 'absolute',
-    top: '0.5rem',
-    right: '0.5rem',
+    alignItems: 'center',
+    backgroundColor: theme.palette.grey[100],
+    borderLeft: `1px solid #afb9c033`,
+    '& button': {
+      flex: 1,
+      padding: 0,
+    }
   },
 }))
 
-export const TermCard = ({ term, clickHandler, selected }) => {
+export const TermCard = ({ term, toggleTermSelectionHandler }) => {
   const classes = useStyles()
+  const [expanded, setExpanded] = useState(false)
+  const { selectedTerms } = useSearchContext()
+  const selected = useMemo(() => term.short_form in selectedTerms, [selectedTerms])
 
   return (
-    <Card
-      variant="outlined"
-      square
-      className={ classes.termCard }
-    >
-      <CardActionArea className={ classes.actionArea } onClick={ clickHandler }>
-        <Typography color="textPrimary">
-          <strong>label:</strong> { term.label }
-        </Typography>
-        <Typography variant="caption" color="textPrimary">
-          <strong>short_form:</strong> <em>{ term.short_form }</em>
-        </Typography>
-        <Typography variant="caption" color="textSecondary">
-          <strong>comment_annotation:</strong> { term.comment_annotation ? term.comment_annotation : 'none provided' }
-        </Typography>
-        {
-          selected
-          ? <CheckedIcon className={ classes.checkbox } />
-          : <UncheckedIcon className={ classes.checkbox } />
-        }
-      </CardActionArea>
-    </Card>
+    <Fragment>
+      <Card square variant="outlined" className={ `${ classes.termCard } ${ selected ? classes.selected : undefined }` }>
+        <CardActionArea onClick={ toggleTermSelectionHandler }>
+          <CardContent className={ classes.content }>
+            <Typography color="textPrimary">
+              <strong>label:</strong> { term.label }
+            </Typography>
+            <Typography variant="caption" color="textPrimary">
+              <strong>short_form:</strong> <em>{ term.short_form }</em>
+            </Typography><br/>
+            <Typography variant="caption" color="textSecondary">
+              <strong>comment_annotation:</strong> { term.comment_annotation ? term.comment_annotation : 'none provided' }
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+        <CardActions className={ classes.actions } disableSpacing={ true }>
+          <Button onClick={ toggleTermSelectionHandler }>{ selected ? <CheckedIcon fontSize="small" color="secondary" /> : <UncheckedIcon fontSize="small" color="default" /> }</Button>
+          <Button onClick={ () => setExpanded(true) }><InspectIcon fontSize="small" color="default" /></Button>
+        </CardActions>
+      </Card>
+      <TermDialog
+        term={ term }
+        selected={ selected }
+        toggleSelectionHandler={ toggleTermSelectionHandler }
+        open={ expanded }
+        closeHandler={ () => setExpanded(false) }
+      />
+    </Fragment>
   )
 }
 
@@ -79,10 +93,5 @@ TermCard.propTypes = {
     has_children: PropTypes.bool.isRequired,
     comment_annotation: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   }).isRequired,
-  clickHandler: PropTypes.func.isRequired,
-  selected: PropTypes.bool.isRequired,
-}
-
-TermCard.defaultProps = {
-  selected: false,
+  toggleTermSelectionHandler: PropTypes.func.isRequired,
 }
