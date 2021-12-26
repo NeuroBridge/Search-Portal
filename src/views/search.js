@@ -111,19 +111,17 @@ export const SearchView = () => {
             <ReactJson src={ terms } theme="monokai" enableClipboard={ false } />
           </div>
         ) : (
-          <Grid container spacing={ 3 }>
-            <Grid item xs={ 12 } className={ classes.grid }>
-              {
-                !!terms.length && terms.map(term => (
-                  <TermCard
-                    key={ term.label }
-                    term={ term }
-                    toggleTermSelectionHandler={ handleToggleTermSelection(term) }
-                  />
-                ))
-              }
-            </Grid>
-          </Grid>
+          <div className={ classes.grid }>
+            {
+              !!terms.length && terms.map(term => (
+                <TermCard
+                  key={ term.label }
+                  term={ term }
+                  toggleTermSelectionHandler={ handleToggleTermSelection(term) }
+                />
+              ))
+            }
+          </div>
         )
       }
     </Fragment>

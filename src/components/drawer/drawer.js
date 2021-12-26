@@ -145,10 +145,10 @@ export const Drawer = ({ title, actions, children }) => {
 Drawer.propTypes = {
   children: PropTypes.node,
   title: PropTypes.string.isRequired,
-  actions: PropTypes.arrayOf({
+  actions: PropTypes.arrayOf(PropTypes.shape({
     ariaLabel: PropTypes.string.isRequired,
     icon: PropTypes.node.isRequired,
     disabled: PropTypes.bool,
     onClick: PropTypes.func,
-  }).isRequired,
+  })).isRequired,
 }

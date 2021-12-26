@@ -40,14 +40,17 @@ export const TermDialog = ({ term, open, closeHandler, toggleSelectionHandler })
       onBackdropClick={ closeHandler }
       classes={ classes }
     >
-      <DialogTitle>{ term.short_form }</DialogTitle>
+      <DialogTitle>
+        { term.short_form }
+      </DialogTitle>
       <DialogContent>
-        lorem ipsum for now <br/>
-        lorem ipsum for now <br/>
-        lorem ipsum for now <br/>
-        lorem ipsum for now <br/>
-        lorem ipsum for now <br/>
-        lorem ipsum for now <br/>
+        has_children: { term.has_children ? 'yes' : 'no' } <br/>
+        iri: { term.iri } <br/>
+        label: { term.label } <br/>
+        ontology_name: { term.ontology_name } <br/>
+        ontology_prefix: { term.ontology_prefix } <br/>
+        short_form: { term.short_form } <br/>
+        type: { term.type } <br/>
       </DialogContent>
       <DialogActions>
         <Button onClick={ toggleSelectionHandler }>
@@ -71,10 +74,13 @@ TermDialog.propTypes = {
   closeHandler: PropTypes.func.isRequired,
   toggleSelectionHandler: PropTypes.func.isRequired,
   term: PropTypes.shape({
-    iri: PropTypes.string.isRequired,
-    short_form: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
-    has_children: PropTypes.bool.isRequired,
     comment_annotation: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+    has_children: PropTypes.bool.isRequired,
+    iri: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+    short_form: PropTypes.string.isRequired,
+    ontology_name: PropTypes.string.isRequired,
+    ontology_prefix: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
   }).isRequired,
 }
