@@ -144,7 +144,7 @@ export const Drawer = ({ title, actions, children }) => {
 
 Drawer.propTypes = {
   children: PropTypes.node,
-  title: PropTypes.node,
+  title: PropTypes.string.isRequired,
   actions: PropTypes.arrayOf({
     ariaLabel: PropTypes.string.isRequired,
     icon: PropTypes.node.isRequired,
