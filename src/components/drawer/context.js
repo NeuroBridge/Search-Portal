@@ -15,10 +15,11 @@ export const DrawerProvider = ({ children }) => {
     }
     setDrawerOpen(!drawerOpen)
   }
+  const openDrawer = () => setDrawerOpen(true)
   const toggleLocked = () => setDrawerLocked(!drawerLocked)
 
   return (
-    <DrawerContext.Provider value={{ drawerOpen, drawerLocked, toggleOpen, toggleLocked }}>
+    <DrawerContext.Provider value={{ drawerOpen, drawerLocked, toggleOpen, toggleLocked, openDrawer }}>
       { children }
     </DrawerContext.Provider>
   )

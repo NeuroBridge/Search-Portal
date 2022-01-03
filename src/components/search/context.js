@@ -4,15 +4,50 @@ import { api } from '../../api'
 import { navigate } from '@reach/router'
 const SearchContext = createContext({})
 import { useLocalStorage } from '../../hooks'
+import { arrayToTree } from 'performant-array-to-tree'
 
 export const SearchContextProvider = ({ children }) => {
-  const [searchHistory, setSearchHistory] = useLocalStorage('search-history', [])
+  const [searchHistory, setSearchHistory] = useLocalStorage('search-history', '[]')
   const [busy, setBusy] = useState(false)
   const [terms, setTerms] = useState([])
   const [selectedTerms, setSelectedTerms] = useState({})
   const [searchedQuery, setSearchedQuery] = useState(null)
 
-  useEffect(() => console.log(Object.keys(selectedTerms)), [selectedTerms])
+  const constructTreeRelations = async root => {
+    let relations = [{ id: root.short_form, parentId: '' }]
+    try {
+      const descendants = await api.descendants(root)
+      if (!descendants.length) {
+        return relations
+      }
+      let queue = [root]
+      while (queue.length > 0) {
+        const t = queue.pop()
+        const children = await api.children(t)
+        queue = [...children, ...queue]
+        relations = [...relations, ...children.map(child => ({ id: child.short_form, parentId: t.short_form }))]
+      }
+      return relations
+    } catch (error) {
+      console.log(error)
+    }
+    console.log(relations)
+    console.log(arrayToTree(relations))
+    return relations
+  }
+
+  useEffect(async () => {
+    // when selectedTerms changes, we check each term for a tree property,
+    // and building it if needed.
+    Object.keys(selectedTerms).forEach(async label => {
+      if (!selectedTerms[label].tree) {
+        let newSelectedTerms = { ...selectedTerms }
+        const [tree] = arrayToTree(await constructTreeRelations(selectedTerms[label]))
+        newSelectedTerms[label].tree = tree
+        setSelectedTerms(newSelectedTerms)
+      }
+    })
+  }, [selectedTerms])
 
   const toggleTermSelection = newTerm => {
     let newTerms = { ...selectedTerms }
@@ -28,7 +63,8 @@ export const SearchContextProvider = ({ children }) => {
   const selectTerm = newTerm => {
     let newTerms = { ...selectedTerms }
     const id = newTerm.short_form
-    newTerms[id] = newTerm
+    newTerms[id] = { ...newTerm, tree: null }
+    console.log(newTerms)
     setSelectedTerms({ ...newTerms })
   }
 
@@ -56,11 +92,7 @@ export const SearchContextProvider = ({ children }) => {
       api.select(query)
         .then(terms => {
           setTerms(terms)
-          const newHistoryItem = {
-            query: query,
-            timestamp: new Date(),
-          }
-          setSearchHistory([newHistoryItem, ...searchHistory])
+          addSearchHistoryItem(query)
           navigate('/')
         })
         .catch(error => console.error(error))
@@ -75,14 +107,35 @@ export const SearchContextProvider = ({ children }) => {
     setSearchedQuery('')
   }
 
+  const addSearchHistoryItem = query => {
+    const newHistoryItem = {
+      query: query,
+      timestamp: new Date(),
+    }
+    setSearchHistory([newHistoryItem, ...searchHistory])
+  }
+
+  const deleteSearchHistoryItem = timestamp => () => {
+    const index = searchHistory.findIndex(item => item.timestamp === timestamp)
+    if (index === -1) {
+      return
+    }
+    let newHistory = [...searchHistory]
+    newHistory.splice(index, 1)
+    setSearchHistory(newHistory)
+  }
+
+  const clearSearchHistory = () => setSearchHistory([])
+
   return (
     <SearchContext.Provider
       value={{
-        busy, resetSearch,
+        busy, setBusy, resetSearch,
         doSearch,
         terms, selectedTerms,
         selectTerm, deselectTerm, toggleTermSelection, clearTermSelection, clickSelectedTerm,
         searchedQuery,
+        searchHistory, addSearchHistoryItem, deleteSearchHistoryItem, clearSearchHistory,
       }}
     >
       { children }

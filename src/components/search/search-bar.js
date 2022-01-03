@@ -1,9 +1,8 @@
 import { useEffect, useRef } from 'react'
-import { IconButton, LinearProgress, InputBase, useAutocomplete, useMediaQuery } from '@mui/material'
+import { IconButton, LinearProgress, InputBase, useMediaQuery } from '@mui/material'
 import { makeStyles, useTheme } from '@mui/styles';
 import { Search as SearchIcon } from '@mui/icons-material'
 import { useSearchContext } from './context'
-import { useLocalStorage } from '../../hooks'
 
 const useStyles = makeStyles(theme => ({
   form: {
@@ -28,19 +27,6 @@ export const SearchBar = () => {
   const mobile = useMediaQuery(theme.breakpoints.down('sm'))
   const { busy, doSearch } = useSearchContext()
   const inputRef = useRef() // used for programatic focus of text input
-  const { searchHistory } = useLocalStorage('searchHistory', '[]')
-  const {
-    getRootProps,
-    getInputLabelProps,
-    getInputProps,
-    getListboxProps,
-    getOptionProps,
-    groupedOptions,
-  } = useAutocomplete({
-    id: 'query-autocomplete',
-    options: searchHistory,
-    getOptionLabel: option => option.query,
-  })
 
   useEffect(() => {
     // this lets the user press backslash to jump focus to the search box
@@ -72,13 +58,13 @@ export const SearchBar = () => {
           variant="filled"
           inputRef={ inputRef }
           endAdornment={ !mobile && <small className={ classes.inputTip }>Press \ to focus</small> }
-          {...getInputProps()}
         />
         <IconButton
           type="submit"
           className={ classes.iconButton }
           aria-label="search"
-          size="large">
+          size="large"
+        >
           <SearchIcon />
         </IconButton>
       </form>

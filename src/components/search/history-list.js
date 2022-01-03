@@ -1,5 +1,4 @@
 import { Button, Card, CardActions, CardContent, CardHeader, Divider, IconButton, List, ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText, Typography } from '@mui/material'
-import { useLocalStorage } from '../../hooks'
 import TimeAgo from 'react-timeago'
 import { useSearchContext } from './context'
 import {
@@ -19,19 +18,7 @@ const useStyles = makeStyles(() => ({
 
 export const SearchHistoryList = () => {
   const classes = useStyles()
-  const [searchHistory, setSearchHistory] = useLocalStorage('search-history')
-  const { doSearch } = useSearchContext()
-  console.log(searchHistory)
-
-  const deleteHistoryItem = timestamp => () => {
-    const index = searchHistory.findIndex(item => item.timestamp === timestamp)
-    if (index === -1) {
-      return
-    }
-    let newHistory = [...searchHistory]
-    newHistory.splice(index, 1)
-    setSearchHistory(newHistory)
-  }
+  const { doSearch, searchHistory, deleteSearchHistoryItem, clearSearchHistory } = useSearchContext()
 
   return (
     <Card>
@@ -60,7 +47,7 @@ export const SearchHistoryList = () => {
                     <IconButton
                       edge="end"
                       aria-label="delete"
-                      onClick={ deleteHistoryItem(timestamp) }
+                      onClick={ deleteSearchHistoryItem(timestamp) }
                       size="large">
                       <DeleteIcon />
                     </IconButton>
@@ -84,7 +71,7 @@ export const SearchHistoryList = () => {
           color="secondary"
           variant="outlined"
           aria-label="clear search history"
-          onClick={ () => setSearchHistory([]) }
+          onClick={ clearSearchHistory }
           disabled={ !searchHistory || !searchHistory.length }
         >
           Clear History &nbsp; <DeleteAllIcon />
