@@ -8,19 +8,13 @@ import {
 } from '@mui/icons-material'
 import { useSearchContext } from '../components/search/context'
 
-const useStyles = makeStyles((theme) => ({
-  checkbox: {
-  },
-}))
-
 export const SelectView = () => {
-  const classes = useStyles()
   const { selectedTerms } = useSearchContext()
   const [selection, setSelection] = useState([])
   const forest = useMemo(() => Object.keys(selectedTerms).map(term => selectedTerms[term].tree), [selectedTerms])
 
   const handleChangeSelection = id => event => {
-    console.log(id)
+    event.preventDefault()
     const index = selection.indexOf(id)
     let newSelection = [...selection]
     if (index > -1) {
@@ -41,7 +35,6 @@ export const SelectView = () => {
             label={ node.data.id }
             control={
               <Checkbox
-                className={ classes.checkbox }
                 checked={ selection.includes(node.data.id) }
                 onClick={ event => event.stopPropagation() }
                 onChange={ handleChangeSelection(node.data.id) }

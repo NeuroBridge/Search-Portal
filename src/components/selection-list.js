@@ -18,8 +18,8 @@ const useStyles = makeStyles(theme => ({
   },
   termChip: {
     borderRadius: theme.shape.borderRadius,
-    padding: `8px`,
     height: 'unset',
+    padding: theme.spacing(1),
     border: `1px solid ${ theme.palette.primary.dark }`,
     animation: '$fadeIn 350ms ease-in',
     backgroundColor: '#dde',
@@ -29,12 +29,12 @@ const useStyles = makeStyles(theme => ({
     },
   },
   chipLabelPrimary: {
-    fontSize: '110%',
     textTransform: 'uppercase',
   },
   chipLabelSecondary: {
     fontStyle: 'italic',
     color: 'dimgrey',
+    fontSize: '90%',
   },
 }))
 
