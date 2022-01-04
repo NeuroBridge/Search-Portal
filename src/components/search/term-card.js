@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
     border: `1px solid #afb9c099`,
     filter: 'opacity(0.8)',
     width: '100%',
-    transition: 'filter 250ms, border-color 250ms, border-width 250ms',
+    transition: 'filter 250ms, border-color 250ms',
     display: 'flex',
     '&:hover': {
       filter: 'opacity(1.0)',
@@ -47,16 +47,16 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export const TermCard = ({ term, toggleTermSelectionHandler }) => {
+export const TermCard = ({ term, toggleRootTermSelectionHandler }) => {
   const classes = useStyles()
   const [expanded, setExpanded] = useState(false)
-  const { selectedTerms } = useSearchContext()
-  const selected = useMemo(() => term.short_form in selectedTerms, [selectedTerms])
+  const { selectedRootTerms } = useSearchContext()
+  const selected = useMemo(() => term.short_form in selectedRootTerms, [selectedRootTerms])
 
   return (
     <Fragment>
       <Card square variant="outlined" className={ `${ classes.termCard } ${ selected ? classes.selected : undefined }` }>
-        <CardActionArea onClick={ toggleTermSelectionHandler }>
+        <CardActionArea onClick={ toggleRootTermSelectionHandler }>
           <CardContent className={ classes.content }>
             <Typography color="textPrimary">
               <strong>label:</strong> { term.label }
@@ -70,14 +70,14 @@ export const TermCard = ({ term, toggleTermSelectionHandler }) => {
           </CardContent>
         </CardActionArea>
         <CardActions className={ classes.actions } disableSpacing={ true }>
-          <Button onClick={ toggleTermSelectionHandler }>{ selected ? <CheckedIcon fontSize="small" color="secondary" /> : <UncheckedIcon fontSize="small" color="default" /> }</Button>
+          <Button onClick={ toggleRootTermSelectionHandler }>{ selected ? <CheckedIcon fontSize="small" color="secondary" /> : <UncheckedIcon fontSize="small" color="default" /> }</Button>
           <Button onClick={ () => setExpanded(true) }><InspectIcon fontSize="small" color="default" /></Button>
         </CardActions>
       </Card>
       <TermDialog
         term={ term }
         selected={ selected }
-        toggleSelectionHandler={ toggleTermSelectionHandler }
+        toggleSelectionHandler={ toggleRootTermSelectionHandler }
         open={ expanded }
         closeHandler={ () => setExpanded(false) }
       />
@@ -93,5 +93,5 @@ TermCard.propTypes = {
     has_children: PropTypes.bool.isRequired,
     comment_annotation: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   }).isRequired,
-  toggleTermSelectionHandler: PropTypes.func.isRequired,
+  toggleRootTermSelectionHandler: PropTypes.func.isRequired,
 }

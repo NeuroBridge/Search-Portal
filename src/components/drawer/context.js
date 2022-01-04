@@ -8,6 +8,7 @@ export const useDrawer = () => useContext(DrawerContext)
 export const DrawerProvider = ({ children }) => {
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [drawerLocked, setDrawerLocked] = useState(false)
+  const DRAWER_WIDTH = '500px'
 
   const toggleOpen = () => {
     if (drawerLocked) {
@@ -19,7 +20,7 @@ export const DrawerProvider = ({ children }) => {
   const toggleLocked = () => setDrawerLocked(!drawerLocked)
 
   return (
-    <DrawerContext.Provider value={{ drawerOpen, drawerLocked, toggleOpen, toggleLocked, openDrawer }}>
+    <DrawerContext.Provider value={{ drawerOpen, drawerLocked, toggleOpen, toggleLocked, openDrawer, DRAWER_WIDTH }}>
       { children }
     </DrawerContext.Provider>
   )

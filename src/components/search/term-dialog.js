@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => ({
 
 export const TermDialog = ({ term, open, closeHandler, toggleSelectionHandler }) => {
   const classes = useStyles()
-  const { selectedTerms } = useSearchContext()
+  const { selectedRootTerms } = useSearchContext()
 
   return (
     <MuiDialog
@@ -55,7 +55,7 @@ export const TermDialog = ({ term, open, closeHandler, toggleSelectionHandler })
       <DialogActions>
         <Button onClick={ toggleSelectionHandler }>
          {
-            term.short_form in selectedTerms
+            term.short_form in selectedRootTerms
               ? <CheckedIcon fontSize="small" color="secondary" />
               : <UncheckedIcon fontSize="small" color="default" />
           }

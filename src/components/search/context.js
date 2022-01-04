@@ -10,80 +10,69 @@ export const SearchContextProvider = ({ children }) => {
   const [searchHistory, setSearchHistory] = useLocalStorage('search-history', '[]')
   const [busy, setBusy] = useState(false)
   const [terms, setTerms] = useState([])
-  const [selectedTerms, setSelectedTerms] = useState({})
+  const [selectedRootTerms, setSelectedRootTerms] = useState({})
+  const [selectedTerms, setSelectedTerms] = useState([])
   const [searchedQuery, setSearchedQuery] = useState(null)
 
-  const constructTreeRelations = async root => {
-    let relations = [{ id: root.short_form, parentId: '' }]
-    try {
-      const descendants = await api.descendants(root)
-      if (!descendants.length) {
+  useEffect(async () => {
+    // when selectedRootTerms changes, we check each term for a tree property,
+    // and building it if needed.
+
+    // first, a function to fetch and construct child-parent relationships
+    const constructTreeRelations = async root => {
+      let relations = [{ id: root.short_form, parentId: '' }]
+      try {
+        const descendants = await api.descendants(root)
+        if (!descendants.length) {
+          return relations
+        }
+        let queue = [root]
+        while (queue.length > 0) {
+          const t = queue.pop()
+          const children = await api.children(t)
+          queue = [...children, ...queue]
+          relations = [...relations, ...children.map(child => ({ id: child.short_form, parentId: t.short_form }))]
+        }
         return relations
-      }
-      let queue = [root]
-      while (queue.length > 0) {
-        const t = queue.pop()
-        const children = await api.children(t)
-        queue = [...children, ...queue]
-        relations = [...relations, ...children.map(child => ({ id: child.short_form, parentId: t.short_form }))]
+      } catch (error) {
+        console.log(error)
       }
       return relations
-    } catch (error) {
-      console.log(error)
     }
-    console.log(relations)
-    console.log(arrayToTree(relations))
-    return relations
-  }
 
-  useEffect(async () => {
-    // when selectedTerms changes, we check each term for a tree property,
-    // and building it if needed.
-    Object.keys(selectedTerms).forEach(async label => {
-      if (!selectedTerms[label].tree) {
-        let newSelectedTerms = { ...selectedTerms }
-        const [tree] = arrayToTree(await constructTreeRelations(selectedTerms[label]))
-        newSelectedTerms[label].tree = tree
-        setSelectedTerms(newSelectedTerms)
+    Object.keys(selectedRootTerms).forEach(async label => {
+      if (!selectedRootTerms[label].tree) {
+        let newSelectedRootTerms = { ...selectedRootTerms }
+        const [tree] = arrayToTree(await constructTreeRelations(selectedRootTerms[label]))
+        newSelectedRootTerms[label].tree = tree
+        setSelectedRootTerms(newSelectedRootTerms)
       }
     })
-  }, [selectedTerms])
+  }, [selectedRootTerms])
 
-  const toggleTermSelection = newTerm => {
-    let newTerms = { ...selectedTerms }
+  const toggleRootTermSelection = newTerm => {
+    let newTerms = { ...selectedRootTerms }
     const id = newTerm.short_form
     if (id in newTerms) {
       delete newTerms[id]
     } else {
       newTerms[id] = newTerm
     }
-    setSelectedTerms({ ...newTerms })
+    setSelectedRootTerms({ ...newTerms })
   }
+  const clearRootTermSelection = () => setSelectedRootTerms({})
 
-  const selectTerm = newTerm => {
-    let newTerms = { ...selectedTerms }
-    const id = newTerm.short_form
-    newTerms[id] = { ...newTerm, tree: null }
-    console.log(newTerms)
-    setSelectedTerms({ ...newTerms })
-  }
-
-  const deselectTerm = newTerm => {
-    let newTerms = { ...selectedTerms }
-    const id = newTerm.short_form
-    if (id in newTerms) {
-      delete newTerms[id]
+  const toggleTermSelection = id => {
+    let newSelectedTerms = selectedTerms
+    const index = selectedTerms.indexOf(id)
+    if (index === -1) {
+      newSelectedTerms = [...newSelectedTerms, id]
+    } else {
+      newSelectedTerms = [...newSelectedTerms.slice(0, index), ...newSelectedTerms.slice(index + 1)]
     }
-    setSelectedTerms({ ...newTerms })
+    setSelectedTerms(newSelectedTerms)
   }
-
-  const clearTermSelection = () => {
-    setSelectedTerms({})
-  }
-
-  const clickSelectedTerm = term => {
-    console.log(`clicked ${ term.label }`)
-  }
+  const clearTermSelection = () => setSelectedTerms([])
 
   const doSearch = query => {
     if (query.trim()) {
@@ -131,9 +120,11 @@ export const SearchContextProvider = ({ children }) => {
     <SearchContext.Provider
       value={{
         busy, setBusy, resetSearch,
-        doSearch,
-        terms, selectedTerms,
-        selectTerm, deselectTerm, toggleTermSelection, clearTermSelection, clickSelectedTerm,
+        doSearch, terms,
+        selectedRootTerms,
+        toggleRootTermSelection, clearRootTermSelection,
+        selectedTerms,
+        toggleTermSelection, clearTermSelection,
         searchedQuery,
         searchHistory, addSearchHistoryItem, deleteSearchHistoryItem, clearSearchHistory,
       }}

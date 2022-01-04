@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
   },
   grid: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 7fr))',
     gap: theme.spacing(2),
     animation: '$fadeIn 250ms ease-out',
   },
@@ -72,11 +72,11 @@ const LandingPageContent = () => {
 
 export const SearchView = () => {
   const classes = useStyles()
-  const { terms, toggleTermSelection, searchedQuery } = useSearchContext()
+  const { terms, toggleRootTermSelection, searchedQuery } = useSearchContext()
   const [debugMode, setDebugMode] = useState(false)
 
   const handleToggleDebugMode = () => setDebugMode(!debugMode)
-  const handleToggleTermSelection = term => () => toggleTermSelection(term)
+  const handleToggleTermSelection = term => () => toggleRootTermSelection(term)
 
   const MemoizedResultsHeader = useCallback(() => {
     return (
@@ -117,7 +117,7 @@ export const SearchView = () => {
                 <TermCard
                   key={ term.label }
                   term={ term }
-                  toggleTermSelectionHandler={ handleToggleTermSelection(term) }
+                  toggleRootTermSelectionHandler={ handleToggleTermSelection(term) }
                 />
               ))
             }
