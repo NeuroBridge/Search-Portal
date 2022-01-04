@@ -86,7 +86,6 @@ export const SelectionForest = () => {
     >
         {
           forest.map((tree, i) => {
-            console.log(selectedTerms)
             if (tree) {
               return (
                 <div key={ `tree-${ i }` } className={ classes.treeContainer }>
