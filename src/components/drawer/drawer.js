@@ -1,11 +1,12 @@
-import { Fragment, useMemo } from 'react'
+import { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Button, Drawer as MuiDrawer, Tooltip } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import {
   Lock as LockedIcon,
   LockOpen as UnlockedIcon,
-  Height as ResizeDrawerIcon,
+  KeyboardArrowRight as CloseDrawerIcon,
+  KeyboardArrowLeft as OpenDrawerIcon,
 } from '@mui/icons-material'
 import { useDrawer } from './context'
 
@@ -58,9 +59,6 @@ const useStyles = makeStyles(theme => {
         filter: 'brightness(0.8)',
       },
     },
-    resizeIcon: {
-      height: '3rem',
-    },
     drawerTitleButton: {
       flex: 1,
       padding: 0,
@@ -77,8 +75,7 @@ const useStyles = makeStyles(theme => {
 
 export const Drawer = ({ title, children }) => {
   const {
-    drawerOpen, toggleOpen, drawerLocked, toggleLocked,
-    drawerWidth, drawerMaxWidth, setDrawerMaxWidth,
+    drawerOpen, toggleOpen, drawerLocked, toggleLocked, drawerWidth, 
   } = useDrawer()
   
   const classes = useStyles({ width: drawerWidth })
@@ -106,14 +103,27 @@ export const Drawer = ({ title, children }) => {
       <div
         className={ classes.drawerHandle }
         aria-label={ `${ drawerOpen ? 'Close' : 'Open' } drawer` }
-        style={{ transform: `translateX(${ drawerOpen ? `-${ drawerWidth }px` : 0 })`, cursor: 'grab' }}
+        style={{ transform: `translateX(${ drawerOpen ? `-${ drawerWidth }px` : 0 })` }}
         draggable
         onDragStart={ handleDragDrawerResizeHandle }
         onDrag={ handleGrabDrawerResizeHandle }
       >
-        <Tooltip title="Resize drawer" placement="left">
-          <ResizeDrawerIcon sx={{ color: 'white', transform: 'rotate(90deg)' }} className={ classes.resizeIcon } />
-        </Tooltip>
+        {
+          drawerOpen
+          ? (
+            <Tooltip title="Close drawer" placement="left">
+              <Button onClick={ toggleOpen } className={ classes.drawerButton }>
+                <CloseDrawerIcon color="secondary" />
+              </Button>
+            </Tooltip>
+          ) : (
+            <Tooltip title="Open drawer" placement="left">
+              <Button onClick={ toggleOpen } className={ classes.drawerButton }>
+                <OpenDrawerIcon color="secondary" />
+              </Button>
+            </Tooltip>
+          )
+        }
         <Button className={ classes.drawerTitleButton } onClick={ toggleOpen }>
           { title }
         </Button>

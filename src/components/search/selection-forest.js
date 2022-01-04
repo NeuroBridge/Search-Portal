@@ -16,12 +16,16 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'stretch',
-    padding: `2px 0`,
-    backgroundColor: theme.palette.primary.light,
-    gap: '2px',
+    gap: theme.spacing(4),
   },
   treeContainer: {
-    backgroundColor: '#ccc',
+    backgroundColor: '#f3f6f9',
+    transition: 'border-color 250ms',
+    border: `1px solid #afb9c099`,
+    padding: theme.spacing(2),
+    '&:hover': {
+      borderColor: theme.palette.secondary.main,
+    },
   },
   loadingIndicator: {
     backgroundColor: '#aaa',
