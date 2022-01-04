@@ -7,7 +7,7 @@ import { useLocalStorage } from '../../hooks'
 import { arrayToTree } from 'performant-array-to-tree'
 
 export const SearchContextProvider = ({ children }) => {
-  const [searchHistory, setSearchHistory] = useLocalStorage('search-history', '[]')
+  const [searchHistory, setSearchHistory] = useLocalStorage('search-history', [])
   const [busy, setBusy] = useState(false)
   const [terms, setTerms] = useState([])
   const [selectedRootTerms, setSelectedRootTerms] = useState({})
