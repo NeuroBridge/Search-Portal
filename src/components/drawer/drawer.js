@@ -44,9 +44,9 @@ const useStyles = makeStyles(theme => {
     },
     drawerHeader: {
       position: 'fixed',
-      right: '-1px',
       top: '115px',
       bottom: 0,
+      right: 0,
       width: '4rem',
       backgroundColor: theme.palette.primary.main,
       transition: 'transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms, filter 250ms',
@@ -69,16 +69,6 @@ const useStyles = makeStyles(theme => {
       padding: 0,
       height: '3rem',
       borderRadius: 0,
-    },
-    drawerIconContainer: {
-      width: '5rem',
-      backgroundColor: theme.palette.secondary.main,
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      '& svg': {
-        fill: theme.palette.common.white,
-      },
     },
   })
 })
@@ -114,9 +104,9 @@ export const Drawer = ({ title, children }) => {
         style={{ transform: `translateX(${ drawerOpen ? `-${ drawerWidth }` : 0 })` }}
       >
         <Tooltip title={ `${ drawerOpen ? 'Close' : 'Open' } drawer` } placement="left">
-          <Button className={ classes.drawerButton } onClick={ toggleOpen } color="secondary">
-            { drawerOpen && <CloseDrawerIcon /> }
-            { !drawerOpen && <OpenDrawerIcon /> }
+          <Button className={ classes.drawerButton } onClick={ toggleOpen }>
+            { drawerOpen && <CloseDrawerIcon sx={{ color: 'white' }} /> }
+            { !drawerOpen && <OpenDrawerIcon sx={{ color: 'white' }} /> }
           </Button>
         </Tooltip>
         <Button className={ classes.drawerTitleButton } onClick={ toggleOpen }>
@@ -124,8 +114,8 @@ export const Drawer = ({ title, children }) => {
         </Button>
         <div className={ classes.actions }>
           <Tooltip title={ `${ drawerLocked ? 'Unlock' : 'Lock' } drawer postiion` } placement="left">
-            <Button onClick={ toggleLocked } color={ drawerLocked ? 'warning' : 'secondary' } className={ classes.drawerButton }>
-              { drawerLocked ? <LockedIcon /> : <UnlockedIcon /> }
+            <Button onClick={ toggleLocked } className={ classes.drawerButton }>
+              { drawerLocked ? <LockedIcon sx={{ 'color': '#c99' }} /> : <UnlockedIcon sx={{ 'color': '#9c9' }} /> }
             </Button>
           </Tooltip>
         </div>

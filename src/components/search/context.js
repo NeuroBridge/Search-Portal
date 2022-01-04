@@ -60,7 +60,10 @@ export const SearchContextProvider = ({ children }) => {
     }
     setSelectedRootTerms({ ...newTerms })
   }
-  const clearRootTermSelection = () => setSelectedRootTerms({})
+  const clearRootTermSelection = () => {
+    setSelectedRootTerms({})
+    clearTermSelection()
+  }
 
   const toggleTermSelection = id => {
     let newSelectedTerms = selectedTerms

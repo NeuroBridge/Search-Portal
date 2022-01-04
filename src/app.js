@@ -1,5 +1,6 @@
-import { useEffect } from 'react'
-import { AppBar, Button, Toolbar, useMediaQuery } from '@mui/material'
+import { useCallback, useEffect } from 'react'
+import { AppBar, Button, IconButton, Paper, Toolbar, Typography, useMediaQuery } from '@mui/material'
+import { DeleteSweep as ClearSelectionIcon } from '@mui/icons-material'
 import makeStyles from '@mui/styles/makeStyles';
 import brainImage from './images/brain.png'
 import { Router } from './router'
@@ -34,19 +35,23 @@ const useStyles = makeStyles(theme => ({
     position: 'relative',
     transition: 'padding-right 225ms cubic-bezier(0, 0, 0.2, 1) 0ms, filter 250ms',
   },
-  drawerTitle: {
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    padding: `0 ${ theme.spacing(3) }`,
+  drawerHeading: {
+    color: theme.palette.primary.dark,
+    padding: theme.spacing(1),
+    '& > *': {
+      textAlign: 'center',
+      padding: 0,
+    },
   },
 }))
 
 export const App = () => {
   const classes = useStyles()
   const compact = useMediaQuery('(max-width: 600px)')
-  const { selectedRootTerms, selectedTerms } = useSearchContext()
+  const {
+    selectedRootTerms, clearRootTermSelection,
+    selectedTerms, clearTermSelection,
+  } = useSearchContext()
   const { DRAWER_WIDTH, drawerOpen, locked, toggleOpen } = useDrawer()
   
   /**
@@ -62,6 +67,25 @@ export const App = () => {
     toggleOpen(true)
   }, [selectedRootTerms])
 
+  const DrawerHeading = useCallback(() => {
+    return (
+      <Paper className={ classes.drawerHeading }>
+        <Typography>
+          { Object.keys(selectedRootTerms).length } Root Term{ Object.keys(selectedRootTerms).length === 1 ? '' : 's' }
+          <IconButton onClick={ clearRootTermSelection } disabled={ Object.keys(selectedRootTerms).length === 0 }>
+            <ClearSelectionIcon />
+          </IconButton>
+        </Typography>
+        <Typography>
+          { selectedTerms.length } selected term{ selectedTerms.length === 1 ? '' : 's'}
+          <IconButton onClick={ clearTermSelection } disabled={ selectedTerms.length === 0 }>
+            <ClearSelectionIcon />
+          </IconButton>
+        </Typography>
+      </Paper>
+    )
+  }, [selectedRootTerms, selectedTerms])
+
   return (
     <div className={ classes.app }>
       <AppBar position="fixed" sx={{ zIndex: '1300' }}>
@@ -75,6 +99,7 @@ export const App = () => {
         <Router />
       </main>
       <Drawer title="Term Selection">
+        <DrawerHeading />
         <SelectionForest />
         <div style={{ display: 'flex', justifyContent: 'center', margin: '2rem auto' }}>
           <Button variant="contained" color="secondary" disabled={ !selectedTerms.length }>

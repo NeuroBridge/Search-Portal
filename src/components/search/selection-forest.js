@@ -1,7 +1,7 @@
-import { Fragment, useMemo } from 'react'
+import { Fragment, useCallback, useMemo } from 'react'
 import { useSearchContext } from './'
 import { TreeView, TreeItem } from '@mui/lab'
-import { Checkbox, CircularProgress, FormControlLabel, IconButton, Typography } from '@mui/material'
+import { Checkbox, CircularProgress, FormControlLabel, IconButton, Paper, Typography } from '@mui/material'
 import {
   DeleteSweep as ClearSelectionIcon,
   ExpandLess as CollapseIcon,
@@ -10,10 +10,6 @@ import {
 import { makeStyles } from '@mui/styles'
 
 const useStyles = makeStyles(theme => ({
-  drawerHeading: {
-    color: theme.palette.primary.dark,
-    padding: theme.spacing(2),
-  },
   forestContainer: {
     width: '100%',
     display: 'flex',
@@ -28,9 +24,11 @@ const useStyles = makeStyles(theme => ({
   },
   loadingIndicator: {
     backgroundColor: '#aaa',
-    padding: `${ theme.spacing(1.5) } ${ theme.spacing(4) }`,
+    padding: `${ theme.spacing(1) } ${ theme.spacing(4) }`,
     display: 'flex',
+    justifyContent: 'center',
     gap: theme.spacing(2),
+    width: '100%',
   },
 }))
 
@@ -79,50 +77,32 @@ export const SelectionForest = () => {
   }
 
   return (
-    <Fragment>
-      <div className={ classes.drawerHeading }>
-        <Typography variant="h5">
-          { Object.keys(selectedRootTerms).length } Root Term{ Object.keys(selectedRootTerms).length === 1 ? '' : 's' }
-          <IconButton onClick={ clearRootTermSelection } disabled={ Object.keys(selectedRootTerms).length === 0 }>
-            <ClearSelectionIcon />
-          </IconButton>
-        </Typography>
-        <Typography variant="h6">
-          { selectedTerms.length } selected term{ selectedTerms.length === 1 ? '' : 's'}
-          <IconButton onClick={ clearTermSelection } disabled={ selectedTerms.length === 0 }>
-            <ClearSelectionIcon />
-          </IconButton>
-        </Typography>
-      </div>
-      
-      <TreeView
-        aria-label="term selection"
-        defaultCollapseIcon={ <CollapseIcon /> }
-        defaultExpandIcon={ <ExpandIcon /> }
-        defaultEndIcon={ '·' }
-        classes={{ root: classes.forestContainer }}
-        expanded={ selectedTerms }
-      >
-          {
-            forest.map((tree, i) => {
-              console.log(selectedTerms)
-              if (tree) {
-                return (
-                  <div key={ `tree-${ i }` } className={ classes.treeContainer }>
-                    { renderTree(tree) }
-                  </div>
-                )
-              }
+    <TreeView
+      aria-label="term selection"
+      defaultCollapseIcon={ <CollapseIcon /> }
+      defaultExpandIcon={ <ExpandIcon /> }
+      defaultEndIcon={ '·' }
+      classes={{ root: classes.forestContainer }}
+    >
+        {
+          forest.map((tree, i) => {
+            console.log(selectedTerms)
+            if (tree) {
               return (
-                <div key={ `tree-${ i }-loading` } className={ classes.loadingIndicator }>
-                  <CircularProgress size={ 25 } />
-                  <Typography sx={{ filter: 'opacity(0.5)' }}>Loading...</Typography>
+                <div key={ `tree-${ i }` } className={ classes.treeContainer }>
+                  { renderTree(tree) }
                 </div>
               )
-            })
-          }
-      </TreeView>
-    </Fragment>
+            }
+            return (
+              <div key={ `tree-${ i }-loading` } className={ classes.loadingIndicator }>
+                <CircularProgress size={ 25 } />
+                <Typography sx={{ filter: 'opacity(0.5)' }}>Loading...</Typography>
+              </div>
+            )
+          })
+        }
+    </TreeView>
   )
 }
 
