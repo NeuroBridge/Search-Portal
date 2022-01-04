@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 import { api } from '../../api'
 import { navigate } from '@reach/router'
@@ -11,12 +11,12 @@ export const SearchContextProvider = ({ children }) => {
   const [busy, setBusy] = useState(false)
   const [terms, setTerms] = useState([])
   const [selectedRootTerms, setSelectedRootTerms] = useState({})
-  const [selectedTerms, setSelectedTerms] = useState([])
+  const [selectedTerms, setSelectedTerms] = useState({})
   const [searchedQuery, setSearchedQuery] = useState(null)
 
   useEffect(async () => {
-    // when selectedRootTerms changes, we check each term for a tree property,
-    // and building it if needed.
+    // when selectedRootTerms changes, we check each term
+    // for a `tree` property, and build it if needed.
 
     // first, a function to fetch and construct child-parent relationships
     const constructTreeRelations = async root => {
@@ -50,6 +50,12 @@ export const SearchContextProvider = ({ children }) => {
     })
   }, [selectedRootTerms])
 
+  /**
+   *
+   * Root Term Selection Functions
+   *
+   */
+  
   const toggleRootTermSelection = newTerm => {
     let newTerms = { ...selectedRootTerms }
     const id = newTerm.short_form
@@ -60,21 +66,36 @@ export const SearchContextProvider = ({ children }) => {
     }
     setSelectedRootTerms({ ...newTerms })
   }
+  
+  const selectedRootTermsCount = useMemo(() => Object.keys(selectedRootTerms).length, [selectedRootTerms])
+
   const clearRootTermSelection = () => {
     setSelectedRootTerms({})
     clearTermSelection()
   }
 
+  /**
+   *
+   * All Term Selection Functions
+   *
+   */
+  
   const toggleTermSelection = id => {
-    let newSelectedTerms = selectedTerms
-    const index = selectedTerms.indexOf(id)
-    if (index === -1) {
-      newSelectedTerms = [...newSelectedTerms, id]
+    let newSelectedTerms = { ...selectedTerms }
+    console.log(id)
+    if (id in newSelectedTerms) {
+      newSelectedTerms[id] = (newSelectedTerms[id] + 1) % 3
+      if (newSelectedTerms[id] === 0) {
+        delete newSelectedTerms[id]
+      }
     } else {
-      newSelectedTerms = [...newSelectedTerms.slice(0, index), ...newSelectedTerms.slice(index + 1)]
+      newSelectedTerms[id] = 1
     }
     setSelectedTerms(newSelectedTerms)
   }
+  
+  const selectedTermsCount = useMemo(() => Object.keys(selectedTerms).length, [selectedTerms])
+
   const clearTermSelection = () => setSelectedTerms([])
 
   const doSearch = query => {
@@ -99,6 +120,12 @@ export const SearchContextProvider = ({ children }) => {
     setSearchedQuery('')
   }
 
+  /**
+   *
+   * Search History Functions
+   *
+   */
+  
   const addSearchHistoryItem = query => {
     const newHistoryItem = {
       query: query,
@@ -119,14 +146,20 @@ export const SearchContextProvider = ({ children }) => {
 
   const clearSearchHistory = () => setSearchHistory([])
 
+  /**
+   *
+   * Return
+   *
+   */
+  
   return (
     <SearchContext.Provider
       value={{
         busy, setBusy, resetSearch,
         doSearch, terms,
-        selectedRootTerms,
+        selectedRootTerms, selectedRootTermsCount,
         toggleRootTermSelection, clearRootTermSelection,
-        selectedTerms,
+        selectedTerms, selectedTermsCount,
         toggleTermSelection, clearTermSelection,
         searchedQuery,
         searchHistory, addSearchHistoryItem, deleteSearchHistoryItem, clearSearchHistory,

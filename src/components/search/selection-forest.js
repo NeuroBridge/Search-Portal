@@ -1,11 +1,12 @@
-import { Fragment, useCallback, useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import { useSearchContext } from './'
 import { TreeView, TreeItem } from '@mui/lab'
-import { Checkbox, CircularProgress, FormControlLabel, IconButton, Paper, Typography } from '@mui/material'
+import { Checkbox, CircularProgress, FormControlLabel, Typography } from '@mui/material'
 import {
-  DeleteSweep as ClearSelectionIcon,
   ExpandLess as CollapseIcon,
   ExpandMore as ExpandIcon,
+  DisabledByDefault as IgnoreTermIcon,
+  CheckBox as SelectedTermIcon,
 } from '@mui/icons-material'
 import { makeStyles } from '@mui/styles'
 
@@ -36,9 +37,7 @@ export const SelectionForest = () => {
   const classes = useStyles()
   const {
     selectedRootTerms,
-    clearRootTermSelection,
     selectedTerms,
-    clearTermSelection,
     toggleTermSelection,
   } = useSearchContext()
 
@@ -47,7 +46,17 @@ export const SelectionForest = () => {
       .map(term => selectedRootTerms[term].tree)
   }, [selectedRootTerms])
 
-  const handleToggleTermSelection = id => () => toggleTermSelection(id)
+  const handleToggleTermSelection = id => () => {
+    toggleTermSelection(id)
+  }
+
+  const selectionIcon = useCallback(termId => {
+    if (selectedTerms[termId] === 2) {
+      return <IgnoreTermIcon sx={{ color: '#966' }} />
+    }
+    return <SelectedTermIcon sx={{ color: '#696' }} />
+  }, [selectedTerms])
+  console.table(selectedTerms)
 
   const renderTree = (node, level = 0) => {
     return (
@@ -59,7 +68,8 @@ export const SelectionForest = () => {
             label={ node.data.id }
             control={
               <Checkbox
-                checked={ selectedTerms.includes(node.data.id) }
+                checked={ node.data.id in selectedTerms && selectedTerms[node.data.id] ? true : false }
+                checkedIcon={ selectionIcon(node.data.id) }
                 onClick={ event => event.stopPropagation() }
                 onChange={ handleToggleTermSelection(node.data.id) }
               />

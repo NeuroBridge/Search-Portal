@@ -53,7 +53,7 @@ const useStyles = makeStyles(theme => {
       display: 'flex',
       flexDirection: 'column',
       filter: 'brightness(1.0)',
-      zIndex: '999',
+      zIndex: '9999',
       '&:hover': {
         filter: 'brightness(0.9)',
       },

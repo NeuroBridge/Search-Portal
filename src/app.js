@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { AppBar, Button, IconButton, Paper, Toolbar, Typography, useMediaQuery } from '@mui/material'
 import { DeleteSweep as ClearSelectionIcon } from '@mui/icons-material'
 import makeStyles from '@mui/styles/makeStyles';
@@ -49,10 +49,17 @@ export const App = () => {
   const classes = useStyles()
   const compact = useMediaQuery('(max-width: 600px)')
   const {
-    selectedRootTerms, clearRootTermSelection,
-    selectedTerms, clearTermSelection,
+    selectedRootTerms, clearRootTermSelection, selectedRootTermsCount,
+    selectedTerms, clearTermSelection, selectedTermsCount,
   } = useSearchContext()
   const { DRAWER_WIDTH, drawerOpen, locked, toggleOpen } = useDrawer()
+  const [sent, setSent] = useState(false)
+
+  /* temporary faking term send request */
+  useEffect(() => {
+    const resetSend = setTimeout(() => setSent(false), 3000)
+    return () => clearTimeout(resetSend)
+  }, [sent])
   
   /**
    *
@@ -61,30 +68,30 @@ export const App = () => {
    *
    */
   useEffect(() => {
-    if (drawerOpen || locked || Object.keys(selectedRootTerms).length === 0) {
+    if (drawerOpen || locked || selectedRootTermsCount === 0) {
       return
     }
     toggleOpen(true)
-  }, [selectedRootTerms])
+  }, [selectedRootTermsCount])
 
   const DrawerHeading = useCallback(() => {
     return (
       <Paper className={ classes.drawerHeading }>
-        <Typography>
-          { Object.keys(selectedRootTerms).length } Root Term{ Object.keys(selectedRootTerms).length === 1 ? '' : 's' }
-          <IconButton onClick={ clearRootTermSelection } disabled={ Object.keys(selectedRootTerms).length === 0 }>
+        <Typography variant="subtitle1">
+          { selectedRootTermsCount } Root Term{ selectedRootTermsCount === 1 ? '' : 's' }
+          <IconButton onClick={ clearRootTermSelection } disabled={ selectedRootTermsCount === 0 }>
             <ClearSelectionIcon />
           </IconButton>
         </Typography>
-        <Typography>
-          { selectedTerms.length } selected term{ selectedTerms.length === 1 ? '' : 's'}
-          <IconButton onClick={ clearTermSelection } disabled={ selectedTerms.length === 0 }>
+        <Typography variant="subtitle2">
+          { selectedTermsCount } selected term{ selectedTermsCount === 1 ? '' : 's'}
+          <IconButton onClick={ clearTermSelection } disabled={ selectedTermsCount === 0 }>
             <ClearSelectionIcon />
           </IconButton>
         </Typography>
       </Paper>
     )
-  }, [selectedRootTerms, selectedTerms])
+  }, [selectedRootTermsCount, selectedTerms, selectedTermsCount])
 
   return (
     <div className={ classes.app }>
@@ -102,10 +109,20 @@ export const App = () => {
         <DrawerHeading />
         <SelectionForest />
         <div style={{ display: 'flex', justifyContent: 'center', margin: '2rem auto' }}>
-          <Button variant="contained" color="secondary" disabled={ !selectedTerms.length }>
-            Send { selectedTerms.length ? selectedTerms.length : '' } term{ selectedTerms.length === 1 ? '' : 's' }
+          <Button variant="contained" color="secondary" disabled={ sent || !selectedTermsCount } onClick={ () => setSent(true) }>
+            Send { selectedTermsCount ? selectedTermsCount : '' } term{ selectedTermsCount === 1 ? '' : 's' }
           </Button>
         </div>
+        {
+          sent && (
+            <div style={{ padding: '3rem' }}>
+              <Typography variant="subtitle2">Success</Typography>
+              <pre style={{ backgroundColor: '#ddd', fontSize: '75%', padding: '1rem' }}>
+                { JSON.stringify(selectedTerms, null, 2) }
+              </pre>
+            </div>
+          )
+        }
       </Drawer>
     </div>
   )
