@@ -15,6 +15,7 @@ import { useSearchContext } from './'
 
 const useStyles = makeStyles(theme => ({
   root: {
+    zIndex: '9999'
   },
   paper: {
     [theme.breakpoints.down('md')]: {

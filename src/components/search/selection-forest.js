@@ -56,7 +56,6 @@ export const SelectionForest = () => {
     }
     return <SelectedTermIcon sx={{ color: '#696' }} />
   }, [selectedTerms])
-  console.table(selectedTerms)
 
   const renderTree = (node, level = 0) => {
     return (

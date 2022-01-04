@@ -2,13 +2,13 @@ import { useCallback, useEffect, useState } from 'react'
 import { AppBar, Button, IconButton, Paper, Toolbar, Typography, useMediaQuery } from '@mui/material'
 import { DeleteSweep as ClearSelectionIcon } from '@mui/icons-material'
 import makeStyles from '@mui/styles/makeStyles';
-import brainImage from './images/brain.png'
 import { Router } from './router'
 import { Brand } from './components/brand'
 import { Menu, MobileMenu } from './components/menu'
 import { SearchBar } from './components/search/search-bar'
 import { useSearchContext, SelectionForest } from './components/search'
 import { Drawer, useDrawer } from './components/drawer'
+import neuroBridgeBackground from './images/nbbg.jpeg'
 
 const useStyles = makeStyles(theme => ({
   app: {
@@ -17,19 +17,26 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'flex-start',
     alignItems: 'stretch',
     minHeight: '100vh',
-    backgroundImage: `url(${ brainImage })`,
-    backgroundPosition: 'center 100%',
-    backgroundSize: '800px',
-    backgroundRepeat: 'no-repeat',
     width: '100%',
   },
   toolbar: {
     padding: `0 0 0 ${ theme.spacing(2) }`,
     alignItems: 'stretch',
   },
+  watermark: {
+    background: `linear-gradient(0deg, transparent 0, #fff 100%), url(${ neuroBridgeBackground })`,
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center center',
+    filter: 'opacity(0.25) saturate(0.25)',  
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    right: 0,
+    bottom: 0,
+  },
   main: {
     flex: 1,
-    padding: theme.spacing(4),
     width: '100%',
     marginTop: '115px',
     position: 'relative',
@@ -52,7 +59,7 @@ export const App = () => {
     clearRootTermSelection, selectedRootTermsCount,
     selectedTerms, clearTermSelection, selectedTermsCount,
   } = useSearchContext()
-  const { DRAWER_WIDTH, drawerOpen, locked, toggleOpen } = useDrawer()
+  const { drawerWidth, drawerOpen, locked, toggleOpen } = useDrawer()
   const [sent, setSent] = useState(false)
 
   /* temporary faking term send request */
@@ -102,10 +109,8 @@ export const App = () => {
         </Toolbar>
         <SearchBar />
       </AppBar>
-      <main className={ classes.main } style={{ paddingRight: drawerOpen ? `calc(${ DRAWER_WIDTH } + 6rem)` : '6rem' }}>
-        <Router />
-      </main>
-      <Drawer title="Term Selection">
+      <div className={ classes.watermark } />
+      <main className={ classes.main } style={{ paddingRight: drawerOpen ? `calc(${ drawerWidth }px + 4rem)` : '4rem' }}>
         <DrawerHeading />
         <SelectionForest />
         <div style={{ display: 'flex', justifyContent: 'center', margin: '2rem auto' }}>
@@ -123,6 +128,9 @@ export const App = () => {
             </div>
           )
         }
+      </main>
+      <Drawer title="Term Selection">
+        <Router />
       </Drawer>
     </div>
   )
