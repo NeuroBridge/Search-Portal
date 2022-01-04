@@ -1,5 +1,4 @@
-import { Button, Card, CardActions, CardContent, CardHeader, Divider, IconButton, List, ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText, Typography } from '@material-ui/core'
-import { useLocalStorage } from '../../hooks'
+import { Button, Card, CardActions, CardContent, CardHeader, Divider, IconButton, List, ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText, Typography } from '@mui/material'
 import TimeAgo from 'react-timeago'
 import { useSearchContext } from './context'
 import {
@@ -7,8 +6,8 @@ import {
   DeleteSweep as DeleteAllIcon,
   Search as SearchIcon,
   AccessTime as HistoryIcon,
-} from '@material-ui/icons'
-import { makeStyles } from '@material-ui/styles'
+} from '@mui/icons-material'
+import { makeStyles } from '@mui/styles'
 
 const useStyles = makeStyles(() => ({
   list: {
@@ -19,18 +18,7 @@ const useStyles = makeStyles(() => ({
 
 export const SearchHistoryList = () => {
   const classes = useStyles()
-  const [searchHistory, setSearchHistory] = useLocalStorage('search-history')
-  const { doSearch } = useSearchContext()
-
-  const deleteHistoryItem = timestamp => () => {
-    const index = searchHistory.findIndex(item => item.timestamp === timestamp)
-    if (index === -1) {
-      return
-    }
-    let newHistory = [...searchHistory]
-    newHistory.splice(index, 1)
-    setSearchHistory(newHistory)
-  }
+  const { doSearch, searchHistory, deleteSearchHistoryItem, clearSearchHistory } = useSearchContext()
 
   return (
     <Card>
@@ -56,7 +44,11 @@ export const SearchHistoryList = () => {
                     secondary={ <TimeAgo date={ timestamp } /> }
                   />
                   <ListItemSecondaryAction>
-                    <IconButton edge="end" aria-label="delete" onClick={ deleteHistoryItem(timestamp) }>
+                    <IconButton
+                      edge="end"
+                      aria-label="delete"
+                      onClick={ deleteSearchHistoryItem(timestamp) }
+                      size="large">
                       <DeleteIcon />
                     </IconButton>
                   </ListItemSecondaryAction>
@@ -79,13 +71,12 @@ export const SearchHistoryList = () => {
           color="secondary"
           variant="outlined"
           aria-label="clear search history"
-          onClick={ () => setSearchHistory([]) }
+          onClick={ clearSearchHistory }
           disabled={ !searchHistory || !searchHistory.length }
         >
           Clear History &nbsp; <DeleteAllIcon />
         </Button>
       </CardActions>
     </Card>
-
-  )
+  );
 }

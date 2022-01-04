@@ -1,10 +1,11 @@
-import { Fragment, useCallback, useMemo, useState } from 'react'
+import { Fragment, useCallback, useState } from 'react'
 import { useSearchContext } from '../components/search/context'
-import { makeStyles } from '@material-ui/core/styles'
-import { Grid, IconButton, Paper, Tooltip, Typography } from '@material-ui/core'
+import makeStyles from '@mui/styles/makeStyles';
+import { Grid, IconButton, Paper, Tooltip, Typography } from '@mui/material'
 import { TermCard } from '../components/search/term-card'
-import { TermDialog } from '../components/search/term-dialog'
-import { BugReport as DebugIcon } from '@material-ui/icons';
+import {
+  BugReport as DebugIcon,
+} from '@mui/icons-material';
 import ReactJson from 'react-json-view'
 import { SearchHistoryList } from '../components/search/history-list'
 
@@ -15,7 +16,7 @@ const useStyles = makeStyles(theme => ({
   },
   grid: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(500px, 1fr))',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 7fr))',
     gap: theme.spacing(2),
     animation: '$fadeIn 250ms ease-out',
   },
@@ -35,13 +36,12 @@ const useStyles = makeStyles(theme => ({
     animation: '$fadeIn 250ms ease-out',
     '& .react-json-view': {
       fontSize: '80%',
-      borderRadius: theme.spacing(1) / 2,
       padding: theme.spacing(2),
     }
   },
 }))
 
-const SearchLanding = () => {
+const LandingPageContent = () => {
   return (
     <Grid container spacing={ 10 }>
       <Grid item xs={ 12 } md={ 8 }>
@@ -72,17 +72,11 @@ const SearchLanding = () => {
 
 export const SearchView = () => {
   const classes = useStyles()
-  const { terms, currentTerm, setCurrentTerm, searchedQuery } = useSearchContext()
-  const dialogOpen = useMemo(() => !!currentTerm, [currentTerm])
+  const { terms, toggleRootTermSelection, searchedQuery } = useSearchContext()
   const [debugMode, setDebugMode] = useState(false)
 
-  const handleClickTerm = index => () => {
-    if (0 <= index && index < terms.length) {
-      setCurrentTerm(terms[index])
-    }
-  }
-
   const handleToggleDebugMode = () => setDebugMode(!debugMode)
+  const handleToggleTermSelection = term => () => toggleRootTermSelection(term)
 
   const MemoizedResultsHeader = useCallback(() => {
     return (
@@ -103,7 +97,7 @@ export const SearchView = () => {
 
   if (!searchedQuery) {
     return (
-      <SearchLanding />
+      <LandingPageContent />
     )
   }
 
@@ -117,14 +111,17 @@ export const SearchView = () => {
             <ReactJson src={ terms } theme="monokai" enableClipboard={ false } />
           </div>
         ) : (
-          <Grid container spacing={ 3 }>
-            <Grid item xs={ 12 } className={ classes.grid }>
-              {
-                !!terms.length && terms.map((term, index) => <TermCard term={ term } key={ term.label } clickHandler={ handleClickTerm(index) } />)
-              }
-              <TermDialog open={ dialogOpen } term={ currentTerm } closeHandler={ handleClickTerm(null) } />
-            </Grid>
-          </Grid>
+          <div className={ classes.grid }>
+            {
+              !!terms.length && terms.map(term => (
+                <TermCard
+                  key={ term.label }
+                  term={ term }
+                  toggleRootTermSelectionHandler={ handleToggleTermSelection(term) }
+                />
+              ))
+            }
+          </div>
         )
       }
     </Fragment>

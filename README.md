@@ -7,7 +7,7 @@ This is a [React](https://reactjs.org/) application that was bootstrapped with [
 
 ### 🚧 Development
 
-Run development server on port 8080 with `npm start`.
+You'll need Node v14.16.0. If you don't have that version installed, use [nvm](https://github.com/nvm-sh/nvm). Install with `nvm use 14.16.0`. Install dependencies with `npm ci`. Run development server on port 8080 with `npm start`.
 
 ### 🎁 Production
 

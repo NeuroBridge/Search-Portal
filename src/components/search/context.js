@@ -1,16 +1,102 @@
-import { createContext, useContext, useMemo, useState } from 'react'
+import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 import { api } from '../../api'
 import { navigate } from '@reach/router'
 const SearchContext = createContext({})
-import { useLocalStorage} from '../../hooks'
+import { useLocalStorage } from '../../hooks'
+import { arrayToTree } from 'performant-array-to-tree'
 
 export const SearchContextProvider = ({ children }) => {
-  const [searchHistory, setSearchHistory] = useLocalStorage('search-history', [])
-  const [terms, setTerms] = useState([])
-  const [currentTerm, setCurrentTerm] = useState(null)
-  const [searchedQuery, setSearchedQuery] = useState(null)
+  const [searchHistory, setSearchHistory] = useLocalStorage('search-history', '[]')
   const [busy, setBusy] = useState(false)
+  const [terms, setTerms] = useState([])
+  const [selectedRootTerms, setSelectedRootTerms] = useState({})
+  const [selectedTerms, setSelectedTerms] = useState({})
+  const [searchedQuery, setSearchedQuery] = useState(null)
+
+  useEffect(async () => {
+    // when selectedRootTerms changes, we check each term
+    // for a `tree` property, and build it if needed.
+
+    // first, a function to fetch and construct child-parent relationships
+    const constructTreeRelations = async root => {
+      let relations = [{ id: root.short_form, parentId: '' }]
+      try {
+        const descendants = await api.descendants(root)
+        if (!descendants.length) {
+          return relations
+        }
+        let queue = [root]
+        while (queue.length > 0) {
+          const t = queue.pop()
+          const children = await api.children(t)
+          queue = [...children, ...queue]
+          relations = [...relations, ...children.map(child => ({ id: child.short_form, parentId: t.short_form }))]
+        }
+        return relations
+      } catch (error) {
+        console.log(error)
+      }
+      return relations
+    }
+
+    Object.keys(selectedRootTerms).forEach(async label => {
+      if (!selectedRootTerms[label].tree) {
+        let newSelectedRootTerms = { ...selectedRootTerms }
+        const [tree] = arrayToTree(await constructTreeRelations(selectedRootTerms[label]))
+        newSelectedRootTerms[label].tree = tree
+        setSelectedRootTerms(newSelectedRootTerms)
+      }
+    })
+  }, [selectedRootTerms])
+
+  /**
+   *
+   * Root Term Selection Functions
+   *
+   */
+  
+  const toggleRootTermSelection = newTerm => {
+    let newTerms = { ...selectedRootTerms }
+    const id = newTerm.short_form
+    if (id in newTerms) {
+      delete newTerms[id]
+    } else {
+      newTerms[id] = newTerm
+    }
+    setSelectedRootTerms({ ...newTerms })
+  }
+  
+  const selectedRootTermsCount = useMemo(() => Object.keys(selectedRootTerms).length, [selectedRootTerms])
+
+  const clearRootTermSelection = () => {
+    setSelectedRootTerms({})
+    clearTermSelection()
+  }
+
+  /**
+   *
+   * All Term Selection Functions
+   *
+   */
+  
+  const toggleTermSelection = id => {
+    let newSelectedTerms = { ...selectedTerms }
+    console.log(id)
+    if (id in newSelectedTerms) {
+      newSelectedTerms[id] = (newSelectedTerms[id] + 1) % 3
+      if (newSelectedTerms[id] === 0) {
+        delete newSelectedTerms[id]
+      }
+    } else {
+      newSelectedTerms[id] = 1
+    }
+    setSelectedTerms(newSelectedTerms)
+  }
+  
+  const selectedTermsCount = useMemo(() => Object.keys(selectedTerms).length, [selectedTerms])
+
+  const clearTermSelection = () => setSelectedTerms([])
 
   const doSearch = query => {
     if (query.trim()) {
@@ -19,11 +105,7 @@ export const SearchContextProvider = ({ children }) => {
       api.select(query)
         .then(terms => {
           setTerms(terms)
-          const newHistoryItem = {
-            query: query,
-            timestamp: new Date(),
-          }
-          setSearchHistory([newHistoryItem, ...searchHistory])
+          addSearchHistoryItem(query)
           navigate('/')
         })
         .catch(error => console.error(error))
@@ -38,35 +120,49 @@ export const SearchContextProvider = ({ children }) => {
     setSearchedQuery('')
   }
 
-  const previousTerm = useMemo(() => {
-    if (currentTerm) {
-      const index = terms.findIndex(term => term.short_form === currentTerm.short_form)
-      if (0 <= index - 1) {
-        return terms[index - 1]
-      }
+  /**
+   *
+   * Search History Functions
+   *
+   */
+  
+  const addSearchHistoryItem = query => {
+    const newHistoryItem = {
+      query: query,
+      timestamp: new Date(),
     }
-    return null
-  }, [currentTerm])
+    setSearchHistory([newHistoryItem, ...searchHistory])
+  }
 
-  const nextTerm = useMemo(() => {
-    if (currentTerm) {
-      const index = terms.findIndex(term => term.short_form === currentTerm.short_form)
-      if (index + 1 < terms.length) {
-        return terms[index + 1]
-      }
+  const deleteSearchHistoryItem = timestamp => () => {
+    const index = searchHistory.findIndex(item => item.timestamp === timestamp)
+    if (index === -1) {
+      return
     }
-    return null
-  }, [currentTerm])
+    let newHistory = [...searchHistory]
+    newHistory.splice(index, 1)
+    setSearchHistory(newHistory)
+  }
 
+  const clearSearchHistory = () => setSearchHistory([])
+
+  /**
+   *
+   * Return
+   *
+   */
+  
   return (
     <SearchContext.Provider
       value={{
-        busy, resetSearch,
-        doSearch,
-        terms,
-        currentTerm, setCurrentTerm,
-        previousTerm, nextTerm,
+        busy, setBusy, resetSearch,
+        doSearch, terms,
+        selectedRootTerms, selectedRootTermsCount,
+        toggleRootTermSelection, clearRootTermSelection,
+        selectedTerms, selectedTermsCount,
+        toggleTermSelection, clearTermSelection,
         searchedQuery,
+        searchHistory, addSearchHistoryItem, deleteSearchHistoryItem, clearSearchHistory,
       }}
     >
       { children }

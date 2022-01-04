@@ -1,69 +1,87 @@
+import { Fragment, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 import {
-  Card, CardActionArea, Typography
-} from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+  Button, Card, CardActions, CardActionArea, CardContent, Typography
+} from '@mui/material'
+import makeStyles from '@mui/styles/makeStyles';
 import {
-  ZoomOutMap as ViewTermIcon,
-} from '@material-ui/icons'
+  CheckBox as CheckedIcon,
+  CheckBoxOutlineBlank as UncheckedIcon,
+  Preview as InspectIcon,
+} from '@mui/icons-material'
+import { TermDialog, useSearchContext } from './'
 
 const useStyles = makeStyles(theme => ({
   termCard: {
     fontSize: '80%',
     position: 'relative',
-    borderLeft: `0.5rem solid ${ theme.palette.primary.light }`,
+    border: `1px solid #afb9c099`,
     filter: 'opacity(0.8)',
     width: '100%',
-    transition: 'filter 250ms, border-color 250ms, border-width 250ms',
+    transition: 'filter 250ms, border-color 250ms',
+    display: 'flex',
     '&:hover': {
       filter: 'opacity(1.0)',
-      borderLeftWidth: `0.75rem`,
-      borderColor: theme.palette.primary.main,
+      borderColor: theme.palette.secondary.main,
     },
   },
-  actionArea: {
+  selected: {
+    borderColor: `${ theme.palette.primary.main }`,
+  },
+  content: {
+    padding: theme.spacing(2),
+  },
+  actions: {
+    padding: 0,
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    // gap: theme.spacing(1),
-    padding: theme.spacing(2),
-    '&:hover $viewTermIcon': {
-      filter: 'opacity(1.0)',
-      transform: 'scale(1.0)',
-    },
-  },
-  viewTermIcon: {
-    filter: 'opacity(0.1)',
-    transition: 'filter 250ms',
-    transform: 'scale(0.9)',
-    position: 'absolute',
-    top: theme.spacing(2),
-    right: theme.spacing(2),
+    alignItems: 'center',
+    backgroundColor: theme.palette.grey[100],
+    borderLeft: `1px solid #afb9c033`,
+    '& button': {
+      flex: 1,
+      padding: 0,
+    }
   },
 }))
 
-export const TermCard = ({ term, clickHandler }) => {
+export const TermCard = ({ term, toggleRootTermSelectionHandler }) => {
   const classes = useStyles()
+  const [expanded, setExpanded] = useState(false)
+  const { selectedRootTerms } = useSearchContext()
+  const selected = useMemo(() => term.short_form in selectedRootTerms, [selectedRootTerms])
+
   return (
-    <Card
-      variant="outlined"
-      className={ classes.termCard }
-    >
-      <CardActionArea className={ classes.actionArea } onClick={ clickHandler }>
-        <Typography color="textPrimary">
-          <strong>label:</strong> { term.label }
-        </Typography>
-        <Typography variant="caption" color="textPrimary">
-          <strong>short_form:</strong> <em>{ term.short_form }</em>
-        </Typography>
-        <Typography variant="caption" color="textSecondary">
-          <strong>comment_annotation:</strong> { term.comment_annotation ? term.comment_annotation : 'none provided' }
-        </Typography>
-        <ViewTermIcon className={ classes.viewTermIcon } fontSize="small" />
-      </CardActionArea>
-    </Card>
+    <Fragment>
+      <Card square variant="outlined" className={ `${ classes.termCard } ${ selected ? classes.selected : undefined }` }>
+        <CardActionArea onClick={ toggleRootTermSelectionHandler }>
+          <CardContent className={ classes.content }>
+            <Typography color="textPrimary">
+              <strong>label:</strong> { term.label }
+            </Typography>
+            <Typography variant="caption" color="textPrimary">
+              <strong>short_form:</strong> <em>{ term.short_form }</em>
+            </Typography><br/>
+            <Typography variant="caption" color="textSecondary">
+              <strong>comment_annotation:</strong> { term.comment_annotation ? term.comment_annotation : 'none provided' }
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+        <CardActions className={ classes.actions } disableSpacing={ true }>
+          <Button onClick={ toggleRootTermSelectionHandler }>{ selected ? <CheckedIcon fontSize="small" color="secondary" /> : <UncheckedIcon fontSize="small" color="default" /> }</Button>
+          <Button onClick={ () => setExpanded(true) }><InspectIcon fontSize="small" color="default" /></Button>
+        </CardActions>
+      </Card>
+      <TermDialog
+        term={ term }
+        selected={ selected }
+        toggleSelectionHandler={ toggleRootTermSelectionHandler }
+        open={ expanded }
+        closeHandler={ () => setExpanded(false) }
+      />
+    </Fragment>
   )
 }
 
@@ -73,7 +91,7 @@ TermCard.propTypes = {
     short_form: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
     has_children: PropTypes.bool.isRequired,
-    comment_annotation: PropTypes.string,
+    comment_annotation: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   }).isRequired,
-  clickHandler: PropTypes.func.isRequired,
+  toggleRootTermSelectionHandler: PropTypes.func.isRequired,
 }
