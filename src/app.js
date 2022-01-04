@@ -111,6 +111,9 @@ export const App = () => {
       </AppBar>
       <div className={ classes.watermark } />
       <main className={ classes.main } style={{ paddingRight: drawerOpen ? `calc(${ drawerWidth }px + 4rem)` : '4rem' }}>
+        <Router />
+      </main>
+      <Drawer title="Term Selection">
         <DrawerHeading />
         <SelectionForest />
         <div style={{ display: 'flex', justifyContent: 'center', margin: '2rem auto' }}>
@@ -128,9 +131,6 @@ export const App = () => {
             </div>
           )
         }
-      </main>
-      <Drawer title="Term Selection">
-        <Router />
       </Drawer>
     </div>
   )
