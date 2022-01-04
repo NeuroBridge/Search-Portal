@@ -49,7 +49,7 @@ export const App = () => {
   const classes = useStyles()
   const compact = useMediaQuery('(max-width: 600px)')
   const {
-    selectedRootTerms, clearRootTermSelection, selectedRootTermsCount,
+    clearRootTermSelection, selectedRootTermsCount,
     selectedTerms, clearTermSelection, selectedTermsCount,
   } = useSearchContext()
   const { DRAWER_WIDTH, drawerOpen, locked, toggleOpen } = useDrawer()
@@ -57,7 +57,7 @@ export const App = () => {
 
   /* temporary faking term send request */
   useEffect(() => {
-    const resetSend = setTimeout(() => setSent(false), 3000)
+    const resetSend = setTimeout(() => setSent(false), 5000)
     return () => clearTimeout(resetSend)
   }, [sent])
   
@@ -116,7 +116,7 @@ export const App = () => {
         {
           sent && (
             <div style={{ padding: '3rem' }}>
-              <Typography variant="subtitle2">Success</Typography>
+              <Typography variant="subtitle2">Sending the following request payload</Typography>
               <pre style={{ backgroundColor: '#ddd', fontSize: '75%', padding: '1rem' }}>
                 { JSON.stringify(selectedTerms, null, 2) }
               </pre>
