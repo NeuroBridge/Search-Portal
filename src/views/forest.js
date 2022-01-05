@@ -1,8 +1,18 @@
 import { useEffect, useState } from 'react'
-import { Button, Grid, Typography } from '@mui/material'
+import { Avatar,
+  Button,
+  Card, CardHeader, CardContent,
+  Grid,
+  List, ListItem, ListItemAvatar, ListItemText,
+  Typography,
+} from '@mui/material'
 import {
   RestartAlt as StartOverIcon,
   DeleteSweep as ClearSelectionIcon,
+  LooksOne as StepOneIcon,
+  LooksTwo as StepTwoIcon,
+  Looks3 as StepThreeIcon,
+  Looks4 as StepFourIcon,
 } from '@mui/icons-material'
 import makeStyles from '@mui/styles/makeStyles'
 import { useSearchContext, SelectionForest } from '../components/search'
@@ -28,11 +38,6 @@ const useStyles = makeStyles(theme => ({
     maxWidth: '900px',
     margin: 'auto',
     textAlign: 'center',
-    '& ol': {
-      textAlign: 'left',
-      display: 'inline-block',
-      margin: 'auto',
-    },
   },
 }))
 
@@ -41,7 +46,7 @@ export const ForestView = () => {
   const {
     resetSearch,
     clearRootTermSelection, selectedRootTermsCount,
-    terms, selectedTerms, clearTermSelection, selectedTermsCount,
+    selectedTerms, clearTermSelection, selectedTermsCount,
   } = useSearchContext()
   const [sent, setSent] = useState(false)
 
@@ -57,17 +62,32 @@ export const ForestView = () => {
     resetSearch()
   }
 
-  if (!terms.length) {
+  if (!selectedRootTermsCount) {
     return (
       <Container>
-        <div className={ classes.instructions }>
-          <ol>
-            <li>Search the Neurobridge ontology for terms.</li>
-            <li>Select roots from the results.</li>
-            <li>Select terms from the descendants of your roots.</li>
-            <li>Send your term selection.</li>
-          </ol>
-        </div>
+        <Card className={ classes.instructions } elevation={ 0 }>
+          <CardHeader title="Instructions" />
+          <CardContent>
+            <List>
+              <ListItem>
+                <ListItemAvatar><Avatar><StepOneIcon /></Avatar></ListItemAvatar>
+                <ListItemText>Search the Neurobridge ontology for terms.</ListItemText>
+              </ListItem>
+              <ListItem>
+                <ListItemAvatar><Avatar><StepTwoIcon /></Avatar></ListItemAvatar>
+                <ListItemText>Select roots from the results.</ListItemText>
+              </ListItem>
+              <ListItem>
+                <ListItemAvatar><Avatar><StepThreeIcon /></Avatar></ListItemAvatar>
+                <ListItemText>Select terms from the descendants of your roots.</ListItemText>
+              </ListItem>
+              <ListItem>
+                <ListItemAvatar><Avatar><StepFourIcon /></Avatar></ListItemAvatar>
+                <ListItemText>Send your term selection.</ListItemText>
+              </ListItem>
+            </List>
+          </CardContent>
+        </Card>
       </Container>
     )
   }
