@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from 'react'
 import { useSearchContext } from './'
 import { TreeView, TreeItem } from '@mui/lab'
-import { Checkbox, CircularProgress, FormControlLabel, Typography } from '@mui/material'
+import { Card, CardHeader, CardContent, Checkbox, FormControlLabel, Skeleton } from '@mui/material'
 import {
   ExpandLess as CollapseIcon,
   ExpandMore as ExpandIcon,
@@ -18,28 +18,6 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'stretch',
     gap: theme.spacing(4),
   },
-  treeContainer: {
-    backgroundColor: '#f3f6f9',
-    transition: 'border-color 250ms',
-    border: `1px solid #afb9c099`,
-    padding: theme.spacing(2),
-    '&:hover': {
-      borderColor: theme.palette.secondary.main,
-    },
-  },
-  treeRootName: {
-    padding: 0,
-    marginBottom: theme.spacing(1),
-  },
-  loadingIndicator: {
-    backgroundColor: '#f0f3f6',
-    border: `1px solid #afb9c099`,
-    padding: `${ theme.spacing(3) } ${ theme.spacing(4) }`,
-    display: 'flex',
-    justifyContent: 'flex-start',
-    gap: theme.spacing(2),
-    width: '100%',
-  },
 }))
 
 export const SelectionForest = () => {
@@ -50,6 +28,13 @@ export const SelectionForest = () => {
     toggleTermSelection,
   } = useSearchContext()
 
+  /**
+   *
+   * memoized array of tree objects,
+   * each of which is rooted at a selected
+   * term (from `selectedRootTerms`).
+   *
+   */
   const forest = useMemo(() => {
     return Object.keys(selectedRootTerms)
       .map(term => selectedRootTerms[term].tree)
@@ -104,28 +89,26 @@ export const SelectionForest = () => {
     >
         {
           forest.map((tree, i) => {
+            console.log(tree)
             if (tree) {
               return (
-                <div key={ `tree-${ i }` }>
-                  <Typography variant="h3" className={ classes.treeRootName }>
-                    { tree.data.id }
-                  </Typography>
-                  <div className={ classes.treeContainer }>
+                <Card key={ `tree-${ i }` }>
+                  <CardHeader title={ tree.data.id } />
+                  <CardContent>
                     { renderTree(tree) }
-                  </div>
-                </div>
+                  </CardContent>
+                </Card>
               )
             }
             return (
-              <div key={ `tree-${ i }-loading` }>
-                <h3 className={ classes.treeRootName } style={{ backgroundColor: '#eee' }}>
-                  &nbsp;
-                </h3>
-                <div className={ classes.loadingIndicator }>
-                  <CircularProgress size={ 25 } />
-                  <Typography sx={{ filter: 'opacity(0.5)' }}>Loading...</Typography>
-                </div>
-              </div>
+              <Card key={ `tree-${ i }-loading` }>
+                <CardContent>
+                  <Skeleton variant="rectangular" width={ 250 } height={ 20 } />
+                </CardContent>
+                <CardContent>
+                  <Skeleton variant="rectangular" width={ 600 } height={ 40 } />
+                </CardContent>
+              </Card>
             )
           })
         }

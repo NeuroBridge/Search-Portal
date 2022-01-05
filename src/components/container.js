@@ -5,7 +5,7 @@ const useStyles = makeStyles(theme => ({
   container: {
     maxWidth: ({maxWidth}) => maxWidth,
     margin: 'auto',
-    padding: theme.spacing(2),
+    padding: theme.spacing(4),
   },
 }))
 

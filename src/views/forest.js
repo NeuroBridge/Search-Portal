@@ -21,11 +21,14 @@ import { Container } from '../components/container'
 const useStyles = makeStyles(theme => ({
   heading: {
     color: theme.palette.primary.dark,
-    padding: `${ theme.spacing(2) } 0`,
   },
-  summary: {},
+  summary: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+  },
   actions: {
-    textAlign: 'right',
+    padding: theme.spacing(2),
+    textAlign: 'center',
   },
   instructions: {
     marginTop: '10vh',
