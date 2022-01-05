@@ -20,6 +20,29 @@ const themeOptions = {
     borderRadius: 0,
   },
   spacing: 8,
+  typography: {
+    h1: {
+      fontSize: '1.75rem',
+    },
+    h2: {
+      fontSize: '1.5rem',
+      fontWeight: 'normal',
+    },
+    h3: {
+      fontSize: '1.4rem',
+      fontWeight: 'normal',
+    },
+    h4: {
+      fontWeight: 'normal',
+      fontSize: '1.3rem',
+    },
+    h5: {
+      fontSize: '1.2rem',
+    },
+    h6: {
+      fontSize: '1.1rem',
+    },
+  },
 }
 
 const theme = createTheme(adaptV4Theme(themeOptions))

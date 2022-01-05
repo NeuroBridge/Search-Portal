@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { AppBar, Toolbar, useMediaQuery } from '@mui/material'
-import makeStyles from '@mui/styles/makeStyles';
+import { makeStyles } from '@mui/styles'
 import { Brand } from './components/brand'
 import { Menu, MobileMenu } from './components/menu'
 import { SearchBar } from './components/search/search-bar'
@@ -48,12 +48,12 @@ export const App = () => {
   const classes = useStyles()
   const compact = useMediaQuery('(max-width: 600px)')
   const { searchedQuery, selectedRootTermsCount, terms } = useSearchContext()
-  const { drawerWidth, drawerOpen, locked, toggleOpen } = useDrawer()
+  const { drawerWidth, drawerOpen, locked, openDrawer } = useDrawer()
   const [sent, setSent] = useState(false)
 
   useEffect(() => {
     if (searchedQuery) {
-      toggleOpen()
+      openDrawer()
     }
   }, [searchedQuery])
 
@@ -73,7 +73,7 @@ export const App = () => {
     if (drawerOpen || locked || selectedRootTermsCount === 0) {
       return
     }
-    toggleOpen(true)
+    openDrawer()
   }, [selectedRootTermsCount])
 
   return (

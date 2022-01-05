@@ -27,11 +27,16 @@ const useStyles = makeStyles(theme => ({
       borderColor: theme.palette.secondary.main,
     },
   },
+  treeRootName: {
+    padding: 0,
+    marginBottom: theme.spacing(1),
+  },
   loadingIndicator: {
-    backgroundColor: '#aaa',
-    padding: `${ theme.spacing(1) } ${ theme.spacing(4) }`,
+    backgroundColor: '#f0f3f6',
+    border: `1px solid #afb9c099`,
+    padding: `${ theme.spacing(3) } ${ theme.spacing(4) }`,
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     gap: theme.spacing(2),
     width: '100%',
   },
@@ -101,15 +106,25 @@ export const SelectionForest = () => {
           forest.map((tree, i) => {
             if (tree) {
               return (
-                <div key={ `tree-${ i }` } className={ classes.treeContainer }>
-                  { renderTree(tree) }
+                <div key={ `tree-${ i }` }>
+                  <Typography variant="h3" className={ classes.treeRootName }>
+                    { tree.data.id }
+                  </Typography>
+                  <div className={ classes.treeContainer }>
+                    { renderTree(tree) }
+                  </div>
                 </div>
               )
             }
             return (
-              <div key={ `tree-${ i }-loading` } className={ classes.loadingIndicator }>
-                <CircularProgress size={ 25 } />
-                <Typography sx={{ filter: 'opacity(0.5)' }}>Loading...</Typography>
+              <div key={ `tree-${ i }-loading` }>
+                <h3 className={ classes.treeRootName } style={{ backgroundColor: '#eee' }}>
+                  &nbsp;
+                </h3>
+                <div className={ classes.loadingIndicator }>
+                  <CircularProgress size={ 25 } />
+                  <Typography sx={{ filter: 'opacity(0.5)' }}>Loading...</Typography>
+                </div>
               </div>
             )
           })

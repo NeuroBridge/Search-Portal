@@ -1,11 +1,18 @@
 import PropTypes from 'prop-types'
+import { makeStyles } from '@mui/styles'
+
+const useStyles = makeStyles(theme => ({
+  container: {
+    maxWidth: ({maxWidth}) => maxWidth,
+    margin: 'auto',
+    padding: theme.spacing(2),
+  },
+}))
 
 export const Container = ({ children, maxWidth }) => {
+  const classes = useStyles({ maxWidth })
   return (
-    <div style={{
-      maxWidth: maxWidth,
-      margin: 'auto',
-    }}>
+    <div className={ classes.container }>
       { children }
     </div>
   )
