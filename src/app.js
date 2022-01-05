@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { AppBar, Toolbar, useMediaQuery } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import { Brand } from './components/brand'
@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
     backgroundSize: 'cover',
     backgroundPosition: 'center center',
     filter: 'opacity(0.33) saturate(0.33)',
-    position: 'absolute',
+    position: 'fixed',
     left: 0,
     top: 0,
     right: 0,
@@ -48,8 +48,7 @@ export const App = () => {
   const classes = useStyles()
   const compact = useMediaQuery('(max-width: 600px)')
   const { searchedQuery, selectedRootTermsCount, terms } = useSearchContext()
-  const { drawerWidth, drawerOpen, locked, openDrawer } = useDrawer()
-  const [sent, setSent] = useState(false)
+  const { drawerWidth, drawerOpen, locked, openDrawer, closeDrawer } = useDrawer()
 
   useEffect(() => {
     if (searchedQuery) {
@@ -57,12 +56,12 @@ export const App = () => {
     }
   }, [searchedQuery])
 
-  /* temporary faking term send request */
   useEffect(() => {
-    const resetSend = setTimeout(() => setSent(false), 5000)
-    return () => clearTimeout(resetSend)
-  }, [sent])
-  
+    if (!terms.length) {
+      closeDrawer()
+    }
+  }, [terms.length])
+
   /**
    *
    * show the drawer's contents whenever they change,
@@ -89,7 +88,7 @@ export const App = () => {
       <main className={ classes.main } style={{ paddingRight: drawerOpen ? `calc(${ drawerWidth }px + 4rem)` : '4rem' }}>
         <ForestView />
       </main>
-      <Drawer title={ `Search Drawer - ${ terms.length } results for "${ searchedQuery }"` }>
+      <Drawer title={ `Search Drawer ${ terms.length ? ` - ${ terms.length } results for "${ searchedQuery }"` : '' }` }>
         <SearchView />
       </Drawer>
     </div>

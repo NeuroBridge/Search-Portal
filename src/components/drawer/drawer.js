@@ -113,13 +113,13 @@ export const Drawer = ({ title, children }) => {
           ? (
             <Tooltip title="Close drawer" placement="left">
               <Button onClick={ toggleOpen } className={ classes.drawerButton }>
-                <CloseDrawerIcon color="secondary" />
+                <CloseDrawerIcon sx={{ color: '#fff' }} />
               </Button>
             </Tooltip>
           ) : (
             <Tooltip title="Open drawer" placement="left">
               <Button onClick={ toggleOpen } className={ classes.drawerButton }>
-                <OpenDrawerIcon color="secondary" />
+                <OpenDrawerIcon sx={{ color: '#fff' }} />
               </Button>
             </Tooltip>
           )

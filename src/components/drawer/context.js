@@ -18,13 +18,16 @@ export const DrawerProvider = ({ children }) => {
   }
 
   const openDrawer = () => setDrawerOpen(true)
+  const closeDrawer = () => setDrawerOpen(false)
 
   const toggleLocked = () => setDrawerLocked(!drawerLocked)
 
   const drawerWidth = useMemo(() => drawerMaxWidth, [drawerMaxWidth])
 
   return (
-    <DrawerContext.Provider value={{ drawerOpen, drawerLocked, toggleOpen, toggleLocked, openDrawer, drawerWidth, drawerMaxWidth, setDrawerMaxWidth }}>
+    <DrawerContext.Provider value={{
+      drawerOpen, drawerLocked, toggleOpen, toggleLocked, openDrawer, closeDrawer, drawerWidth, drawerMaxWidth, setDrawerMaxWidth,
+    }}>
       { children }
     </DrawerContext.Provider>
   )
