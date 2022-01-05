@@ -2,10 +2,12 @@ import { useEffect, useState } from 'react'
 import { Avatar,
   Button,
   Card, CardHeader, CardContent,
+  CircularProgress,
   Grid,
   List, ListItem, ListItemAvatar, ListItemText,
   Typography,
 } from '@mui/material'
+import { LoadingButton } from '@mui/lab'
 import {
   RestartAlt as StartOverIcon,
   DeleteSweep as ClearSelectionIcon,
@@ -13,10 +15,12 @@ import {
   LooksTwo as StepTwoIcon,
   Looks3 as StepThreeIcon,
   Looks4 as StepFourIcon,
+  Send as SendIcon,
 } from '@mui/icons-material'
 import makeStyles from '@mui/styles/makeStyles'
 import { useSearchContext, SelectionForest } from '../components/search'
 import { Container } from '../components/container'
+import { Query } from '../components/query'
 
 const useStyles = makeStyles(theme => ({
   heading: {
@@ -135,22 +139,22 @@ export const ForestView = () => {
 
       <SelectionForest />
 
-      <div style={{ display: 'flex', justifyContent: 'center', margin: '2rem auto' }}>
-        <Button variant="contained" color="secondary" disabled={ sent || !selectedTermsCount } onClick={ () => setSent(true) }>
-          Send { selectedTermsCount ? selectedTermsCount : '' } term{ selectedTermsCount === 1 ? '' : 's' }
-        </Button>
-      </div>
+      <br /><br />
 
-      {
-        sent && (
-          <div style={{ padding: '3rem' }}>
-            <Typography variant="subtitle2">Sending the following request payload</Typography>
-            <pre style={{ backgroundColor: '#ddd', fontSize: '75%', padding: '1rem' }}>
-              { JSON.stringify(selectedTerms, null, 2) }
-            </pre>
-          </div>
-        )
-      }
+      <Query />
+
+      <div style={{ display: 'flex', justifyContent: 'center', margin: '2rem auto' }}>
+        <LoadingButton
+          variant="contained"
+          color="secondary"
+          onClick={ () => setSent(true) }
+          endIcon={ <SendIcon /> }
+          loading={ sent }
+          loadingPosition="end"
+        >
+          Send Query
+        </LoadingButton>
+      </div>
 
     </Container>
   )
