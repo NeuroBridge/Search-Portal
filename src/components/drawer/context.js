@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 
 const DrawerContext = createContext({})
@@ -8,7 +8,7 @@ export const useDrawer = () => useContext(DrawerContext)
 export const DrawerProvider = ({ children }) => {
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [drawerLocked, setDrawerLocked] = useState(false)
-  const DRAWER_WIDTH = '500px'
+  const [drawerMaxWidth, setDrawerMaxWidth] = useState(500)
 
   const toggleOpen = () => {
     if (drawerLocked) {
@@ -16,11 +16,15 @@ export const DrawerProvider = ({ children }) => {
     }
     setDrawerOpen(!drawerOpen)
   }
+
   const openDrawer = () => setDrawerOpen(true)
+
   const toggleLocked = () => setDrawerLocked(!drawerLocked)
 
+  const drawerWidth = useMemo(() => drawerMaxWidth, [drawerMaxWidth])
+
   return (
-    <DrawerContext.Provider value={{ drawerOpen, drawerLocked, toggleOpen, toggleLocked, openDrawer, DRAWER_WIDTH }}>
+    <DrawerContext.Provider value={{ drawerOpen, drawerLocked, toggleOpen, toggleLocked, openDrawer, drawerWidth, drawerMaxWidth, setDrawerMaxWidth }}>
       { children }
     </DrawerContext.Provider>
   )

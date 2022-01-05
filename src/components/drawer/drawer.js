@@ -1,4 +1,4 @@
-import { Fragment, useMemo } from 'react'
+import { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Button, Drawer as MuiDrawer, Tooltip } from '@mui/material'
 import { makeStyles } from '@mui/styles'
@@ -42,7 +42,7 @@ const useStyles = makeStyles(theme => {
         }
       },
     },
-    drawerHeader: {
+    drawerHandle: {
       position: 'fixed',
       top: '115px',
       bottom: 0,
@@ -52,12 +52,12 @@ const useStyles = makeStyles(theme => {
       transition: 'transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms, filter 250ms',
       display: 'flex',
       flexDirection: 'column',
+      alignItems: 'center',
       filter: 'brightness(1.0)',
       zIndex: '9999',
       '&:hover': {
-        filter: 'brightness(0.9)',
+        filter: 'brightness(0.8)',
       },
-      cursor: 'pointer',
     },
     drawerTitleButton: {
       flex: 1,
@@ -74,14 +74,19 @@ const useStyles = makeStyles(theme => {
 })
 
 export const Drawer = ({ title, children }) => {
-  const { DRAWER_WIDTH, drawerOpen, toggleOpen, drawerLocked, toggleLocked } = useDrawer()
-  const drawerWidth = useMemo(() => {
-    if (drawerOpen) {
-      return DRAWER_WIDTH
-    }
-    return '100px'
-  }, [drawerOpen])
+  const {
+    drawerOpen, toggleOpen, drawerLocked, toggleLocked, drawerWidth, 
+  } = useDrawer()
+  
   const classes = useStyles({ width: drawerWidth })
+
+  const handleGrabDrawerResizeHandle = event => {
+    console.log(event)
+  }
+
+  const handleDragDrawerResizeHandle = event => {
+    console.log(event)
+  }
 
   return (
     <Fragment>
@@ -91,24 +96,34 @@ export const Drawer = ({ title, children }) => {
         variant="persistent"
         open={ drawerOpen }
         classes={{ root: classes.drawer, paper: classes.drawerPaper }}
-        sx={{
-          width: drawerWidth,
-        }}
+        sx={{ width: drawerWidth }}
       >
         { children }
       </MuiDrawer>
       <div
-        className={ classes.drawerHeader }
-        role="button"
+        className={ classes.drawerHandle }
         aria-label={ `${ drawerOpen ? 'Close' : 'Open' } drawer` }
-        style={{ transform: `translateX(${ drawerOpen ? `-${ drawerWidth }` : 0 })` }}
+        style={{ transform: `translateX(${ drawerOpen ? `-${ drawerWidth }px` : 0 })` }}
+        draggable
+        onDragStart={ handleDragDrawerResizeHandle }
+        onDrag={ handleGrabDrawerResizeHandle }
       >
-        <Tooltip title={ `${ drawerOpen ? 'Close' : 'Open' } drawer` } placement="left">
-          <Button className={ classes.drawerButton } onClick={ toggleOpen }>
-            { drawerOpen && <CloseDrawerIcon sx={{ color: 'white' }} /> }
-            { !drawerOpen && <OpenDrawerIcon sx={{ color: 'white' }} /> }
-          </Button>
-        </Tooltip>
+        {
+          drawerOpen
+          ? (
+            <Tooltip title="Close drawer" placement="left">
+              <Button onClick={ toggleOpen } className={ classes.drawerButton }>
+                <CloseDrawerIcon color="secondary" />
+              </Button>
+            </Tooltip>
+          ) : (
+            <Tooltip title="Open drawer" placement="left">
+              <Button onClick={ toggleOpen } className={ classes.drawerButton }>
+                <OpenDrawerIcon color="secondary" />
+              </Button>
+            </Tooltip>
+          )
+        }
         <Button className={ classes.drawerTitleButton } onClick={ toggleOpen }>
           { title }
         </Button>

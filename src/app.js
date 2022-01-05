@@ -1,14 +1,13 @@
-import { useCallback, useEffect, useState } from 'react'
-import { AppBar, Button, IconButton, Paper, Toolbar, Typography, useMediaQuery } from '@mui/material'
-import { DeleteSweep as ClearSelectionIcon } from '@mui/icons-material'
-import makeStyles from '@mui/styles/makeStyles';
-import brainImage from './images/brain.png'
-import { Router } from './router'
+import { useEffect, useState } from 'react'
+import { AppBar, Toolbar, useMediaQuery } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import { Brand } from './components/brand'
 import { Menu, MobileMenu } from './components/menu'
 import { SearchBar } from './components/search/search-bar'
-import { useSearchContext, SelectionForest } from './components/search'
+import { useSearchContext } from './components/search'
 import { Drawer, useDrawer } from './components/drawer'
+import neuroBridgeBackground from './images/nbbg.jpeg'
+import { ForestView, SearchView } from './views'
 
 const useStyles = makeStyles(theme => ({
   app: {
@@ -17,43 +16,46 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'flex-start',
     alignItems: 'stretch',
     minHeight: '100vh',
-    backgroundImage: `url(${ brainImage })`,
-    backgroundPosition: 'center 100%',
-    backgroundSize: '800px',
-    backgroundRepeat: 'no-repeat',
     width: '100%',
   },
   toolbar: {
     padding: `0 0 0 ${ theme.spacing(2) }`,
     alignItems: 'stretch',
   },
+  watermark: {
+    background: `linear-gradient(0deg, transparent 0, #fff 66%), url(${ neuroBridgeBackground })`,
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center center',
+    filter: 'opacity(0.33) saturate(0.33)',
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    right: 0,
+    bottom: 0,
+  },
   main: {
     flex: 1,
-    padding: theme.spacing(4),
     width: '100%',
     marginTop: '115px',
     position: 'relative',
     transition: 'padding-right 225ms cubic-bezier(0, 0, 0.2, 1) 0ms, filter 250ms',
   },
-  drawerHeading: {
-    color: theme.palette.primary.dark,
-    padding: theme.spacing(1),
-    '& > *': {
-      textAlign: 'center',
-      padding: 0,
-    },
-  },
+  
 }))
 
 export const App = () => {
   const classes = useStyles()
   const compact = useMediaQuery('(max-width: 600px)')
-  const {
-    clearRootTermSelection, selectedRootTermsCount,
-    selectedTerms, clearTermSelection, selectedTermsCount,
-  } = useSearchContext()
-  const { DRAWER_WIDTH, drawerOpen, locked, toggleOpen } = useDrawer()
+  const { searchedQuery, selectedRootTermsCount, terms } = useSearchContext()
+  const { drawerWidth, drawerOpen, locked, openDrawer } = useDrawer()
   const [sent, setSent] = useState(false)
+
+  useEffect(() => {
+    if (searchedQuery) {
+      openDrawer()
+    }
+  }, [searchedQuery])
 
   /* temporary faking term send request */
   useEffect(() => {
@@ -71,27 +73,8 @@ export const App = () => {
     if (drawerOpen || locked || selectedRootTermsCount === 0) {
       return
     }
-    toggleOpen(true)
+    openDrawer()
   }, [selectedRootTermsCount])
-
-  const DrawerHeading = useCallback(() => {
-    return (
-      <Paper className={ classes.drawerHeading }>
-        <Typography variant="subtitle1">
-          { selectedRootTermsCount } Root Term{ selectedRootTermsCount === 1 ? '' : 's' }
-          <IconButton onClick={ clearRootTermSelection } disabled={ selectedRootTermsCount === 0 }>
-            <ClearSelectionIcon />
-          </IconButton>
-        </Typography>
-        <Typography variant="subtitle2">
-          { selectedTermsCount } selected term{ selectedTermsCount === 1 ? '' : 's'}
-          <IconButton onClick={ clearTermSelection } disabled={ selectedTermsCount === 0 }>
-            <ClearSelectionIcon />
-          </IconButton>
-        </Typography>
-      </Paper>
-    )
-  }, [selectedRootTermsCount, selectedTerms, selectedTermsCount])
 
   return (
     <div className={ classes.app }>
@@ -102,27 +85,12 @@ export const App = () => {
         </Toolbar>
         <SearchBar />
       </AppBar>
-      <main className={ classes.main } style={{ paddingRight: drawerOpen ? `calc(${ DRAWER_WIDTH } + 6rem)` : '6rem' }}>
-        <Router />
+      <div className={ classes.watermark } />
+      <main className={ classes.main } style={{ paddingRight: drawerOpen ? `calc(${ drawerWidth }px + 4rem)` : '4rem' }}>
+        <ForestView />
       </main>
-      <Drawer title="Term Selection">
-        <DrawerHeading />
-        <SelectionForest />
-        <div style={{ display: 'flex', justifyContent: 'center', margin: '2rem auto' }}>
-          <Button variant="contained" color="secondary" disabled={ sent || !selectedTermsCount } onClick={ () => setSent(true) }>
-            Send { selectedTermsCount ? selectedTermsCount : '' } term{ selectedTermsCount === 1 ? '' : 's' }
-          </Button>
-        </div>
-        {
-          sent && (
-            <div style={{ padding: '3rem' }}>
-              <Typography variant="subtitle2">Sending the following request payload</Typography>
-              <pre style={{ backgroundColor: '#ddd', fontSize: '75%', padding: '1rem' }}>
-                { JSON.stringify(selectedTerms, null, 2) }
-              </pre>
-            </div>
-          )
-        }
+      <Drawer title={ `Search Drawer - ${ terms.length } results for "${ searchedQuery }"` }>
+        <SearchView />
       </Drawer>
     </div>
   )
