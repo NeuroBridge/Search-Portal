@@ -13,7 +13,14 @@ You'll need Node v14.16.0. If you don't have that version installed, use [nvm](h
 
 Build the application for production with `npm run build`. The `dist` directory will contain the bundled files.
 
-## Changlog
+## Changelog
+
+- 2021-01-05
+    + remove graph for outlined list of terms & descendants
+    + add drawer
+    + swap perspective so that term selection is "main" view,
+      moving search results into drawer
+    + add instructions
 
 - 2020-10-01
     + save search history to local storage
