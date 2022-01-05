@@ -1,11 +1,12 @@
 import { useCallback, useMemo } from 'react'
 import { useSearchContext } from './'
 import { TreeView, TreeItem } from '@mui/lab'
-import { Card, CardHeader, CardContent, Checkbox, FormControlLabel, Skeleton } from '@mui/material'
+import { Card, CardHeader, CardContent, Checkbox, FormControlLabel, IconButton, Skeleton, Tooltip } from '@mui/material'
 import {
   ExpandLess as CollapseIcon,
   ExpandMore as ExpandIcon,
   DisabledByDefault as IgnoreTermIcon,
+  Cancel as RemoveTermIcon,
   CheckBox as SelectedTermIcon,
 } from '@mui/icons-material'
 import { makeStyles } from '@mui/styles'
@@ -23,9 +24,10 @@ const useStyles = makeStyles(theme => ({
 export const SelectionForest = () => {
   const classes = useStyles()
   const {
-    selectedRootTerms,
     selectedTerms,
     toggleTermSelection,
+    selectedRootTerms,
+    toggleRootTermSelection,
   } = useSearchContext()
 
   /**
@@ -42,6 +44,10 @@ export const SelectionForest = () => {
 
   const handleToggleTermSelection = id => () => {
     toggleTermSelection(id)
+  }
+
+  const handleToggleRootTermSelection = term => () => {
+    toggleRootTermSelection(term)
   }
 
   const selectionIcon = useCallback(termId => {
@@ -93,7 +99,16 @@ export const SelectionForest = () => {
             if (tree) {
               return (
                 <Card key={ `tree-${ i }` }>
-                  <CardHeader title={ tree.data.id } />
+                  <CardHeader
+                    title={ tree.data.id }
+                    action={
+                      <Tooltip title="Remove this term" placement="left">
+                        <IconButton aria-label="Remove this term" onClick={ handleToggleRootTermSelection(selectedRootTerms[tree.data.id]) }>
+                          <RemoveTermIcon />
+                        </IconButton>
+                      </Tooltip>
+                    }
+                  />
                   <CardContent>
                     { renderTree(tree) }
                   </CardContent>
