@@ -47,16 +47,16 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export const TermCard = ({ term, toggleRootTermSelectionHandler }) => {
+export const TermCard = ({ term, toggleRootSelectionHandler }) => {
   const classes = useStyles()
   const [expanded, setExpanded] = useState(false)
-  const { selectedRootTerms } = useSearchContext()
-  const selected = useMemo(() => term.short_form in selectedRootTerms, [selectedRootTerms])
+  const { selectedRoots } = useSearchContext()
+  const selected = useMemo(() => term.short_form in selectedRoots, [selectedRoots])
 
   return (
     <Fragment>
       <Card square variant="outlined" className={ `${ classes.termCard } ${ selected ? classes.selected : undefined }` }>
-        <CardActionArea onClick={ toggleRootTermSelectionHandler }>
+        <CardActionArea onClick={ toggleRootSelectionHandler }>
           <CardContent className={ classes.content }>
             <Typography color="textPrimary">
               <strong>label:</strong> { term.label }
@@ -70,14 +70,14 @@ export const TermCard = ({ term, toggleRootTermSelectionHandler }) => {
           </CardContent>
         </CardActionArea>
         <CardActions className={ classes.actions } disableSpacing={ true }>
-          <Button onClick={ toggleRootTermSelectionHandler }>{ selected ? <CheckedIcon fontSize="small" color="secondary" /> : <UncheckedIcon fontSize="small" color="default" /> }</Button>
+          <Button onClick={ toggleRootSelectionHandler }>{ selected ? <CheckedIcon fontSize="small" color="secondary" /> : <UncheckedIcon fontSize="small" color="default" /> }</Button>
           <Button onClick={ () => setExpanded(true) }><InspectIcon fontSize="small" color="default" /></Button>
         </CardActions>
       </Card>
       <TermDialog
         term={ term }
         selected={ selected }
-        toggleSelectionHandler={ toggleRootTermSelectionHandler }
+        toggleSelectionHandler={ toggleRootSelectionHandler }
         open={ expanded }
         closeHandler={ () => setExpanded(false) }
       />
@@ -93,5 +93,5 @@ TermCard.propTypes = {
     has_children: PropTypes.bool.isRequired,
     comment_annotation: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   }).isRequired,
-  toggleRootTermSelectionHandler: PropTypes.func.isRequired,
+  toggleRootSelectionHandler: PropTypes.func.isRequired,
 }

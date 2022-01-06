@@ -45,11 +45,11 @@ const useStyles = makeStyles(theme => ({
 
 export const SearchView = () => {
   const classes = useStyles()
-  const { terms, toggleRootTermSelection, searchedQuery } = useSearchContext()
+  const { terms, toggleRootSelection, searchedQuery } = useSearchContext()
   const [debugMode, setDebugMode] = useState(false)
 
   const handleToggleDebugMode = () => setDebugMode(!debugMode)
-  const handleToggleTermSelection = term => () => toggleRootTermSelection(term)
+  const handleToggleTermSelection = term => () => toggleRootSelection(term)
 
   const MemoizedResultsHeader = useCallback(() => {
     return (
@@ -88,7 +88,7 @@ export const SearchView = () => {
                 <TermCard
                   key={ term.label }
                   term={ term }
-                  toggleRootTermSelectionHandler={ handleToggleTermSelection(term) }
+                  toggleRootSelectionHandler={ handleToggleTermSelection(term) }
                 />
               ))
             }

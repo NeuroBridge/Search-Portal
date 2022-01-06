@@ -1,6 +1,8 @@
+import { useMemo } from 'react'
 import PropTypes from 'prop-types'
 import { Card, CardContent, CardHeader } from '@mui/material'
 import { makeStyles } from '@mui/styles'
+import { useSearchContext } from './'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -12,17 +14,28 @@ const useStyles = makeStyles(theme => ({
     color: '#367',
     margin: 0,
     fontSize: '125%',
+    overflow: 'auto',
+    whiteSpace: 'pre-wrap',
   },
   content: {
     backgroundColor: theme.palette.primary.dark,
     color: '#fff',
     margin: 0,
     fontSize: '125%',
+    overflow: 'auto',
+    whiteSpace: 'pre-wrap',
   },
 }))
 
-export const Query = ({ query }) => {
+export const QueryCard = () => {
   const classes = useStyles()
+  const { selectedTerms } = useSearchContext()
+
+  console.table(selectedTerms)
+
+  const query = useMemo(() => {
+    return `SELECT ... FROM ...`
+  }, [selectedTerms])
 
   return (
     <Card className={ classes.root }>
@@ -35,12 +48,4 @@ export const Query = ({ query }) => {
       </CardContent>
     </Card>
   )
-}
-
-Query.propTypes = {
-  query: PropTypes.string.isRequired,
-}
-
-Query.defaultProps = {
-  query: '',
 }

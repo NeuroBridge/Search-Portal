@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { Avatar,
   Button,
   Card, CardHeader, CardContent,
-  CircularProgress,
   Grid,
   List, ListItem, ListItemAvatar, ListItemText,
   Typography,
@@ -18,9 +17,8 @@ import {
   Send as SendIcon,
 } from '@mui/icons-material'
 import makeStyles from '@mui/styles/makeStyles'
-import { useSearchContext, SelectionForest } from '../components/search'
+import { useSearchContext, SelectionForest, QueryCard } from '../components/search'
 import { Container } from '../components/container'
-import { Query } from '../components/query'
 
 const useStyles = makeStyles(theme => ({
   heading: {
@@ -52,8 +50,8 @@ export const ForestView = () => {
   const classes = useStyles()
   const {
     resetSearch,
-    clearRootTermSelection, selectedRootTermsCount,
-    selectedTerms, clearTermSelection, selectedTermsCount,
+    selectedTerms, clearRootSelection, selectedRootsCount,
+    clearTermSelection, selectedTermsCount,
   } = useSearchContext()
   const [sent, setSent] = useState(false)
 
@@ -63,13 +61,13 @@ export const ForestView = () => {
     const resetSend = setTimeout(() => setSent(false), 5000)
     return () => clearTimeout(resetSend)
   }, [sent])
-  
+
   const handleStartOver = () => {
-    clearRootTermSelection()
+    clearRootSelection()
     resetSearch()
   }
 
-  if (!selectedRootTermsCount) {
+  if (!selectedRootsCount) {
     return (
       <Container>
         <Card className={ classes.instructions } elevation={ 0 }>
@@ -102,16 +100,14 @@ export const ForestView = () => {
   return (
     <Container>
       
-      <br /><br />
-
       <Grid container className={ classes.heading }>
         <Grid item xs={ 12 } lg={ 6 } className={ classes.summary }>
           <Typography variant="subtitle1">
-            { selectedRootTermsCount } Root Term{ selectedRootTermsCount === 1 ? '' : 's' }
+            { selectedRootsCount } Root Term{ selectedRootsCount === 1 ? '' : 's' }
           </Typography>
           <Button
             onClick={ handleStartOver }
-            disabled={ selectedRootTermsCount === 0 }
+            disabled={ selectedRootsCount === 0 }
             endIcon={ <StartOverIcon /> }
             variant="contained"
             color="primary"
@@ -140,8 +136,12 @@ export const ForestView = () => {
       <SelectionForest />
 
       <br /><br />
+      <br /><br />
+      <hr />
+      <br /><br />
+      <br /><br />
 
-      <Query />
+      <QueryCard />
 
       <div style={{ display: 'flex', justifyContent: 'center', margin: '2rem auto' }}>
         <LoadingButton

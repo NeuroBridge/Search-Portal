@@ -46,7 +46,7 @@ const useStyles = makeStyles(theme => {
       position: 'fixed',
       top: '115px',
       bottom: 0,
-      right: 0,
+      left: 0,
       width: '4rem',
       backgroundColor: theme.palette.primary.main,
       transition: 'transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms, filter 250ms',
@@ -92,7 +92,7 @@ export const Drawer = ({ title, children }) => {
     <Fragment>
       <MuiDrawer
         elevation={ 0 }
-        anchor="right"
+        anchor="left"
         variant="persistent"
         open={ drawerOpen }
         classes={{ root: classes.drawer, paper: classes.drawerPaper }}
@@ -103,7 +103,7 @@ export const Drawer = ({ title, children }) => {
       <div
         className={ classes.drawerHandle }
         aria-label={ `${ drawerOpen ? 'Close' : 'Open' } drawer` }
-        style={{ transform: `translateX(${ drawerOpen ? `-${ drawerWidth }px` : 0 })` }}
+        style={{ transform: `translateX(${ drawerOpen ? `${ drawerWidth }px` : 0 })` }}
         draggable
         onDragStart={ handleDragDrawerResizeHandle }
         onDrag={ handleGrabDrawerResizeHandle }
@@ -111,15 +111,15 @@ export const Drawer = ({ title, children }) => {
         {
           drawerOpen
           ? (
-            <Tooltip title="Close drawer" placement="left">
+            <Tooltip title="Close drawer" placement="right">
               <Button onClick={ toggleOpen } className={ classes.drawerButton }>
-                <CloseDrawerIcon sx={{ color: '#fff' }} />
+                <OpenDrawerIcon sx={{ color: '#fff' }} />
               </Button>
             </Tooltip>
           ) : (
-            <Tooltip title="Open drawer" placement="left">
+            <Tooltip title="Open drawer" placement="right">
               <Button onClick={ toggleOpen } className={ classes.drawerButton }>
-                <OpenDrawerIcon sx={{ color: '#fff' }} />
+                <CloseDrawerIcon sx={{ color: '#fff' }} />
               </Button>
             </Tooltip>
           )
@@ -128,7 +128,7 @@ export const Drawer = ({ title, children }) => {
           { title }
         </Button>
         <div className={ classes.actions }>
-          <Tooltip title={ `${ drawerLocked ? 'Unlock' : 'Lock' } drawer postiion` } placement="left">
+          <Tooltip title={ `${ drawerLocked ? 'Unlock' : 'Lock' } drawer postiion` } placement="right">
             <Button onClick={ toggleLocked } className={ classes.drawerButton }>
               { drawerLocked ? <LockedIcon sx={{ 'color': '#c99' }} /> : <UnlockedIcon sx={{ 'color': '#9c9' }} /> }
             </Button>
