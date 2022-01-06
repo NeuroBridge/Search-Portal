@@ -12,7 +12,7 @@ export const SearchContextProvider = ({ children }) => {
   const [terms, setTerms] = useState([])
   const [selectedRoots, setSelectedRoots] = useState({})
   const [selectedTerms, setSelectedTerms] = useState([])
-  const [searchedQuery, setSearchedQuery] = useState(null)
+  const [searchedQuery, setSearchedQuery] = useState('')
 
   useEffect(async () => {
     // when selectedRoots changes, we check each term
