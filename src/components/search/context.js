@@ -20,7 +20,7 @@ export const SearchContextProvider = ({ children }) => {
 
     // first, a function to fetch and construct child-parent relationships
     const constructTreeRelations = async root => {
-      let relations = [{ id: root.short_form, parentId: '' }]
+      let relations = [{ id: root.short_form, parentId: '', rootId: root.short_form }]
       try {
         const descendants = await api.descendants(root)
         if (!descendants.length) {
@@ -31,7 +31,7 @@ export const SearchContextProvider = ({ children }) => {
           const t = queue.pop()
           const children = await api.children(t)
           queue = [...children, ...queue]
-          relations = [...relations, ...children.map(child => ({ id: child.short_form, parentId: t.short_form, root: root.short_form }))]
+          relations = [...relations, ...children.map(child => ({ id: child.short_form, parentId: t.short_form, rootId: root.short_form }))]
         }
         return relations
       } catch (error) {
@@ -63,7 +63,7 @@ export const SearchContextProvider = ({ children }) => {
       // remove the root
       delete newRoots[id]
       // remove selected terms that were descendants of this root
-      const newSelectedTerms = selectedTerms.filter(t => t.parentId === id)
+      const newSelectedTerms = selectedTerms.filter(t => t.rootId !== id)
       setSelectedTerms(newSelectedTerms)
     } else {
       newRoots[id] = newTerm

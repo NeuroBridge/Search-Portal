@@ -61,13 +61,14 @@ export const SelectionForest = () => {
   }, [selectedTerms])
 
   const renderTree = (node, level = 0) => {
+    console.log(node)
     return (
       <TreeItem
         key={ `${ node.data.id }-${ level }` }
         nodeId={ node.data.id }
         label={
           <FormControlLabel
-            label={ node.data.id }
+            label={ `${ node.data.id } (${ node.data.rootId })` }
             control={
               <Checkbox
                 checked={ isSelectedTerm(node.data.id) }
