@@ -39,7 +39,7 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     marginTop: '115px',
     position: 'relative',
-    transition: 'padding-right 225ms cubic-bezier(0, 0, 0.2, 1) 0ms, filter 250ms',
+    transition: 'padding-left 300ms cubic-bezier(0, 0, 0.2, 1) 100ms, filter 250ms',
   },
   
 }))
@@ -47,7 +47,7 @@ const useStyles = makeStyles(theme => ({
 export const App = () => {
   const classes = useStyles()
   const compact = useMediaQuery('(max-width: 600px)')
-  const { searchedQuery, selectedRootTermsCount, terms } = useSearchContext()
+  const { searchedQuery, selectedRootsCount, terms } = useSearchContext()
   const { drawerWidth, drawerOpen, locked, openDrawer, closeDrawer } = useDrawer()
 
   useEffect(() => {
@@ -69,11 +69,11 @@ export const App = () => {
    *
    */
   useEffect(() => {
-    if (drawerOpen || locked || selectedRootTermsCount === 0) {
+    if (drawerOpen || locked || selectedRootsCount === 0) {
       return
     }
     openDrawer()
-  }, [selectedRootTermsCount])
+  }, [selectedRootsCount])
 
   return (
     <div className={ classes.app }>
@@ -85,7 +85,7 @@ export const App = () => {
         <SearchBar />
       </AppBar>
       <div className={ classes.watermark } />
-      <main className={ classes.main } style={{ paddingRight: drawerOpen ? `calc(${ drawerWidth }px + 4rem)` : '4rem' }}>
+      <main className={ classes.main } style={{ paddingLeft: drawerOpen ? `calc(${ drawerWidth }px + 4rem)` : '4rem' }}>
         <ForestView />
       </main>
       <Drawer title={ `Search Drawer ${ terms.length ? ` - ${ terms.length } results for "${ searchedQuery }"` : '' }` }>

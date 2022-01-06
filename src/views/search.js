@@ -1,7 +1,7 @@
-import { useCallback, useState } from 'react'
+import { Fragment, useCallback, useState } from 'react'
 import { useSearchContext } from '../components/search/context'
 import makeStyles from '@mui/styles/makeStyles';
-import { IconButton, Paper, Tooltip, Typography } from '@mui/material'
+import { IconButton, Paper, Stack, Tooltip, Typography } from '@mui/material'
 import { TermCard } from '../components/search/term-card'
 import {
   BugReport as DebugIcon,
@@ -41,15 +41,61 @@ const useStyles = makeStyles(theme => ({
       padding: theme.spacing(2),
     }
   },
+  landing: {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: theme.spacing(4),
+    padding: theme.spacing(4),
+    backgroundColor: '#ccc',
+  },
+  frown: {
+    flex: 1,
+    fontSize: '600%',
+    color: '#999',
+    textAlign: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+  },
+  details: {
+    flex: 2,
+    textAlign: 'center',
+    color: '#666',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+  },
 }))
+
+const SearchLanding = () => {
+  const classes = useStyles()
+
+  return (
+    <div className={ classes.landing }>
+      <Typography className={ classes.frown }>:(</Typography>
+      <div className={ classes.details }>
+        <Typography paragraph>
+          Search for terms in the NeuroBridge Ontology using
+          the search bar at the top of the page.
+        </Typography>
+        <Typography paragraph>
+          Matching results will appear here.
+        </Typography>
+      </div>
+    </div>
+  )
+}
 
 export const SearchView = () => {
   const classes = useStyles()
-  const { terms, toggleRootTermSelection, searchedQuery } = useSearchContext()
+  const { terms, toggleRootSelection, searchedQuery } = useSearchContext()
   const [debugMode, setDebugMode] = useState(false)
 
   const handleToggleDebugMode = () => setDebugMode(!debugMode)
-  const handleToggleTermSelection = term => () => toggleRootTermSelection(term)
+  const handleToggleTermSelection = term => () => toggleRootSelection(term)
 
   const MemoizedResultsHeader = useCallback(() => {
     return (
@@ -69,7 +115,7 @@ export const SearchView = () => {
   }, [debugMode, searchedQuery, terms])
 
   if (!searchedQuery) {
-    return <span />
+    return <SearchLanding />
   }
 
   return (
@@ -88,7 +134,7 @@ export const SearchView = () => {
                 <TermCard
                   key={ term.label }
                   term={ term }
-                  toggleRootTermSelectionHandler={ handleToggleTermSelection(term) }
+                  toggleRootSelectionHandler={ handleToggleTermSelection(term) }
                 />
               ))
             }

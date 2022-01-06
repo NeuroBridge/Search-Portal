@@ -19,6 +19,9 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'stretch',
     gap: theme.spacing(4),
   },
+  treeCardHeader: {
+    backgroundColor: theme.palette.grey[100],
+  },
 }))
 
 export const SelectionForest = () => {
@@ -26,32 +29,35 @@ export const SelectionForest = () => {
   const {
     selectedTerms,
     toggleTermSelection,
-    selectedRootTerms,
-    toggleRootTermSelection,
+    isSelectedTerm,
+    selectedRoots,
+    toggleRootSelection,
   } = useSearchContext()
 
   /**
    *
    * memoized array of tree objects,
    * each of which is rooted at a selected
-   * term (from `selectedRootTerms`).
+   * term (from `selectedRoots`).
    *
    */
   const forest = useMemo(() => {
-    return Object.keys(selectedRootTerms)
-      .map(term => selectedRootTerms[term].tree)
-  }, [selectedRootTerms])
+    return Object.keys(selectedRoots)
+      .map(term => selectedRoots[term].tree)
+  }, [selectedRoots])
 
-  const handleToggleTermSelection = id => () => {
-    toggleTermSelection(id)
-  }
-
-  const handleToggleRootTermSelection = term => () => {
-    toggleRootTermSelection(term)
-  }
-
+  /**
+   *
+   * this callback determines which selected icon to show in
+   * each node's selection checkbox -- a red x or green check.
+   *
+   */
   const selectionIcon = useCallback(termId => {
-    if (selectedTerms[termId] === 2) {
+    const index = selectedTerms.findIndex(term => term.id === termId)
+    if (index === -1) {
+      return
+    }
+    if (selectedTerms[index].value === 2) {
       return <IgnoreTermIcon sx={{ color: '#966' }} />
     }
     return <SelectedTermIcon sx={{ color: '#696' }} />
@@ -64,13 +70,13 @@ export const SelectionForest = () => {
         nodeId={ node.data.id }
         label={
           <FormControlLabel
-            label={ node.data.id }
+            label={ `${ node.data.id } (${ node.data.rootId })` }
             control={
               <Checkbox
-                checked={ node.data.id in selectedTerms && selectedTerms[node.data.id] ? true : false }
+                checked={ isSelectedTerm(node.data.id) }
                 checkedIcon={ selectionIcon(node.data.id) }
                 onClick={ event => event.stopPropagation() }
-                onChange={ handleToggleTermSelection(node.data.id) }
+                onChange={ () => toggleTermSelection(node.data.id, node.data.rootId) }
               />
             }
           />
@@ -95,15 +101,18 @@ export const SelectionForest = () => {
     >
         {
           forest.map((tree, i) => {
-            console.log(tree)
             if (tree) {
               return (
                 <Card key={ `tree-${ i }` }>
                   <CardHeader
                     title={ tree.data.id }
+                    className={ classes.treeCardHeader }
                     action={
                       <Tooltip title="Remove this term" placement="left">
-                        <IconButton aria-label="Remove this term" onClick={ handleToggleRootTermSelection(selectedRootTerms[tree.data.id]) }>
+                        <IconButton
+                          aria-label="Remove this term"
+                          onClick={ () => toggleRootSelection(selectedRoots[tree.data.id]) }
+                        >
                           <RemoveTermIcon />
                         </IconButton>
                       </Tooltip>

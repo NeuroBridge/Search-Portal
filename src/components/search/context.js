@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useState } from 'react'
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 import { api } from '../../api'
 import { navigate } from '@reach/router'
@@ -10,17 +10,17 @@ export const SearchContextProvider = ({ children }) => {
   const [searchHistory, setSearchHistory] = useLocalStorage('search-history', [])
   const [busy, setBusy] = useState(false)
   const [terms, setTerms] = useState([])
-  const [selectedRootTerms, setSelectedRootTerms] = useState({})
-  const [selectedTerms, setSelectedTerms] = useState({})
-  const [searchedQuery, setSearchedQuery] = useState(null)
+  const [selectedRoots, setSelectedRoots] = useState({})
+  const [selectedTerms, setSelectedTerms] = useState([])
+  const [searchedQuery, setSearchedQuery] = useState('')
 
   useEffect(async () => {
-    // when selectedRootTerms changes, we check each term
+    // when selectedRoots changes, we check each term
     // for a `tree` property, and build it if needed.
 
     // first, a function to fetch and construct child-parent relationships
     const constructTreeRelations = async root => {
-      let relations = [{ id: root.short_form, parentId: '' }]
+      let relations = [{ id: root.short_form, parentId: '', rootId: root.short_form }]
       try {
         const descendants = await api.descendants(root)
         if (!descendants.length) {
@@ -31,7 +31,7 @@ export const SearchContextProvider = ({ children }) => {
           const t = queue.pop()
           const children = await api.children(t)
           queue = [...children, ...queue]
-          relations = [...relations, ...children.map(child => ({ id: child.short_form, parentId: t.short_form }))]
+          relations = [...relations, ...children.map(child => ({ id: child.short_form, parentId: t.short_form, rootId: root.short_form }))]
         }
         return relations
       } catch (error) {
@@ -40,15 +40,15 @@ export const SearchContextProvider = ({ children }) => {
       return relations
     }
 
-    Object.keys(selectedRootTerms).forEach(async label => {
-      if (!selectedRootTerms[label].tree) {
-        let newSelectedRootTerms = { ...selectedRootTerms }
-        const [tree] = arrayToTree(await constructTreeRelations(selectedRootTerms[label]))
-        newSelectedRootTerms[label].tree = tree
-        setSelectedRootTerms(newSelectedRootTerms)
+    Object.keys(selectedRoots).forEach(async label => {
+      if (!selectedRoots[label].tree) {
+        let newSelectedRoots = { ...selectedRoots }
+        const [tree] = arrayToTree(await constructTreeRelations(selectedRoots[label]))
+        newSelectedRoots[label].tree = tree
+        setSelectedRoots(newSelectedRoots)
       }
     })
-  }, [selectedRootTerms])
+  }, [selectedRoots])
 
   /**
    *
@@ -56,21 +56,25 @@ export const SearchContextProvider = ({ children }) => {
    *
    */
   
-  const toggleRootTermSelection = newTerm => {
-    let newTerms = { ...selectedRootTerms }
+  const toggleRootSelection = newTerm => {
+    let newRoots = { ...selectedRoots }
     const id = newTerm.short_form
-    if (id in newTerms) {
-      delete newTerms[id]
+    if (id in newRoots) {
+      // remove the root
+      delete newRoots[id]
+      // remove selected terms that were descendants of this root
+      const newSelectedTerms = selectedTerms.filter(t => t.rootId !== id)
+      setSelectedTerms(newSelectedTerms)
     } else {
-      newTerms[id] = newTerm
+      newRoots[id] = newTerm
     }
-    setSelectedRootTerms({ ...newTerms })
+    setSelectedRoots({ ...newRoots })
   }
   
-  const selectedRootTermsCount = useMemo(() => Object.keys(selectedRootTerms).length, [selectedRootTerms])
+  const selectedRootsCount = useMemo(() => Object.keys(selectedRoots).length, [selectedRoots])
 
-  const clearRootTermSelection = () => {
-    setSelectedRootTerms({})
+  const clearRootSelection = () => {
+    setSelectedRoots({})
     clearTermSelection()
   }
 
@@ -80,21 +84,27 @@ export const SearchContextProvider = ({ children }) => {
    *
    */
   
-  const toggleTermSelection = id => {
-    let newSelectedTerms = { ...selectedTerms }
-    console.log(id)
-    if (id in newSelectedTerms) {
-      newSelectedTerms[id] = (newSelectedTerms[id] + 1) % 3
-      if (newSelectedTerms[id] === 0) {
-        delete newSelectedTerms[id]
-      }
+  const toggleTermSelection = (id, rootId) => {
+    let newSelectedTerms = [...selectedTerms]
+    const index = newSelectedTerms.findIndex(t => t.id === id && t.rootId === rootId)
+    if (index === -1) {
+      newSelectedTerms.push({
+        id: id,
+        rootId: rootId,
+        value: 1,
+      })
     } else {
-      newSelectedTerms[id] = 1
+      newSelectedTerms[index].value = (newSelectedTerms[index].value + 1) % 3
+      if (newSelectedTerms[index].value === 0) {
+        newSelectedTerms.splice(index, 1)
+      }
     }
     setSelectedTerms(newSelectedTerms)
   }
   
-  const selectedTermsCount = useMemo(() => Object.keys(selectedTerms).length, [selectedTerms])
+  const selectedTermsCount = useMemo(() => selectedTerms.length, [selectedTerms])
+
+  const isSelectedTerm = useCallback(id => selectedTerms.some(t => t.id === id), [selectedTerms])
 
   const clearTermSelection = () => setSelectedTerms([])
 
@@ -157,9 +167,9 @@ export const SearchContextProvider = ({ children }) => {
       value={{
         busy, setBusy, resetSearch,
         doSearch, terms,
-        selectedRootTerms, selectedRootTermsCount,
-        toggleRootTermSelection, clearRootTermSelection,
-        selectedTerms, selectedTermsCount,
+        selectedRoots, selectedRootsCount,
+        toggleRootSelection, clearRootSelection,
+        selectedTerms, selectedTermsCount, isSelectedTerm,
         toggleTermSelection, clearTermSelection,
         searchedQuery,
         searchHistory, addSearchHistoryItem, deleteSearchHistoryItem, clearSearchHistory,
