@@ -19,6 +19,9 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'stretch',
     gap: theme.spacing(4),
   },
+  treeCardHeader: {
+    backgroundColor: theme.palette.grey[100],
+  },
 }))
 
 export const SelectionForest = () => {
@@ -61,7 +64,6 @@ export const SelectionForest = () => {
   }, [selectedTerms])
 
   const renderTree = (node, level = 0) => {
-    console.log(node)
     return (
       <TreeItem
         key={ `${ node.data.id }-${ level }` }
@@ -104,6 +106,7 @@ export const SelectionForest = () => {
                 <Card key={ `tree-${ i }` }>
                   <CardHeader
                     title={ tree.data.id }
+                    className={ classes.treeCardHeader }
                     action={
                       <Tooltip title="Remove this term" placement="left">
                         <IconButton
