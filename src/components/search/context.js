@@ -85,7 +85,6 @@ export const SearchContextProvider = ({ children }) => {
    */
   
   const toggleTermSelection = (id, rootId) => {
-    console.log({ id, rootId })
     let newSelectedTerms = [...selectedTerms]
     const index = newSelectedTerms.findIndex(t => t.id === id && t.rootId === rootId)
     if (index === -1) {

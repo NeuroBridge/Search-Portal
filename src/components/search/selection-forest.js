@@ -43,6 +43,12 @@ export const SelectionForest = () => {
       .map(term => selectedRoots[term].tree)
   }, [selectedRoots])
 
+  /**
+   *
+   * this callback determines which selected icon to show in
+   * each node's selection checkbox -- a red x or green check.
+   *
+   */
   const selectionIcon = useCallback(termId => {
     const index = selectedTerms.findIndex(term => term.id === termId)
     if (index === -1) {
