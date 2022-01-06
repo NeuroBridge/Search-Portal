@@ -27,15 +27,21 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
+const buildQuery = terms => {
+  let query = 'SELECT ...'
+
+  //
+  // term-query transformation logic here
+  //
+
+  return query
+}
+
 export const QueryCard = () => {
   const classes = useStyles()
   const { selectedTerms } = useSearchContext()
 
-  console.table(selectedTerms)
-
-  const query = useMemo(() => {
-    return `SELECT ... FROM ...`
-  }, [selectedTerms])
+  const query = useMemo(() => buildQuery(selectedTerms), [selectedTerms])
 
   return (
     <Card className={ classes.root }>
