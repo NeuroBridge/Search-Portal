@@ -89,16 +89,15 @@ export const SearchContextProvider = ({ children }) => {
    *
    */
 
-  const toggleRootSelection = useCallback(newTerm => {
-    const { short_form } = newTerm
+  const toggleRootSelection = useCallback(root => {
+    const { short_form } = root 
     let newRoots = { ...roots }
-    const selectTerm = term => newRoots[short_form] = term
-    const deselectTerm = term => delete newRoots[term.short_form]
     if (short_form in newRoots) {
-      deselectTerm(newTerm)
-    } else {
-      selectTerm(newTerm)
+      delete newRoots[root.short_form]
+      setRoots({ ...newRoots })
+      return
     }
+    newRoots[short_form] = root
     setRoots({ ...newRoots })
   }, [roots])
   

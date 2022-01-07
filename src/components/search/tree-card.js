@@ -113,7 +113,7 @@ export const TreeCard = ({ root }) => {
           <Tooltip title="Remove this term" placement="left">
             <IconButton
               aria-label="Remove this term"
-              onClick={ () => toggleRootSelection(root.id) }
+              onClick={ () => toggleRootSelection(root) }
             >
               <RemoveTermIcon />
             </IconButton>
