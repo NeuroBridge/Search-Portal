@@ -1,10 +1,9 @@
 import { useEffect } from 'react'
-import { AppBar, Toolbar, useMediaQuery } from '@mui/material'
-import { makeStyles } from '@mui/styles'
-import { Brand } from './components/brand'
+import { AppBar, Toolbar, Typography, useMediaQuery } from '@mui/material'
+import { Link } from '@reach/router'
+import { makeStyles, useTheme } from '@mui/styles'
 import { Menu, MobileMenu } from './components/menu'
-import { SearchBar } from './components/search/search-bar'
-import { useSearchContext } from './components/search'
+import { SearchBar, useSearchContext } from './components/search'
 import { Drawer, useDrawer } from './components/drawer'
 import neuroBridgeBackground from './images/nbbg.jpeg'
 import { ForestView, SearchView } from './views'
@@ -21,6 +20,23 @@ const useStyles = makeStyles(theme => ({
   toolbar: {
     padding: `0 0 0 ${ theme.spacing(2) }`,
     alignItems: 'stretch',
+  },
+  title: {
+    width: '100%',
+    fontVariant: 'small-caps',
+    letterSpacing: '1px',
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    '& a': {
+      color: theme.palette.secondary.main,
+      textDecoration: 'none',
+      filter: 'saturate(0.0) brightness(2)',
+      transition: 'filter 250ms',
+      '&:hover': {
+        filter: 'saturate(1.0) brightness(1.0)',
+      }
+    },
   },
   watermark: {
     background: `linear-gradient(0deg, transparent 0, #fff 66%), url(${ neuroBridgeBackground })`,
@@ -46,8 +62,10 @@ const useStyles = makeStyles(theme => ({
 
 export const App = () => {
   const classes = useStyles()
+  const theme = useTheme()
+  const mobile = useMediaQuery(theme.breakpoints.down('sm'))
   const compact = useMediaQuery('(max-width: 600px)')
-  const { searchedQuery, selectedRootsCount, terms } = useSearchContext()
+  const { resetSearch, searchedQuery, rootsCount, terms } = useSearchContext()
   const { drawerWidth, drawerOpen, locked, openDrawer, closeDrawer } = useDrawer()
 
   useEffect(() => {
@@ -69,17 +87,19 @@ export const App = () => {
    *
    */
   useEffect(() => {
-    if (drawerOpen || locked || selectedRootsCount === 0) {
+    if (drawerOpen || locked || rootsCount === 0) {
       return
     }
     openDrawer()
-  }, [selectedRootsCount])
+  }, [rootsCount])
 
   return (
     <div className={ classes.app }>
       <AppBar position="fixed" sx={{ zIndex: '1300' }}>
         <Toolbar disableGutters className={ classes.toolbar }>
-          <Brand />
+          <Typography variant="h6" align={ mobile ? 'center' : 'left' } className={ classes.title }>
+            <Link to="/" onClick={ resetSearch }>NeuroBridge</Link>
+          </Typography>
           { compact ? <MobileMenu /> : <Menu /> }
         </Toolbar>
         <SearchBar />

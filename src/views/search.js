@@ -1,7 +1,7 @@
-import { Fragment, useCallback, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useSearchContext } from '../components/search/context'
 import makeStyles from '@mui/styles/makeStyles';
-import { IconButton, Paper, Stack, Tooltip, Typography } from '@mui/material'
+import { IconButton, Paper, Tooltip, Typography } from '@mui/material'
 import { TermCard } from '../components/search/term-card'
 import {
   BugReport as DebugIcon,

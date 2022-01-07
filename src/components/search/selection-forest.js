@@ -1,13 +1,16 @@
-import { useCallback, useMemo } from 'react'
-import { useSearchContext } from './'
-import { TreeView, TreeItem } from '@mui/lab'
-import { Card, CardHeader, CardContent, Checkbox, FormControlLabel, IconButton, Skeleton, Tooltip } from '@mui/material'
+import { Fragment } from 'react'
+import PropTypes from 'prop-types'
+import { TreeCard, useSearchContext } from './'
+import { TreeView } from '@mui/lab'
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+} from '@mui/material'
 import {
   ExpandLess as CollapseIcon,
   ExpandMore as ExpandIcon,
-  DisabledByDefault as IgnoreTermIcon,
-  Cancel as RemoveTermIcon,
-  CheckBox as SelectedTermIcon,
 } from '@mui/icons-material'
 import { makeStyles } from '@mui/styles'
 
@@ -24,72 +27,33 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
+const OperatorSelect = ({ tree }) => {
+  const { toggleTermOperator } = useSearchContext()
+
+  return (
+    <FormControl>
+      <InputLabel id="boolean-operator-select-label">Operator</InputLabel>
+      <Select
+        labelId="boolean-operator-select-label"
+        id="boolean-operator-select"
+        value={ tree.data.operator }
+        label="Operator"
+        onChange={ event => toggleTermOperator(tree.data.id, event.target.value) }
+      >
+        <MenuItem value="AND">AND</MenuItem>
+        <MenuItem value="OR">OR</MenuItem>
+      </Select>
+    </FormControl>
+  )
+}
+
+OperatorSelect.propTypes = {
+  tree: PropTypes.object.isRequired,
+}
+
 export const SelectionForest = () => {
   const classes = useStyles()
-  const {
-    selectedTerms,
-    toggleTermSelection,
-    isSelectedTerm,
-    selectedRoots,
-    toggleRootSelection,
-  } = useSearchContext()
-
-  /**
-   *
-   * memoized array of tree objects,
-   * each of which is rooted at a selected
-   * term (from `selectedRoots`).
-   *
-   */
-  const forest = useMemo(() => {
-    return Object.keys(selectedRoots)
-      .map(term => selectedRoots[term].tree)
-  }, [selectedRoots])
-
-  /**
-   *
-   * this callback determines which selected icon to show in
-   * each node's selection checkbox -- a red x or green check.
-   *
-   */
-  const selectionIcon = useCallback(termId => {
-    const index = selectedTerms.findIndex(term => term.id === termId)
-    if (index === -1) {
-      return
-    }
-    if (selectedTerms[index].value === 2) {
-      return <IgnoreTermIcon sx={{ color: '#966' }} />
-    }
-    return <SelectedTermIcon sx={{ color: '#696' }} />
-  }, [selectedTerms])
-
-  const renderTree = (node, level = 0) => {
-    return (
-      <TreeItem
-        key={ `${ node.data.id }-${ level }` }
-        nodeId={ node.data.id }
-        label={
-          <FormControlLabel
-            label={ `${ node.data.id } (${ node.data.rootId })` }
-            control={
-              <Checkbox
-                checked={ isSelectedTerm(node.data.id) }
-                checkedIcon={ selectionIcon(node.data.id) }
-                onClick={ event => event.stopPropagation() }
-                onChange={ () => toggleTermSelection(node.data.id, node.data.rootId) }
-              />
-            }
-          />
-        }
-      >
-        {
-          Array.isArray(node.children)
-            ? node.children.map(child => renderTree(child, level + 1))
-            : null
-        }
-      </TreeItem>
-    )
-  }
+  const { roots } = useSearchContext()
 
   return (
     <TreeView
@@ -100,39 +64,11 @@ export const SelectionForest = () => {
       classes={{ root: classes.forestContainer }}
     >
         {
-          forest.map((tree, i) => {
-            if (tree) {
-              return (
-                <Card key={ `tree-${ i }` }>
-                  <CardHeader
-                    title={ tree.data.id }
-                    className={ classes.treeCardHeader }
-                    action={
-                      <Tooltip title="Remove this term" placement="left">
-                        <IconButton
-                          aria-label="Remove this term"
-                          onClick={ () => toggleRootSelection(selectedRoots[tree.data.id]) }
-                        >
-                          <RemoveTermIcon />
-                        </IconButton>
-                      </Tooltip>
-                    }
-                  />
-                  <CardContent>
-                    { renderTree(tree) }
-                  </CardContent>
-                </Card>
-              )
-            }
+          Object.keys(roots).map(short_form => {
             return (
-              <Card key={ `tree-${ i }-loading` }>
-                <CardContent>
-                  <Skeleton variant="rectangular" width={ 250 } height={ 20 } />
-                </CardContent>
-                <CardContent>
-                  <Skeleton variant="rectangular" width={ 600 } height={ 40 } />
-                </CardContent>
-              </Card>
+              <Fragment key={ `${ short_form }-select-tree` }>
+                <TreeCard root={ roots[short_form] } />
+              </Fragment>
             )
           })
         }

@@ -50,8 +50,9 @@ export const ForestView = () => {
   const classes = useStyles()
   const {
     resetSearch,
-    selectedTerms, clearRootSelection, selectedRootsCount,
+    clearRootSelection, rootsCount,
     clearTermSelection, selectedTermsCount,
+    startOver,
   } = useSearchContext()
   const [sent, setSent] = useState(false)
 
@@ -63,11 +64,10 @@ export const ForestView = () => {
   }, [sent])
 
   const handleStartOver = () => {
-    clearRootSelection()
-    resetSearch()
+    startOver()
   }
 
-  if (!selectedRootsCount) {
+  if (!rootsCount) {
     return (
       <Container>
         <Card className={ classes.instructions } elevation={ 0 }>
@@ -103,11 +103,11 @@ export const ForestView = () => {
       <Grid container className={ classes.heading }>
         <Grid item xs={ 12 } lg={ 6 } className={ classes.summary }>
           <Typography variant="subtitle1">
-            { selectedRootsCount } Root Term{ selectedRootsCount === 1 ? '' : 's' }
+            <span>{ rootsCount } Root Term{ rootsCount === 1 ? '' : 's' }</span>
           </Typography>
           <Button
             onClick={ handleStartOver }
-            disabled={ selectedRootsCount === 0 }
+            disabled={ rootsCount === 0 }
             endIcon={ <StartOverIcon /> }
             variant="contained"
             color="primary"
@@ -117,11 +117,11 @@ export const ForestView = () => {
         </Grid>
         <Grid item xs={ 12 } lg={ 6 } className={ classes.actions }>
           <Typography variant="subtitle1">
-            { selectedTermsCount } selected term{ selectedTermsCount === 1 ? '' : 's'}
+            { selectedTermsCount() } selected term{ selectedTermsCount() === 1 ? '' : 's'}
           </Typography>
           <Button
             onClick={ clearTermSelection }
-            disabled={ selectedTermsCount === 0 }
+            disabled={ selectedTermsCount() === 0 }
             endIcon={ <ClearSelectionIcon /> }
             variant="contained"
             color="secondary"

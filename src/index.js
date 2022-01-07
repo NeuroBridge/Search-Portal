@@ -15,6 +15,7 @@ const themeOptions = {
     secondary: {
       main: '#00758d',
     },
+    danger: '#966',
   },
   shape: {
     borderRadius: 0,

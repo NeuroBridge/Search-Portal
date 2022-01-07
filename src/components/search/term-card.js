@@ -50,8 +50,8 @@ const useStyles = makeStyles(theme => ({
 export const TermCard = ({ term, toggleRootSelectionHandler }) => {
   const classes = useStyles()
   const [expanded, setExpanded] = useState(false)
-  const { selectedRoots } = useSearchContext()
-  const selected = useMemo(() => term.short_form in selectedRoots, [selectedRoots])
+  const { roots } = useSearchContext()
+  const selected = useMemo(() => term.short_form in roots, [roots])
 
   return (
     <Fragment>
