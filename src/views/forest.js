@@ -49,10 +49,7 @@ const useStyles = makeStyles(theme => ({
 export const ForestView = () => {
   const classes = useStyles()
   const {
-    resetSearch,
-    clearRootSelection, rootsCount,
-    clearTermSelection, selectedTermsCount,
-    startOver,
+    rootsCount, startOver, clearTermSelection, selectedTermsCount,
   } = useSearchContext()
   const [sent, setSent] = useState(false)
 

@@ -92,7 +92,7 @@ export const SearchContextProvider = ({ children }) => {
   const toggleRootSelection = useCallback(newTerm => {
     const { short_form } = newTerm
     let newRoots = { ...roots }
-    const selectTerm = term => newRoots[short_form] = newTerm
+    const selectTerm = term => newRoots[short_form] = term
     const deselectTerm = term => delete newRoots[term.short_form]
     if (short_form in newRoots) {
       deselectTerm(newTerm)
@@ -135,12 +135,9 @@ export const SearchContextProvider = ({ children }) => {
   }
 
   const selectedTermsCount = () => {
-    const count = Object.keys(roots).reduce((sum, root_short_form) => sum + rootSelectedTermsCount(root_short_form), 0)
-    console.log(count)
-    return count
+    return Object.keys(roots)
+      .reduce((sum, root_short_form) => sum + rootSelectedTermsCount(root_short_form), 0)
   }
-
-  const rootHasSelectedTerms = root_short_form => rootSelectedTermsCount(root_short_form) > 0
 
   const clearTermSelection = () => {
     const newRoots = { ...roots }
