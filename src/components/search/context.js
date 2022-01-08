@@ -109,10 +109,41 @@ export const SearchContextProvider = ({ children }) => {
 
   // toggles a term's value, under given root 
   const toggleTermSelection = useCallback((rootId, id) => {
+    // make a copy of current roots state
     let newRoots = { ...roots }
+    
+    // get index in `newRoots` where the given term can be found
     const index = newRoots[rootId].relations
       .findIndex(rel => rel.id === id && rel.rootId === rootId)
-    newRoots[rootId].relations[index].value = (newRoots[rootId].relations[index].value + 1) % 3
+    
+    // save the current and future values of this node/relation
+    const currentValue = newRoots[rootId].relations[index].value
+    const newValue = (currentValue + 1) % 3
+
+    // set this node's value, and all its descendant
+    // node's values to this same newValue.
+    newRoots[rootId].relations[index].value = newValue
+    
+    let descendants = [id]
+    // add proper descendants to this `descendants` array
+    let queue = [id]
+    while (queue.length > 0) {
+      const t = queue.pop()
+      const children = newRoots[rootId].relations
+        .filter(rel => rel.parentId === t)
+        .map(rel => rel.id)
+      queue = [...children, ...queue]
+      descendants = [...descendants, ...children]
+    }
+    
+    // assign the values affected by selecting this `id`
+    newRoots[rootId].relations.forEach((rel, i) => {
+      if (descendants.includes(rel.id)) {
+        newRoots[rootId].relations[i].value = newValue
+      }
+    })
+
+    // define new roots
     setRoots(newRoots)
   }, [roots])
   
