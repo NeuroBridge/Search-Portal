@@ -108,7 +108,7 @@ export const SearchContextProvider = ({ children }) => {
   const rootsCount = useMemo(() => Object.keys(roots).length, [roots])
 
   // toggles a term's value, under given root 
-  const toggleTermSelection = useCallback((rootId, id) => {
+  const toggleTermSelection = useCallback((rootId, id, cascade = true) => {
     // make a copy of current roots state
     let newRoots = { ...roots }
     
@@ -124,19 +124,25 @@ export const SearchContextProvider = ({ children }) => {
     // node's values to this same newValue.
     newRoots[rootId].relations[index].value = newValue
     
+    // we'll collect descendants in this array
     let descendants = [id]
-    // add proper descendants to this `descendants` array
-    let queue = [id]
-    while (queue.length > 0) {
-      const t = queue.pop()
-      const children = newRoots[rootId].relations
-        .filter(rel => rel.parentId === t)
-        .map(rel => rel.id)
-      queue = [...children, ...queue]
-      descendants = [...descendants, ...children]
+
+    // unless `cascade` is prevented,
+    if (cascade === true) {
+      // add remaining descendants to the `descendants` array
+      let queue = [id]
+      while (queue.length > 0) {
+        const t = queue.pop()
+        const children = newRoots[rootId].relations
+          .filter(rel => rel.parentId === t)
+          .map(rel => rel.id)
+        queue = [...children, ...queue]
+        descendants = [...descendants, ...children]
+      }
     }
     
-    // assign the values affected by selecting this `id`
+    // now that the descendants are collected,
+    // assign the respective values
     newRoots[rootId].relations.forEach((rel, i) => {
       if (descendants.includes(rel.id)) {
         newRoots[rootId].relations[i].value = newValue

@@ -60,6 +60,14 @@ export const TreeCard = ({ root }) => {
     ][value]
   }, [])
 
+  const handleChange = (rootId, id) => event => {
+    const ctrlKeyDown = event?.nativeEvent?.ctrlKey
+    // the last argument passed below defines whether to
+    // `cascade` the `newValue` to all descendants,
+    // which the user prevents by pressing the ctrl key
+    toggleTermSelection(rootId, id, !ctrlKeyDown)
+  }
+
   const renderSelectionTree = (option, level = 0) => {
     option.data.rootId = root.short_form
     const { id, rootId } = option.data
@@ -76,7 +84,7 @@ export const TreeCard = ({ root }) => {
                 checked={ rootHasTermSelected(rootId, id) }
                 checkedIcon={ selectionIcon(termValue(rootId, id)) }
                 onClick={ event => event.stopPropagation() }
-                onChange={ () => toggleTermSelection(rootId, id) }
+                onChange={ handleChange(rootId, id) }
               />
             }
           />
