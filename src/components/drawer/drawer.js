@@ -64,6 +64,7 @@ const useStyles = makeStyles(theme => {
       padding: 0,
       color: theme.palette.common.white,
       writingMode: 'vertical-lr',
+      transform: 'rotate(180deg)',
     },
     drawerButton: {
       padding: 0,
