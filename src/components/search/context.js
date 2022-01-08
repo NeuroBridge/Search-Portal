@@ -71,7 +71,6 @@ export const SearchContextProvider = ({ children }) => {
       }
       return relations
     }
-
     // now, we set each root's operator and relations...
     Object.keys(roots).forEach(async id => {
       if (!roots[id].relations) {
@@ -85,10 +84,11 @@ export const SearchContextProvider = ({ children }) => {
 
   /**
    *
-   * ...
+   * Root & term selection functions
    *
    */
-
+  
+  // adds & removes roots
   const toggleRootSelection = useCallback(root => {
     const { short_form } = root 
     let newRoots = { ...roots }
@@ -101,19 +101,13 @@ export const SearchContextProvider = ({ children }) => {
     setRoots({ ...newRoots })
   }, [roots])
   
-  const clearRootSelection = useCallback(() => {
-    setRoots({})
-  }, [])
+  // unselects all roots
+  const clearRootSelection = useCallback(() => setRoots({}), [])
 
+  // counts roots (this is just shorter than `Object.keys(roots).length`)
   const rootsCount = useMemo(() => Object.keys(roots).length, [roots])
 
-  const toggleTermOperator = useCallback((id, operator) => {
-    let newRoots = { ...roots }
-    newRoots[id].operator = operator
-    setRoots(newRoots)
-  }, [roots])
-
-  // under given root, toggle a term's value 
+  // toggles a term's value, under given root 
   const toggleTermSelection = useCallback((rootId, id) => {
     let newRoots = { ...roots }
     const index = newRoots[rootId].relations
@@ -249,7 +243,6 @@ export const SearchContextProvider = ({ children }) => {
         doSearch, terms,
         roots, rootsCount,
         toggleRootSelection, clearRootSelection,
-        toggleTermOperator,
         rootSelectedTermsCount, rootHasTermSelected, selectedTermsCount, termValue,
         toggleTermSelection, clearTermSelection,
         startOver,
