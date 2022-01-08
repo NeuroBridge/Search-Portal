@@ -1,11 +1,12 @@
-import { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { AppBar, Toolbar, Typography, useMediaQuery } from '@material-ui/core'
-import { makeStyles, useTheme } from '@material-ui/core/styles'
-import brainImage from './images/brain.png'
-import { Router } from './router'
-import { Brand } from './components/brand'
+import { useEffect } from 'react'
+import { AppBar, Toolbar, Typography, useMediaQuery } from '@mui/material'
+import { Link } from '@reach/router'
+import { makeStyles, useTheme } from '@mui/styles'
 import { Menu, MobileMenu } from './components/menu'
-import { SearchBar } from './components/search/search-bar'
+import { SearchBar, useSearchContext } from './components/search'
+import { Drawer, useDrawer } from './components/drawer'
+import neuroBridgeBackground from './images/nbbg.jpeg'
+import { ForestView, SearchView } from './views'
 
 const useStyles = makeStyles(theme => ({
   app: {
@@ -14,40 +15,102 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'flex-start',
     alignItems: 'stretch',
     minHeight: '100vh',
-    backgroundImage: `url(${ brainImage })`,
-    backgroundPosition: 'center 100%',
-    backgroundSize: '800px',
-    backgroundRepeat: 'no-repeat',
-    overflowX: 'hidden',
+    width: '100%',
   },
   toolbar: {
-    padding: `0 0 0 ${ theme.spacing(2) }px`,
+    padding: `0 0 0 ${ theme.spacing(2) }`,
     alignItems: 'stretch',
   },
-  main: {
-    padding: theme.spacing(4),
+  title: {
     width: '100%',
-    maxWidth: '1600px',
-    margin: '0 auto',
+    fontVariant: 'small-caps',
+    letterSpacing: '1px',
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    '& a': {
+      color: theme.palette.secondary.main,
+      textDecoration: 'none',
+      filter: 'saturate(0.0) brightness(2)',
+      transition: 'filter 250ms',
+      '&:hover': {
+        filter: 'saturate(1.0) brightness(1.0)',
+      }
+    },
   },
+  watermark: {
+    background: `linear-gradient(0deg, transparent 0, #fff 66%), url(${ neuroBridgeBackground })`,
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center center',
+    filter: 'opacity(0.33) saturate(0.33)',
+    position: 'fixed',
+    left: 0,
+    top: 0,
+    right: 0,
+    bottom: 0,
+  },
+  main: {
+    flex: 1,
+    width: '100%',
+    marginTop: '115px',
+    position: 'relative',
+    transition: 'padding-left 300ms cubic-bezier(0, 0, 0.2, 1) 100ms, filter 250ms',
+  },
+  
 }))
 
 export const App = () => {
   const classes = useStyles()
+  const theme = useTheme()
+  const mobile = useMediaQuery(theme.breakpoints.down('sm'))
   const compact = useMediaQuery('(max-width: 600px)')
+  const { resetSearch, searchedQuery, rootsCount, terms } = useSearchContext()
+  const { drawerWidth, drawerOpen, locked, openDrawer, closeDrawer } = useDrawer()
+
+  useEffect(() => {
+    if (searchedQuery) {
+      openDrawer()
+    }
+  }, [searchedQuery])
+
+  useEffect(() => {
+    if (!terms.length) {
+      closeDrawer()
+    }
+  }, [terms.length])
+
+  /**
+   *
+   * show the drawer's contents whenever they change,
+   * ...unless it's locked.
+   *
+   */
+  useEffect(() => {
+    if (drawerOpen || locked || rootsCount === 0) {
+      return
+    }
+    openDrawer()
+  }, [rootsCount])
 
   return (
     <div className={ classes.app }>
-      <AppBar position="sticky">
+      <AppBar position="fixed" sx={{ zIndex: '1300' }}>
         <Toolbar disableGutters className={ classes.toolbar }>
-          <Brand />
+          <Typography variant="h6" align={ mobile ? 'center' : 'left' } className={ classes.title }>
+            <Link to="/" onClick={ resetSearch }>NeuroBridge</Link>
+          </Typography>
           { compact ? <MobileMenu /> : <Menu /> }
         </Toolbar>
         <SearchBar />
       </AppBar>
-      <main className={ classes.main }>
-        <Router />
+      <div className={ classes.watermark } />
+      <main className={ classes.main } style={{ paddingLeft: drawerOpen ? `calc(${ drawerWidth }px + 4rem)` : '4rem' }}>
+        <ForestView />
       </main>
+      <Drawer title={ `Search Drawer ${ terms.length ? ` - ${ terms.length } results for "${ searchedQuery }"` : '' }` }>
+        <SearchView />
+      </Drawer>
     </div>
   )
 }
