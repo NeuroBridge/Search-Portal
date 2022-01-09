@@ -14,6 +14,7 @@ import {
   LooksTwo as StepTwoIcon,
   Looks3 as StepThreeIcon,
   Looks4 as StepFourIcon,
+  Looks5 as StepFiveIcon,
   Send as SendIcon,
 } from '@mui/icons-material'
 import makeStyles from '@mui/styles/makeStyles'
@@ -70,22 +71,31 @@ export const ForestView = () => {
         <Card className={ classes.instructions } elevation={ 0 }>
           <CardHeader title="Instructions" />
           <CardContent>
+            <Typography paragraph>
+              Searching the NeuroBridge Ontology is simple!
+            </Typography>
+          </CardContent>
+          <CardContent>
             <List>
               <ListItem>
                 <ListItemAvatar><Avatar><StepOneIcon /></Avatar></ListItemAvatar>
-                <ListItemText>Search the Neurobridge ontology for terms.</ListItemText>
+                <ListItemText>Search for terms.</ListItemText>
               </ListItem>
               <ListItem>
                 <ListItemAvatar><Avatar><StepTwoIcon /></Avatar></ListItemAvatar>
-                <ListItemText>Select roots from the results.</ListItemText>
+                <ListItemText>Select root terms from the search results.</ListItemText>
               </ListItem>
               <ListItem>
                 <ListItemAvatar><Avatar><StepThreeIcon /></Avatar></ListItemAvatar>
-                <ListItemText>Select terms from the descendants of your roots.</ListItemText>
+                <ListItemText>Select descendants to build a query.</ListItemText>
               </ListItem>
               <ListItem>
                 <ListItemAvatar><Avatar><StepFourIcon /></Avatar></ListItemAvatar>
-                <ListItemText>Send your term selection.</ListItemText>
+                <ListItemText>Send your query.</ListItemText>
+              </ListItem>
+              <ListItem>
+                <ListItemAvatar><Avatar><StepFiveIcon /></Avatar></ListItemAvatar>
+                <ListItemText>...</ListItemText>
               </ListItem>
             </List>
           </CardContent>
