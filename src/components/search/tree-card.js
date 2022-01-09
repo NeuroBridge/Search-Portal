@@ -24,10 +24,11 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'stretch',
-    gap: theme.spacing(4),
+    gap: theme.spacing(2),
   },
   treeCardHeader: {
     backgroundColor: theme.palette.grey[100],
+    padding: `${ theme.spacing(1) } ${ theme.spacing(2) }`,
   },
 }))
 
@@ -115,6 +116,7 @@ export const TreeCard = ({ root }) => {
   return (
     <Card variant="outlined">
       <CardHeader
+        disableTypography
         title={ tree.data.id }
         className={ classes.treeCardHeader }
         action={

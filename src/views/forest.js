@@ -129,6 +129,18 @@ export const ForestView = () => {
       </Grid>
 
       <br /><br />
+      
+      <Card variant="outlined">
+        <CardContent className={ classes.controls }>
+          <Grid container>
+            <Grid item xs={ 12 }>
+              <Typography align="center">controls</Typography>
+            </Grid>
+          </Grid>
+        </CardContent>
+      </Card>
+
+      <br /><br />
 
       <SelectionForest />
 

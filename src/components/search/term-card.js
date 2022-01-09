@@ -13,7 +13,6 @@ import { TermDialog, useSearchContext } from './'
 
 const useStyles = makeStyles(theme => ({
   termCard: {
-    fontSize: '80%',
     position: 'relative',
     border: `1px solid #afb9c099`,
     filter: 'opacity(0.8)',
