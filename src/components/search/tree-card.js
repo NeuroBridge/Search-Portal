@@ -42,8 +42,10 @@ export const TreeCard = ({ root }) => {
     toggleRootSelection,
     toggleTermSelection,
     rootHasTermSelected,
+    rootSelectedTermsCount,
     termValue,
   } = useSearchContext()
+  const count = rootSelectedTermsCount(root.short_form)
 
   // construct the tree when the given root's relations changes
   useEffect(() => {
@@ -117,13 +119,14 @@ export const TreeCard = ({ root }) => {
     <Card variant="outlined">
       <CardHeader
         disableTypography
-        title={ tree.data.id }
+        title={ <span>{ tree.data.id } { count > 0 ? `(${ count } selections)` : '' }</span> }
         className={ classes.treeCardHeader }
         action={
           <Tooltip title="Remove this term" placement="left">
             <IconButton
               aria-label="Remove this term"
               onClick={ () => toggleRootSelection(root) }
+              sx={{ '&:hover': { color: theme.palette.danger } }}
             >
               <RemoveTermIcon />
             </IconButton>
