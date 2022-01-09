@@ -22,6 +22,7 @@ const themeOptions = {
   },
   spacing: 8,
   typography: {
+    htmlFontSize: 18,
     h1: {
       fontSize: '1.75rem',
     },

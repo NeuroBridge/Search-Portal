@@ -53,7 +53,7 @@ const useStyles = makeStyles(theme => ({
   main: {
     flex: 1,
     width: '100%',
-    marginTop: '115px',
+    marginTop: '110px',
     position: 'relative',
     transition: 'padding-left 300ms cubic-bezier(0, 0, 0.2, 1) 100ms, filter 250ms',
   },
