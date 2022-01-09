@@ -114,11 +114,11 @@ export const ForestView = () => {
         </Grid>
         <Grid item xs={ 12 } lg={ 6 } className={ classes.actions }>
           <Typography variant="subtitle1">
-            { selectedTermsCount() } selected term{ selectedTermsCount() === 1 ? '' : 's'}
+            { selectedTermsCount } selected term{ selectedTermsCount === 1 ? '' : 's'}
           </Typography>
           <Button
             onClick={ clearTermSelection }
-            disabled={ selectedTermsCount() === 0 }
+            disabled={ selectedTermsCount === 0 }
             endIcon={ <ClearSelectionIcon /> }
             variant="contained"
             color="secondary"

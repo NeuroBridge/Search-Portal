@@ -164,10 +164,10 @@ export const SearchContextProvider = ({ children }) => {
       : 0
   }
 
-  const selectedTermsCount = () => {
+  const selectedTermsCount = useMemo(() => {
     return Object.keys(roots)
       .reduce((sum, root_short_form) => sum + rootSelectedTermsCount(root_short_form), 0)
-  }
+  }, [roots])
 
   const clearTermSelection = () => {
     const newRoots = { ...roots }
