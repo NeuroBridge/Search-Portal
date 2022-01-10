@@ -1,9 +1,11 @@
-import { useEffect, useState } from 'react'
+import { Fragment, useCallback, useEffect, useState } from 'react'
 import { Avatar,
   Button,
   Card, CardHeader, CardContent,
   Grid,
+  IconButton,
   List, ListItem, ListItemAvatar, ListItemText,
+  Tooltip,
   Typography,
 } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
@@ -50,7 +52,8 @@ const useStyles = makeStyles(theme => ({
 export const ForestView = () => {
   const classes = useStyles()
   const {
-    rootsCount, startOver, clearTermSelection, selectedTermsCount,
+    roots, rootsCount, selectedTermsCount,
+    clearRootSelection, clearTermSelection, startOver,
   } = useSearchContext()
   const [sent, setSent] = useState(false)
 
@@ -64,6 +67,57 @@ export const ForestView = () => {
   const handleStartOver = () => {
     startOver()
   }
+
+  const PageHeader = useCallback(() => {
+    return (
+      <Fragment>
+        <Card variant="outlined">
+          <CardContent className={ classes.controls }>
+            <Grid container>
+              <Grid item xs={ 12 } sm={ 3 }>
+                <Typography>
+                  { rootsCount } root{ rootsCount === 1 ? '' : 's' }<br />
+                  { selectedTermsCount } selected term{ selectedTermsCount === 1 ? '' : 's' }<br />
+                </Typography>
+              </Grid>
+              <Grid item xs={ 12 } sm={ 9 }>
+                <Tooltip title="Start Over">
+                  <IconButton
+                    onClick={ handleStartOver }
+                    disabled={ rootsCount === 0 }
+                    variant="contained"
+                    color="primary"
+                  >
+                    <StartOverIcon />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="Clear all roots">
+                  <IconButton
+                    onClick={ clearRootSelection }
+                    disabled={ selectedTermsCount === 0 }
+                    variant="contained"
+                    color="secondary"
+                  >
+                    <ClearSelectionIcon />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="Deselect all terms">
+                  <IconButton
+                    onClick={ clearTermSelection }
+                    disabled={ selectedTermsCount === 0 }
+                    variant="contained"
+                    color="secondary"
+                  >
+                    <ClearSelectionIcon />
+                  </IconButton>
+                </Tooltip>
+              </Grid>
+            </Grid>
+          </CardContent>
+        </Card>
+      </Fragment>
+    )
+  }, [roots])
 
   if (!rootsCount) {
     return (
@@ -107,48 +161,7 @@ export const ForestView = () => {
   return (
     <Container>
       
-      <Grid container className={ classes.heading }>
-        <Grid item xs={ 12 } lg={ 6 } className={ classes.summary }>
-          <Typography variant="subtitle1">
-            <span>{ rootsCount } Root Term{ rootsCount === 1 ? '' : 's' }</span>
-          </Typography>
-          <Button
-            onClick={ handleStartOver }
-            disabled={ rootsCount === 0 }
-            endIcon={ <StartOverIcon /> }
-            variant="contained"
-            color="primary"
-          >
-            Start Over
-          </Button>
-        </Grid>
-        <Grid item xs={ 12 } lg={ 6 } className={ classes.actions }>
-          <Typography variant="subtitle1">
-            { selectedTermsCount } selected term{ selectedTermsCount === 1 ? '' : 's'}
-          </Typography>
-          <Button
-            onClick={ clearTermSelection }
-            disabled={ selectedTermsCount === 0 }
-            endIcon={ <ClearSelectionIcon /> }
-            variant="contained"
-            color="secondary"
-          >
-            Clear Term Selection
-          </Button>
-        </Grid>
-      </Grid>
-
-      <br /><br />
-      
-      <Card variant="outlined">
-        <CardContent className={ classes.controls }>
-          <Grid container>
-            <Grid item xs={ 12 }>
-              <Typography align="center">controls</Typography>
-            </Grid>
-          </Grid>
-        </CardContent>
-      </Card>
+      <PageHeader />
 
       <br /><br />
 
