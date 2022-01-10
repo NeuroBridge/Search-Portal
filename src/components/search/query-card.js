@@ -1,5 +1,7 @@
+import { useEffect, useState } from 'react'
 import { Card, CardContent, CardHeader, IconButton, Tooltip } from '@mui/material'
 import { makeStyles } from '@mui/styles'
+import { Check as CopiedIcon } from '@mui/icons-material'
 import { useSearchContext } from './'
 import { ContentCopy as CopyIcon } from '@mui/icons-material'
 
@@ -29,9 +31,16 @@ const useStyles = makeStyles(theme => ({
 export const QueryCard = () => {
   const classes = useStyles()
   const { query } = useSearchContext()
+  const [copied, setCopied] = useState(false)
+
+  useEffect(() => {
+    const copyTimer = setTimeout(() => setCopied(false), 5000)
+    return () => clearTimeout(copyTimer)
+  }, [copied])
 
   const handleCopyQuery = () => {
     navigator.clipboard.writeText(query())
+    setCopied(true)
   }
 
   return (
@@ -39,9 +48,9 @@ export const QueryCard = () => {
       <CardHeader
         title="Query"
         action={
-          <Tooltip title="Copy query" placement="left">
+          <Tooltip title={ copied ? 'Query copied to clipboard!' : 'Copy query' } placement="left">
             <IconButton size="small" onClick={ handleCopyQuery }>
-              <CopyIcon sx={{ fill: '#fff' }} />
+              { copied ? <CopiedIcon color="secondary" /> : <CopyIcon sx={{ fill: '#fff' }} /> }
             </IconButton>
           </Tooltip>
         }

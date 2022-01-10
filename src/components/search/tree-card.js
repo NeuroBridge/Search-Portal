@@ -24,10 +24,14 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'stretch',
-    gap: theme.spacing(4),
+    gap: theme.spacing(2),
   },
   treeCardHeader: {
-    backgroundColor: theme.palette.grey[100],
+    backgroundColor: theme.palette.grey[200],
+    padding: `${ theme.spacing(1) } ${ theme.spacing(2) }`,
+  },
+  treeCardContent: {
+    padding: '0 !important',
   },
 }))
 
@@ -41,8 +45,10 @@ export const TreeCard = ({ root }) => {
     toggleRootSelection,
     toggleTermSelection,
     rootHasTermSelected,
+    rootSelectedTermsCount,
     termValue,
   } = useSearchContext()
+  const count = rootSelectedTermsCount(root.short_form)
 
   // construct the tree when the given root's relations changes
   useEffect(() => {
@@ -101,34 +107,29 @@ export const TreeCard = ({ root }) => {
 
   if (!tree) {
     return (
-      <Card>
-        <CardContent>
-          <Skeleton variant="rectangular" width={ 250 } height={ 20 } />
-        </CardContent>
-        <CardContent>
-          <Skeleton variant="rectangular" width={ 600 } height={ 40 } />
-        </CardContent>
-      </Card>
+      <Skeleton variant="rectangular" width={ '100%' } height={ 75 } />
     )
   }
 
   return (
     <Card variant="outlined">
       <CardHeader
-        title={ tree.data.id }
+        disableTypography
+        title={ <span>{ tree.data.id } { count > 0 ? `(${ count } selections)` : '' }</span> }
         className={ classes.treeCardHeader }
         action={
           <Tooltip title="Remove this term" placement="left">
             <IconButton
               aria-label="Remove this term"
               onClick={ () => toggleRootSelection(root) }
+              sx={{ '&:hover': { color: theme.palette.danger } }}
             >
               <RemoveTermIcon />
             </IconButton>
           </Tooltip>
         }
       />
-      <CardContent>
+      <CardContent className={ classes.treeCardContent }>
         { renderSelectionTree(tree) }
       </CardContent>
     </Card>
