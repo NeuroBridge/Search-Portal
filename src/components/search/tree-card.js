@@ -107,14 +107,7 @@ export const TreeCard = ({ root }) => {
 
   if (!tree) {
     return (
-      <Card>
-        <CardContent>
-          <Skeleton variant="rectangular" width={ 250 } height={ 20 } />
-        </CardContent>
-        <CardContent>
-          <Skeleton variant="rectangular" width={ 600 } height={ 40 } />
-        </CardContent>
-      </Card>
+      <Skeleton variant="rectangular" width={ '100%' } height={ 75 } />
     )
   }
 
