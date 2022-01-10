@@ -27,8 +27,11 @@ const useStyles = makeStyles(theme => ({
     gap: theme.spacing(2),
   },
   treeCardHeader: {
-    backgroundColor: theme.palette.grey[100],
+    backgroundColor: theme.palette.grey[200],
     padding: `${ theme.spacing(1) } ${ theme.spacing(2) }`,
+  },
+  treeCardContent: {
+    padding: '0 !important',
   },
 }))
 
@@ -133,7 +136,7 @@ export const TreeCard = ({ root }) => {
           </Tooltip>
         }
       />
-      <CardContent>
+      <CardContent className={ classes.treeCardContent }>
         { renderSelectionTree(tree) }
       </CardContent>
     </Card>
