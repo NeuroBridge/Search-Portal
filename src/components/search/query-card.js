@@ -18,6 +18,10 @@ const useStyles = makeStyles(theme => ({
     overflow: 'auto',
     whiteSpace: 'pre-wrap',
   },
+  header: {
+    padding: `${ theme.spacing(1) } ${ theme.spacing(2) }`,
+    textTransform: 'uppercase',
+  },
   content: {
     backgroundColor: theme.palette.primary.dark,
     color: '#fff',
@@ -46,6 +50,7 @@ export const QueryCard = () => {
   return (
     <Card className={ classes.root }>
       <CardHeader
+        disableTypography
         title="Query"
         action={
           <Tooltip title={ copied ? 'Query copied to clipboard!' : 'Copy query' } placement="left">
@@ -54,6 +59,7 @@ export const QueryCard = () => {
             </IconButton>
           </Tooltip>
         }
+        className={ classes.header }
       />
       <CardContent as="pre" className={ classes.preContent }>
         # This query will update as terms are selected.
