@@ -23,7 +23,7 @@ export const api = {
       }
       return data.response.docs
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   },
 
@@ -43,7 +43,7 @@ export const api = {
       }
       return data.response.docs
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   },
 
@@ -58,7 +58,7 @@ export const api = {
         return data._embedded.terms
       }
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
     return []
   },
@@ -74,7 +74,7 @@ export const api = {
         return data._embedded.terms
       }
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
     return []
   },
@@ -90,7 +90,20 @@ export const api = {
         return data._embedded.terms
       }
     } catch (error) {
-      console.log(error)
+      console.error(error)
+    }
+    return []
+  },
+
+  terms: async () => {
+    try {
+      const { data } = await axios.get(`${ API_ROOT }/ontologies/${ ONTOLOGY_NAME }/terms`)
+      if (!data) {
+        throw new Error('An error occurred while fetching terms.')
+      }
+      return data
+    } catch (error) {
+      console.error(error)
     }
     return []
   },
