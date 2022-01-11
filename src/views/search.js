@@ -92,11 +92,10 @@ const SearchLanding = () => {
 
 export const SearchView = () => {
   const classes = useStyles()
-  const { terms, toggleRootSelection, searchedQuery } = useSearchContext()
+  const { terms, searchedQuery } = useSearchContext()
   const [debugMode, setDebugMode] = useState(false)
 
   const handleToggleDebugMode = () => setDebugMode(!debugMode)
-  const handleToggleTermSelection = term => () => toggleRootSelection(term)
 
   const MemoizedResultsHeader = useCallback(() => {
     return (
@@ -135,7 +134,6 @@ export const SearchView = () => {
                 <TermCard
                   key={ term.label }
                   term={ term }
-                  toggleRootSelectionHandler={ handleToggleTermSelection(term) }
                 />
               ))
             }

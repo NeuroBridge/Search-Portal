@@ -46,16 +46,16 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export const TermCard = ({ term, toggleRootSelectionHandler }) => {
+export const TermCard = ({ term }) => {
   const classes = useStyles()
   const [expanded, setExpanded] = useState(false)
-  const { roots } = useSearchContext()
+  const { roots, toggleRootSelection } = useSearchContext()
   const selected = useMemo(() => term.short_form in roots, [roots])
 
   return (
     <Fragment>
       <Card square variant="outlined" className={ `${ classes.termCard } ${ selected ? classes.selected : undefined }` }>
-        <CardActionArea onClick={ toggleRootSelectionHandler }>
+        <CardActionArea onClick={ () => toggleRootSelection(term) }>
           <CardContent className={ classes.content }>
             <Typography color="textPrimary">
               <strong>label:</strong> { term.label }
@@ -69,14 +69,14 @@ export const TermCard = ({ term, toggleRootSelectionHandler }) => {
           </CardContent>
         </CardActionArea>
         <CardActions className={ classes.actions } disableSpacing={ true }>
-          <Button onClick={ toggleRootSelectionHandler }>{ selected ? <CheckedIcon fontSize="small" color="secondary" /> : <UncheckedIcon fontSize="small" color="default" /> }</Button>
+          <Button onClick={ () => toggleRootSelection(term) }>{ selected ? <CheckedIcon fontSize="small" color="secondary" /> : <UncheckedIcon fontSize="small" color="default" /> }</Button>
           <Button onClick={ () => setExpanded(true) }><InspectIcon fontSize="small" color="default" /></Button>
         </CardActions>
       </Card>
       <TermDialog
         term={ term }
         selected={ selected }
-        toggleSelectionHandler={ toggleRootSelectionHandler }
+        toggleSelectionHandler={ () => toggleRootSelection(term) }
         open={ expanded }
         closeHandler={ () => setExpanded(false) }
       />
@@ -92,5 +92,4 @@ TermCard.propTypes = {
     has_children: PropTypes.bool.isRequired,
     comment_annotation: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   }).isRequired,
-  toggleRootSelectionHandler: PropTypes.func.isRequired,
 }
