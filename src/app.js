@@ -1,12 +1,13 @@
 import { useEffect } from 'react'
 import { AppBar, Toolbar, Typography, useMediaQuery } from '@mui/material'
+import { Router } from '@reach/router'
 import { Link } from '@reach/router'
 import { makeStyles, useTheme } from '@mui/styles'
 import { Menu, MobileMenu } from './components/menu'
 import { SearchBar, useSearchContext } from './components/search'
 import { Drawer, useDrawer } from './components/drawer'
 import neuroBridgeBackground from './images/nbbg.jpeg'
-import { ForestView, SearchView } from './views'
+import { ForestView, ListView, NotFoundView, SearchView } from './views'
 
 const useStyles = makeStyles(theme => ({
   app: {
@@ -106,7 +107,11 @@ export const App = () => {
       </AppBar>
       <div className={ classes.watermark } />
       <main className={ classes.main } style={{ paddingLeft: drawerOpen ? `calc(${ drawerWidth }px + 4rem)` : '4rem' }}>
-        <ForestView />
+        <Router>
+          <ForestView exact path="/" />
+          <ListView exact path="/terms" />
+          <NotFoundView default />
+        </Router>
       </main>
       <Drawer title={ `Search Drawer ${ terms.length ? ` - ${ terms.length } results for "${ searchedQuery }"` : '' }` }>
         <SearchView />

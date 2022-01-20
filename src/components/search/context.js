@@ -5,11 +5,37 @@ import { navigate } from '@reach/router'
 const SearchContext = createContext({})
 import { useLocalStorage } from '../../hooks'
 
+const columns = [
+  { field: 'short_form', type: 'string'   },
+  { field: 'label', type: 'string'   },
+  // { field: 'has_children', type: 'boolean'  },
+  // { field: 'description', type: 'string'   },
+  // { field: 'seeAlso', type: 'string'   },
+  { field: 'iri', type: 'string'   },
+]
+
+const escapeRegExp = value => value.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')
+
 export const SearchContextProvider = ({ children }) => {
   const [searchHistory, setSearchHistory] = useLocalStorage('search-history', [])
   const [busy, setBusy] = useState(false)
   const [terms, setTerms] = useState([])
   const [roots, setRoots] = useState({})
+  const [ontology, setOntology] = useState([])
+
+  useEffect(async () => {
+    try {
+      let o = await api.allTerms()
+      o = o.map(term => ({
+          ...term,
+          id: term.short_form,
+          ...term.annotation,
+        }))
+      setOntology(o)
+    } catch (error) {
+      console.log(error)
+    }
+  }, [])
 
   /**
    * The array `roots` consists of objects that represent terms
@@ -87,7 +113,6 @@ export const SearchContextProvider = ({ children }) => {
    * Root & term selection functions
    *
    */
-  
   // adds & removes roots
   const toggleRootSelection = useCallback(root => {
     const { short_form } = root 
@@ -181,18 +206,18 @@ export const SearchContextProvider = ({ children }) => {
     if (query.trim()) {
       setBusy(true)
       setSearchedQuery(query)
-      api.select(query)
-        .then(terms => {
-          setTerms(terms)
-          addSearchHistoryItem(query)
-          navigate('/')
+      addSearchHistoryItem(query)
+      const filteredTerms = ontology.filter(term => {
+        return columns.map(col => col.field).some(field => {
+          const searchRegex = new RegExp(escapeRegExp(query), 'i')
+          return searchRegex.test(term[field].toString())
         })
-        .catch(error => console.error(error))
-        .finally(() => {
-          setBusy(false)
-        })
+      })
+      console.log(filteredTerms)
+      setTerms(filteredTerms)
+      setBusy(false)
     }
-  }, [])
+  }, [ontology])
 
   const resetSearch = useCallback(() => {
     setTerms([])
@@ -275,6 +300,7 @@ export const SearchContextProvider = ({ children }) => {
   return (
     <SearchContext.Provider
       value={{
+        ontology,
         searchedQuery,
         busy, setBusy, resetSearch,
         doSearch, terms,

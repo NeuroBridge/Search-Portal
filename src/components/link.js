@@ -22,8 +22,8 @@ export const Link = ({ to, children, ...props }) => {
 }
 
 Link.propTypes = {
-  to: PropTypes.string.isRequired
-  children: PropTypes.node.isRequired
+  to: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
 }
 
 ExternalLink.propTypes = Link.propTypes

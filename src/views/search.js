@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
   },
   grid: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 7fr))',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))',
     gap: theme.spacing(2),
     animation: '$fadeIn 250ms ease-out',
   },
