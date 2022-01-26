@@ -2,15 +2,13 @@ import { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles, useTheme } from '@mui/styles'
 import { Box, IconButton, TextField } from '@mui/material'
-import { DataGrid, GridToolbarDensitySelector, GridToolbarFilterButton, GridToolbar } from '@mui/x-data-grid'
-import { useSearchContext } from '../components/search'
-import { Container } from '../components/container'
+import { DataGrid } from '@mui/x-data-grid'
 import { TermCard } from '../components/search'
-import { Link } from '../components/link'
 import {
   Clear as ClearIcon,
   Search as SearchIcon,
 } from '@mui/icons-material'
+import { useOntology } from '../components/ontology'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -96,21 +94,21 @@ TermRow.propTypes = {
 }
 
 export const ListView = () => {
-  const { ontology } = useSearchContext()
+  const ontology = useOntology()
   const dataGridClasses = useStyles()
 
   const [searchText, setSearchText] = useState('')
-  const [rows, setRows] = useState(ontology)
+  const [rows, setRows] = useState(ontology.terms)
 
-  useEffect(() => setRows(ontology), [ontology])
+  useEffect(() => setRows(ontology.terms), [ontology.terms])
 
   const requestSearch = searchValue => {
     setSearchText(searchValue)
     const searchRegex = new RegExp(escapeRegExp(searchValue), 'i')
-    if (ontology.length === 0) {
+    if (ontology.terms.length === 0) {
       return
     }
-    const filteredRows = ontology.filter(row => {
+    const filteredRows = ontology.terms.filter(row => {
       return columns.map(col => col.field).some(field => {
         return searchRegex.test(row[field].toString())
       })
@@ -121,7 +119,7 @@ export const ListView = () => {
   return (
     <div style={{ height: 'calc(100% - 65px)', }}>
       <DataGrid
-        loading={ ontology.length === 0 }
+        loading={ ontology.terms.length === 0 }
         classes={ dataGridClasses }
         rows={ rows.map(term => ({ ...term, id: term.short_form })) }
         columns={ columns }

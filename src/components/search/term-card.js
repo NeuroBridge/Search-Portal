@@ -1,14 +1,9 @@
-import { Fragment, useMemo, useState } from 'react'
+import { Fragment, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import {
-  Button, Card, CardActions, CardActionArea, CardContent, Typography
+  Card, CardActionArea, CardContent, Typography
 } from '@mui/material'
 import makeStyles from '@mui/styles/makeStyles';
-import {
-  CheckBox as CheckedIcon,
-  CheckBoxOutlineBlank as UncheckedIcon,
-  Preview as InspectIcon,
-} from '@mui/icons-material'
 import { useSearchContext } from './'
 
 const useStyles = makeStyles(theme => ({

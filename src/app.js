@@ -1,10 +1,9 @@
-import { useEffect } from 'react'
 import { AppBar, Toolbar, Typography, useMediaQuery } from '@mui/material'
 import { Router } from '@reach/router'
 import { Link } from '@reach/router'
 import { makeStyles, useTheme } from '@mui/styles'
 import { Menu, MobileMenu } from './components/menu'
-import { SearchBar, useSearchContext } from './components/search'
+import { useSearchContext } from './components/search'
 import { Drawer, useDrawer } from './components/drawer'
 import neuroBridgeBackground from './images/nbbg.jpeg'
 import { ForestView, ListView, NotFoundView } from './views'
@@ -66,8 +65,8 @@ export const App = () => {
   const theme = useTheme()
   const mobile = useMediaQuery(theme.breakpoints.down('sm'))
   const compact = useMediaQuery('(max-width: 600px)')
-  const { resetSearch, rootsCount, terms } = useSearchContext()
-  const { drawerWidth, drawerOpen, locked, openDrawer, closeDrawer } = useDrawer()
+  const { resetSearch } = useSearchContext()
+  const { drawerWidth, drawerOpen } = useDrawer()
 
   return (
     <div className={ classes.app }>
