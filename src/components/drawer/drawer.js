@@ -26,6 +26,7 @@ const useStyles = makeStyles(theme => {
       overflow: 'hidden',
     },
     contents: {
+      paddingRight: '2rem',
       overflow: 'auto',
     },
     actions: {

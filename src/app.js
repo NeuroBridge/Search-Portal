@@ -7,7 +7,7 @@ import { Menu, MobileMenu } from './components/menu'
 import { SearchBar, useSearchContext } from './components/search'
 import { Drawer, useDrawer } from './components/drawer'
 import neuroBridgeBackground from './images/nbbg.jpeg'
-import { ForestView, ListView, NotFoundView, SearchView } from './views'
+import { ForestView, ListView, NotFoundView } from './views'
 
 const useStyles = makeStyles(theme => ({
   app: {

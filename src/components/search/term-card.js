@@ -15,6 +15,8 @@ const useStyles = makeStyles(theme => ({
   termCard: {
     position: 'relative',
     width: '100%',
+    minWidth: '472px',
+    maxWidth: '472px',
     border: `2px solid #afb9c099`,
     transition: 'filter 250ms, border-color 250ms',
     display: 'flex',

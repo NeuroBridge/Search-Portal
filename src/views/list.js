@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import makeStyles from '@mui/styles/makeStyles'
+import { makeStyles, useTheme } from '@mui/styles'
 import { Box, IconButton, TextField } from '@mui/material'
 import { DataGrid, GridToolbarDensitySelector, GridToolbarFilterButton, GridToolbar } from '@mui/x-data-grid'
 import { useSearchContext } from '../components/search'
@@ -13,6 +13,15 @@ import {
 } from '@mui/icons-material'
 
 const useStyles = makeStyles(theme => ({
+  root: {
+    backgroundColor: theme.palette.grey[200],
+  },
+  virtualScroller: {
+    backgroundColor: '#fff',
+  },
+  footerContainer: {
+    borderTop: `1px solid ${ theme.palette.primary.main }`,
+  },
 }))
 
 const columns = [
@@ -29,10 +38,11 @@ function escapeRegExp(value) {
 }
 
 const QuickSearchToolbar = props => {
+  const theme = useTheme()
   return (
     <Box
       sx={{
-        border: '1px dashed #f99',
+        borderBottom: `1px solid ${ theme.palette.primary.main }`,
       }}
     >
       <TextField
@@ -87,7 +97,7 @@ TermRow.propTypes = {
 
 export const ListView = () => {
   const { ontology } = useSearchContext()
-  const classes = useStyles()
+  const dataGridClasses = useStyles()
 
   const [searchText, setSearchText] = useState('')
   const [rows, setRows] = useState(ontology)
@@ -101,11 +111,7 @@ export const ListView = () => {
       return
     }
     const filteredRows = ontology.filter(row => {
-      // console.log('- - -')
-      // console.table(row)
       return columns.map(col => col.field).some(field => {
-        // console.log(field)
-        // console.log(row[field])
         return searchRegex.test(row[field].toString())
       })
     })
@@ -113,9 +119,10 @@ export const ListView = () => {
   }
 
   return (
-    <div style={{ height: 'calc(100% - 65px)' }}>
+    <div style={{ height: 'calc(100% - 65px)', }}>
       <DataGrid
         loading={ ontology.length === 0 }
+        classes={ dataGridClasses }
         rows={ rows.map(term => ({ ...term, id: term.short_form })) }
         columns={ columns }
         pageSize={ 20 }
