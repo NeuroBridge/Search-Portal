@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import axios from 'axios'
+import { Box, CircularProgress, Typography } from '@mui/material'
 
 //
 // See OLS API Documentation: https://www.ebi.ac.uk/ols/docs/api
@@ -85,9 +86,21 @@ export const OntologyProvider = ({ children }) => {
         terms.length
           ? children
           : (
-            <div>
-              Fetching the NeuroBridge Ontology...
-            </div>
+            <Box
+              sx={{
+                height: '100vh',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '2rem',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <CircularProgress />
+              <Typography paragraph>
+                Fetching the NeuroBridge Ontology...
+              </Typography>
+            </Box>
           )
       }
     </OntologyContext.Provider>
