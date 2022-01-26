@@ -95,22 +95,4 @@ export const api = {
     return []
   },
 
-  allTerms: async () => {
-    let terms = []
-    const termsEndpoint = `${ API_ROOT }/ontologies/${ ONTOLOGY_NAME }/terms`
-    try {
-      const { data } = await axios.get(termsEndpoint)
-      if (!data) {
-        throw new Error('An error occurred while fetching terms.')
-      }
-      let { page: { totalPages } } = data
-      const promises = [...Array(totalPages).keys()].map(i => axios.get(termsEndpoint, { params: { page: i } }))
-      const responses = await Promise.all(promises)
-      terms = responses.reduce((arr, response) => [...arr, ...response.data._embedded.terms], [])
-    } catch (error) {
-      console.error(error)
-    }
-    return terms
-  },
-  
 }
