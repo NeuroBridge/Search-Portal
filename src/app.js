@@ -66,33 +66,8 @@ export const App = () => {
   const theme = useTheme()
   const mobile = useMediaQuery(theme.breakpoints.down('sm'))
   const compact = useMediaQuery('(max-width: 600px)')
-  const { resetSearch, searchedQuery, rootsCount, terms } = useSearchContext()
+  const { resetSearch, rootsCount, terms } = useSearchContext()
   const { drawerWidth, drawerOpen, locked, openDrawer, closeDrawer } = useDrawer()
-
-  useEffect(() => {
-    if (searchedQuery) {
-      openDrawer()
-    }
-  }, [searchedQuery])
-
-  useEffect(() => {
-    if (!terms.length) {
-      closeDrawer()
-    }
-  }, [terms.length])
-
-  /**
-   *
-   * show the drawer's contents whenever they change,
-   * ...unless it's locked.
-   *
-   */
-  useEffect(() => {
-    if (drawerOpen || locked || rootsCount === 0) {
-      return
-    }
-    openDrawer()
-  }, [rootsCount])
 
   return (
     <div className={ classes.app }>
@@ -114,8 +89,8 @@ export const App = () => {
           <NotFoundView default />
         </Router>
       </main>
-      <Drawer title={ `Search Drawer ${ terms.length ? ` - ${ terms.length } results for "${ searchedQuery }"` : '' }` }>
-        <ListView exact path="/terms" />
+      <Drawer title="Search Drawer">
+        <ListView />
       </Drawer>
     </div>
   )

@@ -114,34 +114,40 @@ export const ForestView = () => {
               </Grid>
               <Grid item xs={ 12 } sm={ 9 }>
                 <Tooltip title="Start Over">
-                  <IconButton
-                    onClick={ handleStartOver }
-                    disabled={ rootsCount === 0 }
-                    variant="contained"
-                    color="primary"
-                  >
-                    <StartOverIcon />
-                  </IconButton>
+                  <span>
+                    <IconButton
+                      onClick={ handleStartOver }
+                      disabled={ rootsCount === 0 }
+                      variant="contained"
+                      color="primary"
+                    >
+                      <StartOverIcon />
+                    </IconButton>
+                  </span>
                 </Tooltip>
                 <Tooltip title="Clear all roots">
-                  <IconButton
-                    onClick={ clearRootSelection }
-                    disabled={ selectedTermsCount === 0 }
-                    variant="contained"
-                    color="secondary"
-                  >
-                    <ClearSelectionIcon />
-                  </IconButton>
+                  <span>
+                    <IconButton
+                      onClick={ clearRootSelection }
+                      disabled={ selectedTermsCount === 0 }
+                      variant="contained"
+                      color="secondary"
+                    >
+                      <ClearSelectionIcon />
+                    </IconButton>
+                  </span>
                 </Tooltip>
                 <Tooltip title="Deselect all terms">
-                  <IconButton
-                    onClick={ clearTermSelection }
-                    disabled={ selectedTermsCount === 0 }
-                    variant="contained"
-                    color="secondary"
-                  >
-                    <ClearSelectionIcon />
-                  </IconButton>
+                  <span>
+                    <IconButton
+                      onClick={ clearTermSelection }
+                      disabled={ selectedTermsCount === 0 }
+                      variant="contained"
+                      color="secondary"
+                    >
+                      <ClearSelectionIcon />
+                    </IconButton>
+                  </span>
                 </Tooltip>
               </Grid>
             </Grid>

@@ -1,41 +1,14 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
+import { useOntology } from '../ontology'
 import { api } from '../../api'
-import { navigate } from '@reach/router'
+
 const SearchContext = createContext({})
-import { useLocalStorage } from '../../hooks'
-
-const columns = [
-  { field: 'short_form', type: 'string'   },
-  { field: 'label', type: 'string'   },
-  // { field: 'has_children', type: 'boolean'  },
-  // { field: 'description', type: 'string'   },
-  // { field: 'seeAlso', type: 'string'   },
-  { field: 'iri', type: 'string'   },
-]
-
-const escapeRegExp = value => value.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')
 
 export const SearchContextProvider = ({ children }) => {
-  const [searchHistory, setSearchHistory] = useLocalStorage('search-history', [])
   const [busy, setBusy] = useState(false)
-  const [terms, setTerms] = useState([])
   const [roots, setRoots] = useState({})
-  const [ontology, setOntology] = useState([])
-
-  useEffect(async () => {
-    try {
-      let o = await api.allTerms()
-      o = o.map(term => ({
-          ...term,
-          id: term.short_form,
-          ...term.annotation,
-        }))
-      setOntology(o)
-    } catch (error) {
-      console.log(error)
-    }
-  }, [])
+  const { ontology } = useOntology()
 
   /**
    * The array `roots` consists of objects that represent terms
@@ -60,7 +33,6 @@ export const SearchContextProvider = ({ children }) => {
    *   - 1: selected and use (gets green check icon)
    *   - 2: selected and ignore (gets red x icon)
    */
-  const [searchedQuery, setSearchedQuery] = useState('')
 
   /**
    *
@@ -202,28 +174,6 @@ export const SearchContextProvider = ({ children }) => {
     setRoots(newRoots)
   }
 
-  const doSearch = useCallback(query => {
-    if (query.trim()) {
-      setBusy(true)
-      setSearchedQuery(query)
-      addSearchHistoryItem(query)
-      const filteredTerms = ontology.filter(term => {
-        return columns.map(col => col.field).some(field => {
-          const searchRegex = new RegExp(escapeRegExp(query), 'i')
-          return searchRegex.test(term[field].toString())
-        })
-      })
-      console.log(filteredTerms)
-      setTerms(filteredTerms)
-      setBusy(false)
-    }
-  }, [ontology])
-
-  const resetSearch = useCallback(() => {
-    setTerms([])
-    setSearchedQuery('')
-  }, [])
-
   const termValue = (root_short_form, short_form) => {
     const index = roots[root_short_form].relations
       .findIndex(rel => {
@@ -235,36 +185,8 @@ export const SearchContextProvider = ({ children }) => {
     return roots[root_short_form].relations[index].value
   }
 
-  /**
-   *
-   * Search History Functions
-   *
-   */
-  
-  const addSearchHistoryItem = query => {
-    const newHistoryItem = { query: query, timestamp: new Date() }
-    setSearchHistory([newHistoryItem, ...searchHistory])
-  }
-
-  const deleteSearchHistoryItem = timestamp => () => {
-    const index = searchHistory.findIndex(item => item.timestamp === timestamp)
-    if (index === -1) {
-      return
-    }
-    let newHistory = [...searchHistory]
-    newHistory.splice(index, 1)
-    setSearchHistory(newHistory)
-  }
-
-  //
-
-  const clearSearchHistory = useCallback(() => setSearchHistory([]), [])
-
-  //
-
   const startOver = () => {
     clearRootSelection()
-    resetSearch()
   }
 
   //
@@ -301,15 +223,12 @@ export const SearchContextProvider = ({ children }) => {
     <SearchContext.Provider
       value={{
         ontology,
-        searchedQuery,
-        busy, setBusy, resetSearch,
-        doSearch, terms,
+        busy, setBusy,
         roots, rootsCount,
         toggleRootSelection, clearRootSelection,
         rootSelectedTermsCount, rootHasTermSelected, selectedTermsCount, termValue,
         toggleTermSelection, clearTermSelection,
         startOver,
-        searchHistory, addSearchHistoryItem, deleteSearchHistoryItem, clearSearchHistory,
         query,
       }}
     >

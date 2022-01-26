@@ -9,7 +9,7 @@ import {
   CheckBoxOutlineBlank as UncheckedIcon,
   Preview as InspectIcon,
 } from '@mui/icons-material'
-import { TermDialog, useSearchContext } from './'
+import { useSearchContext } from './'
 
 const useStyles = makeStyles(theme => ({
   termCard: {
@@ -52,7 +52,6 @@ const useStyles = makeStyles(theme => ({
 
 export const TermCard = ({ term }) => {
   const classes = useStyles()
-  const [expanded, setExpanded] = useState(false)
   const { roots, toggleRootSelection } = useSearchContext()
   const selected = useMemo(() => term.short_form in roots, [roots])
 
@@ -77,13 +76,6 @@ export const TermCard = ({ term }) => {
           </CardContent>
         </CardActionArea>
       </Card>
-      <TermDialog
-        term={ term }
-        selected={ selected }
-        toggleSelectionHandler={ () => toggleRootSelection(term) }
-        open={ expanded }
-        closeHandler={ () => setExpanded(false) }
-      />
     </Fragment>
   )
 }
