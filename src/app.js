@@ -1,12 +1,12 @@
-import { useEffect } from 'react'
 import { AppBar, Toolbar, Typography, useMediaQuery } from '@mui/material'
+import { Router } from '@reach/router'
 import { Link } from '@reach/router'
 import { makeStyles, useTheme } from '@mui/styles'
 import { Menu, MobileMenu } from './components/menu'
-import { SearchBar, useSearchContext } from './components/search'
+import { useSearchContext } from './components/search'
 import { Drawer, useDrawer } from './components/drawer'
 import neuroBridgeBackground from './images/nbbg.jpeg'
-import { ForestView, SearchView } from './views'
+import { ForestView, ListView, NotFoundView } from './views'
 
 const useStyles = makeStyles(theme => ({
   app: {
@@ -65,33 +65,8 @@ export const App = () => {
   const theme = useTheme()
   const mobile = useMediaQuery(theme.breakpoints.down('sm'))
   const compact = useMediaQuery('(max-width: 600px)')
-  const { resetSearch, searchedQuery, rootsCount, terms } = useSearchContext()
-  const { drawerWidth, drawerOpen, locked, openDrawer, closeDrawer } = useDrawer()
-
-  useEffect(() => {
-    if (searchedQuery) {
-      openDrawer()
-    }
-  }, [searchedQuery])
-
-  useEffect(() => {
-    if (!terms.length) {
-      closeDrawer()
-    }
-  }, [terms.length])
-
-  /**
-   *
-   * show the drawer's contents whenever they change,
-   * ...unless it's locked.
-   *
-   */
-  useEffect(() => {
-    if (drawerOpen || locked || rootsCount === 0) {
-      return
-    }
-    openDrawer()
-  }, [rootsCount])
+  const { resetSearch } = useSearchContext()
+  const { drawerWidth, drawerOpen } = useDrawer()
 
   return (
     <div className={ classes.app }>
@@ -102,14 +77,19 @@ export const App = () => {
           </Typography>
           { compact ? <MobileMenu /> : <Menu /> }
         </Toolbar>
-        <SearchBar />
+        {
+          // <SearchBar />
+        }
       </AppBar>
       <div className={ classes.watermark } />
       <main className={ classes.main } style={{ paddingLeft: drawerOpen ? `calc(${ drawerWidth }px + 4rem)` : '4rem' }}>
-        <ForestView />
+        <Router>
+          <ForestView exact path="/" />
+          <NotFoundView default />
+        </Router>
       </main>
-      <Drawer title={ `Search Drawer ${ terms.length ? ` - ${ terms.length } results for "${ searchedQuery }"` : '' }` }>
-        <SearchView />
+      <Drawer title="Search Drawer">
+        <ListView />
       </Drawer>
     </div>
   )

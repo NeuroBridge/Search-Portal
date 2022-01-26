@@ -1,61 +1,63 @@
-import { Fragment, useMemo, useState } from 'react'
+import { Fragment, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import {
-  Button, Card, CardActions, CardActionArea, CardContent, Typography
+  Card, CardActionArea, CardContent, Typography
 } from '@mui/material'
 import makeStyles from '@mui/styles/makeStyles';
-import {
-  CheckBox as CheckedIcon,
-  CheckBoxOutlineBlank as UncheckedIcon,
-  Preview as InspectIcon,
-} from '@mui/icons-material'
-import { TermDialog, useSearchContext } from './'
+import { useSearchContext } from './'
 
 const useStyles = makeStyles(theme => ({
   termCard: {
     position: 'relative',
-    border: `1px solid #afb9c099`,
-    filter: 'opacity(0.8)',
     width: '100%',
+    minWidth: '472px',
+    maxWidth: '472px',
+    border: `2px solid #afb9c099`,
     transition: 'filter 250ms, border-color 250ms',
     display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'stretch',
     '&:hover': {
-      filter: 'opacity(1.0)',
       borderColor: theme.palette.secondary.main,
     },
+    margin: theme.spacing(1),
   },
   selected: {
-    borderColor: `${ theme.palette.primary.main }`,
+    borderColor: `${ theme.palette.secondary.main }`,
   },
   content: {
     padding: theme.spacing(2),
+    flex: 1,
   },
   actions: {
     padding: 0,
-    height: '100%',
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: theme.palette.grey[100],
-    borderLeft: `1px solid #afb9c033`,
+    height: '100%',
     '& button': {
       flex: 1,
-      padding: 0,
+      padding: theme.spacing(1),
+      height: '100%'
     }
   },
 }))
 
-export const TermCard = ({ term, toggleRootSelectionHandler }) => {
+export const TermCard = ({ term }) => {
   const classes = useStyles()
-  const [expanded, setExpanded] = useState(false)
-  const { roots } = useSearchContext()
+  const { roots, toggleRootSelection } = useSearchContext()
   const selected = useMemo(() => term.short_form in roots, [roots])
 
   return (
     <Fragment>
-      <Card square variant="outlined" className={ `${ classes.termCard } ${ selected ? classes.selected : undefined }` }>
-        <CardActionArea onClick={ toggleRootSelectionHandler }>
+      <Card
+        square
+        variant="outlined"
+        className={ `${ classes.termCard } ${ selected ? classes.selected : undefined }` }
+      >
+        <CardActionArea onClick={ () => toggleRootSelection(term) }>
           <CardContent className={ classes.content }>
             <Typography color="textPrimary">
               <strong>label:</strong> { term.label }
@@ -68,18 +70,7 @@ export const TermCard = ({ term, toggleRootSelectionHandler }) => {
             </Typography>
           </CardContent>
         </CardActionArea>
-        <CardActions className={ classes.actions } disableSpacing={ true }>
-          <Button onClick={ toggleRootSelectionHandler }>{ selected ? <CheckedIcon fontSize="small" color="secondary" /> : <UncheckedIcon fontSize="small" color="default" /> }</Button>
-          <Button onClick={ () => setExpanded(true) }><InspectIcon fontSize="small" color="default" /></Button>
-        </CardActions>
       </Card>
-      <TermDialog
-        term={ term }
-        selected={ selected }
-        toggleSelectionHandler={ toggleRootSelectionHandler }
-        open={ expanded }
-        closeHandler={ () => setExpanded(false) }
-      />
     </Fragment>
   )
 }
@@ -92,5 +83,4 @@ TermCard.propTypes = {
     has_children: PropTypes.bool.isRequired,
     comment_annotation: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   }).isRequired,
-  toggleRootSelectionHandler: PropTypes.func.isRequired,
 }

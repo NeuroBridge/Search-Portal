@@ -1,6 +1,5 @@
 import { Fragment, useCallback, useEffect, useState } from 'react'
 import { Avatar,
-  Button,
   Card, CardHeader, CardContent,
   Grid,
   IconButton,
@@ -22,6 +21,39 @@ import {
 import makeStyles from '@mui/styles/makeStyles'
 import { useSearchContext, SelectionForest, QueryCard } from '../components/search'
 import { Container } from '../components/container'
+
+// {“data”: [{“pubmed_url”: “https://www.ncbi.nlm.nih.gov/pubmed/21600292”,
+// “title”: “Improving the reliability of functional localizers”
+// },
+// {“pubmed_url”: “https://www.ncbi.nlm.nih.gov/pubmed/21513865”,
+// “title”: “Functional bold MRI: advantages of the 3 T vs. the 1.5 T”
+// },
+// {“pubmed_url”: “https://www.ncbi.nlm.nih.gov/pubmed/19429079”,
+// “title”: “Online mentalising investigated with functional MRI”
+// },
+// {“pubmed_url”: “https://www.ncbi.nlm.nih.gov/pubmed/24761177”,
+// “title”: “Acupuncture Evoked Response in Contralateral Somatosensory Cortex Reflects Peripheral Nerve Pathology of Carpal Tunnel Syndrome”
+// },
+// {“pubmed_url”: “https://www.ncbi.nlm.nih.gov/pubmed/25287513”,
+// “title”: “Multimodal MRI of the hippocampus in Parkinson’s disease with visual hallucinations”
+// },
+// {“pubmed_url”: “https://www.ncbi.nlm.nih.gov/pubmed/24860494”,
+// “title”: “Tai Chi Chuan optimizes the functional organization of the intrinsic human brain architecture in older adults”
+// },
+// {“pubmed_url”: “https://www.ncbi.nlm.nih.gov/pubmed/17368793”,
+// “title”: “A variant of logistic transfer function in Infomax and a postprocessing procedure for independent component analysis applied to fMRI data”
+// },
+// {“pubmed_url”: “https://www.ncbi.nlm.nih.gov/pubmed/28169883”,
+// “title”: “Compensatory functional reorganization may precede hypertension-related brain damage and cognitive decline: a functional magnetic resonance imaging study”
+// },
+// {“pubmed_url”: “https://www.ncbi.nlm.nih.gov/pubmed/21354974”,
+// “title”: “Dissociations between behavioural and functional magnetic resonance imaging-based evaluations of cognitive function after brain injury”
+// },
+// {“pubmed_url”: “https://www.ncbi.nlm.nih.gov/pubmed/16183659”,
+// “title”: “Functional dysconnectivity in schizophrenia associated with attentional modulation of motor function”
+// },
+// {“pubmed_url”: “https://www.ncbi.nlm.nih.gov/pubmed/25592998”,
+// “title”: “Characterizing nonlinear relationships in functional imaging data using eigenspace maximal information canonical correlation analysis (emiCCA)”
 
 const useStyles = makeStyles(theme => ({
   heading: {
@@ -82,34 +114,40 @@ export const ForestView = () => {
               </Grid>
               <Grid item xs={ 12 } sm={ 9 }>
                 <Tooltip title="Start Over">
-                  <IconButton
-                    onClick={ handleStartOver }
-                    disabled={ rootsCount === 0 }
-                    variant="contained"
-                    color="primary"
-                  >
-                    <StartOverIcon />
-                  </IconButton>
+                  <span>
+                    <IconButton
+                      onClick={ handleStartOver }
+                      disabled={ rootsCount === 0 }
+                      variant="contained"
+                      color="primary"
+                    >
+                      <StartOverIcon />
+                    </IconButton>
+                  </span>
                 </Tooltip>
                 <Tooltip title="Clear all roots">
-                  <IconButton
-                    onClick={ clearRootSelection }
-                    disabled={ selectedTermsCount === 0 }
-                    variant="contained"
-                    color="secondary"
-                  >
-                    <ClearSelectionIcon />
-                  </IconButton>
+                  <span>
+                    <IconButton
+                      onClick={ clearRootSelection }
+                      disabled={ selectedTermsCount === 0 }
+                      variant="contained"
+                      color="secondary"
+                    >
+                      <ClearSelectionIcon />
+                    </IconButton>
+                  </span>
                 </Tooltip>
                 <Tooltip title="Deselect all terms">
-                  <IconButton
-                    onClick={ clearTermSelection }
-                    disabled={ selectedTermsCount === 0 }
-                    variant="contained"
-                    color="secondary"
-                  >
-                    <ClearSelectionIcon />
-                  </IconButton>
+                  <span>
+                    <IconButton
+                      onClick={ clearTermSelection }
+                      disabled={ selectedTermsCount === 0 }
+                      variant="contained"
+                      color="secondary"
+                    >
+                      <ClearSelectionIcon />
+                    </IconButton>
+                  </span>
                 </Tooltip>
               </Grid>
             </Grid>

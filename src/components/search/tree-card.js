@@ -19,18 +19,12 @@ import { useSearchContext } from './'
 import { arrayToTree } from 'performant-array-to-tree'
 
 const useStyles = makeStyles(theme => ({
-  forestContainer: {
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'stretch',
-    gap: theme.spacing(2),
-  },
-  treeCardHeader: {
+  header: {
     backgroundColor: theme.palette.grey[200],
+    textTransform: 'uppercase',
     padding: `${ theme.spacing(1) } ${ theme.spacing(2) }`,
   },
-  treeCardContent: {
+  content: {
     padding: '0 !important',
   },
 }))
@@ -116,7 +110,7 @@ export const TreeCard = ({ root }) => {
       <CardHeader
         disableTypography
         title={ <span>{ tree.data.id } { count > 0 ? `(${ count } selections)` : '' }</span> }
-        className={ classes.treeCardHeader }
+        className={ classes.header }
         action={
           <Tooltip title="Remove this term" placement="left">
             <IconButton
@@ -129,7 +123,7 @@ export const TreeCard = ({ root }) => {
           </Tooltip>
         }
       />
-      <CardContent className={ classes.treeCardContent }>
+      <CardContent className={ classes.content }>
         { renderSelectionTree(tree) }
       </CardContent>
     </Card>
