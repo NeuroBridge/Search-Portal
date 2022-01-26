@@ -22,8 +22,8 @@ const useStyles = makeStyles(theme => {
       width: ({ width }) => width,
       backgroundColor: '#eee',
       // transition: 'width 225ms cubic-bezier(0, 0, 0.2, 1) 0ms',
-      marginTop: '110px',
-      overflow: 'auto'
+      marginTop: '64px',
+      overflow: 'hidden',
     },
     contents: {
       overflow: 'auto',
@@ -44,7 +44,7 @@ const useStyles = makeStyles(theme => {
     },
     drawerHandle: {
       position: 'fixed',
-      top: '110px',
+      top: '64px',
       bottom: 0,
       left: 0,
       width: '4rem',

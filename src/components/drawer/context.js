@@ -6,7 +6,7 @@ const DrawerContext = createContext({})
 export const useDrawer = () => useContext(DrawerContext)
 
 export const DrawerProvider = ({ children }) => {
-  const [drawerOpen, setDrawerOpen] = useState(false)
+  const [drawerOpen, setDrawerOpen] = useState(true)
   const [drawerLocked, setDrawerLocked] = useState(false)
   const [drawerMaxWidth, setDrawerMaxWidth] = useState(500)
 

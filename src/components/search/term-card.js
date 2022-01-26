@@ -14,34 +14,36 @@ import { TermDialog, useSearchContext } from './'
 const useStyles = makeStyles(theme => ({
   termCard: {
     position: 'relative',
-    border: `1px solid #afb9c099`,
-    filter: 'opacity(0.8)',
     width: '100%',
+    border: `2px solid #afb9c099`,
     transition: 'filter 250ms, border-color 250ms',
     display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'stretch',
     '&:hover': {
-      filter: 'opacity(1.0)',
       borderColor: theme.palette.secondary.main,
     },
+    margin: theme.spacing(1),
   },
   selected: {
-    borderColor: `${ theme.palette.primary.main }`,
+    borderColor: `${ theme.palette.secondary.main }`,
   },
   content: {
     padding: theme.spacing(2),
+    flex: 1,
   },
   actions: {
     padding: 0,
-    height: '100%',
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: theme.palette.grey[100],
-    borderLeft: `1px solid #afb9c033`,
+    height: '100%',
     '& button': {
       flex: 1,
-      padding: 0,
+      padding: theme.spacing(1),
+      height: '100%'
     }
   },
 }))
@@ -54,7 +56,11 @@ export const TermCard = ({ term }) => {
 
   return (
     <Fragment>
-      <Card square variant="outlined" className={ `${ classes.termCard } ${ selected ? classes.selected : undefined }` }>
+      <Card
+        square
+        variant="outlined"
+        className={ `${ classes.termCard } ${ selected ? classes.selected : undefined }` }
+      >
         <CardActionArea onClick={ () => toggleRootSelection(term) }>
           <CardContent className={ classes.content }>
             <Typography color="textPrimary">
@@ -68,10 +74,6 @@ export const TermCard = ({ term }) => {
             </Typography>
           </CardContent>
         </CardActionArea>
-        <CardActions className={ classes.actions } disableSpacing={ true }>
-          <Button onClick={ () => toggleRootSelection(term) }>{ selected ? <CheckedIcon fontSize="small" color="secondary" /> : <UncheckedIcon fontSize="small" color="default" /> }</Button>
-          <Button onClick={ () => setExpanded(true) }><InspectIcon fontSize="small" color="default" /></Button>
-        </CardActions>
       </Card>
       <TermDialog
         term={ term }

@@ -16,34 +16,25 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const columns = [
-  { field: 'short_form',             headerName: 'short form',            width: 350,     editable: false,      type: 'string'   },
-  { field: 'label',                  headerName: 'label',                 width: 100,     editable: false,      type: 'string'   },
-  // { field: 'has_children',           headerName: 'children',              width: 100,     editable: false,      type: 'boolean'  },
-  // { field: 'description',            headerName: 'description',           width: 100,     editable: false,      type: 'string'   },
-  // { field: 'seeAlso',                headerName: 'see also',              width: 100,     editable: false,      type: 'string'   },
-  { field: 'iri',                    headerName: 'iri',                   width: 300,     editable: false,      type: 'string'   },
+  { field: 'short_form',             headerName: 'short form',            width: 350,     editable: false,      type: 'string',    hide: true },
+  { field: 'label',                  headerName: 'label',                 width: null,     editable: false,      type: 'string',    hide: false },
+  // { field: 'has_children',           headerName: 'children',              width: 100,     editable: false,      type: 'boolean',  hide: true },
+  // { field: 'description',            headerName: 'description',           width: 100,     editable: false,      type: 'string',   hide: true },
+  // { field: 'seeAlso',                headerName: 'see also',              width: 100,     editable: false,      type: 'string',   hide: true },
+  { field: 'iri',                    headerName: 'iri',                   width: 300,     editable: false,      type: 'string',    hide: true },
 ]
 
 function escapeRegExp(value) {
   return value.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')
 }
 
-function QuickSearchToolbar(props) {
+const QuickSearchToolbar = props => {
   return (
     <Box
       sx={{
-        p: 0.5,
-        pb: 0,
-        justifyContent: 'space-between',
-        display: 'flex',
-        alignItems: 'flex-start',
-        flexWrap: 'wrap',
+        border: '1px dashed #f99',
       }}
     >
-      <div>
-        <GridToolbarFilterButton />
-        <GridToolbarDensitySelector />
-      </div>
       <TextField
         variant="standard"
         value={props.value}
@@ -88,6 +79,12 @@ QuickSearchToolbar.propTypes = {
   value: PropTypes.string.isRequired,
 }
 
+const TermRow = ({ row }) => <TermCard term={ row } />
+
+TermRow.propTypes = {
+  row: PropTypes.object.isRequired,
+}
+
 export const ListView = () => {
   const { ontology } = useSearchContext()
   const classes = useStyles()
@@ -116,27 +113,27 @@ export const ListView = () => {
   }
 
   return (
-    <Container>
-      <div style={{ width: '100%' }}>
-        <DataGrid
-          loading={ ontology.length === 0 }
-          rows={ rows.map(term => ({ ...term, id: term.short_form })) }
-          columns={ columns }
-          pageSize={ 25 }
-          autoHeight
-          components={{
-            Toolbar: QuickSearchToolbar,
-          }}
-          componentsProps={{
-            toolbar: {
-              value: searchText,
-              onChange: (event) => requestSearch(event.target.value),
-              clearSearch: () => requestSearch(''),
-            },
-          }}
-        />
-      </div>
-      
-    </Container>
+    <div style={{ height: 'calc(100% - 65px)' }}>
+      <DataGrid
+        loading={ ontology.length === 0 }
+        rows={ rows.map(term => ({ ...term, id: term.short_form })) }
+        columns={ columns }
+        pageSize={ 20 }
+        rowHeight={ 90 }
+        headerHeight={ 0 }
+        components={{
+          Toolbar: QuickSearchToolbar,
+          Row: TermRow,
+        }}
+        componentsProps={{
+          toolbar: {
+            value: searchText,
+            onChange: (event) => requestSearch(event.target.value),
+            clearSearch: () => requestSearch(''),
+          },
+        }}
+      />
+    </div>
+    
   )
 }

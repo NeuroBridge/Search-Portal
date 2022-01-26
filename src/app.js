@@ -103,18 +103,19 @@ export const App = () => {
           </Typography>
           { compact ? <MobileMenu /> : <Menu /> }
         </Toolbar>
-        <SearchBar />
+        {
+          // <SearchBar />
+        }
       </AppBar>
       <div className={ classes.watermark } />
       <main className={ classes.main } style={{ paddingLeft: drawerOpen ? `calc(${ drawerWidth }px + 4rem)` : '4rem' }}>
         <Router>
           <ForestView exact path="/" />
-          <ListView exact path="/terms" />
           <NotFoundView default />
         </Router>
       </main>
       <Drawer title={ `Search Drawer ${ terms.length ? ` - ${ terms.length } results for "${ searchedQuery }"` : '' }` }>
-        <SearchView />
+        <ListView exact path="/terms" />
       </Drawer>
     </div>
   )
