@@ -1,5 +1,4 @@
-import { Fragment, useMemo } from 'react'
-import PropTypes from 'prop-types'
+import { Fragment } from 'react'
 import {
   Card, CardActionArea, CardContent, Typography
 } from '@mui/material'
