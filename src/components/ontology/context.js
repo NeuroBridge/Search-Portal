@@ -54,8 +54,6 @@ export const OntologyProvider = ({ children }) => {
   const [terms, setTerms] = useState([])
   const [loading, setLoading] = useState(false)
 
-  console.log(terms)
-
   const fetchAllTerms = useCallback(async () => {
     setLoading(true)
     let terms = []
@@ -85,7 +83,7 @@ export const OntologyProvider = ({ children }) => {
           id: term.short_form,
           ...term.annotation,
         }))
-      setTerms(terms)
+      setTerms(terms.sort((t, u) => t.label < u.label ? -1 : 1))
     } catch (error) {
       console.log(error)
     }
