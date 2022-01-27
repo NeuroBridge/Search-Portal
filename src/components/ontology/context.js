@@ -13,9 +13,9 @@ const OntologyContext = createContext({})
 
 /**
 
-  TODO:
-  - expose API functions from within the OntologyContext provider 
-  - don't rely on OLS API
+  TODO: Rewrite these functions that communicate with the OLS API so that...
+  - they are exposed from the ontology context provider and
+  - they don't rely on OLS API.
 
  */
 
