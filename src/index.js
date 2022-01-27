@@ -3,8 +3,6 @@ import { App } from './app'
 import { LocationProvider } from '@reach/router'
 import { createTheme, ThemeProvider, StyledEngineProvider, adaptV4Theme } from '@mui/material/styles';
 import { DrawerProvider } from './components/drawer'
-import { SearchContextProvider } from './components/search/context.js'
-import { OntologyProvider } from './components/ontology/'
 import './styles/index.scss'
 
 const themeOptions = {
@@ -52,17 +50,13 @@ const theme = createTheme(adaptV4Theme(themeOptions))
 
 render(
   <LocationProvider>
-    <OntologyProvider>
-      <SearchContextProvider>
-        <DrawerProvider>
-          <StyledEngineProvider injectFirst>
-            <ThemeProvider theme={theme}>
-              <App />
-            </ThemeProvider>
-          </StyledEngineProvider>
-        </DrawerProvider>
-      </SearchContextProvider>
-    </OntologyProvider>
+    <DrawerProvider>
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={theme}>
+          <App />
+        </ThemeProvider>
+      </StyledEngineProvider>
+    </DrawerProvider>
   </LocationProvider>,
   document.getElementById('root')
 )

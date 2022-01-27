@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles, useTheme } from '@mui/styles'
-import { Box, IconButton, TextField } from '@mui/material'
+import { IconButton, TextField } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 import { TermCard } from '../components/search'
 import {
@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: '#fff',
   },
   footerContainer: {
-    borderTop: `1px solid ${ theme.palette.primary.main }`,
+    borderTop: `2px solid ${ theme.palette.primary.main }`,
   },
 }))
 
@@ -35,49 +35,30 @@ function escapeRegExp(value) {
   return value.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')
 }
 
-const QuickSearchToolbar = props => {
+const QuickSearchToolbar = ({ value, onChange, clearSearch }) => {
   const theme = useTheme()
   return (
-    <Box
-      sx={{
-        borderBottom: `1px solid ${ theme.palette.primary.main }`,
+    <TextField
+      sx={{ borderBottom: `2px solid ${ theme.palette.primary.main }` }}
+      fullWidth
+      value={ value }
+      onChange={ onChange }
+      placeholder="Search…"
+      InputProps={{
+        startAdornment: <SearchIcon fontSize="small" />,
+        endAdornment: (
+          <IconButton
+            title="Clear"
+            aria-label="Clear"
+            size="small"
+            style={{ visibility: value ? 'visible' : 'hidden' }}
+            onClick={ clearSearch }
+          >
+            <ClearIcon fontSize="small" />
+          </IconButton>
+        ),
       }}
-    >
-      <TextField
-        variant="standard"
-        value={props.value}
-        onChange={props.onChange}
-        placeholder="Search…"
-        InputProps={{
-          startAdornment: <SearchIcon fontSize="small" />,
-          endAdornment: (
-            <IconButton
-              title="Clear"
-              aria-label="Clear"
-              size="small"
-              style={{ visibility: props.value ? 'visible' : 'hidden' }}
-              onClick={props.clearSearch}
-            >
-              <ClearIcon fontSize="small" />
-            </IconButton>
-          ),
-        }}
-        sx={{
-          width: {
-            xs: 1,
-            sm: 'auto',
-          },
-          m: (theme) => theme.spacing(1, 0.5, 1.5),
-          '& .MuiSvgIcon-root': {
-            mr: 0.5,
-          },
-          '& .MuiInput-underline:before': {
-            borderBottom: 1,
-            borderColor: 'divider',
-          },
-        }}
-      />
-    </Box>
+    />
   )
 }
 
@@ -119,21 +100,23 @@ export const ListView = () => {
   return (
     <div style={{ height: 'calc(100% - 65px)', }}>
       <DataGrid
-        loading={ ontology.terms.length === 0 }
+        loading={ ontology.loading }
         classes={ dataGridClasses }
         rows={ rows.map(term => ({ ...term, id: term.short_form })) }
         columns={ columns }
         pageSize={ 20 }
+        rowsPerPageOptions={ [20] }
         rowHeight={ 90 }
         headerHeight={ 0 }
         components={{
           Toolbar: QuickSearchToolbar,
           Row: TermRow,
+          NoRowsOverlay: () => '',
         }}
         componentsProps={{
           toolbar: {
             value: searchText,
-            onChange: (event) => requestSearch(event.target.value),
+            onChange: event => requestSearch(event.target.value),
             clearSearch: () => requestSearch(''),
           },
         }}

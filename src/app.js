@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { AppBar, Toolbar, Typography, useMediaQuery } from '@mui/material'
 import { Router } from '@reach/router'
 import { Link } from '@reach/router'
@@ -7,6 +8,8 @@ import { useSearchContext } from './components/search'
 import { Drawer, useDrawer } from './components/drawer'
 import neuroBridgeBackground from './images/nbbg.jpeg'
 import { ForestView, ListView, NotFoundView } from './views'
+import { OntologyProvider } from './components/ontology'
+import { SearchContextProvider } from './components/search'
 
 const useStyles = makeStyles(theme => ({
   app: {
@@ -66,7 +69,19 @@ export const App = () => {
   const mobile = useMediaQuery(theme.breakpoints.down('sm'))
   const compact = useMediaQuery('(max-width: 600px)')
   const { resetSearch } = useSearchContext()
-  const { drawerWidth, drawerOpen } = useDrawer()
+  const { drawerWidth, drawerOpen, toggleOpen } = useDrawer()
+
+  useEffect(() => {
+    // this lets the user press backslash to open the drawer
+    // todo: & focus search input
+    const handleKeyPress = event => {
+      if (event.ctrlKey && event.keyCode === 220) { // ctrl + backslash ("\") 
+        toggleOpen()
+      }
+    }
+    window.addEventListener('keydown', handleKeyPress)
+    return () => window.removeEventListener('keydown', handleKeyPress)
+  }, [drawerOpen])
 
   return (
     <div className={ classes.app }>
@@ -77,20 +92,21 @@ export const App = () => {
           </Typography>
           { compact ? <MobileMenu /> : <Menu /> }
         </Toolbar>
-        {
-          // <SearchBar />
-        }
       </AppBar>
       <div className={ classes.watermark } />
-      <main className={ classes.main } style={{ paddingLeft: drawerOpen ? `calc(${ drawerWidth }px + 4rem)` : '4rem' }}>
-        <Router>
-          <ForestView exact path="/" />
-          <NotFoundView default />
-        </Router>
-      </main>
-      <Drawer title="Search Drawer">
-        <ListView />
-      </Drawer>
+      <OntologyProvider>
+        <SearchContextProvider>
+          <main className={ classes.main } style={{ paddingLeft: drawerOpen ? `calc(${ drawerWidth }px + 4rem)` : '4rem' }}>
+            <Router>
+              <ForestView exact path="/" />
+              <NotFoundView default />
+            </Router>
+          </main>
+          <Drawer title="Search Drawer">
+            <ListView />
+          </Drawer>
+        </SearchContextProvider>
+      </OntologyProvider>
     </div>
   )
 }

@@ -34,7 +34,7 @@ const useStyles = makeStyles(theme => {
       flexDirection: 'column',
       justifyContent: 'flex-start',
       alignItems: 'stretch',
-      padding: '0 1px 0 0',
+      padding: '0',
       '& button': {
         marginBottom: '1px',
         backgroundColor: `${ theme.palette.primary.dark } !important`,
@@ -48,7 +48,7 @@ const useStyles = makeStyles(theme => {
       top: '64px',
       bottom: 0,
       left: 0,
-      width: '4rem',
+      width: '2rem',
       backgroundColor: theme.palette.primary.main,
       transition: 'transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms, filter 250ms',
       display: 'flex',
@@ -59,6 +59,7 @@ const useStyles = makeStyles(theme => {
       '&:hover': {
         filter: 'brightness(0.8)',
       },
+      overflow: 'hidden',
     },
     drawerTitleButton: {
       flex: 1,
@@ -69,7 +70,7 @@ const useStyles = makeStyles(theme => {
     },
     drawerButton: {
       padding: 0,
-      height: '3rem',
+      height: '54px',
       borderRadius: 0,
     },
   })

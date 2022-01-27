@@ -1,7 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import axios from 'axios'
-import { Box, CircularProgress, Typography } from '@mui/material'
 
 //
 // See OLS API Documentation: https://www.ebi.ac.uk/ols/docs/api
@@ -11,6 +10,14 @@ const API_ROOT = `https://neurobridges.renci.org:8444/api`
 const ONTOLOGY_NAME = 'neurobridges_ontology'
 
 const OntologyContext = createContext({})
+
+/**
+
+  TODO:
+  - expose API functions from within the OntologyContext provider 
+  - don't rely on OLS API
+
+ */
 
 const api = {
   children: async term => {
@@ -47,8 +54,12 @@ const api = {
 
 export const OntologyProvider = ({ children }) => {
   const [terms, setTerms] = useState([])
+  const [loading, setLoading] = useState(false)
+
+  console.log(terms)
 
   const fetchAllTerms = useCallback(async () => {
+    setLoading(true)
     let terms = []
     const termsEndpoint = `${ API_ROOT }/ontologies/${ ONTOLOGY_NAME }/terms`
     try {
@@ -62,6 +73,8 @@ export const OntologyProvider = ({ children }) => {
       terms = responses.reduce((arr, response) => [...arr, ...response.data._embedded.terms], [])
     } catch (error) {
       console.error(error)
+    } finally {
+      setLoading(false)
     }
     return terms
   }, [])
@@ -81,28 +94,8 @@ export const OntologyProvider = ({ children }) => {
   }, [])
 
   return (
-    <OntologyContext.Provider value={{ api, terms }}>
-      {
-        terms.length
-          ? children
-          : (
-            <Box
-              sx={{
-                height: '100vh',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '2rem',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
-              <CircularProgress />
-              <Typography paragraph>
-                Fetching the NeuroBridge Ontology...
-              </Typography>
-            </Box>
-          )
-      }
+    <OntologyContext.Provider value={{ api, terms, loading }}>
+      { children }
     </OntologyContext.Provider>
   )
 }
