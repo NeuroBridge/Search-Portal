@@ -5,6 +5,7 @@ import {
 } from '@mui/material'
 import makeStyles from '@mui/styles/makeStyles';
 import { useSearchContext } from './'
+import { termType, termDefaults } from '../ontology'
 
 const useStyles = makeStyles(theme => ({
   termCard: {
@@ -48,14 +49,13 @@ const useStyles = makeStyles(theme => ({
 export const TermCard = ({ term }) => {
   const classes = useStyles()
   const { roots, toggleRootSelection } = useSearchContext()
-  const selected = useMemo(() => term.short_form in roots, [roots])
 
   return (
     <Fragment>
       <Card
         square
         variant="outlined"
-        className={ `${ classes.termCard } ${ selected ? classes.selected : undefined }` }
+        className={ `${ classes.termCard } ${ term.short_form in roots ? classes.selected : undefined }` }
       >
         <CardActionArea onClick={ () => toggleRootSelection(term) }>
           <CardContent className={ classes.content }>
@@ -75,12 +75,5 @@ export const TermCard = ({ term }) => {
   )
 }
 
-TermCard.propTypes = {
-  term: PropTypes.shape({
-    iri: PropTypes.string.isRequired,
-    short_form: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
-    has_children: PropTypes.bool.isRequired,
-    comment_annotation: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
-  }).isRequired,
-}
+TermCard.propTypes = { ...termType }
+TermCard.defaultProps = { ...termDefaults }
