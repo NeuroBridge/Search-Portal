@@ -190,11 +190,10 @@ export const SearchContextProvider = ({ children }) => {
 
   //
 
-  const query = () => {
-    let q = 'SELECT\n'
-
-
-    q += Object.keys(roots).map(short_form => {
+  const query = useMemo(() => {
+    // sqlLike query
+    let sqlLike = 'SELECT\n'
+    sqlLike += Object.keys(roots).map(short_form => {
       const selectedTermsCount = rootSelectedTermsCount(short_form)
       if (!selectedTermsCount) {
         return ''
@@ -208,9 +207,16 @@ export const SearchContextProvider = ({ children }) => {
         })
         .join(' ') + ' )' 
     }).join(` OR \n`)
+    
+    // neuroQuery query
+    const selectedTerms = Object.keys(roots).reduce((terms, short_form) => {
+      const thisRootsTerms = rootSelectedTermsCount(short_form) === 0 ? [] : roots[short_form].relations.map(rel => rel.id)
+      return [...terms, ...thisRootsTerms]
+    }, [])
+    const neuroQuery = `SELECT\n  ` + selectedTerms.join(' AND\n  ')
 
-    return q
-  }
+    return { sqlLike, neuroQuery }
+  }, [roots])
 
   /**
    *

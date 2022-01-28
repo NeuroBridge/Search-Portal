@@ -1,13 +1,14 @@
 import { Fragment, useCallback, useEffect, useState } from 'react'
 import { Avatar,
+  Button,
   Card, CardHeader, CardContent,
+  Divider,
   Grid,
   IconButton,
   List, ListItem, ListItemAvatar, ListItemText,
   Tooltip,
   Typography,
 } from '@mui/material'
-import { LoadingButton } from '@mui/lab'
 import {
   RestartAlt as StartOverIcon,
   DeleteSweep as ClearSelectionIcon,
@@ -186,25 +187,21 @@ export const QueryBuilderView = () => {
 
       <SelectionForest />
 
-      <br /><br />
-      <br /><br />
-      <hr />
-      <br /><br />
-      <br /><br />
+      <br /><br /><br /><br />
+      <Divider>Query</Divider>
+      <br /><br /><br /><br />
 
       <QueryCard />
 
       <div style={{ display: 'flex', justifyContent: 'center', margin: '2rem auto' }}>
-        <LoadingButton
+        <Button
           variant="contained"
           color="secondary"
+          size="large"
           onClick={ () => setSent(true) }
-          endIcon={ <SendIcon /> }
-          loading={ sent }
-          loadingPosition="end"
         >
-          Send Query
-        </LoadingButton>
+          OK!
+        </Button>
       </div>
 
     </Container>
