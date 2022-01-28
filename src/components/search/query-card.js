@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { navigate } from '@reach/router'
-import { Box, Button, Card, CardContent, CardHeader, Tab, Tabs, Tooltip, Typography } from '@mui/material'
+import { Box, Button, Tab, Tabs, Tooltip, Typography } from '@mui/material'
 import { makeStyles, useTheme } from '@mui/styles'
 import { Check as CopiedIcon } from '@mui/icons-material'
 import { useSearchContext } from './'
@@ -107,7 +107,7 @@ export const QueryCard = () => {
 
   const handleChangeTab = (event, newValue) => setCurrentTab(newValue)
 
-   const handleCopyQuery = (key = 'sqlLikeQuery') => {
+   const handleCopyQuery = () => {
     navigator.clipboard.writeText(query[queryTypes[currentTab]])
     setCopied(true)
   }
