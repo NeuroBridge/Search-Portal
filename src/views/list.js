@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles, useTheme } from '@mui/styles'
 import { IconButton, TextField } from '@mui/material'
@@ -9,6 +9,7 @@ import {
   Search as SearchIcon,
 } from '@mui/icons-material'
 import { useOntology } from '../components/ontology'
+import { useDrawer } from '../components/drawer'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -37,10 +38,20 @@ function escapeRegExp(value) {
 
 const QuickSearchToolbar = ({ value, onChange, clearSearch }) => {
   const theme = useTheme()
+  const { drawerOpen } = useDrawer()
+  const searchInputRef = useRef()
+
+  useEffect(() => {
+    if (drawerOpen && searchInputRef.current) {
+      searchInputRef.current.focus()
+    }
+  }, [drawerOpen])
+
   return (
     <TextField
       sx={{ borderBottom: `2px solid ${ theme.palette.primary.main }` }}
       fullWidth
+      inputRef={ searchInputRef }
       value={ value }
       onChange={ onChange }
       placeholder="Search…"

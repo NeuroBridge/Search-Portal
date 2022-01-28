@@ -68,10 +68,15 @@ export const App = () => {
   const theme = useTheme()
   const mobile = useMediaQuery(theme.breakpoints.down('sm'))
   const compact = useMediaQuery('(max-width: 600px)')
-  const { resetSearch } = useSearchContext()
+  const { resetSearch, searchInputRef } = useSearchContext()
   const { drawerWidth, drawerOpen, toggleOpen } = useDrawer()
 
   useEffect(() => {
+    // when the user toggle's the drawer open,
+    // focus the search input
+    if (drawerOpen && searchInputRef?.current) {
+      searchInputRef.current.focus()
+    }
     // this lets the user press backslash to open the drawer
     // todo: & focus search input
     const handleKeyPress = event => {
