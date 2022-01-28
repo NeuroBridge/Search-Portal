@@ -62,7 +62,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export const ForestView = () => {
+export const QueryBuilderView = () => {
   const classes = useStyles()
   const {
     roots, rootsCount, selectedTermsCount,
