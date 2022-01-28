@@ -17,7 +17,6 @@ import {
   Looks3 as StepThreeIcon,
   Looks4 as StepFourIcon,
   Looks5 as StepFiveIcon,
-  Send as SendIcon,
 } from '@mui/icons-material'
 import makeStyles from '@mui/styles/makeStyles'
 import { useSearchContext, SelectionForest, QueryCard } from '../components/search'
