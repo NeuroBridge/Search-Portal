@@ -46,7 +46,7 @@ export const ResultsView = () => {
             <Card key={ publication.title } elevation={ 0 } className={ classes.resultCard }>
               <CardHeader title={ publication.title } />
               <CardContent>
-                <Link to={ publication.pubmed_url }>publication.pubmed_url</Link>
+                <Link to={ publication.pubmed_url }>{ publication.pubmed_url }</Link>
               </CardContent>
             </Card>
           ))
