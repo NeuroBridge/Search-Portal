@@ -1,6 +1,20 @@
-import { Typography } from '@mui/material'
+import { useState } from 'react'
+import { Box, Card, CardContent, CardHeader, Typography } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import { useSearchContext } from '../components/search'
 import { Container } from '../components/container'
+import { Link } from '../components/link'
+
+const useStyles = makeStyles(theme => ({
+  resultsContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: theme.spacing(1),
+  },
+  resultCard: {
+    border: `1px solid rgba(0, 0, 0, 0.12)`,
+  }
+}))
 
 const samplePublicationsResponse = [
   { pubmed_url: 'https://www.ncbi.nlm.nih.gov/pubmed/21600292', title: 'Improving the reliability of functional localizers' },
@@ -17,12 +31,27 @@ const samplePublicationsResponse = [
 ]
 
 export const ResultsView = () => {
+  const classes = useStyles()
   const { query } = useSearchContext()
+  const [results, setResults] = useState(samplePublicationsResponse)
 
   return (
     <Container>
       
       <Typography variant="h2">Results View</Typography>
+
+      <Box className={ classes.resultsContainer }>
+        {
+          results.map(publication => (
+            <Card key={ publication.title } elevation={ 0 } className={ classes.resultCard }>
+              <CardHeader title={ publication.title } />
+              <CardContent>
+                <Link to={ publication.pubmed_url }>publication.pubmed_url</Link>
+              </CardContent>
+            </Card>
+          ))
+        }
+      </Box>
 
     </Container>
   )
