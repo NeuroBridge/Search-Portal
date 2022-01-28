@@ -192,17 +192,6 @@ export const QueryBuilderView = () => {
 
       <QueryCard />
 
-      <div style={{ display: 'flex', justifyContent: 'center', margin: '2rem auto' }}>
-        <Button
-          variant="contained"
-          color="secondary"
-          size="large"
-          onClick={ () => setSent(true) }
-        >
-          OK!
-        </Button>
-      </div>
-
     </Container>
   )
 }

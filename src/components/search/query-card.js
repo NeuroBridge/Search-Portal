@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import { Box, Card, CardContent, CardHeader, IconButton, Tab, Tabs, Tooltip, Typography } from '@mui/material'
-import { makeStyles } from '@mui/styles'
+import { Box, Button, Card, CardContent, CardHeader, Tab, Tabs, Tooltip, Typography } from '@mui/material'
+import { makeStyles, useTheme } from '@mui/styles'
 import { Check as CopiedIcon } from '@mui/icons-material'
 import { useSearchContext } from './'
-import { ContentCopy as CopyIcon } from '@mui/icons-material'
+import {
+  ContentCopy as CopyIcon,
+  Send as SendIcon,
+} from '@mui/icons-material'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -13,11 +16,16 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
   },
   header: {
-    padding: `${ theme.spacing(1) } ${ theme.spacing(2) }`,
-    textTransform: 'uppercase',
+    backgroundColor: theme.palette.grey[200],
+  },
+  footer: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    alignItems: 'stretch',
+    backgroundColor: theme.palette.grey[200],
   },
   tabs: {
-    backgroundColor: theme.palette.grey[200],
+    flex: 1,
     color: '#fff',
     margin: 0,
     fontSize: '125%',
@@ -28,23 +36,22 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: '#333',
     position: 'relative',
   },
-  copyButtonContainer: {
-    position: 'absolute',
-    top: theme.spacing(1),
-    right: theme.spacing(1),
+  copyButton: {
+    backgroundColor: theme.palette.grey[400],
+    '&:hover': {
+      backgroundColor: theme.palette.grey[300],
+    }
   },
   queryNote: {
     color: '#786',
     margin: 0,
     marginBottom: theme.spacing(2),
-    fontSize: '125%',
     overflow: 'auto',
     whiteSpace: 'pre-wrap',
   },
   query: {
     color: '#478',
     margin: 0,
-    fontSize: '125%',
     overflow: 'auto',
     whiteSpace: 'pre-wrap',
     wordWrap: 'break-word',
@@ -85,6 +92,7 @@ const a11yProps = index => ({
 })
 
 export const QueryCard = () => {
+  const theme = useTheme()
   const classes = useStyles()
   const { query } = useSearchContext()
   const queryTypes = Object.keys(query)
@@ -105,7 +113,7 @@ export const QueryCard = () => {
 
   return (
     <Box className={ classes.root }>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+      <Box className={ classes.header }>
         <Tabs
           value={currentTab}
           onChange={handleChangeTab}
@@ -118,31 +126,40 @@ export const QueryCard = () => {
         </Tabs>
       </Box>
       {
-        queryTypes.map((t, i) => (
-          <TabPanel key={ t } value={ currentTab } index={ i }>
-            <span className={ classes.copyButtonContainer }>
-              <Tooltip
-                title={ copied ? `${ queryTypes[currentTab] } query copied to clipboard!` : `Copy ${ queryTypes[currentTab] } query` }
-                placement="left"
-              >
-                <IconButton size="small" onClick={ handleCopyQuery }>
-                  {
-                    copied
-                      ? <CopiedIcon sx={{ fill: '#fff' }} />
-                      : <CopyIcon sx={{ fill: '#999' }} />
-                  }
-                </IconButton>
-              </Tooltip>
-            </span>
+        queryTypes.map((queryType, i) => (
+          <TabPanel key={ queryType } value={ currentTab } index={ i }>
             <pre className={ classes.queryNote }>
               # This query will update as the term selection changes.
             </pre>
             <pre className={ classes.query }>
-              { query[t] }
+              { query[queryType] }
             </pre>
           </TabPanel>
         ))
       }
+      <Box className={ classes.footer }>
+        <Tooltip
+          title={ copied ? `${ queryTypes[currentTab] } query copied to clipboard!` : `Copy ${ queryTypes[currentTab] } query` }
+          placement="left"
+        >
+          <Button square size="small" onClick={ handleCopyQuery } className={ classes.copyButton } sx={{ borderRadius: 0 }}>
+            {
+              copied
+                ? <CopiedIcon sx={{ fill: theme.palette.secondary.dark }} />
+                : <CopyIcon sx={{ fill: theme.palette.secondary.light }} />
+            }
+          </Button>
+        </Tooltip>
+        <Button
+          variant="contained"
+          color="secondary"
+          size="large"
+          endIcon={ <SendIcon /> }
+          style={{ boxShadow: 'none' }}
+        >
+          Send Query 
+        </Button>
+      </Box>
     </Box>
   )
 }
