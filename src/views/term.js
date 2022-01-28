@@ -37,7 +37,7 @@ export const TermView = () => {
       return
     }
     setTerm(ontology.terms[index])
-  }, [location])
+  }, [location, ontology])
 
   return (
     <Container>
