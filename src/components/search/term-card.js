@@ -1,9 +1,16 @@
 import { Fragment } from 'react'
 import {
-  Card, CardActionArea, CardContent, Typography
+  Card, CardActionArea, CardContent,
+  Typography,
 } from '@mui/material'
+import {
+  Add as AddIcon,
+  Check as AddedIcon,
+  ZoomIn as InspectIcon,
+} from '@mui/icons-material'
 import makeStyles from '@mui/styles/makeStyles';
 import { useSearchContext } from './'
+import { Link } from '../link'
 import { termType, termDefaults } from '../ontology'
 
 const useStyles = makeStyles(theme => ({
@@ -17,10 +24,10 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'stretch',
+    margin: theme.spacing(1),
     '&:hover': {
       borderColor: theme.palette.secondary.main,
     },
-    margin: theme.spacing(1),
   },
   selected: {
     borderColor: `${ theme.palette.secondary.main }`,
@@ -29,20 +36,38 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(2),
     flex: 1,
   },
-  actions: {
+  mainActionArea: {
+    '& svg': {
+      filter: 'opacity(0.25)',
+      transition: 'filter 250ms'
+    },
+    '&:hover svg': {
+      filter: 'opacity(1.0)',
+    }
+  },
+  secondaryActionArea: {
+    maxWidth: '3rem',
+    minHeight: '100%',
     padding: 0,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: theme.palette.grey[100],
-    height: '100%',
-    '& button': {
-      flex: 1,
-      padding: theme.spacing(1),
-      height: '100%'
+    '& svg': {
+      filter: 'opacity(0.25)',
+      transition: 'filter 250ms'
+    },
+    '&:hover svg': {
+      filter: 'opacity(1.0)',
     }
   },
+  addTermButton: {
+    position: 'absolute',
+    right: theme.spacing(1),
+    top: '50%',
+    transform: 'translateY(-50%)',
+  }
 }))
 
 export const TermCard = ({ term }) => {
@@ -56,7 +81,7 @@ export const TermCard = ({ term }) => {
         variant="outlined"
         className={ `${ classes.termCard } ${ term.short_form in roots ? classes.selected : undefined }` }
       >
-        <CardActionArea onClick={ () => toggleRootSelection(term) }>
+        <CardActionArea onClick={ () => toggleRootSelection(term) } className={ classes.mainActionArea }>
           <CardContent className={ classes.content }>
             <Typography color="textPrimary">
               <strong>label:</strong> { term.label }
@@ -68,6 +93,14 @@ export const TermCard = ({ term }) => {
               <strong>comment_annotation:</strong> { term.comment_annotation ? term.comment_annotation : 'none provided' }
             </Typography>
           </CardContent>
+          {
+            term.short_form in roots
+              ? <AddedIcon className={ classes.addTermButton } color="success" style={{ filter: 'opacity(1)' }} />
+              : <AddIcon className={ classes.addTermButton } />
+          }
+        </CardActionArea>
+        <CardActionArea as={ Link } to={ `/term?id=${ term.short_form }` } className={ classes.secondaryActionArea }>
+          <InspectIcon color="primary" />
         </CardActionArea>
       </Card>
     </Fragment>

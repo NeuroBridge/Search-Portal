@@ -1,4 +1,5 @@
 export * from './list'
+export * from './term'
 export * from './not-found'
 export * from './results'
 export * from './query-builder'

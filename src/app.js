@@ -12,6 +12,7 @@ import {
   NotFoundView,
   ResultsView,
   QueryBuilderView,
+  TermView,
 } from './views'
 import { OntologyProvider } from './components/ontology'
 import { SearchContextProvider } from './components/search'
@@ -110,6 +111,7 @@ export const App = () => {
             <Router>
               <QueryBuilderView exact path="/" />
               <ResultsView exact path="/results" />
+              <TermView exact path="/term" />
               <NotFoundView default />
             </Router>
           </main>
