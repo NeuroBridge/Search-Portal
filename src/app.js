@@ -7,7 +7,12 @@ import { Menu, MobileMenu } from './components/menu'
 import { useSearchContext } from './components/search'
 import { Drawer, useDrawer } from './components/drawer'
 import neuroBridgeBackground from './images/nbbg.jpeg'
-import { QueryBuilderView, ListView, NotFoundView } from './views'
+import {
+  ListView,
+  NotFoundView,
+  ResultsView,
+  QueryBuilderView,
+} from './views'
 import { OntologyProvider } from './components/ontology'
 import { SearchContextProvider } from './components/search'
 
@@ -56,7 +61,7 @@ const useStyles = makeStyles(theme => ({
   main: {
     flex: 1,
     width: '100%',
-    marginTop: '110px',
+    marginTop: '64px',
     position: 'relative',
     transition: 'padding-left 300ms cubic-bezier(0, 0, 0.2, 1) 100ms, filter 250ms',
   },
@@ -104,6 +109,7 @@ export const App = () => {
           <main className={ classes.main } style={{ paddingLeft: drawerOpen ? `calc(${ drawerWidth }px + 4rem)` : '4rem' }}>
             <Router>
               <QueryBuilderView exact path="/" />
+              <ResultsView exact path="/results" />
               <NotFoundView default />
             </Router>
           </main>

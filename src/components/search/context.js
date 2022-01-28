@@ -7,7 +7,7 @@ const SearchContext = createContext({})
 export const SearchContextProvider = ({ children }) => {
   const [busy, setBusy] = useState(false)
   const [roots, setRoots] = useState({})
-  const { api } = useOntology()
+  const ontology = useOntology()
 
   /**
    * The array `roots` consists of objects that represent terms
@@ -44,14 +44,14 @@ export const SearchContextProvider = ({ children }) => {
     const constructTreeRelations = async root => {
       let relations = [{ id: root.short_form, parentId: '', value: 0 }]
       try {
-        const descendants = await api.descendants(root)
+        const descendants = await ontology.api.descendants(root)
         if (!descendants.length) {
           return relations
         }
         let queue = [root]
         while (queue.length > 0) {
           const t = queue.pop()
-          const children = await api.children(t)
+          const children = await ontology.api.children(t)
           queue = [...children, ...queue]
           relations = [
             ...relations,
@@ -190,11 +190,10 @@ export const SearchContextProvider = ({ children }) => {
 
   //
 
-  const query = () => {
-    let q = 'SELECT\n'
-
-
-    q += Object.keys(roots).map(short_form => {
+  const query = useMemo(() => {
+    // sqlLike query
+    let sqlLike = 'SELECT\n'
+    sqlLike += Object.keys(roots).map(short_form => {
       const selectedTermsCount = rootSelectedTermsCount(short_form)
       if (!selectedTermsCount) {
         return ''
@@ -208,9 +207,16 @@ export const SearchContextProvider = ({ children }) => {
         })
         .join(' ') + ' )' 
     }).join(` OR \n`)
+    
+    // neuroQuery query
+    const selectedTerms = Object.keys(roots).reduce((terms, short_form) => {
+      const thisRootsTerms = rootSelectedTermsCount(short_form) === 0 ? [] : roots[short_form].relations.map(rel => rel.id)
+      return [...terms, ...thisRootsTerms]
+    }, [])
+    const neuroQuery = `SELECT\n  ` + selectedTerms.join(' AND\n  ')
 
-    return q
-  }
+    return { sqlLike, neuroQuery }
+  }, [roots])
 
   /**
    *
