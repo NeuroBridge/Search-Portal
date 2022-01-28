@@ -10,7 +10,7 @@ import neuroBridgeBackground from './images/nbbg.jpeg'
 import {
   ListView,
   NotFoundView,
-  QueryView,
+  ResultsView,
   QueryBuilderView,
 } from './views'
 import { OntologyProvider } from './components/ontology'
@@ -61,7 +61,7 @@ const useStyles = makeStyles(theme => ({
   main: {
     flex: 1,
     width: '100%',
-    marginTop: '110px',
+    marginTop: '64px',
     position: 'relative',
     transition: 'padding-left 300ms cubic-bezier(0, 0, 0.2, 1) 100ms, filter 250ms',
   },
@@ -109,7 +109,7 @@ export const App = () => {
           <main className={ classes.main } style={{ paddingLeft: drawerOpen ? `calc(${ drawerWidth }px + 4rem)` : '4rem' }}>
             <Router>
               <QueryBuilderView exact path="/" />
-              <QueryView exact path="/query" />
+              <ResultsView exact path="/results" />
               <NotFoundView default />
             </Router>
           </main>

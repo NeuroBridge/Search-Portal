@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
+import { navigate } from '@reach/router'
 import { Box, Button, Card, CardContent, CardHeader, Tab, Tabs, Tooltip, Typography } from '@mui/material'
 import { makeStyles, useTheme } from '@mui/styles'
 import { Check as CopiedIcon } from '@mui/icons-material'
@@ -156,6 +157,7 @@ export const QueryCard = () => {
           size="large"
           endIcon={ <SendIcon /> }
           style={{ boxShadow: 'none' }}
+          onClick={ () => navigate(`/results`) }
         >
           Send Query 
         </Button>

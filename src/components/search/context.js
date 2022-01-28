@@ -7,7 +7,7 @@ const SearchContext = createContext({})
 export const SearchContextProvider = ({ children }) => {
   const [busy, setBusy] = useState(false)
   const [roots, setRoots] = useState({})
-  const { api } = useOntology()
+  const ontology = useOntology()
 
   /**
    * The array `roots` consists of objects that represent terms
@@ -44,14 +44,14 @@ export const SearchContextProvider = ({ children }) => {
     const constructTreeRelations = async root => {
       let relations = [{ id: root.short_form, parentId: '', value: 0 }]
       try {
-        const descendants = await api.descendants(root)
+        const descendants = await ontology.api.descendants(root)
         if (!descendants.length) {
           return relations
         }
         let queue = [root]
         while (queue.length > 0) {
           const t = queue.pop()
-          const children = await api.children(t)
+          const children = await ontology.api.children(t)
           queue = [...children, ...queue]
           relations = [
             ...relations,
