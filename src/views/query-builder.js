@@ -20,6 +20,7 @@ import {
 import makeStyles from '@mui/styles/makeStyles'
 import { useSearchContext, SelectionForest, QueryCard } from '../components/search'
 import { Container } from '../components/container'
+import { PageHeader } from '../components/page-header'
 
 const useStyles = makeStyles(theme => ({
   heading: {
@@ -66,62 +67,62 @@ export const QueryBuilderView = () => {
     startOver()
   }
 
-  const PageHeader = useCallback(() => {
-    return (
-      <Fragment>
-        <Card variant="outlined">
-          <CardContent className={ classes.controls }>
-            <Grid container>
-              <Grid item xs={ 12 } sm={ 3 }>
-                <Typography>
-                  { rootsCount } root{ rootsCount === 1 ? '' : 's' }<br />
-                  { selectedTermsCount } selected term{ selectedTermsCount === 1 ? '' : 's' }<br />
-                </Typography>
-              </Grid>
-              <Grid item xs={ 12 } sm={ 9 }>
-                <Tooltip title="Start Over">
-                  <span>
-                    <IconButton
-                      onClick={ handleStartOver }
-                      disabled={ rootsCount === 0 }
-                      variant="contained"
-                      color="primary"
-                    >
-                      <StartOverIcon />
-                    </IconButton>
-                  </span>
-                </Tooltip>
-                <Tooltip title="Clear all roots">
-                  <span>
-                    <IconButton
-                      onClick={ clearRootSelection }
-                      disabled={ selectedTermsCount === 0 }
-                      variant="contained"
-                      color="secondary"
-                    >
-                      <ClearSelectionIcon />
-                    </IconButton>
-                  </span>
-                </Tooltip>
-                <Tooltip title="Deselect all terms">
-                  <span>
-                    <IconButton
-                      onClick={ clearTermSelection }
-                      disabled={ selectedTermsCount === 0 }
-                      variant="contained"
-                      color="secondary"
-                    >
-                      <ClearSelectionIcon />
-                    </IconButton>
-                  </span>
-                </Tooltip>
-              </Grid>
-            </Grid>
-          </CardContent>
-        </Card>
-      </Fragment>
-    )
-  }, [roots])
+  // const PageHeader = useCallback(() => {
+  //   return (
+  //     <Fragment>
+  //       <Card variant="outlined">
+  //         <CardContent className={ classes.controls }>
+  //           <Grid container>
+  //             <Grid item xs={ 12 } sm={ 3 }>
+  //               <Typography>
+  //                 { rootsCount } root{ rootsCount === 1 ? '' : 's' }<br />
+  //                 { selectedTermsCount } selected term{ selectedTermsCount === 1 ? '' : 's' }<br />
+  //               </Typography>
+  //             </Grid>
+  //             <Grid item xs={ 12 } sm={ 9 }>
+  //               <Tooltip title="Start Over">
+  //                 <span>
+  //                   <IconButton
+  //                     onClick={ handleStartOver }
+  //                     disabled={ rootsCount === 0 }
+  //                     variant="contained"
+  //                     color="primary"
+  //                   >
+  //                     <StartOverIcon />
+  //                   </IconButton>
+  //                 </span>
+  //               </Tooltip>
+  //               <Tooltip title="Clear all roots">
+  //                 <span>
+  //                   <IconButton
+  //                     onClick={ clearRootSelection }
+  //                     disabled={ selectedTermsCount === 0 }
+  //                     variant="contained"
+  //                     color="secondary"
+  //                   >
+  //                     <ClearSelectionIcon />
+  //                   </IconButton>
+  //                 </span>
+  //               </Tooltip>
+  //               <Tooltip title="Deselect all terms">
+  //                 <span>
+  //                   <IconButton
+  //                     onClick={ clearTermSelection }
+  //                     disabled={ selectedTermsCount === 0 }
+  //                     variant="contained"
+  //                     color="secondary"
+  //                   >
+  //                     <ClearSelectionIcon />
+  //                   </IconButton>
+  //                 </span>
+  //               </Tooltip>
+  //             </Grid>
+  //           </Grid>
+  //         </CardContent>
+  //       </Card>
+  //     </Fragment>
+  //   )
+  // }, [roots])
 
   if (!rootsCount) {
     return (
@@ -165,7 +166,9 @@ export const QueryBuilderView = () => {
   return (
     <Container>
       
-      <PageHeader />
+      <PageHeader>
+        what
+      </PageHeader>
 
       <br /><br />
 

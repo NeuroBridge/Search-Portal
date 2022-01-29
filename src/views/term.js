@@ -1,9 +1,15 @@
 import { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import { Typography } from '@mui/material'
+import { CircularProgress, IconButton, Typography } from '@mui/material'
+import {
+  CheckBox as CheckedIcon,
+  CheckBoxOutlineBlank as UncheckedIcon,
+} from '@mui/icons-material'
 import { useOntology } from '../components/ontology'
+import { useSearchContext } from '../components/search'
 import { useLocation } from '@reach/router'
 import { Container } from '../components/container'
+import { PageHeader } from '../components/page-header'
 
 const getParameterByName = (name, url) => {
   const match = RegExp('[?&]' + name + '=([^&]*)').exec(url)
@@ -29,7 +35,7 @@ export const TermView = () => {
   const location = useLocation()
   const short_form = getParameterByName('id', location.href)
   const [term, setTerm] = useState()
-
+  const { roots, toggleRootSelection } = useSearchContext()
 
   useEffect(() => {
     const index = ontology.terms.findIndex(t => t.short_form === short_form)
@@ -39,8 +45,21 @@ export const TermView = () => {
     setTerm(ontology.terms[index])
   }, [location, ontology])
 
+  if (!term) {
+    return <CircularProgress />
+  }
+
   return (
     <Container>
+      <PageHeader
+        title={ `Term: ${ term.label }` }
+        subtitle={ term.short_form }
+        actions={[
+          <IconButton key="toggle-root-selelction-button" onClick={ () => toggleRootSelection(term) }>
+            { term.short_form in roots ? <CheckedIcon color="success" /> : <UncheckedIcon color="default" /> }
+          </IconButton>
+        ]}
+      />
       
       <Typography variant="h2">Term: { short_form }</Typography>
 
