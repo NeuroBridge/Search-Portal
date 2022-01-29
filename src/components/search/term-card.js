@@ -31,6 +31,7 @@ const useStyles = makeStyles(theme => ({
   },
   selected: {
     borderColor: `${ theme.palette.secondary.main }`,
+    backgroundColor: `${ theme.palette.success.light }33`,
   },
   content: {
     padding: theme.spacing(2),
@@ -53,7 +54,7 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: theme.palette.grey[100],
+    backgroundColor: `${ theme.palette.grey[500] }33`,
     '& svg': {
       filter: 'opacity(0.25)',
       transition: 'filter 250ms'

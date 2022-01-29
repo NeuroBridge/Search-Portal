@@ -56,7 +56,7 @@ export const TreeCard = ({ root }) => {
     return [
       <span key={ 0 } />,
       <SelectedTermIcon key={ 1 } sx={{ color: theme.palette.secondary.main }} />,
-      <IgnoreTermIcon key={ 2 } sx={{ color: theme.palette.danger }} />,
+      <IgnoreTermIcon key={ 2 } sx={{ color: theme.palette.danger.main }} />,
     ][value]
   }, [])
 
@@ -116,7 +116,7 @@ export const TreeCard = ({ root }) => {
             <IconButton
               aria-label="Remove this term"
               onClick={ () => toggleRootSelection(root) }
-              sx={{ '&:hover': { color: theme.palette.danger } }}
+              sx={{ '&:hover': { color: theme.palette.danger.main } }}
             >
               <RemoveTermIcon />
             </IconButton>
