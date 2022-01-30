@@ -153,7 +153,7 @@ TermRow.propTypes = {
 
 //
 
-export const ListView = () => {
+export const TermsView = () => {
   const ontology = useOntology()
   const dataGridClasses = useStyles()
 
