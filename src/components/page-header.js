@@ -11,26 +11,23 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: 'white',
     zIndex: '999',
     borderBottom: `1px solid ${ theme.palette.primary.light }`,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'stretch',
   },
   container: {
+    flex: 1,
     maxWidth: '1080px',
     margin: 'auto',
     padding: `${ theme.spacing(1) } ${ theme.spacing(4) }`,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-  },
-  titles: {
-    flex: '1 !important',
-    display: 'flex',
-    flexDirection: 'column',
     alignItems: 'stretch',
   },
   title: {
-    display: 'block',
-  },
-  subtitle: {
-    display: 'block',
+    flex: '1 !important',
   },
   actions: {
     display: 'flex',
@@ -44,13 +41,8 @@ export const PageHeader = ({ title, subtitle, actions }) => {
   return (
     <Box className={ classes.wrapper }>
       <Box className={ classes.container }>
-        <Box className={ classes.titles }>
-          <Box className={ classes.title }>
-            <Typography variant="h1">{ title }</Typography>
-          </Box>
-          <Box className={ classes.subtitle }>
-            <Typography variant="h2">{ subtitle }</Typography>
-          </Box>
+        <Box className={ classes.title }>
+          <Typography variant="h1">{ title }</Typography>
         </Box>
         <Box className={ classes.actions }>
           { actions }

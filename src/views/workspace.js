@@ -158,8 +158,7 @@ export const WorkspaceView = () => {
   return (
     <Fragment>
       <PageHeader
-        title="Query Builder"
-        subtitle="subtitle"
+        title="Query Workspace"
         actions={[
           <Tooltip key="start-over-button" title="Start Over" placement="bottom">
             <Button onClick={ clearRootSelection }><StartOverIcon /></Button>

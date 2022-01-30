@@ -88,7 +88,7 @@ const QuickSearchToolbar = ({ value, onChange, clearSearch, count }) => {
         backgroundColor: '#fff',
         padding: theme.spacing(1),
         textAlign: 'right',
-        borderBottom: `2px solid ${ theme.palette.primary.main }`,
+        borderBottom: `1px solid ${ theme.palette.primary.main }`,
       }}>
         {
           value === ''
