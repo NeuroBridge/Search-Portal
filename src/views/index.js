@@ -1,5 +1,5 @@
 export * from './not-found'
-export * from './query-builder'
+export * from './workspace'
 export * from './results'
 export * from './term'
 export * from './terms'

@@ -47,7 +47,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export const QueryBuilderView = () => {
+export const WorkspaceView = () => {
   const classes = useStyles()
   const { rootsCount, clearRootSelection, clearTermSelection } = useSearchContext()
   const [sent, setSent] = useState(false)
