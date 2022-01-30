@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles, useTheme } from '@mui/styles'
-import { Box, Button, IconButton, TextField, Tooltip } from '@mui/material'
+import { Box, Button, IconButton, TextField, Tooltip, Typography } from '@mui/material'
 import {
   DataGrid, 
   GridFooterContainer,
   GridPagination,
 } from '@mui/x-data-grid'
+import { LoadingButton } from '@mui/lab'
 import { TermCard } from '../components/search'
 import {
   Clear as ClearIcon,
@@ -85,18 +86,51 @@ QuickSearchToolbar.propTypes = {
 }
 
 const CustomFooter = () => {
+  const theme = useTheme()
+  const [syncing, setSyncing] = useState(false)
+
+  const handleClickSync = () => {
+    console.log('syncing...')
+    setSyncing(true)
+    const fakeSyncTimer = setTimeout(() => {
+      setSyncing(false)
+    }, 2000)
+    return () => clearTimeout(fakeSyncTimer)
+  }
+
   return (
     <GridFooterContainer>
       <Box sx={{
-        border: '1px dashed crimson',
-        width: '100',
         flex: 1,
         display: 'flex',
         justifyContent: 'space-between',
       }}>
-        <Tooltip title="Sync NeuroBridge Ontology" placement="right">
-          <Button square><SyncIcon /></Button>
-        </Tooltip>
+        <Box sx={{
+          flex: 1,
+          display: 'flex',
+          justifyContent: 'flex-start',
+          alignItems: 'stretch',
+          gap: theme.spacing(1),
+        }}>
+          <Tooltip title="Sync NeuroBridge Ontology" placement="right">
+            <LoadingButton
+              square
+              onClick={ handleClickSync }
+              loading={ syncing }
+            >
+              <SyncIcon />
+            </LoadingButton>
+          </Tooltip>
+          <Typography caption sx={{
+            fontSize: '75%',
+            display: 'flex',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+          }}>
+            Last sync:<br />
+            January 29, 2022 at 4:56 pm
+          </Typography>
+        </Box>
         <GridPagination />
       </Box>
     </GridFooterContainer>
