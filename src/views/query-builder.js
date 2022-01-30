@@ -1,9 +1,8 @@
-import { Fragment, useCallback, useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Avatar,
+  Button,
   Card, CardHeader, CardContent,
   Divider,
-  Grid,
-  IconButton,
   List, ListItem, ListItemAvatar, ListItemText,
   Tooltip,
   Typography,
@@ -20,6 +19,7 @@ import {
 import makeStyles from '@mui/styles/makeStyles'
 import { useSearchContext, SelectionForest, QueryCard } from '../components/search'
 import { Container } from '../components/container'
+import { PageHeader } from '../components/page-header'
 
 const useStyles = makeStyles(theme => ({
   heading: {
@@ -49,10 +49,7 @@ const useStyles = makeStyles(theme => ({
 
 export const QueryBuilderView = () => {
   const classes = useStyles()
-  const {
-    roots, rootsCount, selectedTermsCount,
-    clearRootSelection, clearTermSelection, startOver,
-  } = useSearchContext()
+  const { rootsCount, clearRootSelection, clearTermSelection } = useSearchContext()
   const [sent, setSent] = useState(false)
 
   /* temporary faking term send request */
@@ -62,66 +59,62 @@ export const QueryBuilderView = () => {
     return () => clearTimeout(resetSend)
   }, [sent])
 
-  const handleStartOver = () => {
-    startOver()
-  }
-
-  const PageHeader = useCallback(() => {
-    return (
-      <Fragment>
-        <Card variant="outlined">
-          <CardContent className={ classes.controls }>
-            <Grid container>
-              <Grid item xs={ 12 } sm={ 3 }>
-                <Typography>
-                  { rootsCount } root{ rootsCount === 1 ? '' : 's' }<br />
-                  { selectedTermsCount } selected term{ selectedTermsCount === 1 ? '' : 's' }<br />
-                </Typography>
-              </Grid>
-              <Grid item xs={ 12 } sm={ 9 }>
-                <Tooltip title="Start Over">
-                  <span>
-                    <IconButton
-                      onClick={ handleStartOver }
-                      disabled={ rootsCount === 0 }
-                      variant="contained"
-                      color="primary"
-                    >
-                      <StartOverIcon />
-                    </IconButton>
-                  </span>
-                </Tooltip>
-                <Tooltip title="Clear all roots">
-                  <span>
-                    <IconButton
-                      onClick={ clearRootSelection }
-                      disabled={ selectedTermsCount === 0 }
-                      variant="contained"
-                      color="secondary"
-                    >
-                      <ClearSelectionIcon />
-                    </IconButton>
-                  </span>
-                </Tooltip>
-                <Tooltip title="Deselect all terms">
-                  <span>
-                    <IconButton
-                      onClick={ clearTermSelection }
-                      disabled={ selectedTermsCount === 0 }
-                      variant="contained"
-                      color="secondary"
-                    >
-                      <ClearSelectionIcon />
-                    </IconButton>
-                  </span>
-                </Tooltip>
-              </Grid>
-            </Grid>
-          </CardContent>
-        </Card>
-      </Fragment>
-    )
-  }, [roots])
+  // const PageHeader = useCallback(() => {
+  //   return (
+  //     <Fragment>
+  //       <Card variant="outlined">
+  //         <CardContent className={ classes.controls }>
+  //           <Grid container>
+  //             <Grid item xs={ 12 } sm={ 3 }>
+  //               <Typography>
+  //                 { rootsCount } root{ rootsCount === 1 ? '' : 's' }<br />
+  //                 { selectedTermsCount } selected term{ selectedTermsCount === 1 ? '' : 's' }<br />
+  //               </Typography>
+  //             </Grid>
+  //             <Grid item xs={ 12 } sm={ 9 }>
+  //               <Tooltip title="Start Over">
+  //                 <span>
+  //                   <IconButton
+  //                     onClick={ handleStartOver }
+  //                     disabled={ rootsCount === 0 }
+  //                     variant="contained"
+  //                     color="primary"
+  //                   >
+  //                     <StartOverIcon />
+  //                   </IconButton>
+  //                 </span>
+  //               </Tooltip>
+  //               <Tooltip title="Clear all roots">
+  //                 <span>
+  //                   <IconButton
+  //                     onClick={ clearRootSelection }
+  //                     disabled={ selectedTermsCount === 0 }
+  //                     variant="contained"
+  //                     color="secondary"
+  //                   >
+  //                     <ClearSelectionIcon />
+  //                   </IconButton>
+  //                 </span>
+  //               </Tooltip>
+  //               <Tooltip title="Deselect all terms">
+  //                 <span>
+  //                   <IconButton
+  //                     onClick={ clearTermSelection }
+  //                     disabled={ selectedTermsCount === 0 }
+  //                     variant="contained"
+  //                     color="secondary"
+  //                   >
+  //                     <ClearSelectionIcon />
+  //                   </IconButton>
+  //                 </span>
+  //               </Tooltip>
+  //             </Grid>
+  //           </Grid>
+  //         </CardContent>
+  //       </Card>
+  //     </Fragment>
+  //   )
+  // }, [roots])
 
   if (!rootsCount) {
     return (
@@ -163,20 +156,28 @@ export const QueryBuilderView = () => {
   }
 
   return (
-    <Container>
-      
-      <PageHeader />
+    <Fragment>
+      <PageHeader
+        title="Query Builder"
+        subtitle="subtitle"
+        actions={[
+          <Tooltip key="start-over-button" title="Start Over" placement="bottom">
+            <Button onClick={ clearRootSelection }><StartOverIcon /></Button>
+          </Tooltip>,
+          <Tooltip key="clear-selection-button" title="Clear Term Selection" placement="bottom">
+            <Button onClick={ clearTermSelection }><ClearSelectionIcon /></Button>
+          </Tooltip>,
+        ]}
+      />
+      <Container>
+        <SelectionForest />
 
-      <br /><br />
+        <br /><br /><br /><br />
+        <Divider>Query</Divider>
+        <br /><br /><br /><br />
 
-      <SelectionForest />
-
-      <br /><br /><br /><br />
-      <Divider>Query</Divider>
-      <br /><br /><br /><br />
-
-      <QueryCard />
-
-    </Container>
+        <QueryCard />
+      </Container>
+    </Fragment>
   )
 }

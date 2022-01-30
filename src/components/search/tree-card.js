@@ -56,7 +56,7 @@ export const TreeCard = ({ root }) => {
     return [
       <span key={ 0 } />,
       <SelectedTermIcon key={ 1 } sx={{ color: theme.palette.secondary.main }} />,
-      <IgnoreTermIcon key={ 2 } sx={{ color: theme.palette.danger }} />,
+      <IgnoreTermIcon key={ 2 } sx={{ color: theme.palette.danger.main }} />,
     ][value]
   }, [])
 
@@ -109,14 +109,14 @@ export const TreeCard = ({ root }) => {
     <Card variant="outlined">
       <CardHeader
         disableTypography
-        title={ <span>{ tree.data.id } { count > 0 ? `(${ count } selections)` : '' }</span> }
+        title={ <span>{ tree.data.id } { count > 0 ? `(${ count } selected)` : '' }</span> }
         className={ classes.header }
         action={
           <Tooltip title="Remove this term" placement="left">
             <IconButton
               aria-label="Remove this term"
               onClick={ () => toggleRootSelection(root) }
-              sx={{ '&:hover': { color: theme.palette.danger } }}
+              sx={{ '&:hover': { color: theme.palette.danger.main } }}
             >
               <RemoveTermIcon />
             </IconButton>

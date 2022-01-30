@@ -14,7 +14,18 @@ const themeOptions = {
     secondary: {
       main: '#00758d',
     },
-    danger: '#966',
+    danger: {
+      main: '#966',
+      light:'#c99',
+      dark: '#844',
+      contrastText: '#fff',
+    },
+    success: {
+      main: '#2e7d32',
+      light: '#4caf50',
+      dark: '#1b5e20',
+      contrastText: '#fff',
+    },
   },
   shape: {
     borderRadius: 0,

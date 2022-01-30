@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { navigate } from '@reach/router'
-import { Box, Button, Tab, Tabs, Tooltip, Typography } from '@mui/material'
+import { Box, Button, Tab, Tabs, Tooltip } from '@mui/material'
 import { makeStyles, useTheme } from '@mui/styles'
 import { Check as CopiedIcon } from '@mui/icons-material'
 import { useSearchContext } from './'
@@ -62,6 +62,7 @@ const useStyles = makeStyles(theme => ({
 const TabPanel = props => {
   const { children, value, index, ...rest } = props
   const classes = useStyles()
+  const theme = useTheme()
 
   return (
     <div
@@ -73,8 +74,8 @@ const TabPanel = props => {
       { ...rest }
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{ children }</Typography>
+        <Box style={{ padding: theme.spacing(2) }}>
+          { children }
         </Box>
       )}
     </div>
@@ -143,7 +144,7 @@ export const QueryCard = () => {
           title={ copied ? `${ queryTypes[currentTab] } query copied to clipboard!` : `Copy ${ queryTypes[currentTab] } query` }
           placement="left"
         >
-          <Button square size="small" onClick={ handleCopyQuery } className={ classes.copyButton } sx={{ borderRadius: 0 }}>
+          <Button size="small" onClick={ handleCopyQuery } className={ classes.copyButton } sx={{ borderRadius: 0 }}>
             {
               copied
                 ? <CopiedIcon sx={{ fill: theme.palette.secondary.dark }} />
