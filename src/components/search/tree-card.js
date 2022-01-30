@@ -2,6 +2,8 @@ import { useCallback, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { TreeItem } from '@mui/lab'
 import {
+  Box,
+  Button,
   Card, CardHeader, CardContent,
   Checkbox,
   FormControlLabel,
@@ -11,12 +13,14 @@ import {
 } from '@mui/material'
 import {
   DisabledByDefault as IgnoreTermIcon,
+  ZoomIn as InspectIcon,
   Cancel as RemoveTermIcon,
   CheckBox as SelectedTermIcon,
 } from '@mui/icons-material'
 import { makeStyles, useTheme } from '@mui/styles'
 import { useSearchContext } from './'
 import { arrayToTree } from 'performant-array-to-tree'
+import { Link } from '../link'
 
 const useStyles = makeStyles(theme => ({
   header: {
@@ -26,6 +30,27 @@ const useStyles = makeStyles(theme => ({
   },
   content: {
     padding: '0 !important',
+  },
+  treeItem: {
+    width: '100%',
+  },
+  treeItemLabel: {
+    display: 'flex',
+    alignItems: 'center',
+    '&:hover $inspectLink': {
+      filter: 'opacity(0.25)'
+    }
+  },
+  inspectLink: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: '1rem',
+    filter: 'opacity(0.0)',
+    transition: 'filter 250ms',
+    '&:hover': {
+      filter: 'opacity(0.9) !important',
+    }
   },
 }))
 
@@ -74,11 +99,19 @@ export const TreeCard = ({ root }) => {
 
     return (
       <TreeItem
+        className={ classes.treeItem }
         key={ `${ option.data.id }-${ level }` }
         nodeId={ option.data.id }
         label={
           <FormControlLabel
-            label={ id }
+            label={
+              <Box className={ classes.treeItemLabel }>
+                { id }
+                <Link to={ `/term?id=${ option.data.id }` } className={ classes.inspectLink }>
+                  <InspectIcon color="secondary" />
+                </Link>
+              </Box>
+            }
             control={
               <Checkbox
                 checked={ rootHasTermSelected(rootId, id) }

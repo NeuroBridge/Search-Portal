@@ -36,8 +36,14 @@ const useStyles = makeStyles(theme => ({
   content: {
     padding: theme.spacing(2),
     flex: 1,
+    overflowX: 'auto',
+    scrollbarWidth: 'thin', // firefox only
+    scrollbarColor: `${ theme.palette.primary.dark } ${ theme.palette.grey[100] }`, // firefox only
   },
   mainActionArea: {
+    whiteSpace: 'nowrap',
+    flex: 1,
+    maxWidth: '421px',
     '& svg': {
       filter: 'opacity(0.25)',
       transition: 'filter 250ms'
@@ -47,6 +53,7 @@ const useStyles = makeStyles(theme => ({
     }
   },
   inspectLink: {
+    flex: '0 0 3rem',
     minWidth: '3rem',
     maxWidth: '3rem',
     minHeight: '100%',
@@ -93,9 +100,6 @@ export const TermCard = ({ term }) => {
           </Typography>
           <Typography variant="caption" color="textPrimary">
             <strong>short_form:</strong> <em>{ term.short_form }</em>
-          </Typography><br/>
-          <Typography variant="caption" color="textSecondary">
-            <strong>comment_annotation:</strong> { term.comment_annotation ? term.comment_annotation : 'none provided' }
           </Typography>
         </CardContent>
         {

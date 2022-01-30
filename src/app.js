@@ -10,7 +10,7 @@ import neuroBridgeBackground from './images/nbbg.jpeg'
 import {
   NotFoundView,
   ResultsView,
-  QueryBuilderView,
+  WorkspaceView,
   TermView,
   TermsView,
 } from './views'
@@ -114,7 +114,7 @@ export const App = () => {
             }}
           >
             <Router>
-              <QueryBuilderView exact path="/" />
+              <WorkspaceView exact path="/" />
               <ResultsView exact path="/results" />
               <TermView exact path="/term" />
               <NotFoundView default />

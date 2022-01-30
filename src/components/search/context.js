@@ -202,11 +202,11 @@ export const SearchContextProvider = ({ children }) => {
         .filter(rel => rel.value > 0)
         .map(rel => ({ operator: rel.operator, id: rel.id, value: rel.value }))
         .map((rel, i) => {
-          const prefix = i === 0 ? '' : rel.value === 1 ? `AND` : `NOT`
+          const prefix = i === 0 ? '' : rel.value === 1 ? `OR` : `OR NOT`
           return `${ prefix } ${ rel.id }`
         })
         .join(' ') + ' )' 
-    }).join(` OR \n`)
+    }).join(` AND \n`)
     
     // neuroQuery query
     const selectedTerms = Object.keys(roots).reduce((terms, short_form) => {

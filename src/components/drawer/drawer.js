@@ -25,10 +25,6 @@ const useStyles = makeStyles(theme => {
       marginTop: '64px',
       overflow: 'hidden',
     },
-    contents: {
-      paddingRight: '2rem',
-      overflow: 'auto',
-    },
     actions: {
       display: 'flex',
       flexDirection: 'column',
@@ -86,14 +82,6 @@ export const Drawer = ({ title, children }) => {
   
   const classes = useStyles({ width: drawerWidth })
 
-  const handleGrabDrawerResizeHandle = event => {
-    console.log(event)
-  }
-
-  const handleDragDrawerResizeHandle = event => {
-    console.log(event)
-  }
-
   return (
     <Fragment>
       <MuiDrawer
@@ -110,9 +98,6 @@ export const Drawer = ({ title, children }) => {
         className={ classes.drawerHandle }
         aria-label={ `${ drawerOpen ? 'Close' : 'Open' } drawer` }
         style={{ transform: `translateX(${ drawerOpen ? `${ drawerWidth }px` : 0 })` }}
-        draggable
-        onDragStart={ handleDragDrawerResizeHandle }
-        onDrag={ handleGrabDrawerResizeHandle }
       >
         <Tooltip title={ `${ drawerOpen ? 'Close' : 'Open' } drawer` } placement="right">
           <Button className={ classes.drawerTitleButton } onClick={ toggleOpen }>

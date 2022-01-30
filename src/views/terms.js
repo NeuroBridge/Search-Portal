@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles, useTheme } from '@mui/styles'
-import { Box, Button, IconButton, TextField, Tooltip, Typography } from '@mui/material'
+import { Box, IconButton, TextField, Tooltip, Typography } from '@mui/material'
 import {
   DataGrid, 
   GridFooterContainer,
@@ -24,6 +24,8 @@ const useStyles = makeStyles(theme => ({
   },
   virtualScroller: {
     backgroundColor: '#fff',
+    scrollbarWidth: 'thin', // firefox only
+    scrollbarColor: `${ theme.palette.primary.dark } ${ theme.palette.grey[100] }`, // firefox only
   },
   footerContainer: {
     borderTop: `2px solid ${ theme.palette.primary.main }`,
@@ -45,7 +47,7 @@ const escapeRegExp = value => value.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')
 
 //
 
-const QuickSearchToolbar = ({ value, onChange, clearSearch }) => {
+const QuickSearchToolbar = ({ value, onChange, clearSearch, count }) => {
   const theme = useTheme()
   const { drawerOpen } = useDrawer()
   const searchInputRef = useRef()
@@ -57,31 +59,44 @@ const QuickSearchToolbar = ({ value, onChange, clearSearch }) => {
   }, [drawerOpen])
 
   return (
-    <TextField
-      sx={{
-        borderBottom: `2px solid ${ theme.palette.primary.main }`,
-      }}
-      fullWidth
-      inputRef={ searchInputRef }
-      value={ value }
-      onChange={ onChange }
-      placeholder="Search…"
-      InputProps={{
-        style: { height: '80px', fontSize: '150%', },
-        startAdornment: <SearchIcon fontSize="small" sx={{ marginRight: theme.spacing(1) }} />,
-        endAdornment: (
-          <IconButton
-            title="Clear"
-            aria-label="Clear"
-            size="small"
-            style={{ visibility: value ? 'visible' : 'hidden' }}
-            onClick={ clearSearch }
-          >
-            <ClearIcon fontSize="small" />
-          </IconButton>
-        ),
-      }}
-    />
+    <Fragment>
+      <TextField
+        fullWidth
+        variant="standard"
+        inputRef={ searchInputRef }
+        value={ value }
+        onChange={ onChange }
+        placeholder="Search…"
+        InputProps={{
+          style: { height: '80px', fontSize: '150%', },
+          startAdornment: <SearchIcon fontSize="small" sx={{ margin: theme.spacing(1) }} />,
+          endAdornment: (
+            <IconButton
+              title="Clear"
+              aria-label="Clear"
+              size="small"
+              style={{ visibility: value ? 'visible' : 'hidden' }}
+              onClick={ clearSearch }
+              sx={{ margin: theme.spacing(1) }}
+            >
+              <ClearIcon fontSize="small" />
+            </IconButton>
+          ),
+        }}
+      />
+      <Box sx={{
+        backgroundColor: '#fff',
+        padding: theme.spacing(1),
+        textAlign: 'right',
+        borderBottom: `1px solid ${ theme.palette.primary.main }`,
+      }}>
+        {
+          value === ''
+            ? `${ count } total terms`
+            : `${ count } matches for "${ value }"`
+        }
+      </Box>
+    </Fragment>
   )
 }
 
@@ -89,6 +104,7 @@ QuickSearchToolbar.propTypes = {
   clearSearch: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
+  count: PropTypes.number.isRequired,
 }
 
 //
@@ -183,9 +199,9 @@ export const TermsView = () => {
         classes={ dataGridClasses }
         rows={ !ontology.loading ? rows.map(term => ({ ...term, id: term.short_form })) : [] }
         columns={ columns }
-        pageSize={ 20 }
-        rowsPerPageOptions={ [20] }
-        rowHeight={ 90 }
+        pageSize={ 25 }
+        rowsPerPageOptions={ [25] }
+        rowHeight={ 75 }
         headerHeight={ 0 }
         components={{
           Toolbar: QuickSearchToolbar,
@@ -198,6 +214,7 @@ export const TermsView = () => {
             value: searchText,
             onChange: event => requestSearch(event.target.value),
             clearSearch: () => requestSearch(''),
+            count: rows.length,
           },
         }}
       />
