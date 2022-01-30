@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types'
-import { Box, Divider, Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import { Container } from './container'
 
 const useStyles = makeStyles(theme => ({
   wrapper: {

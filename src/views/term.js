@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import { Button, CircularProgress, Typography } from '@mui/material'
+import { Button, CircularProgress } from '@mui/material'
 import {
   CheckBox as CheckedIcon,
   CheckBoxOutlineBlank as UncheckedIcon,
