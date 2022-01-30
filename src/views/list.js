@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles, useTheme } from '@mui/styles'
-import { Box, Button, IconButton, TextField, Tooltip } from '@mui/material'
+import { Box, Button, IconButton, TextField, Tooltip, Typography } from '@mui/material'
 import {
   DataGrid, 
   GridFooterContainer,
   GridPagination,
 } from '@mui/x-data-grid'
+import { LoadingButton } from '@mui/lab'
 import { TermCard } from '../components/search'
 import {
   Clear as ClearIcon,
@@ -15,6 +16,7 @@ import {
 } from '@mui/icons-material'
 import { useOntology } from '../components/ontology'
 import { useDrawer } from '../components/drawer'
+import TimeAgo from 'timeago-react'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -37,9 +39,11 @@ const columns = [
   { field: 'iri',                    headerName: 'iri',                   width: 300,     editable: false,      type: 'string',    hide: true },
 ]
 
-function escapeRegExp(value) {
-  return value.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')
-}
+//
+
+const escapeRegExp = value => value.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')
+
+//
 
 const QuickSearchToolbar = ({ value, onChange, clearSearch }) => {
   const theme = useTheme()
@@ -84,30 +88,67 @@ QuickSearchToolbar.propTypes = {
   value: PropTypes.string.isRequired,
 }
 
+//
+
 const CustomFooter = () => {
+  const theme = useTheme()
+  const ontology = useOntology()
+
+  const handleClickSync = () => {
+    ontology.fetchAllTerms()
+  }
+
   return (
     <GridFooterContainer>
       <Box sx={{
-        border: '1px dashed crimson',
-        width: '100',
         flex: 1,
         display: 'flex',
         justifyContent: 'space-between',
       }}>
-        <Tooltip title="Sync NeuroBridge Ontology" placement="right">
-          <Button square><SyncIcon /></Button>
-        </Tooltip>
+        <Box sx={{
+          flex: 1,
+          display: 'flex',
+          justifyContent: 'flex-start',
+          alignItems: 'stretch',
+          gap: theme.spacing(1),
+        }}>
+          <Tooltip title="Sync NeuroBridge Ontology" placement="right">
+            <span>
+              <LoadingButton
+                onClick={ handleClickSync }
+                loading={ ontology.loading }
+                sx={{ height: '100%' }}
+              >
+                <SyncIcon />
+              </LoadingButton>
+            </span>
+          </Tooltip>
+          <Box sx={{
+            fontSize: '75%',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'flex-start',
+          }}>
+            Last sync:<br />
+            <TimeAgo datetime={ ontology.lastSyncTime } />
+          </Box>
+        </Box>
         <GridPagination />
       </Box>
     </GridFooterContainer>
   )
 }
 
+//
+
 const TermRow = ({ row }) => <TermCard term={ row } />
 
 TermRow.propTypes = {
   row: PropTypes.object.isRequired,
 }
+
+//
 
 export const ListView = () => {
   const ontology = useOntology()
@@ -137,7 +178,7 @@ export const ListView = () => {
       <DataGrid
         loading={ ontology.loading }
         classes={ dataGridClasses }
-        rows={ rows.map(term => ({ ...term, id: term.short_form })) }
+        rows={ !ontology.loading ? rows.map(term => ({ ...term, id: term.short_form })) : [] }
         columns={ columns }
         pageSize={ 20 }
         rowsPerPageOptions={ [20] }
