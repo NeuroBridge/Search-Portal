@@ -67,6 +67,9 @@ const useStyles = makeStyles(theme => {
       color: theme.palette.common.white,
       writingMode: 'vertical-lr',
       transform: 'rotate(180deg)',
+      display: 'flex',
+      flexDirection: 'row',
+      gap: theme.spacing(3),
     },
     drawerButton: {
       padding: 0,
@@ -111,25 +114,16 @@ export const Drawer = ({ title, children }) => {
         onDragStart={ handleDragDrawerResizeHandle }
         onDrag={ handleGrabDrawerResizeHandle }
       >
-        {
-          drawerOpen
-          ? (
-            <Tooltip title="Close drawer" placement="right">
-              <Button onClick={ toggleOpen } className={ classes.drawerButton }>
-                <OpenDrawerIcon sx={{ color: '#fff' }} />
-              </Button>
-            </Tooltip>
-          ) : (
-            <Tooltip title="Open drawer" placement="right">
-              <Button onClick={ toggleOpen } className={ classes.drawerButton }>
-                <CloseDrawerIcon sx={{ color: '#fff' }} />
-              </Button>
-            </Tooltip>
-          )
-        }
-        <Button className={ classes.drawerTitleButton } onClick={ toggleOpen }>
-          { title }
-        </Button>
+        <Tooltip title={ `${ drawerOpen ? 'Close' : 'Open' } drawer` } placement="right">
+          <Button className={ classes.drawerTitleButton } onClick={ toggleOpen }>
+            { title }
+            {
+              drawerOpen
+                ? <CloseDrawerIcon sx={{ color: '#fff' }} />
+                : <OpenDrawerIcon sx={{ color: '#fff' }} />
+            }
+          </Button>
+        </Tooltip>
         <div className={ classes.actions }>
           <Tooltip title={ `${ drawerLocked ? 'Unlock' : 'Lock' } drawer postiion` } placement="right">
             <Button onClick={ toggleLocked } className={ classes.drawerButton }>

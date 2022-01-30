@@ -56,6 +56,7 @@ const QuickSearchToolbar = ({ value, onChange, clearSearch }) => {
       onChange={ onChange }
       placeholder="Search…"
       InputProps={{
+        style: { height: '80px' },
         startAdornment: <SearchIcon fontSize="small" />,
         endAdornment: (
           <IconButton

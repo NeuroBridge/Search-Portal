@@ -107,7 +107,12 @@ export const App = () => {
       <div className={ classes.watermark } />
       <OntologyProvider>
         <SearchContextProvider>
-          <main className={ classes.main } style={{ paddingLeft: drawerOpen ? `calc(${ drawerWidth }px + 4rem)` : '4rem' }}>
+          <main
+            className={ classes.main }
+            style={{
+              paddingLeft: drawerOpen ? `calc(${ drawerWidth }px + 2rem)` : '2rem'
+            }}
+          >
             <Router>
               <QueryBuilderView exact path="/" />
               <ResultsView exact path="/results" />
@@ -115,7 +120,7 @@ export const App = () => {
               <NotFoundView default />
             </Router>
           </main>
-          <Drawer title="Search Drawer">
+          <Drawer title="Term Drawer">
             <ListView />
           </Drawer>
         </SearchContextProvider>

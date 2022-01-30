@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Avatar,
   Button,
   Card, CardHeader, CardContent,
@@ -156,8 +156,7 @@ export const QueryBuilderView = () => {
   }
 
   return (
-    <Container>
-      
+    <Fragment>
       <PageHeader
         title="Query Builder"
         subtitle="subtitle"
@@ -170,17 +169,15 @@ export const QueryBuilderView = () => {
           </Tooltip>,
         ]}
       />
+      <Container>
+        <SelectionForest />
 
-      <br /><br />
+        <br /><br /><br /><br />
+        <Divider>Query</Divider>
+        <br /><br /><br /><br />
 
-      <SelectionForest />
-
-      <br /><br /><br /><br />
-      <Divider>Query</Divider>
-      <br /><br /><br /><br />
-
-      <QueryCard />
-
-    </Container>
+        <QueryCard />
+      </Container>
+    </Fragment>
   )
 }

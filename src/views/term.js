@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Button, CircularProgress, Typography } from '@mui/material'
 import {
@@ -48,23 +48,26 @@ export const TermView = () => {
   }
 
   return (
-    <Container>
+    <Fragment>
       <PageHeader
-        title={ `Term: ${ term.label }` }
+        title={ term.label }
         subtitle={ term.short_form }
         actions={[
-          <Button key="toggle-root-selelction-button" onClick={ () => toggleRootSelection(term) }>
+          <Button
+            key="toggle-root-selection-button"
+            onClick={ () => toggleRootSelection(term) }
+          >
             { term.short_form in roots ? <CheckedIcon color="success" /> : <UncheckedIcon color="default" /> }
           </Button>
         ]}
       />
-      
-      <Typography variant="h2">Term: { short_form }</Typography>
 
-      {
-        term && <TermDetails term={ term } />
-      }
-
-    </Container>
+      <Container>
+        <Typography variant="h2">Term: { short_form }</Typography>
+        {
+          term && <TermDetails term={ term } />
+        }
+      </Container>
+    </Fragment>
   )
 }
