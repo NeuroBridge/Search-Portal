@@ -1,12 +1,17 @@
 import { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles, useTheme } from '@mui/styles'
-import { IconButton, TextField } from '@mui/material'
-import { DataGrid } from '@mui/x-data-grid'
+import { Box, Button, IconButton, TextField, Tooltip } from '@mui/material'
+import {
+  DataGrid, 
+  GridFooterContainer,
+  GridPagination,
+} from '@mui/x-data-grid'
 import { TermCard } from '../components/search'
 import {
   Clear as ClearIcon,
   Search as SearchIcon,
+  Sync as SyncIcon,
 } from '@mui/icons-material'
 import { useOntology } from '../components/ontology'
 import { useDrawer } from '../components/drawer'
@@ -79,6 +84,25 @@ QuickSearchToolbar.propTypes = {
   value: PropTypes.string.isRequired,
 }
 
+const CustomFooter = () => {
+  return (
+    <GridFooterContainer>
+      <Box sx={{
+        border: '1px dashed crimson',
+        width: '100',
+        flex: 1,
+        display: 'flex',
+        justifyContent: 'space-between',
+      }}>
+        <Tooltip title="Sync NeuroBridge Ontology" placement="right">
+          <Button square><SyncIcon /></Button>
+        </Tooltip>
+        <GridPagination />
+      </Box>
+    </GridFooterContainer>
+  )
+}
+
 const TermRow = ({ row }) => <TermCard term={ row } />
 
 TermRow.propTypes = {
@@ -123,6 +147,7 @@ export const ListView = () => {
           Toolbar: QuickSearchToolbar,
           Row: TermRow,
           NoRowsOverlay: () => '',
+          Footer: CustomFooter,
         }}
         componentsProps={{
           toolbar: {
