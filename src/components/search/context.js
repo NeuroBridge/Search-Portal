@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 import { useOntology } from '../ontology'
+import { navigate } from '@reach/router'
 
 const SearchContext = createContext({})
 
@@ -77,6 +78,7 @@ export const SearchContextProvider = ({ children }) => {
         setRoots(newRoots)
       }
     })
+    navigate('/')
   }, [roots])
 
   /**
