@@ -49,10 +49,7 @@ const useStyles = makeStyles(theme => ({
 
 export const QueryBuilderView = () => {
   const classes = useStyles()
-  const {
-    roots, rootsCount, selectedTermsCount,
-    clearRootSelection, clearTermSelection, startOver,
-  } = useSearchContext()
+  const { rootsCount, clearRootSelection, clearTermSelection } = useSearchContext()
   const [sent, setSent] = useState(false)
 
   /* temporary faking term send request */
@@ -61,10 +58,6 @@ export const QueryBuilderView = () => {
     const resetSend = setTimeout(() => setSent(false), 5000)
     return () => clearTimeout(resetSend)
   }, [sent])
-
-  const handleStartOver = () => {
-    startOver()
-  }
 
   // const PageHeader = useCallback(() => {
   //   return (

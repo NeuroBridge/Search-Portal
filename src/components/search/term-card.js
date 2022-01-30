@@ -76,7 +76,7 @@ export const TermCard = ({ term }) => {
   const classes = useStyles()
   const { roots, toggleRootSelection } = useSearchContext()
 
-  const handleToggleRoot = root => event => {
+  const handleToggleRoot = root => () => {
     toggleRootSelection(root)
     navigate('/')
   }
