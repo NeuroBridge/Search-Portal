@@ -16,7 +16,7 @@ const getParameterByName = (name, url) => {
   return match && decodeURIComponent(match[1].replace(/\+/g, ' '))
 }
 
-const TermDetails = term => (
+const TermDetails = ({ term })=> (
   <pre style={{ backgroundColor: '#33333311', overflow: 'auto', padding: '1rem' }}>
     { JSON.stringify(term, null, 2) }
   </pre>
@@ -63,7 +63,6 @@ export const TermView = () => {
       />
 
       <Container>
-        <Typography variant="h2">Term: { short_form }</Typography>
         {
           term && <TermDetails term={ term } />
         }
