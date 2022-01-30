@@ -58,15 +58,17 @@ const QuickSearchToolbar = ({ value, onChange, clearSearch }) => {
 
   return (
     <TextField
-      sx={{ borderBottom: `2px solid ${ theme.palette.primary.main }` }}
+      sx={{
+        borderBottom: `2px solid ${ theme.palette.primary.main }`,
+      }}
       fullWidth
       inputRef={ searchInputRef }
       value={ value }
       onChange={ onChange }
       placeholder="Search…"
       InputProps={{
-        style: { height: '80px' },
-        startAdornment: <SearchIcon fontSize="small" />,
+        style: { height: '80px', fontSize: '150%', },
+        startAdornment: <SearchIcon fontSize="small" sx={{ marginRight: theme.spacing(1) }} />,
         endAdornment: (
           <IconButton
             title="Clear"
