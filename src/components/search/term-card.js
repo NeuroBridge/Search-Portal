@@ -46,7 +46,8 @@ const useStyles = makeStyles(theme => ({
       filter: 'opacity(1.0)',
     }
   },
-  secondaryActionArea: {
+  inspectLink: {
+    minWidth: '3rem',
     maxWidth: '3rem',
     minHeight: '100%',
     padding: 0,
@@ -103,9 +104,9 @@ export const TermCard = ({ term }) => {
             : <AddIcon className={ classes.addTermButton } />
         }
       </CardActionArea>
-      <CardActionArea as={ Link } to={ `/term?id=${ term.short_form }` } className={ classes.secondaryActionArea }>
+      <Link to={ `/term?id=${ term.short_form }` } className={ classes.inspectLink }>
         <InspectIcon color="primary" />
-      </CardActionArea>
+      </Link>
     </Card>
   )
 }
