@@ -37,6 +37,8 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(2),
     flex: 1,
     overflowX: 'auto',
+    scrollbarWidth: 'thin', // firefox only
+    scrollbarColor: `${ theme.palette.primary.dark } ${ theme.palette.grey[100] }`, // firefox only
   },
   mainActionArea: {
     whiteSpace: 'nowrap',
