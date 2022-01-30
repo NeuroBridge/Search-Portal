@@ -8,11 +8,11 @@ import { useSearchContext } from './components/search'
 import { Drawer, useDrawer } from './components/drawer'
 import neuroBridgeBackground from './images/nbbg.jpeg'
 import {
-  ListView,
   NotFoundView,
   ResultsView,
   QueryBuilderView,
   TermView,
+  TermsView,
 } from './views'
 import { OntologyProvider } from './components/ontology'
 import { SearchContextProvider } from './components/search'
@@ -121,7 +121,7 @@ export const App = () => {
             </Router>
           </main>
           <Drawer title="Term Drawer">
-            <ListView />
+            <TermsView />
           </Drawer>
         </SearchContextProvider>
       </OntologyProvider>
