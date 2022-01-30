@@ -51,7 +51,7 @@ export const SearchContextProvider = ({ children }) => {
         let queue = [root]
         while (queue.length > 0) {
           const t = queue.pop()
-          const children = await ontology.fetchDhildren(t)
+          const children = await ontology.fetchChildren(t)
           queue = [...children, ...queue]
           relations = [
             ...relations,
