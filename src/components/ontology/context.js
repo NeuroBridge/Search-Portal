@@ -18,7 +18,7 @@ const OntologyContext = createContext({})
  */
 
 const api = {
-  children: async term => {
+  fetchChildren: async term => {
     const q = encodeURIComponent(encodeURIComponent(term.iri))
     try {
       const { data } = await axios.get(`${ API_ROOT }/ontologies/${ ONTOLOGY_NAME }/terms/${ q }/children?size=250`)
@@ -33,7 +33,7 @@ const api = {
     }
     return []
   },
-  descendants: async term => {
+  fetchDescendants: async term => {
     const q = encodeURIComponent(encodeURIComponent(term.iri))
     try {
       const { data } = await axios.get(`${ API_ROOT }/ontologies/${ ONTOLOGY_NAME }/terms/${ q }/descendants?size=250`)
@@ -51,8 +51,10 @@ const api = {
 }
 
 export const OntologyProvider = ({ children }) => {
+  const { fetchChildren, fetchDescendants } = api
   const [terms, setTerms] = useState([])
   const [loading, setLoading] = useState(false)
+  const [lastSyncTime, setLastSyncTime] = useState()
 
   const fetchAllTerms = useCallback(async () => {
     setLoading(true)
@@ -71,6 +73,7 @@ export const OntologyProvider = ({ children }) => {
       console.error(error)
     } finally {
       setLoading(false)
+      setLastSyncTime(Date.now())
     }
     return terms
   }, [])
@@ -90,7 +93,11 @@ export const OntologyProvider = ({ children }) => {
   }, [])
 
   return (
-    <OntologyContext.Provider value={{ api, terms, loading }}>
+    <OntologyContext.Provider value={{
+      terms, loading,
+      fetchAllTerms, fetchChildren, fetchDescendants,
+      lastSyncTime,
+    }}>
       { children }
     </OntologyContext.Provider>
   )

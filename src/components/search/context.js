@@ -44,14 +44,14 @@ export const SearchContextProvider = ({ children }) => {
     const constructTreeRelations = async root => {
       let relations = [{ id: root.short_form, parentId: '', value: 0 }]
       try {
-        const descendants = await ontology.api.descendants(root)
+        const descendants = await ontology.fetchDescendants(root)
         if (!descendants.length) {
           return relations
         }
         let queue = [root]
         while (queue.length > 0) {
           const t = queue.pop()
-          const children = await ontology.api.children(t)
+          const children = await ontology.fetchDhildren(t)
           queue = [...children, ...queue]
           relations = [
             ...relations,
