@@ -199,9 +199,9 @@ export const TermsView = () => {
         classes={ dataGridClasses }
         rows={ !ontology.loading ? rows.map(term => ({ ...term, id: term.short_form })) : [] }
         columns={ columns }
-        pageSize={ 20 }
-        rowsPerPageOptions={ [20] }
-        rowHeight={ 90 }
+        pageSize={ 25 }
+        rowsPerPageOptions={ [25] }
+        rowHeight={ 75 }
         headerHeight={ 0 }
         components={{
           Toolbar: QuickSearchToolbar,
