@@ -4,19 +4,26 @@ import { makeStyles } from '@mui/styles'
 
 const useStyles = makeStyles(theme => ({
   container: {
-    // border: '1px dashed crimson',
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginBottom: theme.spacing(5),
   },
+  titles: {
+    flex: '1 !important',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'stretch',
+  },
   title: {
-    // border: '1px dotted navy',
+    display: 'block',
   },
   subtitle: {
-    // border: '1px dotted rebeccapurple',
+    display: 'block',
   },
   actions: {
-    // border: '1px dotted lightgreen',
+    display: 'flex',
+    flexDirection: 'row',
   },
 }))
 
@@ -25,19 +32,13 @@ export const PageHeader = ({ title, subtitle, actions }) => {
 
   return (
     <Box className={ classes.container }>
-      <Box className={ classes.title }>
-        {
-          typeof title === 'string'
-          ? <Typography variant="h1">{ title }</Typography>
-          : title
-        }
-      </Box>
-      <Box className={ classes.subtitle }>
-        {
-          typeof subtitle === 'string'
-          ? <Typography variant="h2">{ subtitle }</Typography>
-          : title
-        }
+      <Box className={ classes.titles }>
+        <Box className={ classes.title }>
+          <Typography variant="h1">{ title }</Typography>
+        </Box>
+        <Box className={ classes.subtitle }>
+          <Typography variant="h2">{ subtitle }</Typography>
+        </Box>
       </Box>
       <Box className={ classes.actions }>
         { actions }
@@ -47,7 +48,7 @@ export const PageHeader = ({ title, subtitle, actions }) => {
   )
 }
 PageHeader.propTypes = {
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
-  subtitle: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
+  title: PropTypes.string,
+  subtitle: PropTypes.string,
   actions: PropTypes.arrayOf(PropTypes.node),
 }

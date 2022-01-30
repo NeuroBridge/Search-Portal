@@ -109,7 +109,7 @@ export const TreeCard = ({ root }) => {
     <Card variant="outlined">
       <CardHeader
         disableTypography
-        title={ <span>{ tree.data.id } { count > 0 ? `(${ count } selections)` : '' }</span> }
+        title={ <span>{ tree.data.id } { count > 0 ? `(${ count } selected)` : '' }</span> }
         className={ classes.header }
         action={
           <Tooltip title="Remove this term" placement="left">

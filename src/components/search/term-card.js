@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { navigate } from '@reach/router'
 import {
   Card, CardActionArea, CardContent,
   Typography,
@@ -75,36 +75,38 @@ export const TermCard = ({ term }) => {
   const classes = useStyles()
   const { roots, toggleRootSelection } = useSearchContext()
 
+  const handleToggleRoot = root => event => {
+    toggleRootSelection(root)
+    navigate('/')
+  }
+
   return (
-    <Fragment>
-      <Card
-        square
-        variant="outlined"
-        className={ `${ classes.termCard } ${ term.short_form in roots ? classes.selected : undefined }` }
-      >
-        <CardActionArea onClick={ () => toggleRootSelection(term) } className={ classes.mainActionArea }>
-          <CardContent className={ classes.content }>
-            <Typography color="textPrimary">
-              <strong>label:</strong> { term.label }
-            </Typography>
-            <Typography variant="caption" color="textPrimary">
-              <strong>short_form:</strong> <em>{ term.short_form }</em>
-            </Typography><br/>
-            <Typography variant="caption" color="textSecondary">
-              <strong>comment_annotation:</strong> { term.comment_annotation ? term.comment_annotation : 'none provided' }
-            </Typography>
-          </CardContent>
-          {
-            term.short_form in roots
-              ? <AddedIcon className={ classes.addTermButton } color="success" style={{ filter: 'opacity(1)' }} />
-              : <AddIcon className={ classes.addTermButton } />
-          }
-        </CardActionArea>
-        <CardActionArea as={ Link } to={ `/term?id=${ term.short_form }` } className={ classes.secondaryActionArea }>
-          <InspectIcon color="primary" />
-        </CardActionArea>
-      </Card>
-    </Fragment>
+    <Card
+      variant="outlined"
+      className={ `${ classes.termCard } ${ term.short_form in roots ? classes.selected : undefined }` }
+    >
+      <CardActionArea onClick={ handleToggleRoot(term) } className={ classes.mainActionArea }>
+        <CardContent className={ classes.content }>
+          <Typography color="textPrimary">
+            <strong>label:</strong> { term.label }
+          </Typography>
+          <Typography variant="caption" color="textPrimary">
+            <strong>short_form:</strong> <em>{ term.short_form }</em>
+          </Typography><br/>
+          <Typography variant="caption" color="textSecondary">
+            <strong>comment_annotation:</strong> { term.comment_annotation ? term.comment_annotation : 'none provided' }
+          </Typography>
+        </CardContent>
+        {
+          term.short_form in roots
+            ? <AddedIcon className={ classes.addTermButton } color="success" style={{ filter: 'opacity(1)' }} />
+            : <AddIcon className={ classes.addTermButton } />
+        }
+      </CardActionArea>
+      <CardActionArea as={ Link } to={ `/term?id=${ term.short_form }` } className={ classes.secondaryActionArea }>
+        <InspectIcon color="primary" />
+      </CardActionArea>
+    </Card>
   )
 }
 

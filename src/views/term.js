@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import { CircularProgress, IconButton, Typography } from '@mui/material'
+import { Button, CircularProgress, Typography } from '@mui/material'
 import {
   CheckBox as CheckedIcon,
   CheckBoxOutlineBlank as UncheckedIcon,
@@ -16,13 +16,11 @@ const getParameterByName = (name, url) => {
   return match && decodeURIComponent(match[1].replace(/\+/g, ' '))
 }
 
-const TermDetails = term => {
-  return (
-    <pre style={{ backgroundColor: '#33333311', overflow: 'auto', padding: '1rem' }}>
-      { JSON.stringify(term, null, 2) }
-    </pre>
-  )
-}
+const TermDetails = term => (
+  <pre style={{ backgroundColor: '#33333311', overflow: 'auto', padding: '1rem' }}>
+    { JSON.stringify(term, null, 2) }
+  </pre>
+)
 
 TermDetails.propTypes = {
   term: PropTypes.object.isRequired,
@@ -55,9 +53,9 @@ export const TermView = () => {
         title={ `Term: ${ term.label }` }
         subtitle={ term.short_form }
         actions={[
-          <IconButton key="toggle-root-selelction-button" onClick={ () => toggleRootSelection(term) }>
+          <Button key="toggle-root-selelction-button" onClick={ () => toggleRootSelection(term) }>
             { term.short_form in roots ? <CheckedIcon color="success" /> : <UncheckedIcon color="default" /> }
-          </IconButton>
+          </Button>
         ]}
       />
       

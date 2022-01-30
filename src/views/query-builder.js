@@ -1,9 +1,8 @@
-import { Fragment, useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Avatar,
+  Button,
   Card, CardHeader, CardContent,
   Divider,
-  Grid,
-  IconButton,
   List, ListItem, ListItemAvatar, ListItemText,
   Tooltip,
   Typography,
@@ -166,9 +165,18 @@ export const QueryBuilderView = () => {
   return (
     <Container>
       
-      <PageHeader>
-        what
-      </PageHeader>
+      <PageHeader
+        title="Query Builder"
+        subtitle="subtitle"
+        actions={[
+          <Tooltip key="start-over-button" title="Start Over" placement="bottom">
+            <Button onClick={ clearRootSelection }><StartOverIcon /></Button>
+          </Tooltip>,
+          <Tooltip key="clear-selection-button" title="Clear Term Selection" placement="bottom">
+            <Button onClick={ clearTermSelection }><ClearSelectionIcon /></Button>
+          </Tooltip>,
+        ]}
+      />
 
       <br /><br />
 
