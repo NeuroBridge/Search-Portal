@@ -47,6 +47,13 @@ const TermDetails = ({ term })=> (
         </Card>
       ))
     }
+
+    <br />
+    
+    <Typography paragraph>
+      For reference, the raw term object is shown below.
+    </Typography>
+
     <pre style={{ backgroundColor: '#33333311', overflow: 'auto', padding: '1rem' }}>
       { JSON.stringify(term, null, 2) }
     </pre>
