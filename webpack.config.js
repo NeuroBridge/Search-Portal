@@ -80,6 +80,7 @@ module.exports = {
   devtool: 'source-map',
 
   devServer: {
+    open: true,
     contentBase: './dist',
     historyApiFallback: true,
     hot: true,
