@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import { Button, CircularProgress } from '@mui/material'
+import { Button, Typography } from '@mui/material'
 import {
   CheckBox as CheckedIcon,
   CheckBoxOutlineBlank as UncheckedIcon,
@@ -44,14 +44,23 @@ export const TermView = () => {
   }, [location, ontology])
 
   if (!term) {
-    return <CircularProgress />
+    return (
+      <Fragment>
+        <PageHeader title={ <span>Unable to find term <code>{ short_form }</code></span> } />
+
+        <Container>
+          <Typography paragraph>
+            Oh no! The term with short_form <code>{ short_form }</code> could not be located in the NeuroBridge ontology.
+          </Typography>
+        </Container>
+      </Fragment>
+    )
   }
 
   return (
     <Fragment>
       <PageHeader
         title={ term.label }
-        subtitle={ term.short_form }
         actions={[
           <Button
             key="toggle-root-selection-button"
@@ -63,9 +72,7 @@ export const TermView = () => {
       />
 
       <Container>
-        {
-          term && <TermDetails term={ term } />
-        }
+        <TermDetails term={ term } />
       </Container>
     </Fragment>
   )
