@@ -6,6 +6,7 @@ const useStyles = makeStyles(theme => ({
     maxWidth: ({maxWidth}) => maxWidth,
     margin: 'auto',
     padding: theme.spacing(4),
+    position: 'relative',
   },
 }))
 
