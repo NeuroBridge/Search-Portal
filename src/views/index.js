@@ -1,3 +1,4 @@
+export * from './about'
 export * from './not-found'
 export * from './workspace'
 export * from './results'
