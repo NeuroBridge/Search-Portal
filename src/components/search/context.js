@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
+import axios from 'axios'
 import { useOntology } from '../ontology'
 
 const SearchContext = createContext({})
@@ -42,7 +43,7 @@ export const SearchContextProvider = ({ children }) => {
   useEffect(async () => {
     // first, though, an async function to communicate with the api.
     const constructTreeRelations = async root => {
-      let relations = [{ id: root.short_form, parentId: '', value: 0 }]
+      let relations = [{ id: root.label, parentId: '', value: 0 }]
       try {
         const descendants = await ontology.fetchDescendants(root)
         if (!descendants.length) {
@@ -56,8 +57,8 @@ export const SearchContextProvider = ({ children }) => {
           relations = [
             ...relations,
             ...children.map(child => ({
-              id: child.short_form,
-              parentId: t.short_form,
+              id: child.label,
+              parentId: t.label,
               value: 0,
             })),
           ]
@@ -190,33 +191,31 @@ export const SearchContextProvider = ({ children }) => {
 
   //
 
-  const query = useMemo(() => {
-    // sqlLike query
-    let sqlLike = 'SELECT\n'
-    sqlLike += Object.keys(roots).map(short_form => {
+  const neuroquery = useCallback(async () => {
+    const searchTerms = Object.keys(roots).map(short_form => {
       const selectedTermsCount = rootSelectedTermsCount(short_form)
       if (!selectedTermsCount) {
         return ''
       }
-      return '  (' + roots[short_form].relations
+      return roots[short_form].relations
         .filter(rel => rel.value > 0)
-        .map(rel => ({ operator: rel.operator, id: rel.id, value: rel.value }))
-        .map((rel, i) => {
-          const prefix = i === 0 ? '' : rel.value === 1 ? `OR` : `OR NOT`
-          return `${ prefix } ${ rel.id }`
-        })
-        .join(' ') + ' )' 
-    }).join(` AND \n`)
-    
-    // neuroQuery query
-    const selectedTerms = Object.keys(roots).reduce((terms, short_form) => {
-      const thisRootsTerms = rootSelectedTermsCount(short_form) === 0 ? [] : roots[short_form].relations.map(rel => rel.id)
-      return [...terms, ...thisRootsTerms]
-    }, [])
-    const neuroQuery = `SELECT\n  ` + selectedTerms.join(' AND\n  ')
+        .map(rel => rel.id)
+        .join('+')
+    }).join('+')
 
-    return { sqlLike, neuroQuery }
-  }, [roots])
+    try {
+      console.log(searchTerms)
+      const response = await axios.get(`https://neurobridges.renci.org:13374/query`, { params: { searchTerms: searchTerms } })
+      console.log(response)
+      if (!response?.data?.data) {
+        throw new Error('An error occurred while querying Neruoquery.')
+      }
+      return response.data.data
+    } catch (error) {
+      console.log(error)
+      return []
+    }
+  }, [roots, selectedTermsCount])
 
   /**
    *
@@ -233,7 +232,7 @@ export const SearchContextProvider = ({ children }) => {
         rootSelectedTermsCount, rootHasTermSelected, selectedTermsCount, termValue,
         toggleTermSelection, clearTermSelection,
         startOver,
-        query,
+        neuroquery,
       }}
     >
       { children }

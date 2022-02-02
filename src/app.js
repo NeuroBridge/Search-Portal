@@ -8,6 +8,7 @@ import { useSearchContext } from './components/search'
 import { Drawer, useDrawer } from './components/drawer'
 import neuroBridgeBackground from './images/nbbg.jpeg'
 import {
+  AboutView,
   NotFoundView,
   ResultsView,
   WorkspaceView,
@@ -95,18 +96,18 @@ export const App = () => {
   }, [drawerOpen])
 
   return (
-    <div className={ classes.app }>
-      <AppBar position="fixed" sx={{ zIndex: '1300' }}>
-        <Toolbar disableGutters className={ classes.toolbar }>
-          <Typography variant="h6" align={ mobile ? 'center' : 'left' } className={ classes.title }>
-            <Link to="/" onClick={ resetSearch }>NeuroBridge</Link>
-          </Typography>
-          { compact ? <MobileMenu /> : <Menu /> }
-        </Toolbar>
-      </AppBar>
-      <div className={ classes.watermark } />
-      <OntologyProvider>
-        <SearchContextProvider>
+    <OntologyProvider>
+      <SearchContextProvider>
+        <div className={ classes.app }>
+          <AppBar position="fixed" sx={{ zIndex: '1300' }}>
+            <Toolbar disableGutters className={ classes.toolbar }>
+              <Typography variant="h6" align={ mobile ? 'center' : 'left' } className={ classes.title }>
+                <Link to="/" onClick={ resetSearch }>NeuroBridge</Link>
+              </Typography>
+              { compact ? <MobileMenu /> : <Menu /> }
+            </Toolbar>
+          </AppBar>
+          <div className={ classes.watermark } />
           <main
             className={ classes.main }
             style={{
@@ -114,8 +115,9 @@ export const App = () => {
             }}
           >
             <Router>
+              <AboutView exact path="/about" />
               <WorkspaceView exact path="/" />
-              <ResultsView exact path="/results" />
+              <ResultsView exact path="/results/:type" />
               <TermView exact path="/term" />
               <NotFoundView default />
             </Router>
@@ -123,8 +125,8 @@ export const App = () => {
           <Drawer title="Term Drawer">
             <TermsView />
           </Drawer>
+        </div>
         </SearchContextProvider>
       </OntologyProvider>
-    </div>
   )
 }

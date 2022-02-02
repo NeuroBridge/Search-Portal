@@ -52,6 +52,6 @@ export const PageHeader = ({ title, actions }) => {
   )
 }
 PageHeader.propTypes = {
-  title: PropTypes.string,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   actions: PropTypes.arrayOf(PropTypes.node),
 }
