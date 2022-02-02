@@ -1,5 +1,7 @@
 import { Link } from "@reach/router";
 import { makeStyles } from '@mui/styles'
+import { Badge } from '@mui/material'
+import { useSearchContext } from '../search'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -38,9 +40,15 @@ const NavLink = props => {
 
 export const Menu = () => {
   const classes = useStyles()
+  const { rootsCount } = useSearchContext()
+
   return (
     <nav className={ classes.root }>
-      <NavLink to="/">Search</NavLink>
+      <NavLink to="/">
+        <Badge badgeContent={ rootsCount } color="secondary">
+          Workspace 
+        </Badge>
+      </NavLink>
     </nav>
   )
 
