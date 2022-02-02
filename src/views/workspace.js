@@ -1,4 +1,5 @@
 import { Fragment, useEffect, useState } from 'react'
+import { navigate } from '@reach/router'
 import { Avatar,
   Button,
   Card, CardHeader, CardContent,
@@ -15,9 +16,10 @@ import {
   Looks3 as StepThreeIcon,
   Looks4 as StepFourIcon,
   Looks5 as StepFiveIcon,
+  Send as SendIcon,
 } from '@mui/icons-material'
 import makeStyles from '@mui/styles/makeStyles'
-import { useSearchContext, SelectionForest, QueryCard } from '../components/search'
+import { useSearchContext, SelectionForest } from '../components/search'
 import { Container } from '../components/container'
 import { PageHeader } from '../components/page-header'
 
@@ -175,7 +177,17 @@ export const WorkspaceView = () => {
         <Divider>Query</Divider>
         <br /><br /><br /><br />
 
-        <QueryCard />
+        <Button
+          variant="contained"
+          color="secondary"
+          size="large"
+          endIcon={ <SendIcon /> }
+          style={{ boxShadow: 'none' }}
+          onClick={ () => navigate('/results/neuroquery') }
+        >
+          NeuroQuery
+        </Button>
+
       </Container>
     </Fragment>
   )

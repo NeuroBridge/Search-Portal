@@ -117,7 +117,7 @@ export const App = () => {
             <Router>
               <AboutView exact path="/about" />
               <WorkspaceView exact path="/" />
-              <ResultsView exact path="/results" />
+              <ResultsView exact path="/results/:type" />
               <TermView exact path="/term" />
               <NotFoundView default />
             </Router>
