@@ -20,12 +20,12 @@ const getParameterByName = (name, url) => {
 export const TermView = () => {
   const ontology = useOntology()
   const location = useLocation()
-  const short_form = getParameterByName('id', location.href)
+  const label = getParameterByName('id', location.href)
   const [term, setTerm] = useState()
   const { roots, toggleRootSelection } = useSearchContext()
 
   useEffect(() => {
-    const index = ontology.terms.findIndex(t => t.short_form === short_form)
+    const index = ontology.terms.findIndex(t => t.label === label)
     if (index === -1) {
       return
     }
@@ -39,11 +39,11 @@ export const TermView = () => {
   if (!term) {
     return (
       <Fragment>
-        <PageHeader title={ <span>Unable to find term <code>{ short_form }</code></span> } />
+        <PageHeader title={ <span>Unable to find term <code>{ label }</code></span> } />
 
         <Container>
           <Typography paragraph>
-            Oh no! The term with short_form <code>{ short_form }</code> could not be located in the NeuroBridge ontology.
+            Oh no! The term with label <code>{ label }</code> could not be located in the NeuroBridge ontology.
           </Typography>
         </Container>
       </Fragment>
