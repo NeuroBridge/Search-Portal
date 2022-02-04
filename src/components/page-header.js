@@ -35,7 +35,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export const PageHeader = ({ title, subtitle, actions }) => {
+export const PageHeader = ({ title, actions }) => {
   const classes = useStyles()
 
   return (
@@ -52,7 +52,6 @@ export const PageHeader = ({ title, subtitle, actions }) => {
   )
 }
 PageHeader.propTypes = {
-  title: PropTypes.string,
-  subtitle: PropTypes.string,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   actions: PropTypes.arrayOf(PropTypes.node),
 }

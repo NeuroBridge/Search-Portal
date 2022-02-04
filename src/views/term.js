@@ -1,11 +1,10 @@
 import { Fragment, useEffect, useState } from 'react'
-import PropTypes from 'prop-types'
-import { Button, CircularProgress } from '@mui/material'
+import { Button, Typography } from '@mui/material'
 import {
   CheckBox as CheckedIcon,
   CheckBoxOutlineBlank as UncheckedIcon,
 } from '@mui/icons-material'
-import { useOntology } from '../components/ontology'
+import { TermDetails, useOntology } from '../components/ontology'
 import { useSearchContext } from '../components/search'
 import { useLocation } from '@reach/router'
 import { Container } from '../components/container'
@@ -14,16 +13,6 @@ import { PageHeader } from '../components/page-header'
 const getParameterByName = (name, url) => {
   const match = RegExp('[?&]' + name + '=([^&]*)').exec(url)
   return match && decodeURIComponent(match[1].replace(/\+/g, ' '))
-}
-
-const TermDetails = ({ term })=> (
-  <pre style={{ backgroundColor: '#33333311', overflow: 'auto', padding: '1rem' }}>
-    { JSON.stringify(term, null, 2) }
-  </pre>
-)
-
-TermDetails.propTypes = {
-  term: PropTypes.object.isRequired,
 }
 
 //
@@ -43,15 +32,28 @@ export const TermView = () => {
     setTerm(ontology.terms[index])
   }, [location, ontology])
 
+  if (ontology.loading) {
+    return ''
+  }
+
   if (!term) {
-    return <CircularProgress />
+    return (
+      <Fragment>
+        <PageHeader title={ <span>Unable to find term <code>{ short_form }</code></span> } />
+
+        <Container>
+          <Typography paragraph>
+            Oh no! The term with short_form <code>{ short_form }</code> could not be located in the NeuroBridge ontology.
+          </Typography>
+        </Container>
+      </Fragment>
+    )
   }
 
   return (
     <Fragment>
       <PageHeader
         title={ term.label }
-        subtitle={ term.short_form }
         actions={[
           <Button
             key="toggle-root-selection-button"
@@ -63,9 +65,17 @@ export const TermView = () => {
       />
 
       <Container>
-        {
-          term && <TermDetails term={ term } />
-        }
+        <TermDetails term={ term } />
+  
+        <br /><br /><br />
+
+        <Typography paragraph>
+          For reference during development, the raw term object is shown below.
+        </Typography>
+
+        <pre style={{ backgroundColor: '#33333311', overflow: 'auto', padding: '1rem' }}>
+          { JSON.stringify(term, null, 2) }
+        </pre>
       </Container>
     </Fragment>
   )

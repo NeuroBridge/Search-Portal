@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles, useTheme } from '@mui/styles'
-import { Box, IconButton, TextField, Tooltip, Typography } from '@mui/material'
+import { Box, IconButton, TextField, Tooltip } from '@mui/material'
 import {
   DataGrid, 
   GridFooterContainer,
