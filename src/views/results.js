@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Box, Card, CardContent, CardHeader } from '@mui/material'
 import { makeStyles } from '@mui/styles'
@@ -43,25 +43,27 @@ export const ResultsView = ({ type }) => {
   }
 
   return (
-    <Container>
+    <Fragment>
       <PageHeader title={ `${ type } Results` } />
+      <Container>
 
-      <Box className={ classes.resultsContainer }>
-        {
-          !loading && results.length
-            ? results.map(({ title, pubmed_url }) => (
-              <Card key={ pubmed_url } elevation={ 0 } className={ classes.resultCard }>
-                <CardHeader title={ title } />
-                <CardContent>
-                  <Link to={ pubmed_url }>{ pubmed_url }</Link>
-                </CardContent>
-              </Card>
-            ))
-            : 'No results'
-        }
-      </Box>
+        <Box className={ classes.resultsContainer }>
+          {
+            !loading && results.length
+              ? results.map(({ title, pubmed_url }) => (
+                <Card key={ pubmed_url } elevation={ 0 } className={ classes.resultCard }>
+                  <CardHeader title={ title } />
+                  <CardContent>
+                    <Link to={ pubmed_url }>{ pubmed_url }</Link>
+                  </CardContent>
+                </Card>
+              ))
+              : 'No results'
+          }
+        </Box>
 
-    </Container>
+      </Container>
+    </Fragment>
   )
 }
 
