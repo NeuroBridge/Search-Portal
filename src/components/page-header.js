@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import { Box, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
+import { PopupMenu } from './popup-menu'
 
 const useStyles = makeStyles(theme => ({
   wrapper: {
@@ -45,13 +46,14 @@ export const PageHeader = ({ title, actions }) => {
           <Typography variant="h1">{ title }</Typography>
         </Box>
         <Box className={ classes.actions }>
-          { actions }
+          <PopupMenu items={ actions } />
         </Box>
       </Box>
     </Box>
   )
 }
+
 PageHeader.propTypes = {
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  actions: PropTypes.arrayOf(PropTypes.node),
+  actions: PropTypes.arrayOf(PropTypes.object),
 }

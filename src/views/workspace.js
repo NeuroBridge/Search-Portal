@@ -5,7 +5,6 @@ import { Avatar,
   Card, CardHeader, CardContent,
   Divider,
   List, ListItem, ListItemAvatar, ListItemText,
-  Tooltip,
   Typography,
 } from '@mui/material'
 import {
@@ -106,12 +105,18 @@ export const WorkspaceView = () => {
       <PageHeader
         title="Query Workspace"
         actions={[
-          <Tooltip key="start-over-button" title="Start Over" placement="bottom">
-            <Button onClick={ clearRootSelection }><StartOverIcon /></Button>
-          </Tooltip>,
-          <Tooltip key="clear-selection-button" title="Clear Term Selection" placement="bottom">
-            <Button onClick={ clearTermSelection }><ClearSelectionIcon /></Button>
-          </Tooltip>,
+          {
+            text: 'Start Over',
+            key: 'start-over-button',
+            onClick: clearRootSelection,
+            icon: <StartOverIcon />,
+          },
+          {
+            text: 'Clear Selection',
+            key: 'clear-selection-button',
+            onClick: clearTermSelection,
+            icon: <ClearSelectionIcon />,
+          },
         ]}
       />
       <Container>
