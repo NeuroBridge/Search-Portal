@@ -36,6 +36,12 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
+/*
+ * TODO: programatically hide menu items
+ * as horizontal space is restricted.
+ *
+ */
+
 export const PageHeader = ({ title, actions }) => {
   const classes = useStyles()
 
