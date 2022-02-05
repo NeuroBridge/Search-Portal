@@ -13,6 +13,10 @@ export const PopupMenu = ({ items }) => {
     setAnchorEl(null)
   }
 
+  if (!items) {
+    return ''
+  }
+
   return (
     <Fragment>
       <IconButton

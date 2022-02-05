@@ -34,6 +34,8 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'row',
   },
+  actionsMenu: {
+  },
 }))
 
 /*
@@ -42,7 +44,7 @@ const useStyles = makeStyles(theme => ({
  *
  */
 
-export const PageHeader = ({ title, actions }) => {
+export const PageHeader = ({ title, actions, menuActions }) => {
   const classes = useStyles()
 
   return (
@@ -52,7 +54,8 @@ export const PageHeader = ({ title, actions }) => {
           <Typography variant="h1">{ title }</Typography>
         </Box>
         <Box className={ classes.actions }>
-          <PopupMenu items={ actions } />
+          { actions }
+          { menuActions && <PopupMenu items={ menuActions } /> }
         </Box>
       </Box>
     </Box>
@@ -62,4 +65,5 @@ export const PageHeader = ({ title, actions }) => {
 PageHeader.propTypes = {
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   actions: PropTypes.arrayOf(PropTypes.object),
+  menuActions: PropTypes.arrayOf(PropTypes.object),
 }

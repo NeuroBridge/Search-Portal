@@ -104,7 +104,7 @@ export const WorkspaceView = () => {
     <Fragment>
       <PageHeader
         title="Query Workspace"
-        actions={[
+        menuActions={[
           {
             text: 'Start Over',
             key: 'start-over-button',
