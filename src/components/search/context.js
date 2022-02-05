@@ -43,7 +43,7 @@ export const SearchContextProvider = ({ children }) => {
   useEffect(async () => {
     // first, though, an async function to communicate with the api.
     const constructTreeRelations = async root => {
-      let relations = [{ id: root.label, parentId: '', value: 0 }]
+      let relations = [{ id: root.short_form, parentId: '', value: 0 }]
       try {
         const descendants = await ontology.fetchDescendants(root)
         if (!descendants.length) {
@@ -57,8 +57,8 @@ export const SearchContextProvider = ({ children }) => {
           relations = [
             ...relations,
             ...children.map(child => ({
-              id: child.label,
-              parentId: t.label,
+              id: child.short_form,
+              parentId: t.short_form,
               value: 0,
             })),
           ]
