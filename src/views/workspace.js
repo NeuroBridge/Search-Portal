@@ -1,7 +1,7 @@
 import { Fragment } from 'react'
 import { navigate } from '@reach/router'
 import {
-  Box, Button,
+  Box,
   Card, CardActionArea, CardContent, CardHeader,
   Divider,
   Typography,
@@ -9,7 +9,6 @@ import {
 import {
   RestartAlt as StartOverIcon,
   DeleteSweep as ClearSelectionIcon,
-  Send as SendIcon,
 } from '@mui/icons-material'
 import makeStyles from '@mui/styles/makeStyles'
 import { useSearchContext, SelectionForest } from '../components/search'
