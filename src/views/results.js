@@ -11,6 +11,7 @@ const useStyles = makeStyles(theme => ({
   resultsContainer: {
     display: 'flex',
     flexDirection: 'column',
+    alignItems: 'stretch',
     gap: theme.spacing(1),
   },
   resultCard: {
@@ -25,7 +26,7 @@ const LabeledLinearProgress = props => {
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
       <Box sx={{ ml: 1, position: 'relative', height: '1rem', width: '100%' }}>
         <Typography variant="caption" color="text.secondary" sx={{ position: 'absolute', left: `${ props.value }%`, transform: 'translateX(-50%)' }}>
-          { props.value.toFixed(2) }% similarity
+          { props.value.toFixed(2) }%
         </Typography>
       </Box>
       <Box sx={{ width: '100%' }}>
@@ -52,37 +53,37 @@ export const ResultsView = ({ type }) => {
 
   useEffect(() => {
     if (results) {
-      console.log(results)
       setLoading(false)
     }
   }, [results])
-
-  if (loading) {
-    return (
-      'Loading..'
-    )
-  }
 
   return (
     <Fragment>
       <PageHeader title={ `${ type } Results` } />
       <Container>
-
         <Box className={ classes.resultsContainer }>
-          {
-            !loading && results.length
-              ? results.map(({ pubmed_url, similarity, title }) => (
-                <Card key={ pubmed_url } elevation={ 0 } className={ classes.resultCard }>
-                  <CardHeader title={ title } />
-                  <CardContent>
-                    <Link to={ pubmed_url }>{ pubmed_url }</Link>
-                  </CardContent>
-                  <LabeledLinearProgress variant="determinate" value={ similarity * 100 } />
-                </Card>
-              ))
-              : 'No results'
-          }
-        </Box>
+        {
+          loading ? (
+            <Typography align="center">
+              Loading...
+            </Typography>
+          ) : results.length > 0
+            ? results.map(({ pubmed_url, similarity, title }) => (
+              <Card key={ pubmed_url } elevation={ 0 } className={ classes.resultCard }>
+                <CardHeader title={ title } />
+                <CardContent>
+                  <Link to={ pubmed_url }>{ pubmed_url }</Link>
+                </CardContent>
+                <LabeledLinearProgress variant="determinate" value={ similarity * 100 } />
+              </Card>
+            )) : (
+              <Typography align="center">
+                No results
+              </Typography>
+            )
+        }
+            </Box>
+
 
       </Container>
     </Fragment>
