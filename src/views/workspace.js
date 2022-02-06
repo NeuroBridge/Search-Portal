@@ -57,42 +57,6 @@ export const WorkspaceView = () => {
   }, [sent])
 
 
-  const Workspace = () => {
-    return (
-      <Fragment>
-        <SelectionForest />
-
-        <br /><br /><br /><br />
-        <Divider>Services</Divider>
-        <br /><br /><br /><br />
-
-        <div className={ classes.queryActions }>
-          <Button
-            size="large"
-            color="primary"
-            variant="outlined"
-            startIcon={ <img src={ neuroQueryLogo } width="25" /> }
-            endIcon={ <SendIcon /> }
-            style={{ boxShadow: 'none' }}
-            onClick={ () => navigate('/results/neuroquery') }
-          >
-            Neuroquery
-          </Button>
-        </div>
-      </Fragment>
-    )
-  }
-
-  const EmptyWorkspace = () => {
-    return (
-      <Container>
-        <Typography paragraph align="center">
-          Your workspace is empty!
-        </Typography>
-      </Container>
-    )
-  }
-
 
   return (
     <Fragment>
@@ -115,9 +79,33 @@ export const WorkspaceView = () => {
       />
       <Container>
         {
-          rootsCount
-          ? <Workspace />
-          : <EmptyWorkspace />
+          rootsCount > 0 ? (
+            <Fragment>
+              <SelectionForest />
+
+              <br /><br /><br /><br />
+              <Divider>Services</Divider>
+              <br /><br /><br /><br />
+
+              <div className={ classes.queryActions }>
+                <Button
+                  size="large"
+                  color="primary"
+                  variant="outlined"
+                  startIcon={ <img src={ neuroQueryLogo } width="25" /> }
+                  endIcon={ <SendIcon /> }
+                  style={{ boxShadow: 'none' }}
+                  onClick={ () => navigate('/results/neuroquery') }
+                >
+                  Neuroquery
+                </Button>
+              </div>
+            </Fragment>
+          ) : (
+            <Typography paragraph align="center">
+              Your workspace is empty!
+            </Typography>
+          )
         }
       </Container>
     </Fragment>
