@@ -45,20 +45,20 @@ export const WorkspaceView = () => {
     <Fragment>
       <PageHeader
         title="Query Workspace"
-        menuActions={ rootsCount ? [
+        menuActions={[
           {
+            key: 'action-clear-selection',
             text: 'Clear Selection',
-            key: 'clear-selection-button',
             onClick: clearTermSelection,
             icon: <ClearSelectionIcon />,
           },
           {
+            key: 'action-start-over',
             text: 'Start Over',
-            key: 'start-over-button',
             onClick: clearRootSelection,
             icon: <StartOverIcon />,
           },
-        ] : []}
+        ]}
       />
       <Container>
         {

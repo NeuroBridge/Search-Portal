@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import { Box, Typography } from '@mui/material'
+import { Box, IconButton, Tooltip, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import { PopupMenu } from './popup-menu'
 
@@ -54,7 +54,15 @@ export const PageHeader = ({ title, actions, menuActions }) => {
           <Typography variant="h1">{ title }</Typography>
         </Box>
         <Box className={ classes.actions }>
-          { actions }
+          {
+            !!actions?.length && actions.map(action => (
+              <Tooltip key={ action.key } title={ action.text }>
+                <IconButton onClick={ action.onClick }>
+                  { action.icon }
+                </IconButton>
+              </Tooltip>
+            ))
+          }
           { !!menuActions?.length && <PopupMenu items={ menuActions } /> }
         </Box>
       </Box>

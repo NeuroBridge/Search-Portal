@@ -55,12 +55,12 @@ export const TermView = () => {
       <PageHeader
         title={ term.short_form }
         actions={[
-          <Button
-            key="toggle-root-selection-button"
-            onClick={ () => toggleRootSelection(term) }
-          >
-            { term.short_form in roots ? <CheckedIcon color="success" /> : <UncheckedIcon color="default" /> }
-          </Button>
+          {
+            key: 'action-toggle-root-selection',
+            text: 'Toggle Root Selection',
+            onClick: () => toggleRootSelection(term),
+            icon: term.short_form in roots ? <CheckedIcon color="success" /> : <UncheckedIcon color="default" />,
+          },
         ]}
       />
 
