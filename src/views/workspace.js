@@ -14,25 +14,21 @@ import {
   LooksTwo as StepTwoIcon,
   Looks3 as StepThreeIcon,
   Looks4 as StepFourIcon,
-  Looks5 as StepFiveIcon,
   Send as SendIcon,
 } from '@mui/icons-material'
 import makeStyles from '@mui/styles/makeStyles'
 import { useSearchContext, SelectionForest } from '../components/search'
 import { Container } from '../components/container'
 import { PageHeader } from '../components/page-header'
+import { Link } from '../components/link'
+import neuroQueryLogo from '../images/neuroquery-logo.svg'
 
 const useStyles = makeStyles(theme => ({
-  heading: {
-    color: theme.palette.primary.dark,
-  },
-  summary: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-  },
-  actions: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
+  queryActions: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: theme.spacing(2),
   },
   instructions: {
     marginTop: '10vh',
@@ -61,82 +57,68 @@ export const WorkspaceView = () => {
   }, [sent])
 
 
-  if (!rootsCount) {
+  const Workspace = () => {
+    return (
+      <Fragment>
+        <SelectionForest />
+
+        <br /><br /><br /><br />
+        <Divider>Services</Divider>
+        <br /><br /><br /><br />
+
+        <div className={ classes.queryActions }>
+          <Button
+            size="large"
+            color="primary"
+            variant="outlined"
+            startIcon={ <img src={ neuroQueryLogo } width="25" /> }
+            endIcon={ <SendIcon /> }
+            style={{ boxShadow: 'none' }}
+            onClick={ () => navigate('/results/neuroquery') }
+          >
+            Neuroquery
+          </Button>
+        </div>
+      </Fragment>
+    )
+  }
+
+  const EmptyWorkspace = () => {
     return (
       <Container>
-        <Card className={ classes.instructions } elevation={ 0 }>
-          <CardHeader title="Instructions" />
-          <CardContent>
-            <Typography paragraph>
-              Searching the NeuroBridge Ontology is simple!
-            </Typography>
-          </CardContent>
-          <CardContent>
-            <List>
-              <ListItem>
-                <ListItemAvatar><Avatar><StepOneIcon /></Avatar></ListItemAvatar>
-                <ListItemText>Search for terms.</ListItemText>
-              </ListItem>
-              <ListItem>
-                <ListItemAvatar><Avatar><StepTwoIcon /></Avatar></ListItemAvatar>
-                <ListItemText>Select root terms from the search results.</ListItemText>
-              </ListItem>
-              <ListItem>
-                <ListItemAvatar><Avatar><StepThreeIcon /></Avatar></ListItemAvatar>
-                <ListItemText>Select descendants to build a query.</ListItemText>
-              </ListItem>
-              <ListItem>
-                <ListItemAvatar><Avatar><StepFourIcon /></Avatar></ListItemAvatar>
-                <ListItemText>Send your query.</ListItemText>
-              </ListItem>
-              <ListItem>
-                <ListItemAvatar><Avatar><StepFiveIcon /></Avatar></ListItemAvatar>
-                <ListItemText>...</ListItemText>
-              </ListItem>
-            </List>
-          </CardContent>
-        </Card>
+        <Typography paragraph align="center">
+          Your workspace is empty!
+        </Typography>
       </Container>
     )
   }
+
 
   return (
     <Fragment>
       <PageHeader
         title="Query Workspace"
-        menuActions={[
-          {
-            text: 'Start Over',
-            key: 'start-over-button',
-            onClick: clearRootSelection,
-            icon: <StartOverIcon />,
-          },
+        menuActions={ rootsCount ? [
           {
             text: 'Clear Selection',
             key: 'clear-selection-button',
             onClick: clearTermSelection,
             icon: <ClearSelectionIcon />,
           },
-        ]}
+          {
+            text: 'Start Over',
+            key: 'start-over-button',
+            onClick: clearRootSelection,
+            icon: <StartOverIcon />,
+          },
+        ] : []}
       />
       <Container>
-        <SelectionForest />
-
-        <br /><br /><br /><br />
-        <Divider>Query</Divider>
-        <br /><br /><br /><br />
-
-        <Button
-          variant="contained"
-          color="secondary"
-          size="large"
-          endIcon={ <SendIcon /> }
-          style={{ boxShadow: 'none' }}
-          onClick={ () => navigate('/results/neuroquery') }
-        >
-          NeuroQuery
-        </Button>
-
+        {
+          rootsCount
+          ? <Workspace />
+          : <EmptyWorkspace />
+        }
       </Container>
     </Fragment>
   )

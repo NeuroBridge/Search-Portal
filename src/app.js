@@ -9,6 +9,7 @@ import { Drawer, useDrawer } from './components/drawer'
 import neuroBridgeBackground from './images/nbbg.jpeg'
 import {
   AboutView,
+  HomeView,
   NotFoundView,
   ResultsView,
   WorkspaceView,
@@ -115,8 +116,9 @@ export const App = () => {
             }}
           >
             <Router>
+              <HomeView exact path="/" />
               <AboutView exact path="/about" />
-              <WorkspaceView exact path="/" />
+              <WorkspaceView exact path="/workspace" />
               <ResultsView exact path="/results/:type" />
               <TermView exact path="/term" />
               <NotFoundView default />

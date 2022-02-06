@@ -85,7 +85,7 @@ export const TermCard = ({ term }) => {
 
   const handleToggleRoot = root => () => {
     toggleRootSelection(root)
-    navigate('/')
+    navigate('/workspace')
   }
 
   return (

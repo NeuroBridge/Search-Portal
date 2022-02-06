@@ -55,7 +55,7 @@ export const PageHeader = ({ title, actions, menuActions }) => {
         </Box>
         <Box className={ classes.actions }>
           { actions }
-          { menuActions && <PopupMenu items={ menuActions } /> }
+          { !!menuActions?.length && <PopupMenu items={ menuActions } /> }
         </Box>
       </Box>
     </Box>

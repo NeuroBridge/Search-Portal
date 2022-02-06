@@ -63,24 +63,24 @@ export const SelectionForest = () => {
       defaultEndIcon={ '·' }
       classes={{ root: classes.forestContainer }}
     >
-        {
-          Object.keys(roots).map((short_form, i) => {
-            return (
-              <Fragment key={ `${ short_form }-select-tree` }>
-                {
-                  // show operator here
-                  // todo: select between operator options.
-                  i > 0 && (
-                    <div style={{ textAlign: 'center' }}>
-                      -= [ { roots[short_form].operator } ] =-
-                    </div>
-                  )
-                }
-                <TreeCard root={ roots[short_form] } />
-              </Fragment>
-            )
-          })
-        }
+      {
+        Object.keys(roots).map((short_form, i) => {
+          return (
+            <Fragment key={ `${ short_form }-select-tree` }>
+              {
+                // show operator here
+                // todo: select between operator options.
+                i > 0 && (
+                  <div style={{ textAlign: 'center' }}>
+                    -= [ { roots[short_form].operator } ] =-
+                  </div>
+                )
+              }
+              <TreeCard root={ roots[short_form] } />
+            </Fragment>
+          )
+        })
+      }
     </TreeView>
   )
 }
