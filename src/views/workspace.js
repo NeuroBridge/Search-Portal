@@ -1,7 +1,8 @@
 import { Fragment } from 'react'
 import { navigate } from '@reach/router'
 import {
-  Button,
+  Box, Button,
+  Card, CardActionArea, CardContent, CardHeader,
   Divider,
   Typography,
 } from '@mui/material'
@@ -71,17 +72,30 @@ export const WorkspaceView = () => {
               <br /><br /><br /><br />
 
               <div className={ classes.queryActions }>
-                <Button
-                  size="large"
-                  color="primary"
-                  variant="outlined"
-                  startIcon={ <img src={ neuroQueryLogo } width="25" /> }
-                  endIcon={ <SendIcon /> }
-                  style={{ boxShadow: 'none' }}
-                  onClick={ () => navigate('/results/neuroquery') }
-                >
-                  Neuroquery
-                </Button>
+                <Card>
+                  <CardActionArea onClick={ () => navigate('/results/neuroquery') }>
+                    <CardHeader title="NeuroQuery" />
+                    <CardContent sx={{ display: 'flex', justifyContent: 'center' }}>
+                      <img src={ neuroQueryLogo } width="100" />
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+                <Card>
+                  <CardActionArea>
+                    <CardHeader title="TBD" />
+                    <CardContent sx={{ display: 'flex', justifyContent: 'center' }}>
+                      <Box sx={{ width: '100px', height: '85px', backgroundColor: '#eee' }} />
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+                <Card>
+                  <CardActionArea>
+                    <CardHeader title="TBD" />
+                    <CardContent sx={{ display: 'flex', justifyContent: 'center' }}>
+                      <Box sx={{ width: '100px', height: '85px', backgroundColor: '#eee' }} />
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
               </div>
             </Fragment>
           ) : (
