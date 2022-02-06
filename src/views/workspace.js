@@ -1,26 +1,19 @@
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment } from 'react'
 import { navigate } from '@reach/router'
-import { Avatar,
+import {
   Button,
-  Card, CardHeader, CardContent,
   Divider,
-  List, ListItem, ListItemAvatar, ListItemText,
   Typography,
 } from '@mui/material'
 import {
   RestartAlt as StartOverIcon,
   DeleteSweep as ClearSelectionIcon,
-  LooksOne as StepOneIcon,
-  LooksTwo as StepTwoIcon,
-  Looks3 as StepThreeIcon,
-  Looks4 as StepFourIcon,
   Send as SendIcon,
 } from '@mui/icons-material'
 import makeStyles from '@mui/styles/makeStyles'
 import { useSearchContext, SelectionForest } from '../components/search'
 import { Container } from '../components/container'
 import { PageHeader } from '../components/page-header'
-import { Link } from '../components/link'
 import neuroQueryLogo from '../images/neuroquery-logo.svg'
 
 const useStyles = makeStyles(theme => ({
