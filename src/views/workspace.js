@@ -47,16 +47,6 @@ const useStyles = makeStyles(theme => ({
 export const WorkspaceView = () => {
   const classes = useStyles()
   const { rootsCount, clearRootSelection, clearTermSelection } = useSearchContext()
-  const [sent, setSent] = useState(false)
-
-  /* temporary faking term send request */
-  useEffect(() => {
-    window.scrollTo(0, document.body.scrollHeight)
-    const resetSend = setTimeout(() => setSent(false), 5000)
-    return () => clearTimeout(resetSend)
-  }, [sent])
-
-
 
   return (
     <Fragment>
