@@ -33,12 +33,8 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const columns = [
-  { field: 'short_form',             headerName: 'short form',            width: 350,     editable: false,      type: 'string',    hide: true },
-  { field: 'label',                  headerName: 'label',                 width: null,     editable: false,      type: 'string',    hide: false },
-  // { field: 'has_children',           headerName: 'children',              width: 100,     editable: false,      type: 'boolean',  hide: true },
-  // { field: 'description',            headerName: 'description',           width: 100,     editable: false,      type: 'string',   hide: true },
-  // { field: 'seeAlso',                headerName: 'see also',              width: 100,     editable: false,      type: 'string',   hide: true },
-  { field: 'iri',                    headerName: 'iri',                   width: 300,     editable: false,      type: 'string',    hide: true },
+  { field: 'short_form',  headerName: 'short form',  type: 'string' },
+  { field: 'label',       headerName: 'label',       type: 'string' },
 ]
 
 //

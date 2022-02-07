@@ -20,8 +20,6 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const LabeledLinearProgress = props => {
-  console.log(props.value)
-
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
       <Box sx={{ ml: 1, position: 'relative', height: '1rem', width: '100%' }}>

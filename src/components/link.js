@@ -33,8 +33,7 @@ export const ExternalLink = ({ to, children }) => {
       >
         { children }
       </a>
-      { ' ' }
-      <ExternalLinkIcon size={ 10 } />
+      <ExternalLinkIcon size={ 10 } style={{ marginLeft: '4px' }} />
     </Fragment>
   )
 }
