@@ -85,8 +85,6 @@ Row.propTypes = {
 }
 
 export const TermDetails = ({ term }) => {
-  const classes = useStyles()
-
   return (
     <Fragment>
       <Card>
@@ -106,7 +104,6 @@ export const TermDetails = ({ term }) => {
         <Row label="has_children" value={ term.has_children } />
         <Row label="is_root" value={ term.is_root } />
       </Card>
-
     </Fragment>
   )
 }
