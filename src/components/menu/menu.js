@@ -44,7 +44,7 @@ export const Menu = () => {
 
   return (
     <nav className={ classes.root }>
-      <NavLink to="/">
+      <NavLink to="/workspace">
         <Badge badgeContent={ rootsCount } color="secondary">
           Workspace 
         </Badge>

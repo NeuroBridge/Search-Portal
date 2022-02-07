@@ -1,39 +1,27 @@
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment } from 'react'
 import { navigate } from '@reach/router'
-import { Avatar,
-  Button,
-  Card, CardHeader, CardContent,
+import {
+  Box,
+  Card, CardActionArea, CardContent, CardHeader,
   Divider,
-  List, ListItem, ListItemAvatar, ListItemText,
-  Tooltip,
   Typography,
 } from '@mui/material'
 import {
   RestartAlt as StartOverIcon,
   DeleteSweep as ClearSelectionIcon,
-  LooksOne as StepOneIcon,
-  LooksTwo as StepTwoIcon,
-  Looks3 as StepThreeIcon,
-  Looks4 as StepFourIcon,
-  Looks5 as StepFiveIcon,
-  Send as SendIcon,
 } from '@mui/icons-material'
 import makeStyles from '@mui/styles/makeStyles'
 import { useSearchContext, SelectionForest } from '../components/search'
 import { Container } from '../components/container'
 import { PageHeader } from '../components/page-header'
+import neuroQueryLogo from '../images/neuroquery-logo.svg'
 
 const useStyles = makeStyles(theme => ({
-  heading: {
-    color: theme.palette.primary.dark,
-  },
-  summary: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-  },
-  actions: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
+  queryActions: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: theme.spacing(2),
   },
   instructions: {
     marginTop: '10vh',
@@ -52,142 +40,69 @@ const useStyles = makeStyles(theme => ({
 export const WorkspaceView = () => {
   const classes = useStyles()
   const { rootsCount, clearRootSelection, clearTermSelection } = useSearchContext()
-  const [sent, setSent] = useState(false)
-
-  /* temporary faking term send request */
-  useEffect(() => {
-    window.scrollTo(0, document.body.scrollHeight)
-    const resetSend = setTimeout(() => setSent(false), 5000)
-    return () => clearTimeout(resetSend)
-  }, [sent])
-
-  // const PageHeader = useCallback(() => {
-  //   return (
-  //     <Fragment>
-  //       <Card variant="outlined">
-  //         <CardContent className={ classes.controls }>
-  //           <Grid container>
-  //             <Grid item xs={ 12 } sm={ 3 }>
-  //               <Typography>
-  //                 { rootsCount } root{ rootsCount === 1 ? '' : 's' }<br />
-  //                 { selectedTermsCount } selected term{ selectedTermsCount === 1 ? '' : 's' }<br />
-  //               </Typography>
-  //             </Grid>
-  //             <Grid item xs={ 12 } sm={ 9 }>
-  //               <Tooltip title="Start Over">
-  //                 <span>
-  //                   <IconButton
-  //                     onClick={ handleStartOver }
-  //                     disabled={ rootsCount === 0 }
-  //                     variant="contained"
-  //                     color="primary"
-  //                   >
-  //                     <StartOverIcon />
-  //                   </IconButton>
-  //                 </span>
-  //               </Tooltip>
-  //               <Tooltip title="Clear all roots">
-  //                 <span>
-  //                   <IconButton
-  //                     onClick={ clearRootSelection }
-  //                     disabled={ selectedTermsCount === 0 }
-  //                     variant="contained"
-  //                     color="secondary"
-  //                   >
-  //                     <ClearSelectionIcon />
-  //                   </IconButton>
-  //                 </span>
-  //               </Tooltip>
-  //               <Tooltip title="Deselect all terms">
-  //                 <span>
-  //                   <IconButton
-  //                     onClick={ clearTermSelection }
-  //                     disabled={ selectedTermsCount === 0 }
-  //                     variant="contained"
-  //                     color="secondary"
-  //                   >
-  //                     <ClearSelectionIcon />
-  //                   </IconButton>
-  //                 </span>
-  //               </Tooltip>
-  //             </Grid>
-  //           </Grid>
-  //         </CardContent>
-  //       </Card>
-  //     </Fragment>
-  //   )
-  // }, [roots])
-
-  if (!rootsCount) {
-    return (
-      <Container>
-        <Card className={ classes.instructions } elevation={ 0 }>
-          <CardHeader title="Instructions" />
-          <CardContent>
-            <Typography paragraph>
-              Searching the NeuroBridge Ontology is simple!
-            </Typography>
-          </CardContent>
-          <CardContent>
-            <List>
-              <ListItem>
-                <ListItemAvatar><Avatar><StepOneIcon /></Avatar></ListItemAvatar>
-                <ListItemText>Search for terms.</ListItemText>
-              </ListItem>
-              <ListItem>
-                <ListItemAvatar><Avatar><StepTwoIcon /></Avatar></ListItemAvatar>
-                <ListItemText>Select root terms from the search results.</ListItemText>
-              </ListItem>
-              <ListItem>
-                <ListItemAvatar><Avatar><StepThreeIcon /></Avatar></ListItemAvatar>
-                <ListItemText>Select descendants to build a query.</ListItemText>
-              </ListItem>
-              <ListItem>
-                <ListItemAvatar><Avatar><StepFourIcon /></Avatar></ListItemAvatar>
-                <ListItemText>Send your query.</ListItemText>
-              </ListItem>
-              <ListItem>
-                <ListItemAvatar><Avatar><StepFiveIcon /></Avatar></ListItemAvatar>
-                <ListItemText>...</ListItemText>
-              </ListItem>
-            </List>
-          </CardContent>
-        </Card>
-      </Container>
-    )
-  }
 
   return (
     <Fragment>
       <PageHeader
         title="Query Workspace"
-        actions={[
-          <Tooltip key="start-over-button" title="Start Over" placement="bottom">
-            <Button onClick={ clearRootSelection }><StartOverIcon /></Button>
-          </Tooltip>,
-          <Tooltip key="clear-selection-button" title="Clear Term Selection" placement="bottom">
-            <Button onClick={ clearTermSelection }><ClearSelectionIcon /></Button>
-          </Tooltip>,
+        menuActions={[
+          {
+            key: 'action-clear-selection',
+            text: 'Clear Selection',
+            onClick: clearTermSelection,
+            icon: <ClearSelectionIcon />,
+          },
+          {
+            key: 'action-start-over',
+            text: 'Start Over',
+            onClick: clearRootSelection,
+            icon: <StartOverIcon />,
+          },
         ]}
       />
       <Container>
-        <SelectionForest />
+        {
+          rootsCount > 0 ? (
+            <Fragment>
+              <SelectionForest />
 
-        <br /><br /><br /><br />
-        <Divider>Query</Divider>
-        <br /><br /><br /><br />
+              <br /><br /><br /><br />
+              <Divider>Services</Divider>
+              <br /><br /><br /><br />
 
-        <Button
-          variant="contained"
-          color="secondary"
-          size="large"
-          endIcon={ <SendIcon /> }
-          style={{ boxShadow: 'none' }}
-          onClick={ () => navigate('/results/neuroquery') }
-        >
-          NeuroQuery
-        </Button>
-
+              <div className={ classes.queryActions }>
+                <Card>
+                  <CardActionArea onClick={ () => navigate('/results/neuroquery') }>
+                    <CardHeader title="NeuroQuery" />
+                    <CardContent sx={{ display: 'flex', justifyContent: 'center' }}>
+                      <img src={ neuroQueryLogo } width="100" />
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+                <Card>
+                  <CardActionArea>
+                    <CardHeader title="TBD" />
+                    <CardContent sx={{ display: 'flex', justifyContent: 'center' }}>
+                      <Box sx={{ width: '100px', height: '85px', backgroundColor: '#eee' }} />
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+                <Card>
+                  <CardActionArea>
+                    <CardHeader title="TBD" />
+                    <CardContent sx={{ display: 'flex', justifyContent: 'center' }}>
+                      <Box sx={{ width: '100px', height: '85px', backgroundColor: '#eee' }} />
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              </div>
+            </Fragment>
+          ) : (
+            <Typography paragraph align="center">
+              Your workspace is empty!
+            </Typography>
+          )
+        }
       </Container>
     </Fragment>
   )

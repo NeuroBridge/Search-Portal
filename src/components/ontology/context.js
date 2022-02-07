@@ -69,6 +69,7 @@ export const OntologyProvider = ({ children }) => {
       const promises = [...Array(totalPages).keys()].map(i => axios.get(termsEndpoint, { params: { page: i } }))
       const responses = await Promise.all(promises)
       terms = responses.reduce((arr, response) => [...arr, ...response.data._embedded.terms], [])
+
     } catch (error) {
       console.error(error)
     } finally {

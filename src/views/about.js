@@ -1,7 +1,7 @@
 import { Fragment } from 'react'
 import { Container } from '../components/container'
 import { PageHeader } from '../components/page-header'
-import { Card, CardContent, CardHeader } from '@mui/material'
+import { Card, CardContent } from '@mui/material'
 
 export const AboutView = () => {
   return (

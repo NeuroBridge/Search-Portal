@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
-import { Box, Typography } from '@mui/material'
+import { Box, IconButton, Tooltip, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
+import { PopupMenu } from './popup-menu'
 
 const useStyles = makeStyles(theme => ({
   wrapper: {
@@ -33,9 +34,17 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'row',
   },
+  actionsMenu: {
+  },
 }))
 
-export const PageHeader = ({ title, actions }) => {
+/*
+ * TODO: programatically hide menu items
+ * as horizontal space is restricted.
+ *
+ */
+
+export const PageHeader = ({ title, actions, menuActions }) => {
   const classes = useStyles()
 
   return (
@@ -45,13 +54,24 @@ export const PageHeader = ({ title, actions }) => {
           <Typography variant="h1">{ title }</Typography>
         </Box>
         <Box className={ classes.actions }>
-          { actions }
+          {
+            !!actions?.length && actions.map(action => (
+              <Tooltip key={ action.key } title={ action.text }>
+                <IconButton onClick={ action.onClick }>
+                  { action.icon }
+                </IconButton>
+              </Tooltip>
+            ))
+          }
+          { !!menuActions?.length && <PopupMenu items={ menuActions } /> }
         </Box>
       </Box>
     </Box>
   )
 }
+
 PageHeader.propTypes = {
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  actions: PropTypes.arrayOf(PropTypes.node),
+  actions: PropTypes.arrayOf(PropTypes.object),
+  menuActions: PropTypes.arrayOf(PropTypes.object),
 }
