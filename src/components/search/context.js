@@ -65,7 +65,7 @@ export const SearchContextProvider = ({ children }) => {
         }
         return relations
       } catch (error) {
-        console.log(error)
+        console.error(error)
       }
       return relations
     }
@@ -204,15 +204,13 @@ export const SearchContextProvider = ({ children }) => {
     }).join('+')
 
     try {
-      console.log(searchTerms)
       const response = await axios.get(`https://neurobridges.renci.org:13374/query`, { params: { searchTerms: searchTerms } })
-      console.log(response)
       if (!response?.data?.data) {
         throw new Error('An error occurred while querying Neruoquery.')
       }
       return response.data.data
     } catch (error) {
-      console.log(error)
+      console.error(error)
       return []
     }
   }, [roots, selectedTermsCount])
