@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const LabeledLinearProgress = props => {
+const SimilarityScoreMeter = props => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
       <Box sx={{ ml: 1, position: 'relative', height: '1rem', width: '100%' }}>
@@ -34,7 +34,7 @@ const LabeledLinearProgress = props => {
   )
 }
 
-LabeledLinearProgress.propTypes = {
+SimilarityScoreMeter.propTypes = {
   value: PropTypes.number.isRequired,
 }
 
@@ -72,7 +72,7 @@ export const ResultsView = ({ type }) => {
                 <CardContent>
                   <Link to={ pubmed_url }>{ pubmed_url }</Link>
                 </CardContent>
-                <LabeledLinearProgress variant="determinate" value={ similarity * 100 } />
+                <SimilarityScoreMeter variant="determinate" value={ similarity * 100 } />
               </Card>
             )) : (
               <Typography align="center">
