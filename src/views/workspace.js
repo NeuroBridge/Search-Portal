@@ -39,7 +39,7 @@ const useStyles = makeStyles(theme => ({
 
 export const WorkspaceView = () => {
   const classes = useStyles()
-  const { rootsCount, clearRootSelection, clearTermSelection } = useSearchContext()
+  const { rootsCount, clearRootSelection, clearTermSelection, selectedTermsCount } = useSearchContext()
 
   return (
     <Fragment>
@@ -66,36 +66,43 @@ export const WorkspaceView = () => {
             <Fragment>
               <SelectionForest />
 
-              <br /><br /><br /><br />
-              <Divider>Services</Divider>
-              <br /><br /><br /><br />
 
-              <div className={ classes.queryActions }>
-                <Card>
-                  <CardActionArea onClick={ () => navigate('/results/neuroquery') }>
-                    <CardHeader title="NeuroQuery" />
-                    <CardContent sx={{ display: 'flex', justifyContent: 'center' }}>
-                      <img src={ neuroQueryLogo } width="100" />
-                    </CardContent>
-                  </CardActionArea>
-                </Card>
-                <Card>
-                  <CardActionArea>
-                    <CardHeader title="TBD" />
-                    <CardContent sx={{ display: 'flex', justifyContent: 'center' }}>
-                      <Box sx={{ width: '100px', height: '85px', backgroundColor: '#eee' }} />
-                    </CardContent>
-                  </CardActionArea>
-                </Card>
-                <Card>
-                  <CardActionArea>
-                    <CardHeader title="TBD" />
-                    <CardContent sx={{ display: 'flex', justifyContent: 'center' }}>
-                      <Box sx={{ width: '100px', height: '85px', backgroundColor: '#eee' }} />
-                    </CardContent>
-                  </CardActionArea>
-                </Card>
-              </div>
+              {
+                 selectedTermsCount > 0 && (
+                  <Fragment>
+                    <br /><br /><br /><br />
+                    <Divider>Services</Divider>
+                    <br /><br /><br /><br />
+
+                    <div className={ classes.queryActions }>
+                      <Card>
+                        <CardActionArea onClick={ () => navigate('/results/neuroquery') }>
+                          <CardHeader title="NeuroQuery" />
+                          <CardContent sx={{ display: 'flex', justifyContent: 'center' }}>
+                            <img src={ neuroQueryLogo } width="100" />
+                          </CardContent>
+                        </CardActionArea>
+                      </Card>
+                      <Card>
+                        <CardActionArea disabled>
+                          <CardHeader title="TBD" />
+                          <CardContent sx={{ display: 'flex', justifyContent: 'center' }}>
+                            <Box sx={{ width: '100px', height: '85px', backgroundColor: '#eee' }} />
+                          </CardContent>
+                        </CardActionArea>
+                      </Card>
+                      <Card>
+                        <CardActionArea disabled>
+                          <CardHeader title="TBD" />
+                          <CardContent sx={{ display: 'flex', justifyContent: 'center' }}>
+                            <Box sx={{ width: '100px', height: '85px', backgroundColor: '#eee' }} />
+                          </CardContent>
+                        </CardActionArea>
+                      </Card>
+                    </div>
+                  </Fragment>
+                )
+              }
             </Fragment>
           ) : (
             <Typography paragraph align="center">
