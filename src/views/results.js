@@ -87,9 +87,8 @@ export const ResultsView = ({ type }) => {
 
   useEffect(async () => {
     let publications = await neuroquery()
-    // give result publications uinique ids
+    // give results uinique ids
     publications = publications.map(publication => ({ ...publication, id: uuid() }))
-    console.log(publications)
     setResults(publications)
   }, [type])
 
