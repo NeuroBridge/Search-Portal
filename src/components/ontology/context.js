@@ -89,7 +89,7 @@ export const OntologyProvider = ({ children }) => {
         }))
       setTerms(terms.sort((t, u) => t.label < u.label ? -1 : 1))
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }, [])
 
