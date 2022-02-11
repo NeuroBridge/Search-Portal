@@ -2,6 +2,7 @@ import { Fragment, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import {
   Box,
+  Card, CardContent, CardHeader,
   LinearProgress,
   Typography,
 } from '@mui/material'
@@ -13,8 +14,7 @@ import {
 import { makeStyles } from '@mui/styles'
 import { useSearchContext } from '../components/search'
 import { PageHeader } from '../components/page-header'
-import { Container } from '../components/container'
-// import { Link } from '../components/link'
+import { Link } from '../components/link'
 import { v4 as uuid } from 'uuid'
 
 const useStyles = makeStyles(theme => ({
@@ -24,10 +24,21 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'stretch',
     gap: theme.spacing(1),
     minHeight: '100%',
-    width: '100%',
+    '& .MuiDataGrid-virtualScrollerRenderZone': {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'stretch',
+      width: '100%',
+    }
   },
-  resultCard: {
+  card: {
+    width: '100%',
     border: `1px solid rgba(0, 0, 0, 0.12)`,
+    margin: `${ theme.spacing(1) } 0`,
+  },
+  cardTitle: { },
+  cardContent: {
+    padding: theme.spacing(2),
   }
 }))
 
@@ -56,7 +67,7 @@ const SimilarityScoreMeter = props => {
         </Typography>
       </Box>
       <Box sx={{ width: '100%' }}>
-        <LinearProgress variant="determinate" {...props} />
+        <LinearProgress variant="determinate" { ...props } />
       </Box>
     </Box>
   )
@@ -75,6 +86,28 @@ const publicationResultColumns = [
   { headerName: 'Similarity',  field: 'similarity',  type: 'number', hide: false },
   { headerName: 'URL',         field: 'pubmed_url',  type: 'string', hide: false },
 ]
+
+//
+
+const PublicationRow = ({ row: publication }) => {
+  const classes = useStyles()
+
+  return (
+    <Card className={ classes.card }>
+      <CardHeader className={ classes.cardTitle } title={ publication.title } disableTypography />
+      <CardContent className={ classes.cardContent }>
+        <Typography variant="caption" color="textPrimary">
+          <Link to={ publication.pubmed_url }>{ publication.pmid }</Link>
+        </Typography>
+      </CardContent>
+      <SimilarityScoreMeter value={ publication.similarity * 100 } />
+    </Card>
+  )
+}
+
+PublicationRow.propTypes = {
+  row: PropTypes.object,
+}
 
 //
 
@@ -101,19 +134,21 @@ export const ResultsView = ({ type }) => {
   return (
     <Fragment>
       <PageHeader title={ `${ type } Results` } />
-      <Container>
-        <Box className={ classes.resultsContainer }>
-          <DataGrid
-            loading={ loading }
-            classes={ dataGridClasses }
-            rows={ results }
-            columns={ publicationResultColumns }
-            pageSize={ 25 }
-            rowsPerPageOptions={ [25] }
-            autoHeight
-          />
-        </Box>
-      </Container>
+      <Box className={ classes.resultsContainer }>
+        <DataGrid
+          loading={ loading }
+          classes={ dataGridClasses }
+          rows={ results }
+          columns={ publicationResultColumns }
+          pageSize={ 25 }
+          rowsPerPageOptions={ [25] }
+          headerHeight={ 0 }
+          autoHeight
+          components={{
+            Row: PublicationRow,
+          }}
+        />
+      </Box>
     </Fragment>
   )
 }
