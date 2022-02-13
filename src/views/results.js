@@ -23,18 +23,20 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     alignItems: 'stretch',
     gap: theme.spacing(1),
-    minHeight: '100%',
+    minHeight: 'calc(100vh - 184px)',
     '& .MuiDataGrid-virtualScrollerRenderZone': {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'stretch',
+      gap: theme.spacing(1),
+      padding: theme.spacing(1),
       width: '100%',
     }
   },
   card: {
     width: '100%',
-    border: `1px solid rgba(0, 0, 0, 0.12)`,
-    margin: `${ theme.spacing(1) } 0`,
+    border: `solid rgba(0, 0, 0, 0.12)`,
+    borderWidth: `1px 1px 0 1px`
   },
   cardTitle: { },
   cardContent: {
@@ -133,7 +135,7 @@ export const ResultsView = ({ type }) => {
 
   return (
     <Fragment>
-      <PageHeader title={ `${ type } Results` } />
+      <PageHeader title={ `${ type } Results` } style={{ marginBottom: 0 }} />
       <Box className={ classes.resultsContainer }>
         <DataGrid
           loading={ loading }
@@ -143,7 +145,6 @@ export const ResultsView = ({ type }) => {
           pageSize={ 25 }
           rowsPerPageOptions={ [25] }
           headerHeight={ 0 }
-          autoHeight
           components={{
             Row: PublicationRow,
           }}

@@ -5,7 +5,7 @@ import { PopupMenu } from './popup-menu'
 
 const useStyles = makeStyles(theme => ({
   wrapper: {
-    height: '80px',
+    height: '80.5px',
     marginBottom: theme.spacing(5),
     position: 'sticky',
     top: '4rem',
@@ -44,11 +44,11 @@ const useStyles = makeStyles(theme => ({
  *
  */
 
-export const PageHeader = ({ title, actions, menuActions }) => {
+export const PageHeader = ({ title, actions, menuActions, style }) => {
   const classes = useStyles()
 
   return (
-    <Box className={ classes.wrapper }>
+    <Box className={ classes.wrapper } style={ style }>
       <Box className={ classes.container }>
         <Box className={ classes.title }>
           <Typography variant="h1">{ title }</Typography>
@@ -74,4 +74,5 @@ PageHeader.propTypes = {
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   actions: PropTypes.arrayOf(PropTypes.object),
   menuActions: PropTypes.arrayOf(PropTypes.object),
+  style: PropTypes.object,
 }
