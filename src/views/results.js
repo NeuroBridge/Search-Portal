@@ -11,7 +11,7 @@ import {
   // GridFooterContainer,
   // GridPagination,
 } from '@mui/x-data-grid'
-import { makeStyles } from '@mui/styles'
+import { makeStyles, useTheme } from '@mui/styles'
 import { useSearchContext } from '../components/search'
 import { PageHeader } from '../components/page-header'
 import { Link } from '../components/link'
@@ -115,6 +115,7 @@ PublicationRow.propTypes = {
 
 export const ResultsView = ({ type }) => {
   const classes = useStyles()
+  const theme = useTheme()
   const dataGridClasses = useGridStyles()
   const { neuroquery } = useSearchContext()
   const [results, setResults] = useState(null)
@@ -136,6 +137,14 @@ export const ResultsView = ({ type }) => {
   return (
     <Fragment>
       <PageHeader title={ `${ type } Results` } style={{ marginBottom: 0 }} />
+      <Box sx={{
+        backgroundColor: '#fff',
+        padding: theme.spacing(1),
+        textAlign: 'right',
+        borderBottom: `1px solid ${ theme.palette.primary.main }`,
+      }}>
+        { results?.length ? results.length : '0' } matching publications
+      </Box>
       <Box className={ classes.resultsContainer }>
         <DataGrid
           loading={ loading }
