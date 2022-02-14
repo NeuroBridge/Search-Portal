@@ -2,6 +2,7 @@ import { Fragment, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import {
   Box,
+  Card, CardContent, CardHeader,
   LinearProgress,
   Typography,
 } from '@mui/material'
@@ -10,11 +11,10 @@ import {
   // GridFooterContainer,
   // GridPagination,
 } from '@mui/x-data-grid'
-import { makeStyles } from '@mui/styles'
+import { makeStyles, useTheme } from '@mui/styles'
 import { useSearchContext } from '../components/search'
 import { PageHeader } from '../components/page-header'
-import { Container } from '../components/container'
-// import { Link } from '../components/link'
+import { Link } from '../components/link'
 import { v4 as uuid } from 'uuid'
 
 const useStyles = makeStyles(theme => ({
@@ -23,11 +23,24 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     alignItems: 'stretch',
     gap: theme.spacing(1),
-    minHeight: '100%',
-    width: '100%',
+    minHeight: 'calc(100vh - 184px)',
+    '& .MuiDataGrid-virtualScrollerRenderZone': {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'stretch',
+      gap: theme.spacing(1),
+      padding: theme.spacing(1),
+      width: '100%',
+    }
   },
-  resultCard: {
-    border: `1px solid rgba(0, 0, 0, 0.12)`,
+  card: {
+    width: '100%',
+    border: `solid rgba(0, 0, 0, 0.12)`,
+    borderWidth: `1px 1px 0 1px`
+  },
+  cardTitle: { },
+  cardContent: {
+    padding: theme.spacing(2),
   }
 }))
 
@@ -56,7 +69,7 @@ const SimilarityScoreMeter = props => {
         </Typography>
       </Box>
       <Box sx={{ width: '100%' }}>
-        <LinearProgress variant="determinate" {...props} />
+        <LinearProgress variant="determinate" { ...props } />
       </Box>
     </Box>
   )
@@ -78,8 +91,31 @@ const publicationResultColumns = [
 
 //
 
+const PublicationRow = ({ row: publication }) => {
+  const classes = useStyles()
+
+  return (
+    <Card className={ classes.card }>
+      <CardHeader className={ classes.cardTitle } title={ publication.title } disableTypography />
+      <CardContent className={ classes.cardContent }>
+        <Typography variant="caption" color="textPrimary">
+          <Link to={ publication.pubmed_url }>{ publication.pmid }</Link>
+        </Typography>
+      </CardContent>
+      <SimilarityScoreMeter value={ publication.similarity * 100 } />
+    </Card>
+  )
+}
+
+PublicationRow.propTypes = {
+  row: PropTypes.object,
+}
+
+//
+
 export const ResultsView = ({ type }) => {
   const classes = useStyles()
+  const theme = useTheme()
   const dataGridClasses = useGridStyles()
   const { neuroquery } = useSearchContext()
   const [results, setResults] = useState(null)
@@ -100,20 +136,29 @@ export const ResultsView = ({ type }) => {
 
   return (
     <Fragment>
-      <PageHeader title={ `${ type } Results` } />
-      <Container>
-        <Box className={ classes.resultsContainer }>
-          <DataGrid
-            loading={ loading }
-            classes={ dataGridClasses }
-            rows={ results }
-            columns={ publicationResultColumns }
-            pageSize={ 25 }
-            rowsPerPageOptions={ [25] }
-            autoHeight
-          />
-        </Box>
-      </Container>
+      <PageHeader title={ `${ type } Results` } style={{ marginBottom: 0 }} />
+      <Box sx={{
+        backgroundColor: '#fff',
+        padding: theme.spacing(1),
+        textAlign: 'right',
+        borderBottom: `1px solid ${ theme.palette.primary.main }`,
+      }}>
+        { results?.length ? results.length : '0' } matching publications
+      </Box>
+      <Box className={ classes.resultsContainer }>
+        <DataGrid
+          loading={ loading }
+          classes={ dataGridClasses }
+          rows={ results }
+          columns={ publicationResultColumns }
+          pageSize={ 25 }
+          rowsPerPageOptions={ [25] }
+          headerHeight={ 0 }
+          components={{
+            Row: PublicationRow,
+          }}
+        />
+      </Box>
     </Fragment>
   )
 }

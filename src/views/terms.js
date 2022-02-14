@@ -205,6 +205,7 @@ export const TermsView = () => {
           NoRowsOverlay: () => '',
           Footer: CustomFooter,
         }}
+        disableVirtualization
         componentsProps={{
           toolbar: {
             value: searchText,
