@@ -1,22 +1,19 @@
-import { useMemo, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import loadable from '@loadable/component'
-import { useDrawer } from './drawer'
 import { useOntology } from './ontology'
 
 const ForceGraph2D = loadable(() => import('./force-graph'))
 
-export const TermsGraph = ({ rootTerm, width, height }) => {
+export const TermGraph = ({ rootTerm, width, height, onNodeClick }) => {
   const graphRef = useRef()
   const ontology = useOntology()
   const [graphData, setGraphData] = useState({ nodes: [rootTerm], links: [] })
 
   useEffect(() => {
     let descendants = ontology.descendantsOf(rootTerm.id)
-    console.log(descendants)
     const rootIndex = descendants.findIndex(term => term.id === rootTerm.id)
     descendants[rootIndex] = { ...rootTerm, parentId: null }
-    console.log(descendants)
     setGraphData(ontology.generateGraph(descendants))
   }, [rootTerm])
 
@@ -30,18 +27,20 @@ export const TermsGraph = ({ rootTerm, width, height }) => {
       linkWidth={ 1 }
       nodeLabel="id"
       width={ width }
-      height={ width }
+      height={ height }
+      onNodeClick={ onNodeClick }
     />
   )
 }
 
-TermsGraph.propTypes = {
-  rootTerm: PropTypes.object,
+TermGraph.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
+  rootTerm: PropTypes.object,
+  onNodeClick: PropTypes.func,
 }
 
-TermsGraph.defaultProps = {
+TermGraph.defaultProps = {
   rootTerm: [],
   width: 500,
   height: 500,

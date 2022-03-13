@@ -1,7 +1,7 @@
 import { Fragment } from 'react'
 import { Router as ReachRouter } from '@reach/router'
 import { Box, Container } from '@mui/material'
-import { AboutView, NotFoundView, SearchView } from './views'
+import { AboutView, BrowseView, NotFoundView, SearchView } from './views'
 import { Link } from './components/link'
 import { Drawer } from './components/drawer'
 
@@ -9,6 +9,7 @@ const Router = () => {
   return (
     <ReachRouter>
       <SearchView path="/" />
+      <BrowseView path="/browse" />
       <AboutView path="/about" />
       <NotFoundView default />
     </ReachRouter>
@@ -37,6 +38,7 @@ export const App = () => {
           </Box>
           <Box sx={{ display: 'flex', gap: '1rem' }}>
             <Link to="/">Search</Link>
+            <Link to="/browse">Browse</Link>
             <Link to="/about">About</Link>
           </Box>
         </Container>

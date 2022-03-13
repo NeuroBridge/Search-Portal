@@ -79,7 +79,6 @@ export const OntologyProvider = ({ children, owlFile }) => {
   }, [terms])
 
   const childrenOf = useCallback(id => {
-    console.log('children of', id)
     return terms.filter(term => term.parentId === id)
   }, [])
 
@@ -105,8 +104,6 @@ export const OntologyProvider = ({ children, owlFile }) => {
       // ...otherwise, continue on with what we've collected thus far.
       return [...collection]
     }, [])
-    console.log(nodes)
-    console.log(links)
     return { nodes, links }
   }
 

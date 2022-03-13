@@ -1,11 +1,10 @@
 import { Fragment, useCallback } from 'react'
-import PropTypes from 'prop-types'
 import {
   Box, Button, Divider, Drawer as MuiDrawer, Fade, List, ListItem, ListItemText, Typography
 } from '@mui/material'
 import { useDrawer } from './context'
-import { TermButtonGroup } from '../term-button-group'
-import { TermsGraph } from '../terms-graph'
+import { TermActionButtons } from '../term-action-buttons'
+import { TermGraph } from '../term-graph'
 
 //
 
@@ -31,7 +30,7 @@ export const Drawer = () => {
           }}>
             {
               drawer.currentTerm.labels.map(label => (
-                <ListItem key={ `${ drawer.currentTerm.id }-label-${ label.id }` }>
+                <ListItem key={ `${ drawer.currentTerm.id }-label-${ label }` }>
                   <ListItemText sx={{ fontStyle: 'italic' }}>&bull;&nbsp;{ label }</ListItemText>
                 </ListItem>
               ))
@@ -43,7 +42,6 @@ export const Drawer = () => {
   }, [drawer.currentTerm])
 
   const Parent = useCallback(() => {
-    console.log(drawer.currentTerm.parentId)
     return (
       <Fade in={ true } style={{ transitionDelay: '100ms' }}>
         <Box>
@@ -93,45 +91,6 @@ export const Drawer = () => {
     )
   }, [drawer.currentTerm])
 
-  const DescendantsList = useCallback(() => {
-    return (
-      <Fade in={ true } style={{ transitionDelay: '150ms' }}>
-        <Box>
-          <Typography variant="h6">Descendants</Typography>
-
-          {/*
-          <List dense disablePadding sx={{ '.MuiListItem-root': { padding: 0 } }}>
-            {
-              drawer.currentTerm.descendants.length > 0
-                ? drawer.currentTerm.children.map(descendant => (
-                  <ListItem
-                    key={ `${ drawer.currentTerm.id }-descendant-${ descendant.id }` }
-                  >
-                    &bull;&nbsp;
-                    <Button
-                      size="small"
-                      variant="text"
-                      onClick={ () => drawer.setTermId(descendant.id) }
-                      sx={{ textAlign: 'left' }}
-                    >
-                      { descendant.id }
-                    </Button>
-                  </ListItem>
-                ))
-                : <Button size="small" variant="text" disabled>No descendants</Button>
-            }
-          </List>
-          */}
-          <pre style={{fontSize: '50%'}}>
-            {
-              JSON.stringify(drawer.currentTerm.descendants, null, 2)
-            }
-          </pre>
-        </Box>
-      </Fade>
-    )
-  }, [drawer.currentTerm])
-
   return (
     <MuiDrawer
       anchor="right"
@@ -153,9 +112,10 @@ export const Drawer = () => {
               <Typography variant="h5" sx={{ margin: '1rem 0', flex: 1, }}>
                 { drawer.currentTerm.id }
               </Typography>
-              <TermButtonGroup
+              <TermActionButtons
                 termId={ drawer.currentTerm.id }
                 tooltipPlacement="left"
+                hideDrawerButton
               />
             </Box>
             
@@ -173,11 +133,13 @@ export const Drawer = () => {
             
             <Divider />
 
-              <TermsGraph
-                width={ 500 }
-                height={ 500 }
-                rootTerm={ drawer.currentTerm }
-              />
+            <TermGraph
+              width={ 500 }
+              height={ 500 }
+              rootTerm={ drawer.currentTerm }
+              onNodeClick={ (node, ) => drawer.setTermId(node.id) }
+            />
+            
             <Divider />
 
           </Fragment>
@@ -185,7 +147,4 @@ export const Drawer = () => {
       }
     </MuiDrawer>
   )
-}
-
-Drawer.propTypes = {
 }

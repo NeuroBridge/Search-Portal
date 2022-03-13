@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import { Box, Card, CardActionArea, CardContent, Typography } from '@mui/material'
-import { TermButtonGroup } from './term-button-group'
+import { TermActionButtons } from './term-action-buttons'
 import { useBasket } from './basket'
 
 const LabelList = ({ labels }) => {
@@ -48,7 +48,7 @@ export const TermCard = ({ term, selected, compact }) => {
           { !compact && <LabelList labels={ term.labels } /> }
         </CardContent>
         <CardContent>
-          <TermButtonGroup termId={ term.id} />
+          <TermActionButtons termId={ term.id} />
         </CardContent>
       </CardActionArea>
     </Card>

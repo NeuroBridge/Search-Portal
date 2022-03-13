@@ -1,4 +1,4 @@
-import { createContext, useCallback, useEffect, useContext, useState } from 'react'
+import { createContext, useCallback, useContext, useState } from 'react'
 import PropTypes from 'prop-types'
 import { useOntology } from '../ontology'
 
@@ -9,18 +9,12 @@ export const DrawerProvider = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [currentTerm, setCurrentTerm] = useState()
 
-  useEffect(() => {
-    setTermId('CocaineAbuse')
-    setIsOpen(true)
-  }, [])
-
   const setTermId = useCallback(id => {
     const termToDetail = ontology.find(id)
     if (!termToDetail) {
       console.log(`Failed to locate term "${ id }"`)
       return
     }
-    console.log(ontology.childrenOf(id))
     setCurrentTerm({
       ...ontology.find(id),
       children: ontology.childrenOf(id),

@@ -2,7 +2,7 @@ import { Fragment, useState } from 'react'
 import PropTypes from 'prop-types'
 import {
   Box, Card, CardContent, Fade, IconButton,
-  List, ListItem, ListItemButton, ListItemIcon, ListItemText,
+  List, ListItem, ListItemIcon, ListItemText,
   TextField, Typography,
 } from '@mui/material'
 import {
@@ -14,7 +14,7 @@ import TimeAgo from 'react-timeago'
 import { useLocalStorage } from '../hooks'
 import { useBasket } from './basket'
 import { TermCard } from './term-card'
-import { TermButtonGroup } from './term-button-group'
+import { TermActionButtons } from './term-action-buttons'
 
 //
 
@@ -178,7 +178,7 @@ export const SearchForm = ({ inputRef, searchText, searchHandler, matches }) => 
                                   primary={ termId }
                                   secondary={ <TimeAgo date={ timestamp } /> }
                                 />
-                                <TermButtonGroup termId={ termId } />
+                                <TermActionButtons termId={ termId } />
                               </ListItem>
                             )
                           })
