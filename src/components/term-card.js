@@ -34,23 +34,22 @@ export const TermCard = ({ term, selected, compact }) => {
     <Card sx={{
       border: `1px solid #1976d2${ selected ? 'ff' : '11' }`,
       transition: 'border-color 250ms',
+      display: 'flex',
+      alignItems: 'center',
       '&:hover': {
         border: `1px solid #1976d2${ selected ? 'ff' : '66' }`,
         cursor: 'pointer',
       },
     }}>
-      <CardActionArea onClick={ () => basket.toggle(term.id) } sx={{
-        display: 'flex',
-        alignItems: 'center',        
-      }}>
-        <CardContent sx={{ flex: 1 }}>
+      <CardActionArea onClick={ () => basket.toggle(term.id) } sx={{ flex: 1 }}>
+        <CardContent>
           <Typography>{ term.id }</Typography>
           { !compact && <LabelList labels={ term.labels } /> }
         </CardContent>
-        <CardContent>
-          <TermActionButtons termId={ term.id} />
-        </CardContent>
       </CardActionArea>
+      <CardContent>
+      <TermActionButtons termId={ term.id} />
+      </CardContent>
     </Card>
   )
 }
