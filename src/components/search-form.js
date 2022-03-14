@@ -1,8 +1,8 @@
 import { Fragment, useState } from 'react'
 import PropTypes from 'prop-types'
 import {
-  Box, Card, CardContent, Fade, IconButton,
-  List, ListItem, ListItemIcon, ListItemText,
+  Box, Card, CardActionArea, CardContent,
+  Fade, IconButton,
   TextField, Typography,
 } from '@mui/material'
 import {
@@ -13,45 +13,42 @@ import {
 import TimeAgo from 'react-timeago'
 import { useLocalStorage } from '../hooks'
 import { useBasket } from './basket'
-import { TermCard } from './term-card'
 import { TermActionButtons } from './term-action-buttons'
 
 //
 
 const SearchBar = ({ value, onChange, clearSearch, inputRef, onFocus }) => {
   return (
-    <Fragment>
-      <TextField
-        className="search-field"
-        fullWidth
-        inputRef={ inputRef }
-        value={ value }
-        onChange={ onChange }
-        placeholder="Search…"
-        onFocus={ onFocus }
-        InputProps={{
-          style: {
-            height: '5rem',
-            fontSize: '150%',
-          },
-          startAdornment: <SearchIcon fontSize="small" sx={{ margin: '1rem'}} />,
-          endAdornment: (
-            <IconButton
-              title="Clear"
-              aria-label="Clear"
-              size="small"
-              sx={{
-                margin: '1rem',
-                visibility: value ? 'visible' : 'hidden',
-              }}
-              onClick={ clearSearch }
-            >
-              <ClearIcon fontSize="small" />
-            </IconButton>
-          ),
-        }}
-      />
-    </Fragment>
+    <TextField
+      className="search-field"
+      fullWidth
+      inputRef={ inputRef }
+      value={ value }
+      onChange={ onChange }
+      placeholder="Search…"
+      onFocus={ onFocus }
+      InputProps={{
+        style: {
+          height: '5rem',
+          fontSize: '150%',
+        },
+        startAdornment: <SearchIcon fontSize="small" sx={{ margin: '1rem'}} />,
+        endAdornment: (
+          <IconButton
+            title="Clear"
+            aria-label="Clear"
+            size="small"
+            sx={{
+              margin: '1rem',
+              visibility: value ? 'visible' : 'hidden',
+            }}
+            onClick={ clearSearch }
+          >
+            <ClearIcon fontSize="small" />
+          </IconButton>
+        ),
+      }}
+    />
   )
 }
 
@@ -61,6 +58,108 @@ SearchBar.propTypes = {
   onFocus: PropTypes.func,
   value: PropTypes.string.isRequired,
   inputRef: PropTypes.object,
+}
+
+//
+
+const LabelList = ({ labels }) => {
+  if (!labels.length) {
+    return 'no labels'
+  }
+  return (
+    <Box>
+      {
+        labels
+          .filter(label => typeof label === 'string')
+          .sort((l, m) => l.toLowerCase() < m.toLowerCase() ? -1 : 1)
+          .map(label => (
+            <div key={ label }>
+              <Typography variant="caption"> &bull; { label }</Typography>
+            </div>
+          ))
+      }
+    </Box>
+  )
+}
+
+LabelList.propTypes = {
+  labels: PropTypes.array.isRequired,
+}
+
+//
+
+export const TermCard = ({ term, selected, compact, onClick }) => {
+  return (
+    <Card sx={{
+      border: `1px solid #1976d2${ selected ? 'ff' : '11' }`,
+      transition: 'border-color 250ms',
+      display: 'flex',
+      alignItems: 'center',
+      '&:hover': {
+        border: `1px solid #1976d2${ selected ? 'ff' : '66' }`,
+        cursor: 'pointer',
+      },
+    }}>
+      <CardActionArea onClick={ onClick } sx={{ flex: 1 }}>
+        <CardContent>
+          <Typography>{ term.id }</Typography>
+          { !compact && <LabelList labels={ term.labels } /> }
+        </CardContent>
+      </CardActionArea>
+      <CardContent>
+        <TermActionButtons termId={ term.id} />
+      </CardContent>
+    </Card>
+  )
+}
+
+TermCard.propTypes = {
+  term: PropTypes.object.isRequired,
+  selected: PropTypes.bool.isRequired,
+  compact: PropTypes.bool.isRequired,
+  onClick: PropTypes.func,
+}
+
+TermCard.defaultProps = {
+  selected: false,
+  compact: false,
+}
+
+//
+
+const HistoryItemCard = ({ termId, timestamp, onClick }) => {
+  return (
+    <Card sx={{
+      border: `1px solid #1976d211`,
+      display: 'flex',
+    }}>
+      <CardActionArea onClick={ onClick } >
+        <CardContent sx={{
+          flex: 1,
+          display: 'flex',
+          alignItems: 'center',
+          gap: '1rem',
+        }}>
+          <HistoryIcon />
+          <Box>
+            <Typography>{ termId }</Typography>
+            <Typography variant="caption">
+              <TimeAgo date={ timestamp } />
+            </Typography>
+          </Box>
+        </CardContent>
+      </CardActionArea>
+      <CardContent>
+        <TermActionButtons termId={ termId } />
+      </CardContent>
+    </Card>
+  )
+}
+
+HistoryItemCard.propTypes = {
+  termId: PropTypes.string.isRequired,
+  timestamp: PropTypes.string.isRequired,
+  onClick: PropTypes.func,
 }
 
 //
@@ -141,13 +240,10 @@ export const SearchForm = ({ inputRef, searchText, searchHandler, matches }) => 
             flexDirection: 'column',
             gap: '1rem',
             padding: '1rem',
-            overflowY: 'hidden',
+            overflowY: 'scroll',
             position: 'absolute',
             top: 'calc(100% + 1rem)',
             backgroundColor: '#fff',
-            '&:hover': {
-              overflowY: 'scroll',
-            },
           }}>
             {/* this wrapping Box is our scrollable surface inside the dropdown panel.*/}
             <CardContent sx={{
@@ -156,7 +252,6 @@ export const SearchForm = ({ inputRef, searchText, searchHandler, matches }) => 
               gap: '1rem',
               padding: '0 !important',
             }}>
-
               {
                 !searchText && searchHistory.length ? (
                   // history list.
@@ -164,26 +259,21 @@ export const SearchForm = ({ inputRef, searchText, searchHandler, matches }) => 
                   // ...unless there is no history yet.
                   <Fragment>
                     <Typography variant="caption" align="right">
-                      Recent searches
+                      Recently selected terms
                     </Typography>
-                    <List dense>
-                      {
-                        searchHistory
-                          .slice(0, 10)
-                          .map(({ timestamp, termId }) => {
-                            return (
-                              <ListItem key={ timestamp } disableGutters>
-                                <ListItemIcon><HistoryIcon /></ListItemIcon>
-                                <ListItemText
-                                  primary={ termId }
-                                  secondary={ <TimeAgo date={ timestamp } /> }
-                                />
-                                <TermActionButtons termId={ termId } />
-                              </ListItem>
-                            )
-                          })
-                      }
-                    </List>
+
+                    {
+                      searchHistory
+                        .slice(0, 10)
+                        .map(({ timestamp, termId }) => (
+                          <HistoryItemCard
+                            key={ timestamp }
+                            termId={ termId }
+                            timestamp={ timestamp }
+                            onClick={ handleClickTerm(termId) }
+                          />
+                        ))
+                    }
                   </Fragment>
                 ) : (
                   // matching terms.
@@ -193,7 +283,7 @@ export const SearchForm = ({ inputRef, searchText, searchHandler, matches }) => 
                     <Typography variant="caption" align="right">
                       {
                         matches.length > 0
-                        ? `Showing terms 1 to ${ matches.length >= 15 ? '15' : matches.length }
+                        ? `Showing 1 to ${ matches.length >= 15 ? '15' : matches.length }
                           of ${ matches.length } terms ${ searchText !== '' ? `matching "${ searchText }"` : '' }`
                         : 'No matching terms'
                       }
