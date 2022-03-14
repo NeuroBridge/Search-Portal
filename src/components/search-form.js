@@ -158,7 +158,7 @@ const HistoryItemCard = ({ termId, timestamp, onClick }) => {
 
 HistoryItemCard.propTypes = {
   termId: PropTypes.string.isRequired,
-  timestamp: PropTypes.string.isRequired,
+  timestamp: PropTypes.number.isRequired,
   onClick: PropTypes.func,
 }
 
@@ -171,7 +171,7 @@ export const SearchForm = ({ inputRef, searchText, searchHandler, matches }) => 
 
   const addToSearchHistory = id => {
     const newHistoryItem = {
-      timestamp: new Date(),
+      timestamp: Date.now(),
       termId: id,
     }
     setSearchHistory([newHistoryItem, ...searchHistory].slice(0, 10))
