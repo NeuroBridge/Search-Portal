@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import loadable from '@loadable/component'
-import { useOntology } from './ontology'
+import { useOntology } from '../ontology'
 
 const ForceGraph2D = loadable(() => import('./force-graph'))
 

@@ -4,7 +4,7 @@ import {
 } from '@mui/material'
 import { useDrawer } from './context'
 import { TermActionButtons } from '../term-action-buttons'
-import { TermGraph } from '../term-graph'
+import { TermGraph } from '../graph'
 
 //
 
