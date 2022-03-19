@@ -1,6 +1,7 @@
-
 import { useCallback, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
+import { Box, IconButton, Tooltip } from '@mui/material'
+import { FitScreen as FitGraphIcon } from '@mui/icons-material'
 import loadable from '@loadable/component'
 import { useOntology } from '../ontology'
 
@@ -30,20 +31,35 @@ export const TermGraph = ({ rootTerm, width, height, onNodeClick }) => {
   }, [rootTerm])
 
   return (
-    <ForceGraph2D
-      ref={ graphRef }
-      graphData={ graphData }
-      linkDirectionalArrowLength={ 3 }
-      linkDirectionalArrowRelPos={ 0.5 }
-      linkCurvature={ 0 }
-      linkWidth={ 1 }
-      nodeLabel="id"
-      width={ width }
-      height={ height }
-      onNodeClick={ onNodeClick }
-      nodeCanvasObject={ (node, ctx) => nodePaint(node, getColor(node.id), ctx) }
-      nodePointerAreaPaint={ nodePaint }
-    />
+    <Box sx={{
+      padding: '0 !important',
+      position: 'relative',
+    }}>
+      <ForceGraph2D
+        ref={ graphRef }
+        graphData={ graphData }
+        linkDirectionalArrowLength={ 3 }
+        linkDirectionalArrowRelPos={ 0.5 }
+        linkCurvature={ 0 }
+        linkWidth={ 1 }
+        nodeLabel="id"
+        width={ width }
+        height={ height }
+        onNodeClick={ onNodeClick }
+        nodeCanvasObject={ (node, ctx) => nodePaint(node, getColor(node.id), ctx) }
+        nodePointerAreaPaint={ nodePaint }
+      />
+      <Box
+        className="graph-actions"
+        sx={{ position: 'absolute', bottom: '0.5rem', right: '0.5rem' }}
+      >
+        <Tooltip title="Fit graph to canvas" placement="top">
+          <IconButton onClick={ () => graphRef.current.zoomToFit(width) }>
+            <FitGraphIcon fontSize="small" color="default" />
+          </IconButton>
+        </Tooltip>
+      </Box>
+    </Box>
   )
 }
 
