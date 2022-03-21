@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Box, Button, Container, Typography } from '@mui/material'
+import { Box, Container } from '@mui/material'
 import { useOntology } from '../components/ontology'
 import { SearchForm } from '../components/search-form'
 import { Workspace } from '../components/workspace'
@@ -87,31 +87,6 @@ export const SearchView = () => {
           inputRef={ searchInputRef }
           matches={ filteredTerms }
         />
-      </Container>
-
-      <Container maxWidth="xl">
-        <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-          {/*
-            these are some buttons to get results quickly.
-            this is nice during development and thus is probably only
-            a temporary thing, but a list of recently-searched words
-            might be nice here.
-          */}
-          <Typography>Quicksearch:</Typography>
-          {
-            ['spec', 'abuse', 'brain', 'depression'].map(term => (
-              <Button
-                key={ term }
-                variant="outlined"
-                size="small"
-                onClick={() => {
-                  requestSearch(term)
-                  searchInputRef.current.focus()
-                }}
-              >{ term }</Button>
-            ))
-          }
-        </Box>
       </Container>
 
       <Container maxWidth="xl">

@@ -29,6 +29,12 @@ export const BrowseView = () => {
           alignItems: 'center',
           gap: '1rem',
           padding: '0.5rem',
+          '.term-action-buttons': {
+            filter: 'opacity(0.0)',
+          },
+          '&:hover .term-action-buttons': {
+            filter: 'opacity(1.0)',
+          },
         }}>
           <Typography>{ node.id }</Typography>
           <TermActionButtons termId={ node.id } stopEventPropagation />

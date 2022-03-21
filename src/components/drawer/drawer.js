@@ -4,7 +4,7 @@ import {
 } from '@mui/material'
 import { useDrawer } from './context'
 import { TermActionButtons } from '../term-action-buttons'
-import { TermGraph } from '../term-graph'
+import { TermGraph } from '../graph'
 
 //
 
@@ -19,7 +19,6 @@ export const Drawer = () => {
     return (
       <Fade in={ true } style={{ transitionDelay: '50ms' }}>
         <Box>
-          <Typography variant="h6">Labels</Typography>
           <List dense disablePadding sx={{
             '.MuiListItem-root': {
               padding: 0,
@@ -99,29 +98,30 @@ export const Drawer = () => {
       sx={{
         '.MuiDrawer-paper': {
           width: DRAWER_WIDTH,
-        },
-        '.MuiBox-root': {
-          padding: '1rem 1rem 1rem 2rem',
+          '& > .MuiBox-root': {
+            padding: '1rem 2rem',
+          },
         },
       }}
     >
       {
         drawer.currentTerm && (
           <Fragment>
-            <Box sx={{ display: 'flex', alignItems: 'center', backgroundColor: '#e6e9ec' }}>
-              <Typography variant="h5" sx={{ margin: '1rem 0', flex: 1, }}>
-                { drawer.currentTerm.id }
-              </Typography>
-              <TermActionButtons
-                termId={ drawer.currentTerm.id }
-                tooltipPlacement="left"
-                hideDrawerButton
-              />
+            <Box sx={{ width: '100%', backgroundColor: '#e6e9ec', display: 'flex', alignItems: 'flex-start' }}>
+              <Box sx={{ flex: 1, paddingTop: '1rem' }}>
+                <Typography variant="h5" sx={{ margin: 0 }}>
+                  { drawer.currentTerm.id }
+                </Typography>
+                <LabelsList />
+              </Box>
+              <Box sx={{ paddingTop: '1rem' }}>
+                <TermActionButtons
+                  termId={ drawer.currentTerm.id }
+                  tooltipPlacement="left"
+                  hideDrawerButton
+                />
+              </Box>
             </Box>
-            
-            <Divider />
-
-            <LabelsList />
 
             <Divider />
 

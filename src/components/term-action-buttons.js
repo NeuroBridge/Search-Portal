@@ -29,7 +29,14 @@ export const TermActionButtons = ({ termId, stopEventPropagation, tooltipPlaceme
   }
 
   return (
-    <Box>
+    <Box
+      className="term-action-buttons"
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
       <Tooltip title={ tip } placement={ tooltipPlacement }>
         <IconButton color="default" size="small" onClick={ handleClickTermButton('basket') }>
           { basket.contains(termId) ? <RemoveIcon fontSize="small" /> : <AddIcon fontSize="small" /> }
