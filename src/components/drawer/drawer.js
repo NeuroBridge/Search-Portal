@@ -4,7 +4,7 @@ import {
 } from '@mui/material'
 import { useDrawer } from './context'
 import { TermActionButtons } from '../term-action-buttons'
-import { TermGraph } from '../graph'
+import { TreeList } from '../tree-list'
 
 //
 
@@ -133,13 +133,8 @@ export const Drawer = () => {
             
             <Divider />
 
-            <TermGraph
-              width={ 500 }
-              height={ 500 }
-              rootTerm={ drawer.currentTerm }
-              onNodeClick={ (node, ) => drawer.setTermId(node.id) }
-            />
-            
+            <TreeList rootTerm={ drawer.currentTerm } />
+
             <Divider />
 
           </Fragment>
