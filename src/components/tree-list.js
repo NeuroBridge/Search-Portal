@@ -8,37 +8,43 @@ import {
 } from '@mui/icons-material'
 import { TermActionButtons } from './term-action-buttons'
 import { arrayToTree } from 'performant-array-to-tree'
+import { useBasket } from './basket'
 
-const renderTree = node => (
-  <TreeItem
-    key={ node.id }
-    nodeId={ node.id }
-    label={
-      <Box sx={{
-        display: 'flex',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        gap: '1rem',
-        padding: '0.5rem',
-        '.term-action-buttons': {
-          filter: 'opacity(0.0)',
-        },
-        '&:hover .term-action-buttons': {
-          filter: 'opacity(1.0)',
-        },
-      }}>
-        <Typography>{ node.id }</Typography>
-        <TermActionButtons termId={ node.id } stopEventPropagation />
-      </Box>
-    }
-  >
-    {
-      Array.isArray(node.children)
-        ? node.children.map(n => renderTree(n))
-        : null
-    }
-  </TreeItem>
-)
+const renderTree = node => {
+  const basket = useBasket()
+
+  return (
+    <TreeItem
+      key={ node.id }
+      nodeId={ node.id }
+      label={
+        <Box sx={{
+          display: 'flex',
+          justifyContent: 'flex-start',
+          alignItems: 'center',
+          gap: '1rem',
+          padding: '0.5rem',
+          '.term-action-buttons': {
+            transition: 'filter 250ms',
+            filter: basket.contains(node.id) ? 'opacity(0.5)' : 'opacity(0.0)',
+          },
+          '&:hover .term-action-buttons': {
+            filter: 'opacity(1.0)',
+          },
+        }}>
+          <Typography>{ node.id }</Typography>
+          <TermActionButtons termId={ node.id } stopEventPropagation />
+        </Box>
+      }
+    >
+      {
+        Array.isArray(node.children)
+          ? node.children.map(n => renderTree(n))
+          : null
+      }
+    </TreeItem>
+  )
+}
 
 export const TreeList = ({ rootTerm }) => {
   const descendants = [
