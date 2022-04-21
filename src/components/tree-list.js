@@ -1,7 +1,7 @@
 import { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { TreeView, TreeItem } from '@mui/lab'
-import { Box, Typography } from '@mui/material'
+import { Box, Button } from '@mui/material'
 import {
   ChevronRight as CollapseIcon,
   ExpandMore as ExpandIcon,
@@ -9,9 +9,11 @@ import {
 import { TermActionButtons } from './term-action-buttons'
 import { arrayToTree } from 'performant-array-to-tree'
 import { useBasket } from './basket'
+import { useDrawer } from './drawer'
 
 const renderTree = node => {
   const basket = useBasket()
+  const drawer = useDrawer()
 
   return (
     <TreeItem
@@ -25,8 +27,8 @@ const renderTree = node => {
           gap: '1rem',
           padding: '0.5rem',
         }}>
-          <Typography>{ node.id }</Typography>
-          <TermActionButtons termId={ node.id } stopEventPropagation />
+          <Button onClick={ () => drawer.setTermId(node.id) }>{ node.id }</Button>
+          <TermActionButtons termId={ node.id } stopEventPropagation hideDrawerButton />
         </Box>
       }
     >
@@ -70,6 +72,8 @@ export const TreeList = ({ rootTerm }) => {
         sx={{ flexGrow: 1, width: '100%', overflowY: 'auto' }}
         defaultCollapseIcon={ <ExpandIcon /> }
         defaultExpandIcon={ <CollapseIcon /> }
+        disabledItemsFocusable
+        disableSelection
       >
         { renderTree(tree) }
       </TreeView>
