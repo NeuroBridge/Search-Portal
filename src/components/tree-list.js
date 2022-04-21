@@ -75,8 +75,8 @@ export const TreeList = ({ rootTerm }) => {
     <Fragment>
       <TreeView
         sx={{ flexGrow: 1, width: '100%', overflowY: 'auto' }}
-        defaultCollapseIcon={ <CollapseIcon />}
-        defaultExpandIcon={ <ExpandIcon />}
+        defaultCollapseIcon={ <ExpandIcon /> }
+        defaultExpandIcon={ <CollapseIcon /> }
       >
         { renderTree(tree) }
       </TreeView>
