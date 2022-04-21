@@ -156,9 +156,7 @@ export const Drawer = () => {
             
             <Divider />
 
-            <Box>
-              <Typography variant="h6">Descendant Tree</Typography>
-            </Box>
+            <Typography component={ Box } variant="h6">Descendant Tree</Typography>
             <TreeList rootTerm={ drawer.currentTerm } />
 
             <Divider />
