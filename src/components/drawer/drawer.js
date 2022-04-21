@@ -45,14 +45,28 @@ export const Drawer = () => {
       <Fade in={ true } style={{ transitionDelay: '100ms' }}>
         <Box>
           <Typography variant="h6">Parent</Typography>
-          <Button
-            size="small"
-            variant="text"
-            onClick={ () => drawer.setTermId(drawer.currentTerm.parentId) }
-            disabled={ drawer.currentTerm.parentId === null }
-          >
-            { drawer.currentTerm.parentId || 'No parent' }
-          </Button>
+          <Box sx={{
+            display: 'flex',
+            flexDirection: 'row',
+          }}>
+            <Button
+              size="small"
+              variant="text"
+              onClick={ () => drawer.setTermId(drawer.currentTerm.parentId) }
+              disabled={ drawer.currentTerm.parentId === null }
+            >
+              { drawer.currentTerm.parentId || 'No parent' }
+            </Button>
+            {
+              drawer.currentTerm.parentId && (
+                <TermActionButtons
+                  termId={ drawer.currentTerm.parentId }
+                  tooltipPlacement="top"
+                  hideDrawerButton
+                />
+              )
+            }
+          </Box>
         </Box>
       </Fade>
     )
@@ -80,6 +94,11 @@ export const Drawer = () => {
                     >
                       { child.id }
                     </Button>
+                    <TermActionButtons
+                      termId={ child.id }
+                      tooltipPlacement="top"
+                      hideDrawerButton
+                    />
                   </ListItem>
                 ))
                 : <Button size="small" variant="text" disabled>No children</Button>
