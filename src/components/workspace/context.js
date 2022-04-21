@@ -1,38 +1,13 @@
 import PropTypes from 'prop-types'
-import { createContext, useContext, useState } from 'react'
+import { useBasket } from '../basket'
 
 const WorkspaceContext = createContext({})
 
 export const WorkspaceProvider = ({ children }) => {
-  const [contents, setContents] = useState([])
-
-  const toggle = id => {
-    let newContents = [...contents]
-    const index = contents.indexOf(id)
-    if (index > -1) {
-      newContents = newContents.slice(0, index).concat(newContents.slice(index + 1))
-    } else {
-      newContents = [...contents, id]
-    }
-    setContents(newContents)
-  }
-
-  const log = () => {
-    console.log(contents)
-  }
-
-  const contains = id => {
-    const index = contents.indexOf(id)
-    return index > -1
-  }
-
+  const { contents } = useBasket()
+  
   return (
-    <WorkspaceContext.Provider value={{
-      contains,
-      contents,
-      log,
-      toggle,
-    }}>
+    <WorkspaceContext.Provider value={{ contents }}>
       { children }
     </WorkspaceContext.Provider>
   )
