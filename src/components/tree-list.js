@@ -24,13 +24,6 @@ const renderTree = node => {
           alignItems: 'center',
           gap: '1rem',
           padding: '0.5rem',
-          '.term-action-buttons': {
-            transition: 'filter 250ms',
-            filter: basket.contains(node.id) ? 'opacity(0.5)' : 'opacity(0.0)',
-          },
-          '&:hover .term-action-buttons': {
-            filter: 'opacity(1.0)',
-          },
         }}>
           <Typography>{ node.id }</Typography>
           <TermActionButtons termId={ node.id } stopEventPropagation />
@@ -75,8 +68,8 @@ export const TreeList = ({ rootTerm }) => {
     <Fragment>
       <TreeView
         sx={{ flexGrow: 1, width: '100%', overflowY: 'auto' }}
-        defaultCollapseIcon={ <CollapseIcon />}
-        defaultExpandIcon={ <ExpandIcon />}
+        defaultCollapseIcon={ <ExpandIcon /> }
+        defaultExpandIcon={ <CollapseIcon /> }
       >
         { renderTree(tree) }
       </TreeView>
