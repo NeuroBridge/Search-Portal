@@ -158,8 +158,8 @@ export const Drawer = () => {
 
             <Box>
               <Typography variant="h6">Descendant Tree</Typography>
-              <TreeList rootTerm={ drawer.currentTerm } />
             </Box>
+            <TreeList rootTerm={ drawer.currentTerm } />
 
             <Divider />
 
