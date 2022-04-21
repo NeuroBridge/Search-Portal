@@ -48,6 +48,7 @@ export const Drawer = () => {
           <Box sx={{
             display: 'flex',
             flexDirection: 'row',
+            gap: '0.5rem',
           }}>
             <Button
               size="small"
@@ -84,6 +85,9 @@ export const Drawer = () => {
                 ? drawer.currentTerm.children.map(child => (
                   <ListItem
                     key={ `${ drawer.currentTerm.id }-child-${ child.id }` }
+                    sx={{
+                      gap: '0.5rem',
+                    }}
                   >
                     &bull;&nbsp;
                     <Button
@@ -152,7 +156,10 @@ export const Drawer = () => {
             
             <Divider />
 
-            <TreeList rootTerm={ drawer.currentTerm } />
+            <Box>
+              <Typography variant="h6">Descendant Tree</Typography>
+              <TreeList rootTerm={ drawer.currentTerm } />
+            </Box>
 
             <Divider />
 
