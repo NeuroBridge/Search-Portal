@@ -24,13 +24,6 @@ const renderTree = node => {
           alignItems: 'center',
           gap: '1rem',
           padding: '0.5rem',
-          '.term-action-buttons': {
-            transition: 'filter 250ms',
-            filter: basket.contains(node.id) ? 'opacity(0.5)' : 'opacity(0.0)',
-          },
-          '&:hover .term-action-buttons': {
-            filter: 'opacity(1.0)',
-          },
         }}>
           <Typography>{ node.id }</Typography>
           <TermActionButtons termId={ node.id } stopEventPropagation />
