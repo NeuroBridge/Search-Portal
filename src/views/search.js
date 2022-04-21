@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Box, Container } from '@mui/material'
 import { useOntology } from '../components/ontology'
 import { SearchForm } from '../components/search-form'
-import { Workspace } from '../components/workspace'
+import { Basket } from '../components/basket'
 
 //
 
@@ -90,7 +90,7 @@ export const SearchView = () => {
       </Container>
 
       <Container maxWidth="xl">
-        <Workspace />
+        <Basket />
       </Container>
 
     </Box>
