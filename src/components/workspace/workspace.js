@@ -1,31 +1,14 @@
 import { useEffect, useState } from 'react'
-import { Box, Card, CardContent, CardHeader, Divider } from '@mui/material'
+import { Box, Button, Card, CardContent, CardHeader, Divider } from '@mui/material'
 import { useBasket } from '../basket'
 import { useOntology } from '../ontology'
+import { NeuroQueryServiceInterface, NeuroBridgeServiceInterface } from './services'
 
 //
 
 export const Workspace = () => {
   const ontology = useOntology()
   const basket = useBasket()
-  const [terms, setTerms] = useState([])
-  const [query, setQuery] = useState({
-    description: '',
-    expression: {
-      and: ['AcuteDepression', 'AnxietyDisorder']
-    },
-  })
-
-  useEffect(() => {
-    let newTerms = []
-    basket.contents.forEach(id => {
-      const index = ontology.terms.findIndex(term => term.id === id)
-      if (index > -1) {
-        newTerms = [...newTerms, ontology.terms[index]]
-      }
-    })
-    setTerms(newTerms)
-  }, [basket.contents])
 
   return (
     <Card sx={{
@@ -34,21 +17,16 @@ export const Workspace = () => {
       backgroundSize: '1rem 1rem',
       overflow: 'hidden',
     }}>
-      <CardHeader title="Query Workspace" />
+      <CardHeader title="Workspace" />
       <CardContent>
-        <button>+ term</button>
-        <button>+ expression</button>
+        Select a service
       </CardContent>
 
       <Divider />
 
       <CardContent>
-      </CardContent>
-
-      <Divider />
-
-      <CardContent>
-        <pre>{ JSON.stringify(query, null, 2) }</pre>
+        <Button>NeuroQuery</Button>
+        <Button>NeuroBridge</Button>
       </CardContent>
     </Card>
   )
