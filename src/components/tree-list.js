@@ -8,11 +8,8 @@ import {
 } from '@mui/icons-material'
 import { TermActionButtons } from './term-action-buttons'
 import { arrayToTree } from 'performant-array-to-tree'
-import { useBasket } from './basket'
 
 const renderTree = node => {
-  const basket = useBasket()
-
   return (
     <TreeItem
       key={ node.id }
