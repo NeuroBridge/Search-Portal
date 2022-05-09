@@ -1,14 +1,19 @@
-import { useEffect, useState } from 'react'
-import { Box, Button, Card, CardContent, CardHeader, Divider } from '@mui/material'
+import React, { Suspense, useEffect, useState } from 'react'
+import { Box, Button, Card, CardContent, CardHeader, Divider, Tabs, Tab } from '@mui/material'
 import { useBasket } from '../basket'
 import { useOntology } from '../ontology'
-import { NeuroQueryServiceInterface, NeuroBridgeServiceInterface } from './services'
+import { services } from './services'
 
 //
 
 export const Workspace = () => {
   const ontology = useOntology()
   const basket = useBasket()
+  const [currentServiceIndex, setCurrentServiceIndex] = useState(0)
+
+  const handleChangeService = (event, newIndex) => {
+    setCurrentServiceIndex(newIndex)
+  }
 
   return (
     <Card sx={{
@@ -25,8 +30,17 @@ export const Workspace = () => {
       <Divider />
 
       <CardContent>
-        <Button>NeuroQuery</Button>
-        <Button>NeuroBridge</Button>
+        <Tabs value={ currentServiceIndex } onChange={ handleChangeService }>
+          {
+            services.map(service => (
+              <Tab key={ service.name } label={ service.name } />
+            ))
+          }
+        </Tabs>
+
+        <Suspense fallback={ 'Loading...' }>
+          { services[currentServiceIndex].module }
+        </Suspense>
       </CardContent>
     </Card>
   )
