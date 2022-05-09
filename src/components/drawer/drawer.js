@@ -3,6 +3,7 @@ import {
   Box, Button, Divider, Drawer as MuiDrawer, Fade, List, ListItem, ListItemText, Typography
 } from '@mui/material'
 import { useDrawer } from './context'
+import { useOntology } from '../ontology'
 import { TermActionButtons } from '../term-action-buttons'
 import { TreeList } from '../tree-list'
 
@@ -14,6 +15,7 @@ const DRAWER_WIDTH = 500
 
 export const Drawer = () => {
   const drawer = useDrawer()
+  const ontology = useOntology()
 
   const LabelsList = useCallback(() => {
     return (
@@ -49,21 +51,16 @@ export const Drawer = () => {
             display: 'flex',
             flexDirection: 'row',
             gap: '0.5rem',
+            padding: '0.5rem 2.4rem',
           }}>
-            <Button
-              size="small"
-              variant="text"
-              onClick={ () => drawer.setTermId(drawer.currentTerm.parentId) }
-              disabled={ drawer.currentTerm.parentId === null }
-            >
+            <Typography>
               { drawer.currentTerm.parentId || 'No parent' }
-            </Button>
+            </Typography>
             {
               drawer.currentTerm.parentId && (
                 <TermActionButtons
                   termId={ drawer.currentTerm.parentId }
                   tooltipPlacement="top"
-                  hideDrawerButton
                 />
               )
             }
@@ -73,37 +70,24 @@ export const Drawer = () => {
     )
   }, [drawer.currentTerm])
 
-  const ChildrenList = useCallback(() => {
+  const DescendantsList = useCallback(() => {
     return (
       <Fade in={ true } style={{ transitionDelay: '150ms' }}>
         <Box>
-          <Typography variant="h6">Children</Typography>
+          <Typography variant="h6">Descendants</Typography>
 
           <List dense disablePadding sx={{ '.MuiListItem-root': { padding: 0 } }}>
             {
               drawer.currentTerm.children.length > 0
                 ? drawer.currentTerm.children.map(child => (
-                  <ListItem
+                  <TreeList
                     key={ `${ drawer.currentTerm.id }-child-${ child.id }` }
-                    sx={{
-                      gap: '0.5rem',
+                    rootTerm={{
+                      ...ontology.find(child.id),
+                      children: ontology.childrenOf(child.id),
+                      descendants: ontology.descendantsOf(child.id),
                     }}
-                  >
-                    &bull;&nbsp;
-                    <Button
-                      size="small"
-                      variant="text"
-                      onClick={ () => drawer.setTermId(child.id) }
-                      sx={{ textAlign: 'left' }}
-                    >
-                      { child.id }
-                    </Button>
-                    <TermActionButtons
-                      termId={ child.id }
-                      tooltipPlacement="top"
-                      hideDrawerButton
-                    />
-                  </ListItem>
+                  />
                 ))
                 : <Button size="small" variant="text" disabled>No children</Button>
             }
@@ -152,12 +136,7 @@ export const Drawer = () => {
 
             <Divider />
 
-            <ChildrenList />
-            
-            <Divider />
-
-            <Typography component={ Box } variant="h6">Descendant Tree</Typography>
-            <TreeList rootTerm={ drawer.currentTerm } />
+            <DescendantsList />
 
             <Divider />
 
