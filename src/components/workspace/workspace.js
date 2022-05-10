@@ -48,22 +48,19 @@ export const Workspace = () => {
           backgroundSize: '1rem 1rem',
           overflow: 'hidden',
         }}>
-          <CardHeader title="Query Workspace" />
-          <CardContent>
-            Select a service
-          </CardContent>
-
+          <CardHeader title="Services" />
+          
           <Divider />
 
-          <CardContent>
-            <Tabs value={ currentServiceIndex } onChange={ handleChangeService }>
-              {
-                services.map(service => (
-                  <Tab key={ service.name } label={ service.name } />
-                ))
-              }
-            </Tabs>
-          </CardContent>
+          <Tabs value={ currentServiceIndex } onChange={ handleChangeService }>
+            {
+              services.map(service => (
+                <Tab key={ service.name } label={ service.name } />
+              ))
+            }
+          </Tabs>
+
+          <Divider />
 
           <CardContent>
             <Box>
