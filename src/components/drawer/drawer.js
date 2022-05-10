@@ -53,14 +53,18 @@ export const Drawer = () => {
             gap: '0.5rem',
             padding: '0.5rem 2.4rem',
           }}>
-            <Typography>
-              { drawer.currentTerm.parentId || 'No parent' }
-            </Typography>
-            {
+          <Button
+            variant="text"
+            onClick={ () => drawer.setTermId(drawer.currentTerm.parentId) }
+            disabled={ drawer.currentTerm.parentId === null }
+          >
+            { drawer.currentTerm.parentId || 'No parent' }
+          </Button>            {
               drawer.currentTerm.parentId && (
                 <TermActionButtons
                   termId={ drawer.currentTerm.parentId }
                   tooltipPlacement="top"
+                  hideDrawerButton
                 />
               )
             }
