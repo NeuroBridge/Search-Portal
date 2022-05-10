@@ -9,6 +9,8 @@ import { useDrawer } from '../drawer'
 import { useOntology } from '../ontology'
 import {
   Delete as CloseIcon,
+  Check as SelectedIcon,
+  DoNotDisturbAlt as IgnoreIcon,
 } from '@mui/icons-material'
 
 
@@ -38,6 +40,10 @@ export const BasketItem = ({ term }) => {
           alignItems: 'stretch',
         }}>
           <IconButton onClick={ () => basket.toggle(term.id) }>
+            { basket.contents[term.id] === 0 && <IgnoreIcon fontSize="small" sx={{ color: '#f99' }} /> }
+            { basket.contents[term.id] === 1 && <SelectedIcon fontSize="small" sx={{ color: '#fff' }} /> }
+          </IconButton>
+          <IconButton onClick={ () => basket.remove(term.id) }>
             <CloseIcon fontSize="small" sx={{ color: '#fff' }} />
           </IconButton>
         </CardContent> 
@@ -59,14 +65,14 @@ export const Basket = () => {
 
   useEffect(() => {
     let newTerms = []
-    basket.contents.forEach(id => {
+    basket.ids.forEach(id => {
       const index = ontology.terms.findIndex(term => term.id === id)
       if (index > -1) {
         newTerms.push(ontology.terms[index])
       }
     })
     setTerms(newTerms)
-  }, [basket.contents])
+  }, [basket.ids])
 
   return (
     <Paper sx={{

@@ -12,8 +12,8 @@ export const NeuroQueryServiceInterface = ({ setLoading, setResults }) => {
   const ontology = useOntology()
   
   const terms = useMemo(() => {
-    return basket.contents.map(item => ontology.find(item))
-  }, [basket.contents])
+    return basket.ids.map(item => ontology.find(item))
+  }, [basket.ids])
 
   const querystring = useMemo(() => {
     return terms.map(term => term.labels[0]).join('+')
@@ -46,7 +46,7 @@ export const NeuroQueryServiceInterface = ({ setLoading, setResults }) => {
   return (
     <Box>
       <pre>
-        terms: { JSON.stringify(basket.contents) }
+        terms: { JSON.stringify(basket.ids) }
       </pre>
       <pre>
         url: { JSON.stringify(url) }
