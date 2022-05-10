@@ -1,7 +1,7 @@
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import PropTypes from 'prop-types'
 import axios from 'axios'
-import { Box, Button, CircularProgress, Divider, Typography } from '@mui/material'
+import { Box, Button, Divider } from '@mui/material'
 import { useBasket } from '../../basket'
 import { useOntology } from '../../ontology'
 
@@ -45,7 +45,12 @@ export const NeuroQueryServiceInterface = ({ setLoading, setResults }) => {
 
   return (
     <Box>
-      { JSON.stringify(basket.contents) }
+      <pre>
+        terms: { JSON.stringify(basket.contents) }
+      </pre>
+      <pre>
+        url: { JSON.stringify(url) }
+      </pre>
       <Divider />
       <Button variant="outlined" onClick={ handleClickQueryButton }>Query</Button>
     </Box>
