@@ -6,16 +6,16 @@ export const services = [
   {
     id: 'nq',
     name: 'NeuroQuery',
-    module: <NeuroQueryServiceInterface />,
+    module: NeuroQueryServiceInterface,
   },
   {
     id: 'nb',
     name: 'NeuroBridge',
-    module: <NeuroBridgeServiceInterface />,
+    module: NeuroBridgeServiceInterface,
   },
   {
     id: 'tbd',
     name: 'TBD',
-    module: <ToBeDeterminedServiceInterface />,
+    module: ToBeDeterminedServiceInterface,
   },
 ]

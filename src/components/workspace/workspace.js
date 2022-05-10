@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState } from 'react'
+import { createElement, useEffect, useState } from 'react'
 import { Box, Button, Card, CardContent, CardHeader, Divider, Tabs, Tab } from '@mui/material'
 import { useBasket } from '../basket'
 import { useOntology } from '../ontology'
@@ -38,9 +38,9 @@ export const Workspace = () => {
           }
         </Tabs>
 
-        <Suspense fallback={ 'Loading...' }>
-          { services[currentServiceIndex].module }
-        </Suspense>
+        <Box>
+          { createElement(services[currentServiceIndex].module) }
+        </Box>
       </CardContent>
     </Card>
   )
