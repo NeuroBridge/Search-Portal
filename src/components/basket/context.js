@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import PropTypes from 'prop-types'
 import { createContext, useContext, useState } from 'react'
 
@@ -26,12 +27,17 @@ export const BasketProvider = ({ children }) => {
     return index > -1
   }
 
+  const ids = useMemo(() => {
+    return Object.keys(contents)
+  }, [contents])
+
   return (
     <BasketContext.Provider value={{
       contains,
       contents,
       log,
       toggle,
+      ids,
     }}>
       { children }
     </BasketContext.Provider>
