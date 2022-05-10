@@ -1,3 +1,5 @@
+import "core-js/stable"
+import "regenerator-runtime/runtime"
 import { render } from 'react-dom'
 import { App } from './app'
 import { BasketProvider } from './components/basket'
