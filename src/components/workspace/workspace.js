@@ -1,4 +1,4 @@
-import { createElement, Fragment, useState } from 'react'
+import { createElement, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Box, Card, CardContent, CardHeader, CircularProgress, Divider, Fade, Tab, Tabs } from '@mui/material'
 import { services } from './services'
@@ -36,7 +36,7 @@ export const Workspace = () => {
   }
 
   return (
-    <Fade in={ basket.contents.length > 0 }>
+    <Fade in={ basket.ids.length > 0 }>
       <Box sx={{
         display: 'flex',
         flexDirection: 'column',

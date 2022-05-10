@@ -59,14 +59,14 @@ export const Basket = () => {
 
   useEffect(() => {
     let newTerms = []
-    basket.contents.forEach(id => {
+    basket.ids.forEach(id => {
       const index = ontology.terms.findIndex(term => term.id === id)
       if (index > -1) {
         newTerms.push(ontology.terms[index])
       }
     })
     setTerms(newTerms)
-  }, [basket.contents])
+  }, [basket.ids])
 
   return (
     <Paper sx={{
