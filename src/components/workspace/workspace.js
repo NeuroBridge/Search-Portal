@@ -1,48 +1,68 @@
-import { createElement, useEffect, useState } from 'react'
-import { Box, Button, Card, CardContent, CardHeader, Divider, Tabs, Tab } from '@mui/material'
-import { useBasket } from '../basket'
-import { useOntology } from '../ontology'
+import { createElement, Fragment, useState } from 'react'
+import { Box, Card, CardContent, CardHeader, CircularProgress, Divider, Tab, Tabs } from '@mui/material'
 import { services } from './services'
 
 //
 
 export const Workspace = () => {
-  const ontology = useOntology()
-  const basket = useBasket()
   const [currentServiceIndex, setCurrentServiceIndex] = useState(0)
+  const [results, setResults] = useState([])
+  const [loading, setLoading] = useState(false)
 
   const handleChangeService = (event, newIndex) => {
     setCurrentServiceIndex(newIndex)
   }
 
   return (
-    <Card sx={{
+    <Box sx={{
       display: 'flex',
       flexDirection: 'column',
-      backgroundSize: '1rem 1rem',
-      overflow: 'hidden',
+      gap: '1rem',
     }}>
-      <CardHeader title="Workspace" />
-      <CardContent>
-        Select a service
-      </CardContent>
+      <Card sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        backgroundSize: '1rem 1rem',
+        overflow: 'hidden',
+      }}>
+        <CardHeader title="Query Workspace" />
+        <CardContent>
+          Select a service
+        </CardContent>
 
-      <Divider />
+        <Divider />
 
-      <CardContent>
-        <Tabs value={ currentServiceIndex } onChange={ handleChangeService }>
-          {
-            services.map(service => (
-              <Tab key={ service.name } label={ service.name } />
-            ))
-          }
-        </Tabs>
+        <CardContent>
+          <Tabs value={ currentServiceIndex } onChange={ handleChangeService }>
+            {
+              services.map(service => (
+                <Tab key={ service.name } label={ service.name } />
+              ))
+            }
+          </Tabs>
+        </CardContent>
 
-        <Box>
-          { createElement(services[currentServiceIndex].module) }
-        </Box>
-      </CardContent>
-    </Card>
+        <CardContent>
+          <Box>
+            { createElement(services[currentServiceIndex].module, { setLoading, setResults }) }
+          </Box>
+        </CardContent>
+      </Card>
+
+      { loading && <CircularProgress /> }
+
+      {
+        !loading && results.map((result, i) => (
+          <Card key={ `${ i }_${ result.pmid }` } >
+            <CardContent>
+              <pre>
+                { JSON.stringify(result, null, 2) }
+              </pre>
+            </CardContent>
+          </Card>
+        ))
+      }
+    </Box>
   )
 }
 
