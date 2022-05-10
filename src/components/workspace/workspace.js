@@ -32,6 +32,7 @@ export const Workspace = () => {
 
   const handleChangeService = (event, newIndex) => {
     setCurrentServiceIndex(newIndex)
+    setResults([])
   }
 
   return (
