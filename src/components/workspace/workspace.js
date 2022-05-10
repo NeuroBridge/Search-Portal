@@ -1,55 +1,68 @@
-import { useEffect, useState } from 'react'
-import { Box, Divider, Paper } from '@mui/material'
-import { useBasket } from '../basket'
-import { useOntology } from '../ontology'
-import { WorkspaceItem } from './item'
-import { ServicesInterface } from './services-interface'
+import { createElement, Fragment, useState } from 'react'
+import { Box, Card, CardContent, CardHeader, CircularProgress, Divider, Tab, Tabs } from '@mui/material'
+import { services } from './services'
 
 //
 
 export const Workspace = () => {
-  const ontology = useOntology()
-  const basket = useBasket()
-  const [terms, setTerms] = useState([])
+  const [currentServiceIndex, setCurrentServiceIndex] = useState(0)
+  const [results, setResults] = useState([])
+  const [loading, setLoading] = useState(false)
 
-  useEffect(() => {
-    let newTerms = []
-    basket.contents.forEach(id => {
-      const index = ontology.terms.findIndex(term => term.id === id)
-      if (index > -1) {
-        newTerms.push(ontology.terms[index])
-      }
-    })
-    setTerms(newTerms)
-  }, [basket.contents])
+  const handleChangeService = (event, newIndex) => {
+    setCurrentServiceIndex(newIndex)
+  }
 
   return (
-    <Paper sx={{
+    <Box sx={{
       display: 'flex',
       flexDirection: 'column',
-      background: 'radial-gradient(#33669944 0px, transparent 3px)',
-      backgroundColor: '#33669933',
-      backgroundSize: '1rem 1rem',
-      overflow: 'hidden',
+      gap: '1rem',
     }}>
-      <Box sx={{
+      <Card sx={{
         display: 'flex',
-        flexWrap: 'wrap',
-        gap: '0.5rem',
-        padding: '1rem',
+        flexDirection: 'column',
+        backgroundSize: '1rem 1rem',
+        overflow: 'hidden',
       }}>
-        {
-          terms.map(term => <WorkspaceItem key={ `workspace-item-${ term.id }` } term={ term } />)
-        }
-      </Box>
-      <Divider />
-      <Box sx={{
-        backgroundColor: '#eee',
-        padding: '1rem',
-      }}>
-        <ServicesInterface />
-      </Box>
-    </Paper>
+        <CardHeader title="Query Workspace" />
+        <CardContent>
+          Select a service
+        </CardContent>
+
+        <Divider />
+
+        <CardContent>
+          <Tabs value={ currentServiceIndex } onChange={ handleChangeService }>
+            {
+              services.map(service => (
+                <Tab key={ service.name } label={ service.name } />
+              ))
+            }
+          </Tabs>
+        </CardContent>
+
+        <CardContent>
+          <Box>
+            { createElement(services[currentServiceIndex].module, { setLoading, setResults }) }
+          </Box>
+        </CardContent>
+      </Card>
+
+      { loading && <CircularProgress /> }
+
+      {
+        !loading && results.map((result, i) => (
+          <Card key={ `${ i }_${ result.pmid }` } >
+            <CardContent>
+              <pre>
+                { JSON.stringify(result, null, 2) }
+              </pre>
+            </CardContent>
+          </Card>
+        ))
+      }
+    </Box>
   )
 }
 
