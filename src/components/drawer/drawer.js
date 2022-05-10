@@ -1,4 +1,4 @@
-import { Fragment, useCallback } from 'react'
+import { Fragment, useCallback, useState } from 'react'
 import {
   Box, Button, Divider, Drawer as MuiDrawer, Fade, List, ListItem, ListItemText, Typography
 } from '@mui/material'
@@ -9,13 +9,37 @@ import { TreeList } from '../tree-list'
 
 //
 
-const DRAWER_WIDTH = 500
+const DRAWER_CONFIG = {
+  initialWidth: 600,
+  minWidth: 400,
+  maxWidth: 1200,
+}
 
 //
 
 export const Drawer = () => {
   const drawer = useDrawer()
   const ontology = useOntology()
+  const [drawerWidth, setDrawerWidth] = useState(DRAWER_CONFIG.initialWidth)
+
+  const handleMouseDown = event => {
+    document.addEventListener("mouseup", handleMouseUp, true)
+    document.addEventListener("mousemove", handleMouseMove, true)
+  }
+
+  const handleMouseUp = () => {
+    document.removeEventListener("mouseup", handleMouseUp, true)
+    document.removeEventListener("mousemove", handleMouseMove, true)
+  }
+
+  const handleMouseMove = useCallback(event => {
+    const newWidth = document.body.offsetLeft + document.body.offsetWidth - event.clientX
+    console.log(newWidth)
+    console.log(event)
+    if (DRAWER_CONFIG.minWidth < newWidth && newWidth < DRAWER_CONFIG.maxWidth) {
+      setDrawerWidth(newWidth)
+    }
+  }, [])
 
   const LabelsList = useCallback(() => {
     return (
@@ -106,15 +130,36 @@ export const Drawer = () => {
       anchor="right"
       open={ drawer.isOpen }
       onClose={ drawer.close }
+      PaperProps={{ style: { width: drawerWidth } }}
       sx={{
         '.MuiDrawer-paper': {
-          width: DRAWER_WIDTH,
           '& > .MuiBox-root': {
             padding: '1rem 2rem',
           },
+          '& .handle': {
+            padding: 0,
+          }
         },
       }}
     >
+      <Box
+        className="handle"
+        onMouseDown={ handleMouseDown }
+        sx={{ backgroundColor: '#789',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          height: '100%',
+          minWidth: '5px',
+          transition: 'min-width 100ms, filter 250ms',
+          padding: 0,
+          cursor: 'ew-resize',
+          '&:hover': {
+            minWidth: '10px',
+            filter: 'brightness(1.1)',
+          },
+        }}
+      />
       {
         drawer.currentTerm && (
           <Fragment>
