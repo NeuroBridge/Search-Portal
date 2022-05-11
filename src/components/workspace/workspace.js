@@ -1,8 +1,8 @@
 import { createElement, useState } from 'react'
 import PropTypes from 'prop-types'
-import { Box, Card, CardContent, CardHeader, Divider, Fade, LinearProgress, Tab, Tabs } from '@mui/material'
+import { Box, Card, CardContent, CardHeader, Divider, LinearProgress, Tab, Tabs } from '@mui/material'
 import { services } from './services'
-import { useBasket } from '../basket'
+import { Basket, useBasket } from '../basket'
 import { Publication } from './results'
 
 //
@@ -37,11 +37,9 @@ export const Workspace = () => {
   }
 
   return (
-    <Fade in={ basket.ids.length > 0 }>
       <Box sx={{
         display: 'flex',
         flexDirection: 'column',
-        gap: '1rem',
       }}>
         <Card sx={{
           display: 'flex',
@@ -49,8 +47,8 @@ export const Workspace = () => {
           backgroundSize: '1rem 1rem',
           overflow: 'hidden',
         }}>
-          <CardHeader title="Services" />
-          
+          <Basket />
+
           <LinearProgress variant={ loading ? 'indeterminate' : 'determinate' } value={ 0 } />
 
           <Tabs value={ currentServiceIndex } onChange={ handleChangeService }>
@@ -84,7 +82,6 @@ export const Workspace = () => {
             </ResultsGrid>
         }
       </Box>
-    </Fade>
   )
 }
 

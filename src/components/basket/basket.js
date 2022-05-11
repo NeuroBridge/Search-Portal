@@ -91,6 +91,8 @@ export const Basket = () => {
       backgroundColor: '#33669933',
       backgroundSize: '1rem 1rem',
       overflow: 'hidden',
+      minHeight: '80px',
+      borderRadius: 0,
     }}>
       <Box sx={{
         display: 'flex',
