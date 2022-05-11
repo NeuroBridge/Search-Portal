@@ -1,6 +1,6 @@
 import { createElement, useState } from 'react'
 import PropTypes from 'prop-types'
-import { Box, Card, CardContent, CardHeader, CircularProgress, Divider, Fade, Tab, Tabs } from '@mui/material'
+import { Box, Card, CardContent, CardHeader, Divider, Fade, LinearProgress, Tab, Tabs } from '@mui/material'
 import { services } from './services'
 import { useBasket } from '../basket'
 import { Publication } from './results'
@@ -52,7 +52,7 @@ export const Workspace = () => {
         }}>
           <CardHeader title="Services" />
           
-          <Divider />
+          <LinearProgress variant={ loading ? 'indeterminate' : 'determinate' } value={ 0 } />
 
           <Tabs value={ currentServiceIndex } onChange={ handleChangeService }>
             {
@@ -72,9 +72,7 @@ export const Workspace = () => {
         </Card>
 
         {
-          loading
-          ? <CircularProgress />
-          : <ResultsGrid>
+          !loading && <ResultsGrid>
               {
                 results.map((result, i) => (
                   <Publication
