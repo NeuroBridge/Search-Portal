@@ -58,7 +58,7 @@ export const NeuroQueryServiceInterface = ({ setLoading, setResults }) => {
       <br />
 
       <Box sx={{ textAlign: 'right' }}>
-        <Button variant="outlined" onClick={ handleClickQueryButton }>Query</Button>
+        <Button variant="contained" onClick={ handleClickQueryButton }>Query</Button>
       </Box>
     </Box>
   )
