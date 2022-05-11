@@ -80,15 +80,15 @@ export const NeuroQueryServiceInterface = ({ setLoading, setResults }) => {
           ))
         }
       </Stack>
-      <pre>
-        url: { JSON.stringify(url) }
-      </pre>
 
       <br />
       <Divider />
       <br />
 
-      <Box sx={{ textAlign: 'right' }}>
+      <Box sx={{ display: 'flex', gap: '1rem', alignItems: 'center', justifyContent: 'flex-start' }}>
+        <pre style={{ backgroundColor: '#eee', color: '#789', fontSize: '75%', margin: 0, padding: '0.5rem', whiteSpace: 'pre-wrap', flex: 1 }}>
+          { url }
+        </pre>
         <Button variant="contained" onClick={ handleClickQueryButton }>Query</Button>
       </Box>
     </Box>
