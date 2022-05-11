@@ -3,9 +3,13 @@ import { Button, Card, CardContent, CardHeader } from '@mui/material'
 
 export const Publication = ({ title, url }) => {
   return (
-    <Card sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-      <CardHeader disableTypography title={ title } sx={{ flex: 1 }}/>
-      <CardContent>
+    <Card sx={{
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'stretch',
+    }}>
+      <CardHeader disableTypography title={ title } sx={{ flex: 1, textAign: 'left' }} />
+      <CardContent sx={{ display: 'flex', justifyContent: 'flex-end' }}>
         <Button variant="outlined" size="small" href={ url } target="_blank">View</Button>
       </CardContent>
     </Card>

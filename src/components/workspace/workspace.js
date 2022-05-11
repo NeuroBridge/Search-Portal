@@ -35,7 +35,6 @@ export const Workspace = () => {
     setCurrentServiceIndex(newIndex)
     setResults([])
   }
-  console.log(results)
 
   return (
     <Fade in={ basket.ids.length > 0 }>

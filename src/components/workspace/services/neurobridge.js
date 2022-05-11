@@ -21,7 +21,7 @@ export const NeuroBridgeServiceInterface = () => {
       <br />
 
       <Box sx={{ textAlign: 'right' }}>
-        <Button variant="outlined">Query</Button>
+        <Button variant="contained">Query</Button>
       </Box>
 
     </div>
