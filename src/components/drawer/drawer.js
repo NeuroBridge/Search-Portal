@@ -22,7 +22,7 @@ export const Drawer = () => {
   const ontology = useOntology()
   const [drawerWidth, setDrawerWidth] = useState(DRAWER_CONFIG.initialWidth)
 
-  const handleMouseDown = event => {
+  const handleMouseDown = () => {
     document.addEventListener("mouseup", handleMouseUp, true)
     document.addEventListener("mousemove", handleMouseMove, true)
   }

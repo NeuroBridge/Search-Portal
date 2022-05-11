@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Box, Card, CardContent, CardHeader, CircularProgress, Divider, Fade, Tab, Tabs } from '@mui/material'
 import { services } from './services'
 import { useBasket } from '../basket'
+import { Publication } from './results'
 
 //
 
@@ -34,6 +35,7 @@ export const Workspace = () => {
     setCurrentServiceIndex(newIndex)
     setResults([])
   }
+  console.log(results)
 
   return (
     <Fade in={ basket.ids.length > 0 }>
@@ -75,13 +77,11 @@ export const Workspace = () => {
           : <ResultsGrid>
               {
                 results.map((result, i) => (
-                  <Card key={ `${ i }_${ result.pmid }` } >
-                    <CardContent>
-                      <pre>
-                        { JSON.stringify(result, null, 2) }
-                      </pre>
-                    </CardContent>
-                  </Card>
+                  <Publication
+                    key={ `${ i }_${ result.pmid }` }
+                    title={ result.title }
+                    url= { result.pubmed_url }
+                  />
                 ))
               }
             </ResultsGrid>
