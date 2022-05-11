@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {
   Box, Paper,
   Card, CardActionArea, CardContent, CardHeader, IconButton,
+  Tooltip,
 } from '@mui/material'
 import { useBasket } from './context'
 import { useDrawer } from '../drawer'
@@ -39,13 +40,21 @@ export const BasketItem = ({ term }) => {
           justifyContent: 'center',
           alignItems: 'stretch',
         }}>
-          <IconButton onClick={ () => basket.toggle(term.id) }>
-            { basket.contents[term.id] === 0 && <IgnoreIcon fontSize="small" sx={{ color: '#f99' }} /> }
-            { basket.contents[term.id] === 1 && <SelectedIcon fontSize="small" sx={{ color: '#fff' }} /> }
-          </IconButton>
-          <IconButton onClick={ () => basket.remove(term.id) }>
-            <CloseIcon fontSize="small" sx={{ color: '#fff' }} />
-          </IconButton>
+          <Tooltip title="Toggle term selection" placement="top">
+            <IconButton onClick={ () => basket.toggle(term.id) }>
+              { basket.contents[term.id] === 0 && <IgnoreIcon fontSize="small" sx={{ color: '#f99' }} /> }
+              { basket.contents[term.id] === 1 && <SelectedIcon fontSize="small" sx={{ color: '#9f9' }} /> }
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Remove term from basket" placement="top">
+            <IconButton onClick={ () => basket.remove(term.id) } sx={{
+              color: '#fff',
+              transition: 'color 250ms',
+              '&:hover': { color: '#f99' } }}
+            >
+              <CloseIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>  
         </CardContent> 
       </Card>
     </Fragment>
