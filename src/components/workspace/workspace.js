@@ -40,6 +40,7 @@ export const Workspace = () => {
       <Box sx={{
         display: 'flex',
         flexDirection: 'column',
+        gap: '1rem',
       }}>
         <Card sx={{
           display: 'flex',
