@@ -87,11 +87,12 @@ export const Basket = () => {
     <Paper sx={{
       display: 'flex',
       flexDirection: 'column',
-      background: 'radial-gradient(#33669944 0px, transparent 3px)',
-      backgroundColor: '#33669933',
-      backgroundSize: '1rem 1rem',
+      background: 'radial-gradient(#33669944 0px, transparent 2px)',
+      backgroundColor: '#44668833',
+      backgroundSize: '0.5rem 0.5rem',
       overflow: 'hidden',
-      minHeight: '80px',
+      minHeight: basket.ids.length ? '80px' : 0,
+      transition: 'min-height 250ms',
       borderRadius: 0,
     }}>
       <Box sx={{
