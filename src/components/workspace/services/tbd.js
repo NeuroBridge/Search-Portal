@@ -1,5 +1,9 @@
+import { CardContent } from '@mui/material'
+
 export const ToBeDeterminedServiceInterface = () => {
   return (
-    <div>TBD</div>
+    <CardContent>
+      TBD
+    </CardContent>
   )
 }
