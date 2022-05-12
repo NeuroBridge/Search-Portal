@@ -1,9 +1,10 @@
-import { createElement, useState } from 'react'
+import { createElement, Fragment, useState } from 'react'
 import PropTypes from 'prop-types'
-import { Box, Card, Collapse, Divider, LinearProgress, Tab, Tabs, useTheme } from '@mui/material'
+import { Box, Card, Collapse, Divider, IconButton, LinearProgress, Tab, Tabs, Tooltip, Typography, useTheme } from '@mui/material'
 import { services } from './services'
 import { Basket, useBasket } from '../basket'
 import { Publication } from './results'
+import { ClearAll as ClearResultsIcon } from '@mui/icons-material'
 
 //
 
@@ -83,17 +84,36 @@ export const Workspace = () => {
         </Card>
 
         {
-          !loading && <ResultsGrid>
-              {
-                results.map((result, i) => (
-                  <Publication
-                    key={ `${ i }_${ result.pmid }` }
-                    title={ result.title }
-                    url= { result.pubmed_url }
-                  />
-                ))
-              }
-            </ResultsGrid>
+          !loading && results.length > 0 && (
+            <Fragment>
+              <Box sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}>
+                <Typography>
+                  { results.length } results were found
+                </Typography>
+                <Tooltip title="Clear results" placement="left">
+                  <IconButton onClick={ () => setResults([]) }>
+                    <ClearResultsIcon />
+                  </IconButton>
+                </Tooltip>
+              </Box>
+
+              <ResultsGrid>
+                {
+                  results.map((result, i) => (
+                    <Publication
+                      key={ `${ i }_${ result.pmid }` }
+                      title={ result.title }
+                      url= { result.pubmed_url }
+                    />
+                  ))
+                }
+              </ResultsGrid>
+            </Fragment>
+          )
         }
       </Box>
   )
