@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { Fragment, useEffect, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 import axios from 'axios'
 import { Box, Button, CardContent, Collapse, Divider, IconButton, MenuItem, Select, Stack, Typography } from '@mui/material'
@@ -11,6 +11,24 @@ import {
 } from '@mui/icons-material'
 
 const BASE_URL = `https://neurobridges.renci.org:13374/query`
+
+const HelpText = () => {
+  return (
+    <Fragment>
+      <Typography paragraph>
+        This interface allows communication with <Link to="https://neuroquery.org/">NeuroQuery</Link>,
+        which receives terms and returns PubMed publications.
+      </Typography>
+      <Typography paragraph>
+        Terms in your workspace will appear in this interface as selection boxes.
+        Many terms in the NeuroBridge Ontology have multiple string representations, or <em>labels</em>.
+        Before sending your request to NeuroQuery, you may fine-tune your NeuroQuery search by
+        selecting the most appropriate label to represent each term.
+        Verify the constructed URL and query before sending your request to NeuroQuery.
+      </Typography>
+    </Fragment>
+  )
+}
 
 export const NeuroQueryServiceInterface = ({ doSearch }) => {
   const basket = useBasket()
@@ -56,20 +74,8 @@ export const NeuroQueryServiceInterface = ({ doSearch }) => {
   return (
     <Box>
       <CardContent sx={{ display: 'flex', gap: '1rem' }}>
-        <Collapse in={ showHelp }>
-          <Typography paragraph>
-            This interface allows communication with <Link to="https://neuroquery.org/">NeuroQuery</Link>,
-            which receives terms and returns PubMed publications.
-          </Typography>
-          <Typography paragraph>
-            Terms in your workspace will appear in this interface as selection boxes.
-            Many terms in the NeuroBridge Ontology have multiple string representations, or <em>labels</em>.
-            Before sending your request to NeuroQuery, you may fine-tune your NeuroQuery search by
-            selecting the most appropriate label to represent each term.
-            Verify the constructed URL and query before sending your request to NeuroQuery.
-          </Typography>
-          <Typography paragraph>
-          </Typography>
+        <Collapse in={ showHelp } sx={{ flex: 1 }}>
+          <HelpText />
         </Collapse>
         <Box>
           <IconButton onClick={ () => setShowHelp(!showHelp) } size="small">
