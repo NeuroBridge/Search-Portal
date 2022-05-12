@@ -1,7 +1,7 @@
 import { Fragment, useState } from 'react'
 import PropTypes from 'prop-types'
 import {
-  Box, Card, CardActionArea, CardContent,
+  Box, Button, Card, CardActionArea, CardContent,
   Fade, IconButton,
   TextField, Typography,
 } from '@mui/material'
@@ -175,11 +175,13 @@ export const SearchForm = ({ inputRef, searchText, searchHandler, matches }) => 
     setSearchHistory({ ...newSearchHistory })
   }
 
+  const resetSearchHistory = () => {
+    setSearchHistory({})
+  }
+
   const handleClickTerm = id => () => {
-    if (!basket.contains(id)) {
-      addToSearchHistory(id)
-    }
     basket.toggle(id)
+    addToSearchHistory(id)
     setOpen(false)
   }
 
@@ -262,6 +264,7 @@ export const SearchForm = ({ inputRef, searchText, searchHandler, matches }) => 
 
                     {
                       Object.keys(searchHistory)
+                        .sort((a, b) => searchHistory[a] < searchHistory[b] ? 1 : -1)
                         .map(id => (
                           <HistoryItemCard
                             key={ searchHistory[id] }
@@ -271,6 +274,11 @@ export const SearchForm = ({ inputRef, searchText, searchHandler, matches }) => 
                           />
                         ))
                     }
+                    <Box sx={{ display: 'flex', justifyContent: 'flex-end'  }}>
+                      <Button onClick={ resetSearchHistory } size="small" variant="text">
+                        Clear search history
+                      </Button>
+                    </Box>
                   </Fragment>
                 ) : (
                   // matching terms.
@@ -302,8 +310,6 @@ export const SearchForm = ({ inputRef, searchText, searchHandler, matches }) => 
                   </Fragment>
                 )
               }
-
-              <br />
             </CardContent>
           </Card>
         </Fade>
