@@ -27,7 +27,7 @@ export const BasketItem = ({ term }) => {
         backgroundColor: '#234',
         color: '#def',
         fontSize: '75%',
-        borderRadius: '4px',
+        borderRadius: '3px',
         display: 'flex',
       }}>
         <CardActionArea onClick={ () => drawer.setTermId(term.id) }>

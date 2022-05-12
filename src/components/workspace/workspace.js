@@ -47,6 +47,8 @@ export const Workspace = () => {
           flexDirection: 'column',
           backgroundSize: '1rem 1rem',
           overflow: 'hidden',
+          border: 'solid rgb(167, 202, 237)',
+          borderWidth: '1px',
         }}>
           <Basket />
 
