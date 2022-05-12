@@ -12,7 +12,7 @@ import {
 
 const BASE_URL = `https://neurobridges.renci.org:13374/query`
 
-export const NeuroQueryServiceInterface = ({ setLoading, setResults }) => {
+export const NeuroQueryServiceInterface = ({ doSearch }) => {
   const basket = useBasket()
   const ontology = useOntology()
   const [termLabels, setTermLabels] = useState({})
@@ -32,8 +32,7 @@ export const NeuroQueryServiceInterface = ({ setLoading, setResults }) => {
   const url = useMemo(() => `${ BASE_URL }?${ querystring }`, [querystring])
 
   const handleClickQueryButton = () => {
-    const fetchResults = async () => {
-      setLoading(true)
+    doSearch(async () => {
       try {
         const response = await axios.get(BASE_URL, {
           params: { searchTerms: querystring }
@@ -41,16 +40,12 @@ export const NeuroQueryServiceInterface = ({ setLoading, setResults }) => {
         if (!response?.data?.data) {
           throw new Error('An error occurred while querying NeuroQuery.')
         }
-        setResults(response.data.data)
+        return response.data.data
       } catch (error) {
         console.error(error)
-      } finally {
-        setLoading(false)
       }
       return
-    }
-    setResults([])
-    fetchResults()
+    })
   }
 
   const handleChangeTermLabel = id => event => {
@@ -130,6 +125,5 @@ export const NeuroQueryServiceInterface = ({ setLoading, setResults }) => {
 }
 
 NeuroQueryServiceInterface.propTypes = {
-  setLoading: PropTypes.func.isRequired,
-  setResults: PropTypes.func.isRequired,
+  doSearch: PropTypes.func.isRequired,
 }

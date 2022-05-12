@@ -33,6 +33,13 @@ export const Workspace = () => {
   const [loading, setLoading] = useState(false)
   const basket = useBasket()
 
+  const doSearch = async fn => {
+    setLoading(true)
+    const data = await fn()
+    setResults(data)
+    setLoading(false)
+  }
+
   const handleChangeService = (event, newIndex) => {
     setCurrentServiceIndex(newIndex)
     setResults([])
@@ -79,7 +86,7 @@ export const Workspace = () => {
 
             <Divider />
 
-            { createElement(services[currentServiceIndex].module, { setLoading, setResults }) }
+            { createElement(services[currentServiceIndex].module, { doSearch }) }
           </Collapse>
         </Card>
 

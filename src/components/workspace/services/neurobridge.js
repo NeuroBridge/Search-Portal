@@ -1,13 +1,25 @@
 import { useMemo } from 'react'
+import PropTypes from 'prop-types'
 import { Box, Button, CardContent, Divider, List, ListItem } from '@mui/material'
 import { useBasket } from '../../basket'
 
-export const NeuroBridgeServiceInterface = () => {
+export const NeuroBridgeServiceInterface = ({ doSearch }) => {
   const basket = useBasket()
 
   const query = useMemo(() => {
     return 'query query query'
   }, [basket.ids])
+
+  const handleClickQueryButton = () => {
+    doSearch(async () => {
+      return [
+        { title: 'a', pubmed_url: 'https://google.com', pmid: '1234' },
+        { title: 'few', pubmed_url: 'https://google.com', pmid: '1235' },
+        { title: 'sample', pubmed_url: 'https://google.com', pmid: '1236' },
+        { title: 'results', pubmed_url: 'https://google.com', pmid: '1237' },
+      ]
+    })
+  }
 
   return (
     <Box>
@@ -29,8 +41,12 @@ export const NeuroBridgeServiceInterface = () => {
       <Divider />
 
       <CardContent sx={{ display: 'flex', gap: '1rem', alignItems: 'center', justifyContent: 'flex-end' }}>
-        <Button variant="contained">Send Query</Button>
+        <Button variant="contained" onClick={ handleClickQueryButton }>Send Query</Button>
       </CardContent>
     </Box>
   )
+}
+
+NeuroBridgeServiceInterface.propTypes = {
+  doSearch: PropTypes.func.isRequired,
 }
