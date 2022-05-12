@@ -6,7 +6,7 @@ import { useBasket } from '../../basket'
 import { useOntology } from '../../ontology'
 import { Add as PlusIcon } from '@mui/icons-material'
 import {
-  ExpandMore as ExpandIcon,
+  Info as ExpandIcon,
 } from '@mui/icons-material'
 
 const BASE_URL = `https://neurobridges.renci.org:13374/query`
@@ -15,7 +15,7 @@ export const NeuroQueryServiceInterface = ({ setLoading, setResults }) => {
   const basket = useBasket()
   const ontology = useOntology()
   const [termLabels, setTermLabels] = useState({})
-  const [showHelp, setShowHelp] = useState(true)
+  const [showHelp, setShowHelp] = useState(false)
 
   const terms = useMemo(() => {
     return basket.ids.filter(id => basket.contents[id] === 1)
@@ -59,7 +59,7 @@ export const NeuroQueryServiceInterface = ({ setLoading, setResults }) => {
 
   return (
     <Box>
-      <CardContent sx={{ display: 'flex' }}>
+      <CardContent sx={{ display: 'flex', gap: '1rem' }}>
         <Collapse in={ showHelp }>
           <Typography paragraph>
             Many terms in the NeuroBridge Ontology have multiple string representations, or <em>labels</em>.
