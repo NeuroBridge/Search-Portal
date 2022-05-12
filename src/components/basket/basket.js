@@ -46,7 +46,7 @@ export const BasketItem = ({ term }) => {
               { basket.contents[term.id] === 1 && <SelectedIcon fontSize="small" sx={{ color: '#9f9' }} /> }
             </IconButton>
           </Tooltip>
-          <Tooltip title="Remove term from basket" placement="top">
+          <Tooltip title="Remove term from workspace" placement="top">
             <IconButton onClick={ () => basket.remove(term.id) } sx={{
               color: '#fff',
               transition: 'color 250ms',
