@@ -1,6 +1,6 @@
 import { createElement, useState } from 'react'
 import PropTypes from 'prop-types'
-import { Box, Card, Collapse, Divider, LinearProgress, Tab, Tabs, useTheme } from '@mui/material'
+import { Box, Card, Collapse, Divider, LinearProgress, Tab, Tabs } from '@mui/material'
 import { services } from './services'
 import { Basket, useBasket } from '../basket'
 import { Publication } from './results'
@@ -26,7 +26,6 @@ ResultsGrid.propTypes = {
 //
 
 export const Workspace = () => {
-  const theme = useTheme()
   const [currentServiceIndex, setCurrentServiceIndex] = useState(0)
   const [results, setResults] = useState([])
   const [loading, setLoading] = useState(false)

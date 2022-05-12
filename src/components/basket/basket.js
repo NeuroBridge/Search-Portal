@@ -2,7 +2,7 @@ import { Fragment, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import {
   Box, Paper,
-  Card, CardActionArea, CardContent, CardHeader, IconButton,
+  Card, CardActionArea, CardHeader,
   Tooltip,
 } from '@mui/material'
 import { useBasket } from './context'
