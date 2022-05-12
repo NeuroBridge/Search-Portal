@@ -36,7 +36,7 @@ export const NeuroQueryServiceInterface = ({ setLoading, setResults }) => {
       setLoading(true)
       try {
         const response = await axios.get(BASE_URL, {
-          params: { searchTerms: querystring}
+          params: { searchTerms: querystring }
         })
         if (!response?.data?.data) {
           throw new Error('An error occurred while querying NeuroQuery.')
