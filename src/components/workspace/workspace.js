@@ -1,6 +1,6 @@
 import { createElement, useState } from 'react'
 import PropTypes from 'prop-types'
-import { Box, Card, CardContent, Divider, LinearProgress, Tab, Tabs } from '@mui/material'
+import { Box, Card, Divider, LinearProgress, Tab, Tabs } from '@mui/material'
 import { services } from './services'
 import { Basket } from '../basket'
 import { Publication } from './results'
