@@ -1,8 +1,8 @@
 import { createElement, useState } from 'react'
 import PropTypes from 'prop-types'
-import { Box, Card, Divider, LinearProgress, Tab, Tabs } from '@mui/material'
+import { Box, Card, Collapse, Divider, LinearProgress, Tab, Tabs } from '@mui/material'
 import { services } from './services'
-import { Basket } from '../basket'
+import { Basket, useBasket } from '../basket'
 import { Publication } from './results'
 
 //
@@ -29,6 +29,7 @@ export const Workspace = () => {
   const [currentServiceIndex, setCurrentServiceIndex] = useState(0)
   const [results, setResults] = useState([])
   const [loading, setLoading] = useState(false)
+  const basket = useBasket()
 
   const handleChangeService = (event, newIndex) => {
     setCurrentServiceIndex(newIndex)
@@ -51,19 +52,21 @@ export const Workspace = () => {
         }}>
           <Basket />
 
-          <LinearProgress variant={ loading ? 'indeterminate' : 'determinate' } value={ 0 } />
+          <Collapse in={ basket.ids.length > 0 }>
+            <LinearProgress variant={ loading ? 'indeterminate' : 'determinate' } value={ 0 } />
 
-          <Tabs value={ currentServiceIndex } onChange={ handleChangeService }>
-            {
-              services.map(service => (
-                <Tab key={ service.name } label={ service.name } />
-              ))
-            }
-          </Tabs>
+            <Tabs value={ currentServiceIndex } onChange={ handleChangeService }>
+              {
+                services.map(service => (
+                  <Tab key={ service.name } label={ service.name } />
+                ))
+              }
+            </Tabs>
 
-          <Divider />
+            <Divider />
 
-          { createElement(services[currentServiceIndex].module, { setLoading, setResults }) }
+            { createElement(services[currentServiceIndex].module, { setLoading, setResults }) }
+          </Collapse>
         </Card>
 
         {

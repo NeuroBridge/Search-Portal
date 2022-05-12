@@ -91,8 +91,7 @@ export const Basket = () => {
       backgroundColor: '#44668833',
       backgroundSize: '0.5rem 0.5rem',
       overflow: 'hidden',
-      minHeight: basket.ids.length ? '80px' : 0,
-      transition: 'min-height 250ms',
+      minHeight: '80px',
       borderRadius: 0,
     }}>
       <Box sx={{
