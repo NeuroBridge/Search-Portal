@@ -4,6 +4,7 @@ import axios from 'axios'
 import { Box, Button, CardContent, Collapse, Divider, IconButton, MenuItem, Select, Stack, Typography } from '@mui/material'
 import { useBasket } from '../../basket'
 import { useOntology } from '../../ontology'
+import { Link } from '../../link'
 import { Add as PlusIcon } from '@mui/icons-material'
 import {
   Info as ExpandIcon,
@@ -62,12 +63,17 @@ export const NeuroQueryServiceInterface = ({ setLoading, setResults }) => {
       <CardContent sx={{ display: 'flex', gap: '1rem' }}>
         <Collapse in={ showHelp }>
           <Typography paragraph>
-            Many terms in the NeuroBridge Ontology have multiple string representations, or <em>labels</em>.
-            Before sending your request off to NeuroQuery, you have the ability to select the most appropriate labels.
+            This interface allows interfacing with <Link to="https://neuroquery.org/">NeuroQuery</Link>,
+            which returns PubMed publications.
           </Typography>
           <Typography paragraph>
+            Terms in your workspace will appear here as select boxes.
+            Many terms in the NeuroBridge Ontology have multiple string representations, or <em>labels</em>.
+            Before sending your request to NeuroQuery, you have the ability to fine-tune your search by
+            selecting the appropriate label to represent each term.
             Verify the query you construct before sending it to NeuroQuery.
-            The results will be PubMed publications.
+          </Typography>
+          <Typography paragraph>
           </Typography>
         </Collapse>
         <Box>
