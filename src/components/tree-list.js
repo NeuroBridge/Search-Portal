@@ -41,7 +41,7 @@ const renderTree = node => {
 
 export const TreeList = ({ rootTerm }) => {
   const descendants = [
-    // to play nicey with `arrayToTree`, we'll set
+    // to play nicely with `arrayToTree`, we'll set
     // our root term to have no parent so that it doesn't
     // expect to find and render the term's parent.
     {
