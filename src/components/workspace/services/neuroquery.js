@@ -63,15 +63,15 @@ export const NeuroQueryServiceInterface = ({ setLoading, setResults }) => {
       <CardContent sx={{ display: 'flex', gap: '1rem' }}>
         <Collapse in={ showHelp }>
           <Typography paragraph>
-            This interface allows interfacing with <Link to="https://neuroquery.org/">NeuroQuery</Link>,
-            which returns PubMed publications.
+            This interface allows communication with <Link to="https://neuroquery.org/">NeuroQuery</Link>,
+            which receives terms and returns PubMed publications.
           </Typography>
           <Typography paragraph>
-            Terms in your workspace will appear here as select boxes.
+            Terms in your workspace will appear in this interface as selection boxes.
             Many terms in the NeuroBridge Ontology have multiple string representations, or <em>labels</em>.
-            Before sending your request to NeuroQuery, you have the ability to fine-tune your search by
-            selecting the appropriate label to represent each term.
-            Verify the query you construct before sending it to NeuroQuery.
+            Before sending your request to NeuroQuery, you may fine-tune your NeuroQuery search by
+            selecting the most appropriate label to represent each term.
+            Verify the constructed URL and query before sending your request to NeuroQuery.
           </Typography>
           <Typography paragraph>
           </Typography>
