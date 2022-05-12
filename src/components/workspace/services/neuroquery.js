@@ -89,7 +89,7 @@ export const NeuroQueryServiceInterface = ({ setLoading, setResults }) => {
         <Stack
           direction="row"
           divider={ <PlusIcon color="disabled" /> }
-          spacing={ 2 }
+          spacing={ 0 }
           alignItems="center"
           sx={{ flexWrap: 'wrap', padding: '0.5rem', }}
         >
@@ -103,6 +103,7 @@ export const NeuroQueryServiceInterface = ({ setLoading, setResults }) => {
                   id={ `${ term.id }-select` }
                   value={ termLabels[term.id] || 0 }
                   onChange={ handleChangeTermLabel(term.id) }
+                  sx={{ '.MuiSelect-select': { padding: '0.5rem' } }}
                 >
                   {
                     term.labels.map((label, i) => (
