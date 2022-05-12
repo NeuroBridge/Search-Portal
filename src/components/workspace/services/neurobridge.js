@@ -1,16 +1,59 @@
-import { useMemo } from 'react'
-import { Box, Button, CardContent, Divider, List, ListItem } from '@mui/material'
+import { Fragment, useMemo, useState } from 'react'
+import PropTypes from 'prop-types'
+import { Box, Button, CardContent, Collapse, Divider, IconButton, List, ListItem, Typography } from '@mui/material'
+import {
+  Info as ExpandIcon,
+} from '@mui/icons-material'
 import { useBasket } from '../../basket'
 
-export const NeuroBridgeServiceInterface = () => {
+const HelpText = () => {
+  return (
+    <Fragment>
+      <Typography paragraph>
+        This interface allows communication with the NeuroBridge API,
+        which receives terms and returns PubMed publications.
+      </Typography>
+      <Typography paragraph>
+        This interface is still under development.
+      </Typography>
+    </Fragment>
+  )
+}
+
+export const NeuroBridgeServiceInterface = ({ doSearch }) => {
   const basket = useBasket()
+  const [showHelp, setShowHelp] = useState(false)
 
   const query = useMemo(() => {
     return 'query query query'
   }, [basket.ids])
 
+  const handleClickQueryButton = () => {
+    doSearch(async () => {
+      return [
+        { title: 'a', pubmed_url: 'https://google.com', pmid: '1234' },
+        { title: 'few', pubmed_url: 'https://google.com', pmid: '1235' },
+        { title: 'sample', pubmed_url: 'https://google.com', pmid: '1236' },
+        { title: 'results', pubmed_url: 'https://google.com', pmid: '1237' },
+      ]
+    })
+  }
+
   return (
     <Box>
+      <CardContent sx={{ display: 'flex', gap: '1rem' }}>
+        <Collapse in={ showHelp } sx={{ flex: 1 }}>
+          <HelpText />
+        </Collapse>
+        <Box>
+          <IconButton onClick={ () => setShowHelp(!showHelp) } size="small">
+            <ExpandIcon fontSize="small" />
+          </IconButton>
+        </Box>
+      </CardContent>
+
+      <Divider />
+      
       <CardContent>
         <List>
           {
@@ -29,8 +72,12 @@ export const NeuroBridgeServiceInterface = () => {
       <Divider />
 
       <CardContent sx={{ display: 'flex', gap: '1rem', alignItems: 'center', justifyContent: 'flex-end' }}>
-        <Button variant="contained">Send Query</Button>
+        <Button variant="contained" onClick={ handleClickQueryButton }>Send Query</Button>
       </CardContent>
     </Box>
   )
+}
+
+NeuroBridgeServiceInterface.propTypes = {
+  doSearch: PropTypes.func.isRequired,
 }

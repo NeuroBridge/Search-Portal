@@ -1,6 +1,6 @@
 import { NeuroQueryServiceInterface } from './neuroquery'
 import { NeuroBridgeServiceInterface } from './neurobridge'
-import { ToBeDeterminedServiceInterface } from './tba'
+import { ToBeDeterminedServiceInterface } from './tbd'
 
 export const services = [
   {
