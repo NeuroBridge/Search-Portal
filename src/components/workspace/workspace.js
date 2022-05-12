@@ -98,7 +98,7 @@ export const Workspace = () => {
                 alignItems: 'center',
               }}>
                 <Typography>
-                  { results.length } results were found
+                  { results.length } results were returned.
                 </Typography>
                 <Tooltip title="Clear results" placement="left">
                   <IconButton onClick={ () => setResults([]) }>
