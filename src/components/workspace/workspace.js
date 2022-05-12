@@ -63,11 +63,7 @@ export const Workspace = () => {
 
           <Divider />
 
-          <CardContent>
-            <Box>
-              { createElement(services[currentServiceIndex].module, { setLoading, setResults }) }
-            </Box>
-          </CardContent>
+          { createElement(services[currentServiceIndex].module, { setLoading, setResults }) }
         </Card>
 
         {
