@@ -1,6 +1,6 @@
 import { createElement, useState } from 'react'
 import PropTypes from 'prop-types'
-import { Box, Card, CardContent, CardHeader, Divider, LinearProgress, Tab, Tabs } from '@mui/material'
+import { Box, Card, Collapse, Divider, LinearProgress, Tab, Tabs, useTheme } from '@mui/material'
 import { services } from './services'
 import { Basket, useBasket } from '../basket'
 import { Publication } from './results'
@@ -26,10 +26,11 @@ ResultsGrid.propTypes = {
 //
 
 export const Workspace = () => {
-  const basket = useBasket()
+  const theme = useTheme()
   const [currentServiceIndex, setCurrentServiceIndex] = useState(0)
   const [results, setResults] = useState([])
   const [loading, setLoading] = useState(false)
+  const basket = useBasket()
 
   const handleChangeService = (event, newIndex) => {
     setCurrentServiceIndex(newIndex)
@@ -47,26 +48,38 @@ export const Workspace = () => {
           flexDirection: 'column',
           backgroundSize: '1rem 1rem',
           overflow: 'hidden',
+          border: 'solid rgb(167, 202, 237)',
+          borderWidth: '1px',
+          position: 'relative',
         }}>
+          <Box sx={{
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            padding: '0.5rem',
+            backgroundColor: '#336699cc',
+            color: '#fff',
+            fontSize: '80%',
+            borderBottomLeftRadius: '4px',
+          }}>Workspace</Box>
+
           <Basket />
 
-          <LinearProgress variant={ loading ? 'indeterminate' : 'determinate' } value={ 0 } />
+          <Collapse in={ basket.ids.length > 0 }>
+            <LinearProgress variant={ loading ? 'indeterminate' : 'determinate' } value={ 0 } />
 
-          <Tabs value={ currentServiceIndex } onChange={ handleChangeService }>
-            {
-              services.map(service => (
-                <Tab key={ service.name } label={ service.name } />
-              ))
-            }
-          </Tabs>
+            <Tabs value={ currentServiceIndex } onChange={ handleChangeService }>
+              {
+                services.map(service => (
+                  <Tab key={ service.name } label={ service.name } />
+                ))
+              }
+            </Tabs>
 
-          <Divider />
+            <Divider />
 
-          <CardContent>
-            <Box>
-              { createElement(services[currentServiceIndex].module, { setLoading, setResults }) }
-            </Box>
-          </CardContent>
+            { createElement(services[currentServiceIndex].module, { setLoading, setResults }) }
+          </Collapse>
         </Card>
 
         {

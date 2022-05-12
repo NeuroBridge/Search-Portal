@@ -167,14 +167,12 @@ HistoryItemCard.propTypes = {
 export const SearchForm = ({ inputRef, searchText, searchHandler, matches }) => {
   const basket = useBasket()
   const [open, setOpen] = useState(false)
-  const [searchHistory, setSearchHistory] = useLocalStorage('search-history', [])
+  const [searchHistory, setSearchHistory] = useLocalStorage('nb-search-history', {})
 
   const addToSearchHistory = id => {
-    const newHistoryItem = {
-      timestamp: Date.now(),
-      termId: id,
-    }
-    setSearchHistory([newHistoryItem, ...searchHistory].slice(0, 10))
+    let newSearchHistory = { ...searchHistory }
+    newSearchHistory[id] = Date.now()
+    setSearchHistory({ ...newSearchHistory })
   }
 
   const handleClickTerm = id => () => {
@@ -253,7 +251,7 @@ export const SearchForm = ({ inputRef, searchText, searchHandler, matches }) => 
               padding: '0 !important',
             }}>
               {
-                !searchText && searchHistory.length ? (
+                !searchText && Object.keys(searchHistory).length ? (
                   // history list.
                   // renders before search text has been entered.
                   // ...unless there is no history yet.
@@ -263,14 +261,13 @@ export const SearchForm = ({ inputRef, searchText, searchHandler, matches }) => 
                     </Typography>
 
                     {
-                      searchHistory
-                        .slice(0, 10)
-                        .map(({ timestamp, termId }) => (
+                      Object.keys(searchHistory)
+                        .map(id => (
                           <HistoryItemCard
-                            key={ timestamp }
-                            termId={ termId }
-                            timestamp={ timestamp }
-                            onClick={ handleClickTerm(termId) }
+                            key={ searchHistory[id] }
+                            termId={ id }
+                            timestamp={ searchHistory[id] }
+                            onClick={ handleClickTerm(id) }
                           />
                         ))
                     }

@@ -14,7 +14,6 @@ import {
   DoNotDisturbAlt as IgnoreIcon,
 } from '@mui/icons-material'
 
-
 //
 
 export const BasketItem = ({ term }) => {
@@ -27,35 +26,25 @@ export const BasketItem = ({ term }) => {
         backgroundColor: '#234',
         color: '#def',
         fontSize: '75%',
-        borderRadius: '4px',
+        borderRadius: '3px',
         display: 'flex',
       }}>
         <CardActionArea onClick={ () => drawer.setTermId(term.id) }>
           <CardHeader title={ term.id } disableTypography />
         </CardActionArea>
-        <CardContent sx={{
-          backgroundColor: '#ffffff11',
-          padding: '0 !important',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'stretch',
-        }}>
-          <Tooltip title="Toggle term selection" placement="top">
-            <IconButton onClick={ () => basket.toggle(term.id) }>
-              { basket.contents[term.id] === 0 && <IgnoreIcon fontSize="small" sx={{ color: '#f99' }} /> }
-              { basket.contents[term.id] === 1 && <SelectedIcon fontSize="small" sx={{ color: '#9f9' }} /> }
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Remove term from workspace" placement="top">
-            <IconButton onClick={ () => basket.remove(term.id) } sx={{
-              color: '#fff',
-              transition: 'color 250ms',
-              '&:hover': { color: '#f99' } }}
-            >
-              <CloseIcon fontSize="small" />
-            </IconButton>
-          </Tooltip>  
-        </CardContent> 
+        <Tooltip title="Toggle term selection" placement="top">
+          <CardActionArea onClick={ () => basket.toggle(term.id) } sx={{ padding: '0.5rem' }}>
+            { basket.contents[term.id] === 0 &&
+                <IgnoreIcon fontSize="small" sx={{ color: '#f99' }} /> }
+            { basket.contents[term.id] === 1 &&
+                <SelectedIcon fontSize="small" sx={{ color: '#9f9' }} /> }
+          </CardActionArea>
+        </Tooltip>
+        <Tooltip title="Remove term from workspace" placement="top">
+          <CardActionArea onClick={ () => basket.remove(term.id) } sx={{padding: '0.5rem' }}>
+            <CloseIcon fontSize="small" />
+          </CardActionArea>
+        </Tooltip>  
       </Card>
     </Fragment>
   )
@@ -87,9 +76,9 @@ export const Basket = () => {
     <Paper sx={{
       display: 'flex',
       flexDirection: 'column',
-      background: 'radial-gradient(#33669944 0px, transparent 3px)',
-      backgroundColor: '#33669933',
-      backgroundSize: '1rem 1rem',
+      background: 'radial-gradient(#33669944 0px, transparent 2px)',
+      backgroundColor: '#44668833',
+      backgroundSize: '0.5rem 0.5rem',
       overflow: 'hidden',
       minHeight: '80px',
       borderRadius: 0,

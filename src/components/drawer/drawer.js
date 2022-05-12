@@ -158,12 +158,21 @@ export const Drawer = () => {
             minWidth: '10px',
             filter: 'brightness(1.1)',
           },
+          zIndex: 10,
         }}
       />
       {
         drawer.currentTerm && (
           <Fragment>
-            <Box sx={{ width: '100%', backgroundColor: '#e6e9ec', display: 'flex', alignItems: 'flex-start' }}>
+            <Box sx={{
+              width: '100%',
+              backgroundColor: '#e6e9ec',
+              display: 'flex',
+              alignItems: 'flex-start',
+              position: 'sticky',
+              top: 0,
+              zIndex: 9,
+            }}>
               <Box sx={{ flex: 1, paddingTop: '1rem' }}>
                 <Typography variant="h5" sx={{ margin: 0 }}>
                   { drawer.currentTerm.id }
