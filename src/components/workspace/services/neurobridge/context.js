@@ -95,8 +95,13 @@ export const ForestProvider = ({ children, searchWrapper }) => {
         if (!data) {
           throw new Error('An error occurred while fetching results.')
         }
-        console.log(data)
-        return data
+        const results = Object.values(data).map(result => ({
+          title: result.title[0],
+          pmid: result.pmid,
+          url: result.pmc_link,
+        }))
+        console.log(results)
+        return results
       } catch (error) {
         return []
       }

@@ -7,7 +7,7 @@ export const Forest = () => {
 
   return (
     <CardContent>
-      <Stack divider={ <Divider /> }>
+      <Stack divider={ <Divider sx={{ margin: '1rem 0' }}/> }>
         {
           Object.keys(basket.contents)
             .filter(id => basket.contents[id] === 1)

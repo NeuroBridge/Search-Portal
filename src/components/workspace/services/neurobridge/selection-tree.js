@@ -64,7 +64,6 @@ export const SelectionTree = ({ rootTermId }) => {
             justifyContent: 'flex-start',
             alignItems: 'center',
             gap: '1rem',
-            padding: '0.5rem',
           }}>
             <FormControlLabel
               label={ node.id }
@@ -92,7 +91,7 @@ export const SelectionTree = ({ rootTermId }) => {
   return (
     <Fragment>
       <TreeView
-        sx={{ flexGrow: 1, width: '100%', overflowY: 'auto' }}
+        sx={{ flexGrow: 1, width: '100%', overflowY: 'auto', }}
         defaultCollapseIcon={ <ExpandIcon /> }
         defaultExpandIcon={ <CollapseIcon /> }
         disabledItemsFocusable
