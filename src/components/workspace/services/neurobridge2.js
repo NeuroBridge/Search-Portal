@@ -1,6 +1,6 @@
 import { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
-import { Box, Button, CardContent, Divider, FormControlLabel, Checkbox } from '@mui/material'
+import { Box, Button, CardContent, Checkbox, Divider, FormControlLabel, Stack } from '@mui/material'
 import { TreeItem, TreeView } from '@mui/lab'
 import {
   ChevronRight as CollapseIcon,
@@ -138,14 +138,16 @@ export const NeuroBridge2ServiceInterface = ({ doSearch }) => {
   return (
     <Box>
       <CardContent>
-        {
-          basket.ids.map(id => (
-            <SelectionTreeList
-              key={ `${ id }-selection-tree` }
-              rootTermId={ id }
-            />
-          ))
-        }
+        <Stack divider={ <Divider /> }>
+          {
+            basket.ids.map(id => (
+              <SelectionTreeList
+                key={ `${ id }-selection-tree` }
+                rootTermId={ id }
+              />
+            ))
+          }
+        </Stack>
       </CardContent>
 
       <Divider />
