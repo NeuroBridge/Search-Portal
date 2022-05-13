@@ -23,14 +23,16 @@ export const SelectionTreeList = ({ rootTermId }) => {
   
   useEffect(() => {
     let baseValues = {}
-    Object.keys(basket.contents).forEach(id => {
-      const descendants = [id, ...ontology.descendantsOf(id)]
-      baseValues = {
-        ...baseValues,
-        ...descendants.map(d => d.id)
-          .reduce((obj, id) => ({ ...obj, [id]: 0 }), {}),
-      }
-    })
+    Object.keys(basket.contents)
+      .filter(id => basket.contents[id])
+      .forEach(id => {
+        const descendants = [id, ...ontology.descendantsOf(id)]
+        baseValues = {
+          ...baseValues,
+          ...descendants.map(d => d.id)
+            .reduce((obj, id) => ({ ...obj, [id]: 0 }), {}),
+        }
+      })
     setValues({ ...baseValues, ...values })
   }, [basket.ids])
 
@@ -45,16 +47,14 @@ export const SelectionTreeList = ({ rootTermId }) => {
     ...ontology.descendantsOf(rootTermId),
   ]
 
-  // this function cleans up and flattens the tree data
-  // to make browsing on this view a little simpler.
-  const reduceTree = node => {
-    return {
-      id: node.data.id,
-      parentId: node.data.parentId,
-      children: node.children.map(reduceTree),
-    }
-  }
-
+  // this function aids in generating a tree object
+  // suitable for the MUI TreeView component.
+  const reduceTree = node => ({
+    id: node.data.id,
+    parentId: node.data.parentId,
+    children: node.children.map(reduceTree),
+  })
+  // this is the tree, ready for MUI's TreeView.
   const tree = reduceTree(arrayToTree(descendants)[0])
 
   const toggleTermSelection = id => () => {
@@ -63,12 +63,16 @@ export const SelectionTreeList = ({ rootTermId }) => {
     setValues(newValues)
   }
 
-  const selectionIcon = value => [
+  // this function returns the apropriate icon to render,
+  // based on the user's selection.
+  const selectionIcon = useCallback(value => [
     <TermNeutralIcon key={ 0 } sx={{ color: '#ccc', }} />,
     <TermSelectedIcon key={ 1 } sx={{ color: theme.palette.primary.light, }} />,
     <TermUnselectedIcon key={ 2 } sx={{ color: 'darkred' }} />,
-  ][value]
+  ][value], [])
 
+  // this recursive function handles rendering the nesting of tree list items
+  // to create the tree of descendants for each term.
   const renderSelectionTree = useCallback(node => {
     return (
       <TreeItem
@@ -160,6 +164,12 @@ export const NeuroBridge2ServiceInterface = ({ doSearch }) => {
       </CardContent>
 
       <Divider />
+      
+      <CardContent>
+        <pre style={{ backgroundColor: '#eee', color: '#789', fontSize: '75%', margin: 0, padding: '0.5rem', whiteSpace: 'pre-wrap', flex: 1 }}>
+          { query }
+        </pre>
+      </CardContent>
 
       <CardContent sx={{ display: 'flex', gap: '1rem', alignItems: 'center', justifyContent: 'flex-end' }}>
         <Button variant="contained" onClick={ handleClickQueryButton }>Send Query</Button>
