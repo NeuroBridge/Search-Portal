@@ -71,21 +71,20 @@ export const ForestProvider = ({ children, searchWrapper }) => {
         ]
       }
     }, {})
-    let q = {
-      description: '...',
-      expression: {},
-    }
-    q.expression.or = []
+    let _query = { and: [] }
     roots.forEach(id => {
-      q.expression.or.push({
-        and: [
+      _query.and.push({
+        or: [
           ...groups[id]
             .filter(id => values[id] !== 0)
             .map(id => values[id] === 1 ? id : { not: [id] }),
         ]
       })
     })
-    return q
+    if (roots.length === 1) {
+      _query = _query.and[0]
+    }
+    return _query
   }, [roots, values])
 
   const fetchResults = () => {
@@ -100,7 +99,6 @@ export const ForestProvider = ({ children, searchWrapper }) => {
           pmid: result.pmid,
           url: result.pmc_link,
         }))
-        console.log(results)
         return results
       } catch (error) {
         return []
