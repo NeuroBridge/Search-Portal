@@ -1,55 +1,48 @@
-import { Fragment, useMemo } from 'react'
+import { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
-import { Box, Button, CardContent, Divider } from '@mui/material'
+import { Box, Button, CardContent, Divider, FormControlLabel, Checkbox } from '@mui/material'
 import { TreeItem, TreeView } from '@mui/lab'
 import {
   ChevronRight as CollapseIcon,
   ExpandMore as ExpandIcon,
+  DisabledByDefault as IgnoreTermIcon,
+  Cancel as RemoveTermIcon,
+  CheckBox as SelectedTermIcon,
 } from '@mui/icons-material'
 import { useBasket } from '../../basket'
 import { useOntology } from '../../ontology'
 import { arrayToTree } from 'performant-array-to-tree'
 
-const renderSelectionTree = node => {
-  return (
-    <TreeItem
-      key={ node.id }
-      nodeId={ node.id }
-      label={
-        <Box sx={{
-          display: 'flex',
-          justifyContent: 'flex-start',
-          alignItems: 'center',
-          gap: '1rem',
-          padding: '0.5rem',
-        }}>
-          { node.id }
-        </Box>
+export const SelectionTreeList = ({ rootTermId }) => {
+  const basket = useBasket()
+  const ontology = useOntology()
+  const [values, setValues] = useState({})
+  
+  useEffect(() => {
+    let baseValues = {}
+    Object.keys(basket.contents).forEach(id => {
+      const descendants = [id, ...ontology.descendantsOf(id)]
+      baseValues = {
+        ...baseValues,
+        ...descendants.map(d => d.id)
+          .reduce((obj, id) => ({ ...obj, [id]: 0 }), {}),
       }
-    >
-      {
-        Array.isArray(node.children)
-          ? node.children.map(n => renderSelectionTree(n))
-          : null
-      }
-    </TreeItem>
-  )
-}
+    })
+    setValues({ ...baseValues, ...values })
+  }, [basket.ids])
 
-export const SelectionTreeList = ({ rootTerm }) => {
+  // to play nicely with `arrayToTree`, we'll set
+  // our root term to have no parent so that it doesn't
+  // expect to find and render the term's parent.
   const descendants = [
-    // to play nicely with `arrayToTree`, we'll set
-    // our root term to have no parent so that it doesn't
-    // expect to find and render the term's parent.
     {
-      id: rootTerm.id,
+      id: rootTermId,
       parentId: null,
-      labels: rootTerm.labels,
     },
-    ...rootTerm.descendants,
+    ...ontology.descendantsOf(rootTermId),
   ]
 
-  // this function cleans up and flattens the tree data a bit
+  // this function cleans up and flattens the tree data
   // to make browsing on this view a little simpler.
   const reduceTree = node => {
     return {
@@ -60,6 +53,48 @@ export const SelectionTreeList = ({ rootTerm }) => {
   }
 
   const tree = reduceTree(arrayToTree(descendants)[0])
+
+  const toggleTermSelection = id => () => {
+    const newValue = (values[id] + 1) % 3
+    const newValues = { ...values, [id]: newValue }
+    setValues(newValues)
+  }
+
+  const renderSelectionTree = useCallback(node => {
+    return (
+      <TreeItem
+        key={ node.id }
+        nodeId={ node.id }
+        label={
+          <Box sx={{
+            display: 'flex',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+            gap: '1rem',
+            padding: '0.5rem',
+          }}>
+            <FormControlLabel
+              label={ node.id }
+              control={
+                <Checkbox
+                  checked={ true }
+                  checkedIcon={ <span>{ values[node.id] }</span> }
+                  onClick={ event => event.stopPropagation() }
+                  onChange={ toggleTermSelection(node.id) }
+                />
+              }
+            />
+          </Box>
+        }
+      >
+        {
+          Array.isArray(node.children)
+            ? node.children.map(n => renderSelectionTree(n))
+            : null
+        }
+      </TreeItem>
+    )
+  })
 
   return (
     <Fragment>
@@ -77,16 +112,13 @@ export const SelectionTreeList = ({ rootTerm }) => {
 }
 
 SelectionTreeList.propTypes = {
-  rootTerm: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    labels: PropTypes.array.isRequired,
-    descendants: PropTypes.array.isRequired,
-  }).isRequired,
+  rootTermId: PropTypes.string.isRequired,
 }
+
+//
 
 export const NeuroBridge2ServiceInterface = ({ doSearch }) => {
   const basket = useBasket()
-  const ontology = useOntology()
 
   const query = useMemo(() => {
     return 'query query query'
@@ -106,7 +138,14 @@ export const NeuroBridge2ServiceInterface = ({ doSearch }) => {
   return (
     <Box>
       <CardContent>
-        <SelectionTreeList rootTerm={ ontology.find('Depression') } />
+        {
+          basket.ids.map(id => (
+            <SelectionTreeList
+              key={ `${ id }-selection-tree` }
+              rootTermId={ id }
+            />
+          ))
+        }
       </CardContent>
 
       <Divider />
