@@ -21,6 +21,10 @@ export const SelectionTreeList = ({ rootTermId }) => {
   const ontology = useOntology()
   const [values, setValues] = useState({})
   
+  // this effect gets triggered when the basket contents update.
+  // it handles updating the values this component holds in its state by
+  // first starting with a base selection of "0" for all basket terms and their
+  // descendants, and then spreading in the existing state already in state.
   useEffect(() => {
     let baseValues = {}
     Object.keys(basket.contents)
