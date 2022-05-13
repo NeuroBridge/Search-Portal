@@ -1,19 +1,22 @@
 import { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
-import { Box, Button, CardContent, Checkbox, Divider, FormControlLabel, Stack } from '@mui/material'
+import { Box, Button, CardContent, Checkbox, Divider, FormControlLabel, Stack, useTheme } from '@mui/material'
 import { TreeItem, TreeView } from '@mui/lab'
 import {
   ChevronRight as CollapseIcon,
   ExpandMore as ExpandIcon,
   DisabledByDefault as IgnoreTermIcon,
   Cancel as RemoveTermIcon,
-  CheckBox as SelectedTermIcon,
+  AddCircle as TermSelectedIcon,
+  RemoveCircle as TermUnselectedIcon,
+  Circle as TermNeutralIcon,
 } from '@mui/icons-material'
 import { useBasket } from '../../basket'
 import { useOntology } from '../../ontology'
 import { arrayToTree } from 'performant-array-to-tree'
 
 export const SelectionTreeList = ({ rootTermId }) => {
+  const theme = useTheme()
   const basket = useBasket()
   const ontology = useOntology()
   const [values, setValues] = useState({})
@@ -60,6 +63,12 @@ export const SelectionTreeList = ({ rootTermId }) => {
     setValues(newValues)
   }
 
+  const selectionIcon = value => [
+    <TermNeutralIcon key={ 0 } sx={{ color: '#ccc', }} />,
+    <TermSelectedIcon key={ 1 } sx={{ color: theme.palette.primary.light, }} />,
+    <TermUnselectedIcon key={ 2 } sx={{ color: 'darkred' }} />,
+  ][value]
+
   const renderSelectionTree = useCallback(node => {
     return (
       <TreeItem
@@ -78,7 +87,7 @@ export const SelectionTreeList = ({ rootTermId }) => {
               control={
                 <Checkbox
                   checked={ true }
-                  checkedIcon={ <span>{ values[node.id] }</span> }
+                  checkedIcon={ selectionIcon(values[node.id]) }
                   onClick={ event => event.stopPropagation() }
                   onChange={ toggleTermSelection(node.id) }
                 />
