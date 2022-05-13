@@ -33,10 +33,15 @@ export const ForestProvider = ({ children }) => {
       setValues({ ...baseValues, ...previousValues })
   }, [basket.ids])
 
-  const toggleTermSelection = id => () => {
-    const newValues = {
-      ...values,
-      [id]: (values[id] + 1) % 3
+  const toggleTermSelection = id => event => {
+    const newValue = (values[id] + 1) % 3
+    const newValues = { ...values, [id]: newValue }
+    // if the CTRL key is held down, then toggle all descendants
+    // to have the same state as the clicked term.
+    if (event.nativeEvent.ctrlKey) {
+      ontology.descendantsOf(id).forEach(term => {
+        newValues[term.id] = newValue
+      })
     }
     setValues(newValues)
   }
