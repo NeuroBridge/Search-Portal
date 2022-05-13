@@ -90,7 +90,7 @@ export const Workspace = () => {
         </Card>
 
         {
-          !loading && results.length > 0 && (
+          !loading && results && results.length > 0 && (
             <Fragment>
               <Box sx={{
                 display: 'flex',
