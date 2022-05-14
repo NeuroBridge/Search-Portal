@@ -41,7 +41,6 @@ export const Workspace = () => {
 
   const handleChangeService = (event, newIndex) => {
     setCurrentServiceIndex(newIndex)
-    setResults([])
   }
 
   return (
@@ -90,7 +89,7 @@ export const Workspace = () => {
         </Card>
 
         {
-          !loading && results.length > 0 && (
+          !loading && results && results.length > 0 && (
             <Fragment>
               <Box sx={{
                 display: 'flex',
@@ -113,7 +112,7 @@ export const Workspace = () => {
                     <Publication
                       key={ `${ i }_${ result.pmid }` }
                       title={ result.title }
-                      url= { result.pubmed_url }
+                      url={ result.url }
                     />
                   ))
                 }

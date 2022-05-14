@@ -58,7 +58,11 @@ export const NeuroQueryServiceInterface = ({ doSearch }) => {
         if (!response?.data?.data) {
           throw new Error('An error occurred while querying NeuroQuery.')
         }
-        return response.data.data
+        return response.data.data.map(result => ({
+          title: result.title,
+          url: result.pubmed_url,
+          pmid: result.pmid,
+        }))
       } catch (error) {
         console.error(error)
       }
