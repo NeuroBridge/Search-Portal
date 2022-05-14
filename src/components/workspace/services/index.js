@@ -1,6 +1,5 @@
 import { Interface as NeuroQueryServiceInterface } from './neuroquery'
 import { ForestInterface } from './neurobridge'
-import { ToBeDeterminedServiceInterface } from './tbd'
 
 export const services = [
   {
@@ -12,10 +11,5 @@ export const services = [
     id: 'nb',
     name: 'NeuroBridge',
     module: ForestInterface,
-  },
-  {
-    id: 'tbd',
-    name: 'TBD',
-    module: ToBeDeterminedServiceInterface,
   },
 ]

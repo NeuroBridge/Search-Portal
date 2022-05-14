@@ -84,7 +84,16 @@ export const Workspace = () => {
 
             <Divider />
 
-            { createElement(services[currentServiceIndex].module, { doSearch }) }
+            {
+              services.map((service, i) => (
+                <Box
+                  key={ `service-${ i }` }
+                  sx={{ display: currentServiceIndex === i ? 'block' : 'none' }}
+                >
+                  { createElement(services[i].module, { doSearch }) }
+                </Box>
+              ))
+            }
           </Collapse>
         </Card>
 
