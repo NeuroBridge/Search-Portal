@@ -11,7 +11,7 @@ import {
 } from '@mui/icons-material'
 import { arrayToTree } from 'performant-array-to-tree'
 import { useOntology } from '../../../ontology'
-import { useForest } from './context'
+import { useForest } from './'
 
 export const SelectionTree = ({ rootTermId }) => {
   const theme = useTheme()

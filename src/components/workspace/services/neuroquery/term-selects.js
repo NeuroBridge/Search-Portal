@@ -1,6 +1,6 @@
 import { Box, CardContent, MenuItem, Select, Stack } from '@mui/material'
 import { Add as PlusIcon } from '@mui/icons-material'
-import { useInterfaceContext } from './context'
+import { useInterfaceContext } from './'
 
 export const TermSelects = () => {
   const { handleChangeTermLabel, terms, termLabels } = useInterfaceContext()

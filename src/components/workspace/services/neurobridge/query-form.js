@@ -1,6 +1,6 @@
 import { Fragment } from 'react'
 import { Button, CardContent, Divider } from '@mui/material'
-import { useForest } from './context'
+import { useForest } from './'
 
 export const QueryForm = () => {
   const { query, fetchResults } = useForest()

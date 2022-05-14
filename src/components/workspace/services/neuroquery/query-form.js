@@ -1,5 +1,5 @@
 import { Button, CardContent } from '@mui/material'
-import { useInterfaceContext } from './context'
+import { useInterfaceContext } from './'
 
 export const QueryForm = () => {
   const { fetchResults, url } = useInterfaceContext()

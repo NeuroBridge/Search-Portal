@@ -1,10 +1,14 @@
-import { createElement, Fragment, useState } from 'react'
+import { Fragment, useState } from 'react'
 import PropTypes from 'prop-types'
-import { Box, Card, Collapse, Divider, IconButton, LinearProgress, Tab, Tabs, Tooltip, Typography } from '@mui/material'
+import {
+  Box, Card, Collapse, Divider, IconButton, LinearProgress,
+  Tab, Tabs, Tooltip, Typography, useTheme,
+} from '@mui/material'
 import { services } from './services'
 import { Basket, useBasket } from '../basket'
 import { Publication } from './results'
 import { ClearAll as ClearResultsIcon } from '@mui/icons-material'
+import { Help as HelpIcon } from '@mui/icons-material'
 
 //
 
@@ -27,10 +31,12 @@ ResultsGrid.propTypes = {
 //
 
 export const Workspace = () => {
+  const theme = useTheme()
+  const basket = useBasket()
   const [currentServiceIndex, setCurrentServiceIndex] = useState(0)
   const [results, setResults] = useState([])
   const [loading, setLoading] = useState(false)
-  const basket = useBasket()
+  const [showHelp, setShowHelp] = useState(false)
 
   const doSearch = async fn => {
     setLoading(true)
@@ -41,6 +47,7 @@ export const Workspace = () => {
 
   const handleChangeService = (event, newIndex) => {
     setCurrentServiceIndex(newIndex)
+    setShowHelp(false)
   }
 
   return (
@@ -85,14 +92,36 @@ export const Workspace = () => {
             <Divider />
 
             {
-              services.map((service, i) => (
-                <Box
-                  key={ `service-${ i }` }
-                  sx={{ display: currentServiceIndex === i ? 'block' : 'none' }}
-                >
-                  { createElement(services[i].module, { doSearch }) }
-                </Box>
-              ))
+              services.map((service, i) => {
+                const { Interface, HelpText } = services[i]
+                return (
+                  <Box
+                    key={ `service-${ service.id }` }
+                    sx={{ display: currentServiceIndex === i ? 'block' : 'none' }}
+                  >
+                    <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                      <Tooltip title="View help" placement="left">
+                        <IconButton onClick={ () => setShowHelp(!showHelp) } size="small">
+                          <HelpIcon
+                            fontSize="small"
+                            sx={{
+                              color: theme.palette.primary.dark,
+                              filter: 'saturate(0.1) opacity(0.5)',
+                              transition: 'filter 250ms',
+                              '&:hover': { filter: 'saturate(0.9) opacity(1)' },
+                            }}
+                          />
+                        </IconButton>
+                      </Tooltip>
+                    </Box>
+                    <Collapse in={ showHelp }>
+                      <HelpText />
+                    </Collapse>
+                    <Divider />
+                    <Interface searchWrapper={ doSearch } />
+                  </Box>
+                )
+              })
             }
           </Collapse>
         </Card>

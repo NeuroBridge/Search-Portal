@@ -1,15 +1,17 @@
-import { Interface as NeuroQueryServiceInterface } from './neuroquery'
-import { ForestInterface } from './neurobridge'
+import * as NQ from './neuroquery'
+import * as NB from './neurobridge'
 
 export const services = [
   {
     id: 'nq',
     name: 'NeuroQuery',
-    module: NeuroQueryServiceInterface,
+    Interface: NQ.Interface,
+    HelpText: NQ.HelpText,
   },
   {
     id: 'nb',
     name: 'NeuroBridge',
-    module: ForestInterface,
+    Interface: NB.Interface,
+    HelpText: NB.HelpText,
   },
 ]
