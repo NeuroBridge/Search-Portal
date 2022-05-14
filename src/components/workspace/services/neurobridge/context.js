@@ -89,6 +89,7 @@ export const ForestProvider = ({ children, searchWrapper }) => {
 
   const fetchResults = () => {
     searchWrapper(async () => {
+      console.log('in wrapper')
       try {
         const { data } = await axios.post(API_URL, { query })
         if (!data) {

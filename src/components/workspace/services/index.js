@@ -1,4 +1,4 @@
-import { NeuroQueryServiceInterface } from './neuroquery'
+import { Interface as NeuroQueryServiceInterface } from './neuroquery'
 import { ForestInterface } from './neurobridge'
 import { ToBeDeterminedServiceInterface } from './tbd'
 

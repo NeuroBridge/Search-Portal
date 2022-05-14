@@ -1,12 +1,8 @@
-import { Fragment, useMemo } from 'react'
+import { Fragment } from 'react'
 import { Button, CardContent, Divider } from '@mui/material'
 import { useForest } from './context'
-import { useOntology } from '../../../ontology'
-import { useBasket } from '../../../basket'
 
 export const QueryForm = () => {
-  const ontology = useOntology()
-  const basket = useBasket()
   const { query, fetchResults } = useForest()
 
   return (
