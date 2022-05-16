@@ -82,9 +82,9 @@ export const OntologyProvider = ({ children, owlFile }) => {
     return terms.filter(term => term.parentId === id)
   }, [])
 
-  const descendantsOf = useCallback(id => {
+  const descendantsOf = useCallback((id, options = { strict: false }) => {
     const root = find(id)
-    let descendants = [root]
+    let descendants = options.strict ? [] : [root]
     const children = childrenOf(id)
     children.forEach(child => {
       descendants = [...descendants, ...descendantsOf(child.id)]
