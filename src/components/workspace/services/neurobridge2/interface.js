@@ -92,7 +92,7 @@ export const Interface = ({ searchWrapper }) => {
   const fetchResults = () => {
     searchWrapper(async () => {
       try {
-        const { data } = await axios.post(API_URL, { query })
+        const { data } = await axios.post(API_URL, { expression: query })
         if (!data) {
           throw new Error('An error occurred while fetching results.')
         }
