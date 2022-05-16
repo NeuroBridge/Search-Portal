@@ -1,24 +1,10 @@
-import * as NQ from './neuroquery'
-import * as NB from './neurobridge'
-import * as XW from './xiaochen'
+
+import * as NeuroBridge from './xiaochen'
+import * as NeuroQuery from './neuroquery'
+import * as NeuroBridge2 from './neurobridge'
 
 export const services = [
-  {
-    id: 'nq',
-    name: 'NeuroQuery',
-    Interface: NQ.Interface,
-    HelpText: NQ.HelpText,
-  },
-  {
-    id: 'xw',
-    name: 'Xiaochen',
-    Interface: XW.Interface,
-    HelpText: XW.HelpText,
-  },
-  {
-    id: 'nb',
-    name: 'NeuroBridge',
-    Interface: NB.Interface,
-    HelpText: NB.HelpText,
-  },
+  { id: 'nq',     name: 'NeuroQuery',     ...NeuroQuery },
+  { id: 'nb',     name: 'NeuroBridge',    ...NeuroBridge },
+  { id: 'nb2',    name: 'NeuroBridge2',   ...NeuroBridge2 },
 ]
