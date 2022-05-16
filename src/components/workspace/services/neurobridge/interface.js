@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 import axios from 'axios'
-import { Box, Button, CardContent, Switch, Divider, List, ListItem, ListItemText, Select, MenuItem } from '@mui/material'
+import { Box, Button, CardContent, Divider, List, ListItem, ListItemText, MenuItem, Select, Stack, Switch } from '@mui/material'
 import { useBasket } from '../../../basket'
 
 //
@@ -65,27 +65,38 @@ export const Interface = ({ searchWrapper }) => {
   return (
     <Box>
       <CardContent>
-        <Select
-          value={ operator }
-          onChange={ () => setOperator(operator === AND ? OR : AND) }
-          sx={{ '.MuiSelect-select': { padding: '0.5rem' } }}
+        <Stack
+          direction="row"
+          divider={ <Divider orientation="vertical" flexItem /> }
         >
-          <MenuItem value={ AND }>{ AND }</MenuItem>
-          <MenuItem value={ OR }>{ OR }</MenuItem>
-        </Select>
+          <Box>
+            <Select
+              value={ operator }
+              onChange={ () => setOperator(operator === AND ? OR : AND) }
+              sx={{ '.MuiSelect-select': { padding: '0.5rem' }, margin: '1rem' }}
+            >
+              <MenuItem value={ AND }>{ AND }</MenuItem>
+              <MenuItem value={ OR }>{ OR }</MenuItem>
+            </Select>
+          </Box>
+          <List>
+            {
+              Object.keys(basket.contents)
+                .filter(id => basket.contents[id])
+                .map(id => (
+                  <ListItem key={ `basket-item=${ id }` }>
+                    <Switch edge="start" checked={ id in selections && selections[id] } tabIndex={ -1 } onChange={ handleClickToggletermSelection(id) } />
+                    <ListItemText>{ id }</ListItemText>
+                  </ListItem>
+                ))
+            }
+          </List>
+        </Stack>
+      </CardContent>
 
-        <List>
-          {
-            Object.keys(basket.contents)
-              .filter(id => basket.contents[id])
-              .map(id => (
-                <ListItem key={ `basket-item=${ id }` }>
-                  <Switch edge="start" checked={ id in selections && selections[id] } tabIndex={ -1 } onChange={ handleClickToggletermSelection(id) } />
-                  <ListItemText>{ id }</ListItemText>
-                </ListItem>
-              ))
-          }
-        </List>
+      <Divider />
+
+      <CardContent>
         <pre style={{ backgroundColor: '#eee', color: '#789', fontSize: '75%', margin: 0, padding: '0.5rem', whiteSpace: 'pre-wrap' }}>
           { JSON.stringify(query, null, 2) }
         </pre>
