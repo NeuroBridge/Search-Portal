@@ -90,6 +90,7 @@ export const Interface = ({ searchWrapper }) => {
   }, [roots, values])
 
   const fetchResults = () => {
+    console.log({ expression: query })
     searchWrapper(async () => {
       try {
         const { data } = await axios.post(API_URL, { expression: query })
@@ -103,6 +104,7 @@ export const Interface = ({ searchWrapper }) => {
         }))
         return results
       } catch (error) {
+        console.log(error)
         return []
       }
     })
