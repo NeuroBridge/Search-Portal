@@ -54,9 +54,15 @@ export const HelpText = () => {
 
       <Typography paragraph>
         Each term has a three-way selection.
+        Click the icon beside each term to toggle its selection state.
       </Typography>
 
       <SelectionOptionsList />
+
+      <Typography paragraph>
+        Pro tip: Hold CTRL when toggling a term&quot;s selection state to toggle
+        all of that term&quot;s descendants to have the same state.
+      </Typography>
 
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem' }}>
         <UnderConstructionIcon color="warning" /> 
