@@ -44,7 +44,8 @@ export const HelpText = () => {
   return (
     <CardContent>
       <Typography paragraph>
-        This interface allows the contruction of a query to send to the NeuroBridge API.
+        This interface allows users to find PubMed publications by
+        communicating with the NeuroBridge API,
         Terms checked <CheckIcon sx={{ color: '#6c6' }} fontSize="small" /> in your
         workspace appear here as trees of their descendants in the NeuroBridge Ontology.
         The query will be constructed with <code>OR</code> operator between root terms, and

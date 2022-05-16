@@ -8,8 +8,8 @@ export const HelpText = () => {
   return (
     <CardContent>
       <Typography paragraph>
-        This interface allows communication with the NeuroBridge API,
-        which returns PubMed publications.
+        This interface allows users to find PubMed publications by
+        communicating with the NeuroBridge API,
         The current iteration of this interface restricts the user to
         constructing a query of the form <code>termA AND termB AND ...</code>
       </Typography>
