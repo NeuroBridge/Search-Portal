@@ -1,17 +1,20 @@
 import { useEffect, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 import axios from 'axios'
-import { Box, Button, CardContent, Switch, Divider, IconButton, List, ListItem, ListItemText } from '@mui/material'
+import { Box, Button, CardContent, Switch, Divider, List, ListItem, ListItemText, Select, MenuItem } from '@mui/material'
 import { useBasket } from '../../../basket'
 
 //
 
 const API_URL = `https://neurobridges-ml.edc.renci.org:5000/nb_translator`
+const AND = 'AND'
+const OR = 'OR'
 
 //
 
 export const Interface = ({ searchWrapper }) => {
   const basket = useBasket()
+  const [operator, setOperator] = useState(AND)
   const [selections, setSelections] = useState({})
 
   // this effect gets triggered when the basket contents update.
@@ -28,12 +31,12 @@ export const Interface = ({ searchWrapper }) => {
 
 
   const query = useMemo(() => ({
-    and: [
+    [operator.toLowerCase()]: [
       ...Object.keys(selections)
         .filter(id => basket.contents[id])
         .map(id => selections[id] ? id : ({ not: id }) ),
     ]
-  }), [selections])
+  }), [operator, selections])
 
   const handleClickToggletermSelection = id => event => {
     const newSelections = { ...selections, [id]: event.target.checked}
@@ -62,6 +65,15 @@ export const Interface = ({ searchWrapper }) => {
   return (
     <Box>
       <CardContent>
+        <Select
+          value={ operator }
+          onChange={ () => setOperator(operator === AND ? OR : AND) }
+          sx={{ '.MuiSelect-select': { padding: '0.5rem' } }}
+        >
+          <MenuItem value={ AND }>{ AND }</MenuItem>
+          <MenuItem value={ OR }>{ OR }</MenuItem>
+        </Select>
+
         <List>
           {
             Object.keys(basket.contents)
