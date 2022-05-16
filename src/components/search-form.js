@@ -180,7 +180,7 @@ export const SearchForm = ({ inputRef, searchText, searchHandler, matches }) => 
   }
 
   const handleClickTerm = id => () => {
-    basket.toggle(id)
+    basket.add(id)
     addToSearchHistory(id)
     setOpen(false)
   }

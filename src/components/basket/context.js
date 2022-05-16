@@ -17,6 +17,14 @@ export const BasketProvider = ({ children }) => {
     setContents(newContents)
   }
 
+  const add = id => {
+    const newContents = { ...contents }
+    if (!(id in newContents)) {
+      newContents[id] = 1
+    }
+    setContents(newContents)
+  }
+
   const remove = id => {
     const newContents = { ...contents }
     delete newContents[id]
@@ -33,6 +41,7 @@ export const BasketProvider = ({ children }) => {
       contents,
       ids,
       toggle,
+      add,
       remove,
     }}>
       { children }
