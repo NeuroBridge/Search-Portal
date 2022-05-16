@@ -47,7 +47,6 @@ export const Workspace = () => {
 
   const handleChangeService = (event, newIndex) => {
     setCurrentServiceIndex(newIndex)
-    setShowHelp(false)
   }
 
   return (
