@@ -83,7 +83,7 @@ export const Workspace = () => {
             <Tabs value={ currentServiceIndex } onChange={ handleChangeService }>
               {
                 services.map(service => (
-                  <Tab key={ service.name } label={ service.name } />
+                  <Tab key={ service.id } label={ service.name } />
                 ))
               }
             </Tabs>

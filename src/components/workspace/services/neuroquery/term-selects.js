@@ -17,12 +17,15 @@ export const TermSelects = () => {
         {
           terms.map(term => term.labels.length === 1
             ? (
-              <Box sx={{
-                border: '1px solid #c4c4c4',
-                borderRadius: '4px',
-                padding: '0.4rem 0.5rem',
-                margin: '0 0.5rem',
-              }}>
+              <Box
+                key={ `${ term.id }-select-box` }
+                sx={{
+                  border: '1px solid #c4c4c4',
+                  borderRadius: '4px',
+                  padding: '0.4rem 0.5rem',
+                  margin: '0 0.5rem',
+                }}
+              >
                 <Typography>{ term.id }</Typography>
               </Box>
             ) : (

@@ -1,4 +1,3 @@
-
 import * as NeuroBridge from './neurobridge'
 import * as NeuroQuery from './neuroquery'
 import * as NeuroBridge2 from './neurobridge2'
