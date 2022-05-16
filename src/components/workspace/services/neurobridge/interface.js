@@ -79,7 +79,7 @@ export const Interface = ({ searchWrapper }) => {
             Object.keys(basket.contents)
               .filter(id => basket.contents[id])
               .map(id => (
-                <ListItem key={ id }>
+                <ListItem key={ `basket-item=${ id }` }>
                   <Switch edge="start" checked={ id in selections && selections[id] } tabIndex={ -1 } onChange={ handleClickToggletermSelection(id) } />
                   <ListItemText>{ id }</ListItemText>
                 </ListItem>
