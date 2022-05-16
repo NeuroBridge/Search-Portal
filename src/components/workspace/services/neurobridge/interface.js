@@ -9,7 +9,7 @@ import { QueryForm } from './query-form'
 
 //
 
-const API_URL = `http://neurobridges-ml.edc.renci.org:5000/nb_translator`
+const API_URL = `https://neurobridges-ml.edc.renci.org:5000/nb_translator`
 
 //
 
@@ -91,7 +91,6 @@ export const Interface = ({ searchWrapper }) => {
 
   const fetchResults = () => {
     searchWrapper(async () => {
-      console.log('in wrapper')
       try {
         const { data } = await axios.post(API_URL, { query })
         if (!data) {
