@@ -25,7 +25,7 @@ export const TermSelects = () => {
                 <Typography>{ term.id }</Typography>
               </Box>
             ) : (
-              <Box key={ `${ term.id }-select` } sx={{ padding: '0.5rem' }}>
+              <Box key={ `${ term.id }-select-box` } sx={{ padding: '0.5rem' }}>
                 <Select
                   id={ `${ term.id }-select` }
                   value={ termLabels[term.id] || 0 }
