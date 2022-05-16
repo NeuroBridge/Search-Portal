@@ -1,95 +1,49 @@
-import { createContext, useContext, useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
-import { Divider } from '@mui/material'
-import { useBasket } from '../../../basket'
-import { useOntology } from '../../../ontology'
 import axios from 'axios'
-import { Forest } from './selection-forest'
-import { QueryForm } from './query-form'
+import { Box, Button, CardContent, Switch, Divider, List, ListItem, ListItemText, Select, MenuItem } from '@mui/material'
+import { useBasket } from '../../../basket'
 
 //
 
 const API_URL = `https://neurobridges-ml.edc.renci.org:5000/nb_translator`
+const AND = 'AND'
+const OR = 'OR'
 
 //
 
-const ForestContext = createContext({})
-
 export const Interface = ({ searchWrapper }) => {
-  const ontology = useOntology()
   const basket = useBasket()
-  const [values, setValues] = useState({})
+  const [operator, setOperator] = useState(AND)
+  const [selections, setSelections] = useState({})
 
   // this effect gets triggered when the basket contents update.
   // it handles updating the values this component holds in its state by
-  // first starting with a base selection of "0" for all basket terms and their
-  // descendants, and then spreading in the existing state already in state.
+  // first starting with a base selection of "1" for all basket terms.
   useEffect(() => {
-    const previousValues = { ...values }
-    let baseValues
-    basket.ids
-      .forEach(id => {
-        const descendants = [
-          id,
-          ...ontology.descendantsOf(id).map(term => term.id),
-        ]
-        baseValues = {
-          ...baseValues,
-          ...descendants
-            .reduce((obj, id) => ({ [id]: 0, ...obj }), {}),
-        }
-      })
-      setValues({ ...baseValues, ...previousValues })
+    const previousSelections = { ...selections }
+    const baseValues = basket.ids.reduce((obj, term) => ({
+      ...obj,
+      [term]: true,
+    }), {})
+    setSelections({ ...baseValues, ...previousSelections })
   }, [basket.ids])
 
-  const toggleTermSelection = id => event => {
-    const newValue = (values[id] + 1) % 3
-    const newValues = { ...values, [id]: newValue }
-    // if the CTRL key is held down, then also toggle all
-    // descendants to have the same state as the clicked term.
-    if (event.nativeEvent.ctrlKey) {
-      ontology.descendantsOf(id).forEach(term => {
-        newValues[term.id] = newValue
-      })
-    }
-    setValues(newValues)
+
+  const query = useMemo(() => ({
+    [operator.toLowerCase()]: [
+      ...Object.keys(selections)
+        .filter(id => basket.contents[id])
+        .map(id => selections[id] ? id : ({ not: id }) ),
+    ]
+  }), [operator, selections])
+
+  const handleClickToggletermSelection = id => event => {
+    const newSelections = { ...selections, [id]: event.target.checked}
+    setSelections({ ...newSelections })
   }
 
-  // this is basically a copy of the ids of the basket contents,
-  // with the non-checked (value = 0) ones filtered out.
-  const roots = useMemo(() => {
-    return [...basket.ids.filter(id => basket.contents[id] === 1)]
-  }, [basket.ids])
-
-  // here, we construct the query.
-  const query = useMemo(() => {
-    const groups = roots.reduce((obj, root) => {
-      return {
-        ...obj,
-        [root]: [
-          ...ontology
-            .descendantsOf(root)
-            .map(term => term.id)
-        ]
-      }
-    }, {})
-    let _query = { and: [] }
-    roots.forEach(id => {
-      _query.and.push({
-        or: [
-          ...groups[id]
-            .filter(id => values[id] !== 0)
-            .map(id => values[id] === 1 ? id : { not: [id] }),
-        ]
-      })
-    })
-    if (roots.length === 1) {
-      _query = _query.and[0]
-    }
-    return _query
-  }, [roots, values])
-
-  const fetchResults = () => {
+  const handleClickQueryButton = () => {
     searchWrapper(async () => {
       try {
         const { data } = await axios.post(API_URL, { query })
@@ -109,18 +63,43 @@ export const Interface = ({ searchWrapper }) => {
   }
 
   return (
-    <ForestContext.Provider value={{ values, toggleTermSelection, query, fetchResults }}>
-      <Forest />
+    <Box>
+      <CardContent>
+        <Select
+          value={ operator }
+          onChange={ () => setOperator(operator === AND ? OR : AND) }
+          sx={{ '.MuiSelect-select': { padding: '0.5rem' } }}
+        >
+          <MenuItem value={ AND }>{ AND }</MenuItem>
+          <MenuItem value={ OR }>{ OR }</MenuItem>
+        </Select>
+
+        <List>
+          {
+            Object.keys(basket.contents)
+              .filter(id => basket.contents[id])
+              .map(id => (
+                <ListItem key={ id }>
+                  <Switch edge="start" checked={ id in selections && selections[id] } tabIndex={ -1 } onChange={ handleClickToggletermSelection(id) } />
+                  <ListItemText>{ id }</ListItemText>
+                </ListItem>
+              ))
+          }
+        </List>
+        <pre style={{ backgroundColor: '#eee', color: '#789', fontSize: '75%', margin: 0, padding: '0.5rem', whiteSpace: 'pre-wrap' }}>
+          { JSON.stringify(query, null, 2) }
+        </pre>
+      </CardContent>
 
       <Divider />
-      
-      <QueryForm />
-    </ForestContext.Provider>
+
+      <CardContent sx={{ display: 'flex', gap: '1rem', alignItems: 'center', justifyContent: 'flex-end' }}>
+        <Button variant="contained" onClick={ handleClickQueryButton }>Send Query</Button>
+      </CardContent>
+    </Box>
   )
-} 
+}
 
 Interface.propTypes = {
   searchWrapper: PropTypes.func.isRequired,
 }
-
-export const useForest = () => useContext(ForestContext)

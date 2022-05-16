@@ -8,7 +8,7 @@ import { services } from './services'
 import { Basket, useBasket } from '../basket'
 import { Publication } from './results'
 import { ClearAll as ClearResultsIcon } from '@mui/icons-material'
-import { Help as HelpIcon } from '@mui/icons-material'
+import { ExpandMore as HelpToggleIcon } from '@mui/icons-material'
 
 //
 
@@ -47,7 +47,6 @@ export const Workspace = () => {
 
   const handleChangeService = (event, newIndex) => {
     setCurrentServiceIndex(newIndex)
-    setShowHelp(false)
   }
 
   return (
@@ -99,20 +98,33 @@ export const Workspace = () => {
                     key={ `service-${ service.id }` }
                     sx={{ display: currentServiceIndex === i ? 'block' : 'none' }}
                   >
-                    <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                      <Tooltip title="View help" placement="left">
-                        <IconButton onClick={ () => setShowHelp(!showHelp) } size="small">
-                          <HelpIcon
-                            fontSize="small"
-                            sx={{
-                              color: theme.palette.primary.dark,
-                              filter: 'saturate(0.1) opacity(0.5)',
-                              transition: 'filter 250ms',
-                              '&:hover': { filter: 'saturate(0.9) opacity(1)' },
-                            }}
-                          />
-                        </IconButton>
-                      </Tooltip>
+                    <Box sx={{
+                      display: 'flex',
+                      justifyContent: 'flex-end',
+                      alignItems: 'center',
+                      gap: '0.25rem',
+                      padding: '0.25rem',
+                      filter: 'opacity(0.5)',
+                      transition: 'filter 250ms',
+                      '&:hover': {
+                        filter: 'opacity(1.0)',
+                      }
+                    }}>
+                      <Typography sx={{ fontSize: '75%', filter: 'opacity(0.5)', }}>
+                        { showHelp ? 'HIDE' : 'SHOW' } HELP
+                      </Typography>
+                      <IconButton onClick={ () => setShowHelp(!showHelp) } size="small">
+                        <HelpToggleIcon
+                          fontSize="small"
+                          sx={{
+                            color: theme.palette.primary.dark,
+                            filter: 'saturate(0.1) opacity(0.5)',
+                            transition: 'filter 250ms, transform 250ms',
+                            transform: showHelp ? 'rotate(180deg)' : 'rotate(0)',
+                            '&:hover': { filter: 'saturate(0.9) opacity(1)' },
+                          }}
+                        />
+                      </IconButton>
                     </Box>
                     <Collapse in={ showHelp }>
                       <HelpText />

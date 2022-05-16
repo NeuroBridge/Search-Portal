@@ -6,8 +6,9 @@ export const HelpText = () => {
   return (
     <CardContent>
       <Typography paragraph>
-        This interface allows communication with <Link to="https://neuroquery.org/">NeuroQuery</Link>,
-        which returns PubMed publications.
+        This interface allows users to find PubMed publications by
+        communicating with communication with
+        the <Link to="https://neuroquery.org/">NeuroQuery</Link> API,
       </Typography>
       <Typography paragraph>
         Terms checked <CheckIcon sx={{ color: '#6c6' }} fontSize="small" /> in

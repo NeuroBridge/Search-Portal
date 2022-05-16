@@ -1,7 +1,7 @@
 
-import * as NeuroBridge from './xiaochen'
+import * as NeuroBridge from './neurobridge'
 import * as NeuroQuery from './neuroquery'
-import * as NeuroBridge2 from './neurobridge'
+import * as NeuroBridge2 from './neurobridge2'
 
 export const services = [
   { id: 'nq',     name: 'NeuroQuery',     ...NeuroQuery },
