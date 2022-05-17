@@ -83,7 +83,7 @@ export const Workspace = () => {
             <Tabs value={ currentServiceIndex } onChange={ handleChangeService }>
               {
                 services.map(service => (
-                  <Tab key={ service.name } label={ service.name } />
+                  <Tab key={ service.id } label={ service.name } />
                 ))
               }
             </Tabs>
@@ -111,7 +111,7 @@ export const Workspace = () => {
                       }
                     }}>
                       <Typography sx={{ fontSize: '75%', filter: 'opacity(0.5)', }}>
-                        { showHelp ? 'HIDE' : 'SHOW' } HELP
+                        { showHelp ? 'HIDE' : 'SHOW' } { service.name.toUpperCase() } HELP
                       </Typography>
                       <IconButton onClick={ () => setShowHelp(!showHelp) } size="small">
                         <HelpToggleIcon

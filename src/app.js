@@ -1,9 +1,9 @@
 import { Fragment } from 'react'
 import { Router as ReachRouter } from '@reach/router'
-import { Box, Container } from '@mui/material'
+import { Box } from '@mui/material'
 import { AboutView, BrowseView, NotFoundView, SearchView } from './views'
-import { Link } from './components/link'
 import { Drawer } from './components/drawer'
+import { Header } from './components/layout'
 
 const Router = () => {
   return (
@@ -19,33 +19,12 @@ const Router = () => {
 export const App = () => {
   return (
     <Fragment>
-      <header>
-        <Container maxWidth="xl" sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          height: '5rem',
-          padding: '0 1rem',
-        }}>
-          <Box>
-            <Link to="/" style={{
-              fontVariant: 'small-caps',
-              textDecoration: 'none',
-              fontSize: '2rem',
-            }}>
-              NeuroBridge
-            </Link>
-          </Box>
-          <Box sx={{ display: 'flex', gap: '1rem' }}>
-            <Link to="/">Search</Link>
-            <Link to="/browse">Browse</Link>
-            <Link to="/about">About</Link>
-          </Box>
-        </Container>
-      </header>
+      <Header />
+
       <main>
         <Router />
       </main>
+      
       <footer>
         <Box sx={{
           display: 'flex',

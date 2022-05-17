@@ -12,11 +12,12 @@ export const HelpText = () => {
       </Typography>
       <Typography paragraph>
         Terms checked <CheckIcon sx={{ color: '#6c6' }} fontSize="small" /> in
-        your workspace appear here as selection boxes. Many terms in the
-        NeuroBridge Ontology have multiple string representations, or <em>labels</em>.
-        Before sending your request to NeuroQuery, you may fine-tune your NeuroQuery
-        search by selecting the most appropriate label to represent each term. Verify
-        the constructed URL and query before sending your request to NeuroQuery.
+        your workspace appear here. Many terms in the NeuroBridge Ontology have
+        multiple string representations, or <em>labels</em>. Before sending your
+        request to NeuroQuery, you may fine-tune your search by selecting the
+        most appropriate label to represent each term with multiple labels.
+        Terms without additional labels, Verify the constructed URL and query
+        before sending your request to NeuroQuery.
       </Typography>
     </CardContent>
   )
