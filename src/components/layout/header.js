@@ -54,7 +54,7 @@ export const Header = () => {
   return (
     <Fragment>
       <HideOnScroll>
-        <AppBar sx={{
+        <AppBar elevation={ 1 } sx={{
           backgroundColor: '#eee',
         }}>
           <Toolbar>
