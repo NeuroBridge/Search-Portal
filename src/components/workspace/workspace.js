@@ -67,13 +67,25 @@ export const Workspace = () => {
           <Box sx={{
             position: 'absolute',
             top: 0,
-            right: 0,
-            padding: '0.5rem',
+            left: '50%',
+            width: '75%',
+            maxWidth: '400px',
+            transform: 'translate(-50%)',
+            padding: '0.33rem 0.5rem',
             backgroundColor: '#336699cc',
             color: '#fff',
-            fontSize: '80%',
+            fontSize: '75%',
+            display: 'flex',
+            justifyContent: 'center',
             borderBottomLeftRadius: '4px',
-          }}>Workspace</Box>
+            borderBottomRightRadius: '4px',
+          }}>
+            WORKSPACE {
+              basket.ids.length > 0
+                ? `  —  ${ basket.ids.length } TERM${ basket.ids.length === 1 ? '' : 'S' }`
+                : ''
+            }
+          </Box>
 
           <Basket />
 
