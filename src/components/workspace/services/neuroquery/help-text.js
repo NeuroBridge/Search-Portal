@@ -15,7 +15,7 @@ export const HelpText = () => {
         your workspace appear here. Many terms in the NeuroBridge Ontology have
         multiple string representations, or <em>labels</em>. Before sending your
         request to NeuroQuery, you may fine-tune your search by selecting the
-        most appropriate label to represent each term posessing multiple labels.
+        most appropriate label to represent each term with multiple labels.
         Terms without additional labels, Verify the constructed URL and query
         before sending your request to NeuroQuery.
       </Typography>
