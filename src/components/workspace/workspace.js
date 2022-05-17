@@ -80,7 +80,11 @@ export const Workspace = () => {
           <Collapse in={ basket.ids.length > 0 }>
             <LinearProgress variant={ loading ? 'indeterminate' : 'determinate' } value={ 0 } />
 
-            <Tabs value={ currentServiceIndex } onChange={ handleChangeService }>
+            <Tabs
+              variant="scrollable"
+              value={ currentServiceIndex }
+              onChange={ handleChangeService }
+            >
               {
                 services.map(service => (
                   <Tab key={ service.id } label={ service.name } />
