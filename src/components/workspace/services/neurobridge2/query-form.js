@@ -1,9 +1,9 @@
 import { Fragment } from 'react'
 import { Button, CardContent, Divider } from '@mui/material'
-import { useForest } from './'
+import { useInterfaceContext } from './'
 
 export const QueryForm = () => {
-  const { query, fetchResults } = useForest()
+  const { query, fetchResults } = useInterfaceContext()
 
   return (
     <Fragment>

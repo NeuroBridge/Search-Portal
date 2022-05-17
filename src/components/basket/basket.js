@@ -82,6 +82,7 @@ export const Basket = () => {
       overflow: 'hidden',
       minHeight: '80px',
       borderRadius: 0,
+      paddingTop: '1.5rem',
     }}>
       <Box sx={{
         display: 'flex',

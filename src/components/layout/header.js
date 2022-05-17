@@ -1,6 +1,6 @@
 import { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { AppBar, Toolbar, Box, Container, useScrollTrigger, Slide } from '@mui/material'
+import { AppBar, Toolbar, Box, Container, useScrollTrigger, Slide, useTheme } from '@mui/material'
 import { Link } from '../link'
 
 const HideOnScroll = ({ children }) => {
@@ -50,12 +50,13 @@ const brandStyle = {
 //
 
 export const Header = () => {
+  const theme = useTheme()
 
   return (
     <Fragment>
       <HideOnScroll>
         <AppBar elevation={ 1 } sx={{
-          backgroundColor: '#eee',
+          backgroundColor: theme.palette.background.paper,
         }}>
           <Toolbar>
             <Container maxWidth="xl" sx={{
