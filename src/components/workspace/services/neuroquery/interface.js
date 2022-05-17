@@ -19,6 +19,8 @@ const InterfaceContext = createContext({})
 export const Interface = ({ searchWrapper }) => {
   const ontology = useOntology()
   const basket = useBasket()
+  // `termLabels` is an object whose keys are term ids,
+  // and each value is the index for the selected term label.
   const [termLabels, setTermLabels] = useState({})
 
   const terms = useMemo(() => {
