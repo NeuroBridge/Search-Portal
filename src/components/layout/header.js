@@ -1,6 +1,6 @@
 import { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { AppBar, Toolbar, Box, Container, useScrollTrigger, Slide, Typography } from '@mui/material'
+import { AppBar, Toolbar, Box, Container, useScrollTrigger, Slide } from '@mui/material'
 import { Link } from '../link'
 
 const HideOnScroll = ({ children }) => {

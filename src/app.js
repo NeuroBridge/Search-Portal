@@ -1,9 +1,7 @@
 import { Fragment } from 'react'
-import PropTypes from 'prop-types'
 import { Router as ReachRouter } from '@reach/router'
-import { AppBar, Toolbar, Box, Container, useScrollTrigger, Slide, Typography } from '@mui/material'
+import { Box } from '@mui/material'
 import { AboutView, BrowseView, NotFoundView, SearchView } from './views'
-import { Link } from './components/link'
 import { Drawer } from './components/drawer'
 import { Header } from './components/layout'
 
