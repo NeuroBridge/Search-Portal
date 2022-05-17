@@ -11,13 +11,13 @@ import {
 } from '@mui/icons-material'
 import { arrayToTree } from 'performant-array-to-tree'
 import { useOntology } from '../../../ontology'
-import { useForest } from './'
+import { useInterfaceContext } from './'
 
 export const SelectionTree = ({ rootTermId }) => {
   const theme = useTheme()
   const ontology = useOntology()
-  const { toggleTermSelection } = useForest()
-  const { values } = useForest()
+  const { toggleTermSelection } = useInterfaceContext()
+  const { values } = useInterfaceContext()
 
   // to play nicely with `arrayToTree`, we'll set
   // our root term to have no parent so that it doesn't

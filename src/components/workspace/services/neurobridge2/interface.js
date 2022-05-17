@@ -13,7 +13,7 @@ const API_URL = `https://neurobridges-ml.edc.renci.org:5000/nb_translator`
 
 //
 
-const ForestContext = createContext({})
+const InterfaceContext = createContext({})
 
 export const Interface = ({ searchWrapper }) => {
   const ontology = useOntology()
@@ -111,13 +111,13 @@ export const Interface = ({ searchWrapper }) => {
   }
 
   return (
-    <ForestContext.Provider value={{ values, toggleTermSelection, query, fetchResults }}>
+    <InterfaceContext.Provider value={{ values, toggleTermSelection, query, fetchResults }}>
       <Forest />
 
       <Divider />
       
       <QueryForm />
-    </ForestContext.Provider>
+    </InterfaceContext.Provider>
   )
 } 
 
@@ -125,4 +125,4 @@ Interface.propTypes = {
   searchWrapper: PropTypes.func.isRequired,
 }
 
-export const useForest = () => useContext(ForestContext)
+export const useInterfaceContext = () => useContext(InterfaceContext)
