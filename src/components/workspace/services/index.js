@@ -14,6 +14,20 @@ export const services = [
   The default import should look like { Interface, HelpText },
   where Interface and HelpText are React components.
 
+  It is required to wrap the logic of the function that
+  fetches results in `searchWrapper`, which is passed as a prop
+  to each interface component. For example,
+
+  const fetchResults = () => {
+    searchWrapper(async () => {
+      const response = await axios.get(URL)
+      // ...
+    })
+  }
+
+  This will handle orchestrating the interface logic alongside
+  the application machinery.
+
   Your interface will have access to the application state
   and helper functions therein. The following contexts
   currently exist: Basket, Drawer, Ontology, and Workspace.
