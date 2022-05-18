@@ -47,7 +47,7 @@ export const Interface = ({ searchWrapper }) => {
     console.log(`PAYLOAD: ${ JSON.stringify({ query }, null, 2) }`)
     searchWrapper(async () => {
       try {
-        const { data } = await axios.get(
+        const { data } = await axios.post(
           API_URL,
           { query },
           { headers: { 'Content-Type': 'application/json;charset=utf-8' } },
