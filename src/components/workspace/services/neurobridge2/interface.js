@@ -9,7 +9,7 @@ import { QueryForm } from './query-form'
 
 //
 
-const API_URL = `https://neurobridges-ml.edc.renci.org:5000/nb_translator`
+const API_URL = `https://neurobridges-ml.renci.org/nb_translator`
 
 //
 
@@ -90,10 +90,10 @@ export const Interface = ({ searchWrapper }) => {
   }, [roots, values])
 
   const fetchResults = () => {
-    console.log({ expression: query })
+    console.log(`PAYLOAD: ${ JSON.stringify({ query }, null, 2) }`)
     searchWrapper(async () => {
       try {
-        const { data } = await axios.post(API_URL, { expression: query })
+        const { data } = await axios.post(API_URL, { query })
         if (!data) {
           throw new Error('An error occurred while fetching results.')
         }
