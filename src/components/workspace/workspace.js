@@ -4,7 +4,7 @@ import {
   Box, Card, Collapse, Divider, IconButton, LinearProgress,
   Tab, Tabs, Tooltip, Typography, useTheme,
 } from '@mui/material'
-import { services } from './services'
+import { interfaces } from './interfaces'
 import { Basket, useBasket } from '../basket'
 import { Publication } from './results'
 import { ClearAll as ClearResultsIcon } from '@mui/icons-material'
@@ -98,7 +98,7 @@ export const Workspace = () => {
               onChange={ handleChangeService }
             >
               {
-                services.map(service => (
+                interfaces.map(service => (
                   <Tab key={ service.id } label={ service.name } />
                 ))
               }
@@ -107,8 +107,8 @@ export const Workspace = () => {
             <Divider />
 
             {
-              services.map((service, i) => {
-                const { Interface, HelpText } = services[i]
+              interfaces.map((service, i) => {
+                const { Interface, HelpText } = interfaces[i]
                 return (
                   <Box
                     key={ `service-${ service.id }` }
