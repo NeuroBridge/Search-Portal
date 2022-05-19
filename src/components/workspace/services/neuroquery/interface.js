@@ -10,6 +10,10 @@ import { TermSelects } from './term-selects'
 
 //
 
+axios.defaults.timeout = 5000
+
+//
+
 const API_URL = `https://neurobridges.renci.org:13374/query`
 
 //

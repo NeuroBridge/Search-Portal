@@ -9,6 +9,10 @@ import { QueryForm } from './query-form'
 
 //
 
+axios.defaults.timeout = 5000
+
+//
+
 const API_URL = `https://neurobridges-ml.renci.org/article`
 
 //

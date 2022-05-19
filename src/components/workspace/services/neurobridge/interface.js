@@ -6,6 +6,10 @@ import { useBasket } from '../../../basket'
 
 //
 
+axios.defaults.timeout = 5000
+
+//
+
 const API_URL = `https://neurobridges-ml.renci.org/article`
 const AND = 'AND'
 const OR = 'OR'
