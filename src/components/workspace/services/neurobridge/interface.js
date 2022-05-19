@@ -6,7 +6,7 @@ import { useBasket } from '../../../basket'
 
 //
 
-const API_URL = `https://neurobridges-ml.renci.org/nb_translator`
+const API_URL = `https://neurobridges-ml.renci.org/article`
 const AND = 'AND'
 const OR = 'OR'
 
@@ -49,21 +49,20 @@ export const Interface = ({ searchWrapper }) => {
       try {
         const { data } = await axios.post(
           API_URL,
-          { query },
-          { headers: { 'Content-Type': 'application/json;charset=utf-8' } },
+          JSON.stringify({ query }),
+          { headers: { 'Content-Type': 'text/html;charset=utf-8' } },
         )
         if (!data) {
           throw new Error('An error occurred while fetching results.')
         }
-        console.log(data)
         const results = Object.values(data).map(result => ({
-          title: result.title,
+          title: result.title[0],
           pmid: result.pmid,
           url: result.pmc_link,
         }))
         return results
       } catch (error) {
-        console.log(error)
+        console.error(error.message)
         return []
       }
     })

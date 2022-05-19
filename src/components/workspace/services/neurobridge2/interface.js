@@ -9,7 +9,7 @@ import { QueryForm } from './query-form'
 
 //
 
-const API_URL = `https://neurobridges-ml.renci.org/nb_translator`
+const API_URL = `https://neurobridges-ml.renci.org/article`
 
 //
 
@@ -93,7 +93,11 @@ export const Interface = ({ searchWrapper }) => {
     console.log(`PAYLOAD: ${ JSON.stringify({ query }, null, 2) }`)
     searchWrapper(async () => {
       try {
-        const { data } = await axios.post(API_URL, { query })
+        const { data } = await axios.post(
+          API_URL,
+          JSON.stringify({ query }),
+          { headers: { 'Content-Type': 'text/html;charset=utf-8' } },
+        )
         if (!data) {
           throw new Error('An error occurred while fetching results.')
         }
@@ -104,7 +108,7 @@ export const Interface = ({ searchWrapper }) => {
         }))
         return results
       } catch (error) {
-        console.log(error)
+        console.error(error.message)
         return []
       }
     })
