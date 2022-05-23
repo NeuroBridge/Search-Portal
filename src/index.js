@@ -6,7 +6,7 @@ import { App } from './app'
 import { BasketProvider } from './components/basket'
 import { DrawerProvider } from './components/drawer'
 import { OntologyProvider } from './components/ontology'
-import owlFile from './data/NeuroBridge_093021.owl'
+import owlFile from './data/ontology.owl'
 import './styles/index.scss'
 
 const ProvisionedApp = () => {
