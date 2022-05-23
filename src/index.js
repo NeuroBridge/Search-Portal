@@ -1,6 +1,7 @@
 import "core-js/stable"
 import "regenerator-runtime/runtime"
 import { render } from 'react-dom'
+import { BrowserRouter } from 'react-router-dom'
 import { App } from './app'
 import { BasketProvider } from './components/basket'
 import { DrawerProvider } from './components/drawer'
@@ -10,13 +11,15 @@ import './styles/index.scss'
 
 const ProvisionedApp = () => {
   return (
-    <OntologyProvider owlFile={ owlFile }>
-      <BasketProvider>
-        <DrawerProvider>
-          <App />
-        </DrawerProvider>
-      </BasketProvider>
-    </OntologyProvider>
+    <BrowserRouter>
+      <OntologyProvider owlFile={ owlFile }>
+        <BasketProvider>
+          <DrawerProvider>
+            <App />
+          </DrawerProvider>
+        </BasketProvider>
+      </OntologyProvider>
+    </BrowserRouter>
   )
 }
 

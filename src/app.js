@@ -1,5 +1,5 @@
 import { Fragment } from 'react'
-import { Router as ReachRouter } from '@reach/router'
+import { Route, Routes } from 'react-router-dom'
 import { Box } from '@mui/material'
 import { AboutView, BrowseView, NotFoundView, SearchView } from './views'
 import { Drawer } from './components/drawer'
@@ -7,12 +7,12 @@ import { Header } from './components/layout'
 
 const Router = () => {
   return (
-    <ReachRouter>
-      <SearchView path="/" />
-      <BrowseView path="/browse" />
-      <AboutView path="/about" />
-      <NotFoundView default />
-    </ReachRouter>
+    <Routes>
+      <Route path="/"       element={ <SearchView /> } />
+      <Route path="/browse" element={ <BrowseView /> } />
+      <Route path="/about"  element={ <AboutView /> } />
+      <Route default        element={ <NotFoundView /> } />
+    </Routes>
   )
 }
 
