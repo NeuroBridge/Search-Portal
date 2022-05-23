@@ -10,7 +10,7 @@ axios.defaults.timeout = 5000
 
 //
 
-const API_URL = `https://neurobridges-ml.renci.org/article`
+const API_URL = `https://neurobridges-ml.renci.org/nb_translator`
 const AND = 'AND'
 const OR = 'OR'
 

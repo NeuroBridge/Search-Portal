@@ -94,12 +94,12 @@ export const Interface = ({ searchWrapper }) => {
   }, [roots, values])
 
   const fetchResults = () => {
-    console.log(`PAYLOAD: ${ JSON.stringify({ expression: query }, null, 2) }`)
+    console.log(`PAYLOAD: ${ JSON.stringify({ query }, null, 2) }`)
     searchWrapper(async () => {
       try {
         const { data } = await axios.post(
           API_URL,
-          JSON.stringify({ expression: query }),
+          JSON.stringify({ query }),
           { headers: { 'Content-Type': 'text/html;charset=utf-8' } },
         )
         if (!data) {
