@@ -48,13 +48,13 @@ export const Interface = ({ searchWrapper }) => {
   }
 
   const handleClickQueryButton = () => {
-    console.log(`PAYLOAD: ${ JSON.stringify({ query }, null, 2) }`)
+    console.log(`PAYLOAD: ${ JSON.stringify({ expression: query }, null, 2) }`)
     searchWrapper(async () => {
       try {
         const { data } = await axios.post(
           API_URL,
-          JSON.stringify({ query }),
-          { headers: { 'Content-Type': 'text/html;charset=utf-8' } },
+          JSON.stringify({ expression: query }),
+          { headers: { 'content-type': 'text/html;charset=utf-8' } },
         )
         if (!data) {
           throw new Error('An error occurred while fetching results.')
