@@ -1,6 +1,6 @@
 import { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { Link as ReachLink } from '@reach/router'
+import { Link as ReactLink } from 'react-router-dom'
 
 export const ExternalLinkIcon = ({ size, ...rest }) => {
   return (
@@ -43,7 +43,7 @@ export const Link = ({ to, children, ...props }) => {
   const externalUrlPattern = new RegExp(/^https?:\/\//)
   const externalUrlMatch = externalUrlPattern.exec(to)
   const mailtoMatch = mailtoPattern.exec(to)
-  const LinkComponent = externalUrlMatch || mailtoMatch ? ExternalLink : ReachLink
+  const LinkComponent = externalUrlMatch || mailtoMatch ? ExternalLink : ReactLink
   return <LinkComponent to={to} { ...props }>{children}</LinkComponent>
 }
 
