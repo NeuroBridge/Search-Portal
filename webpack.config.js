@@ -91,10 +91,13 @@ module.exports = {
   devtool: 'source-map',
 
   devServer: {
-    contentBase: './dist',
-    historyApiFallback: true,
     hot: true,
-    after: function(app, server, compiler) {
+    historyApiFallback: true,
+    static: path.resolve(__dirname, 'dist'),
+    setupMiddlewares: (middlewares, devServer) => {
+      if (!devServer) {
+        throw new Error('webpack-dev-server is not defined')
+      }
       console.log()
       console.log(` _|_|_|    _|_|_|_|  _|      _|    _|_|_|  _|_|_| `)
       console.log(` _|    _|  _|        _|_|    _|  _|          _|   `)
@@ -102,6 +105,7 @@ module.exports = {
       console.log(` _|    _|  _|        _|    _|_|  _|          _|   `)
       console.log(` _|    _|  _|_|_|_|  _|      _|    _|_|_|  _|_|_| `)
       console.log(`\n`)
+      return middlewares
     },
   },
 

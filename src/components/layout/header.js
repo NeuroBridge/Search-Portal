@@ -2,6 +2,7 @@ import { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { AppBar, Toolbar, Box, Container, useScrollTrigger, Slide, useTheme } from '@mui/material'
 import { Link } from '../link'
+import { useMatch, useResolvedPath } from 'react-router-dom'
 
 const HideOnScroll = ({ children }) => {
   const trigger = useScrollTrigger()
@@ -49,6 +50,22 @@ const brandStyle = {
 
 //
 
+const NavLink = ({ to, children }) => {
+  const resolved = useResolvedPath(to)
+  const match = useMatch({ path: resolved.pathname, end: true })
+
+  return (
+    <Link to={ to } aria-current={ match ? 'page' : undefined }>{ children }</Link>
+  )
+}
+
+NavLink.propTypes = {
+  to: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
+}
+
+//
+
 export const Header = () => {
   const theme = useTheme()
 
@@ -72,9 +89,9 @@ export const Header = () => {
                 </Link>
               </Box>
               <Box sx={ navStyle }>
-                <Link to="/">Search</Link>
-                <Link to="/browse">Browse</Link>
-                <Link to="/about">About</Link>
+                <NavLink to="/">Search</NavLink>
+                <NavLink to="/browse">Browse</NavLink>
+                <NavLink to="/about">About</NavLink>
               </Box>
             </Container>
           </Toolbar>

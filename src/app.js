@@ -11,7 +11,7 @@ const Router = () => {
       <Route path="/"       element={ <SearchView /> } />
       <Route path="/browse" element={ <BrowseView /> } />
       <Route path="/about"  element={ <AboutView /> } />
-      <Route default        element={ <NotFoundView /> } />
+      <Route path="*"       element={ <NotFoundView /> } />
     </Routes>
   )
 }
