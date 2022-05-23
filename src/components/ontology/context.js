@@ -37,7 +37,7 @@ const extractIdFromIri = iri => {
   return matches[1]
 }
 
-export const OntologyProvider = ({ children, owlFile }) => {
+export const OntologyProvider = ({ children, owlFile, owlLocation }) => {
   const terms = useMemo(() => {
     return owlFile['rdf:RDF']['owl:Class'].map(term => {
       // every term will have this shape
@@ -118,6 +118,7 @@ export const OntologyProvider = ({ children, owlFile }) => {
 OntologyProvider.propTypes = {
   children: PropTypes.node.isRequired,
   owlFile: PropTypes.object,
+  owlLocation: PropTypes.string,
 }
 
 export const useOntology = () => useContext(OntologyContext)
