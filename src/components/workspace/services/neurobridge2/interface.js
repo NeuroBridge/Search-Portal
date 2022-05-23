@@ -9,7 +9,11 @@ import { QueryForm } from './query-form'
 
 //
 
-const API_URL = `https://neurobridges-ml.renci.org/article`
+axios.defaults.timeout = 5000
+
+//
+
+const API_URL = `https://neurobridges-ml.renci.org/nb_translator`
 
 //
 
@@ -90,12 +94,12 @@ export const Interface = ({ searchWrapper }) => {
   }, [roots, values])
 
   const fetchResults = () => {
-    console.log(`PAYLOAD: ${ JSON.stringify({ query }, null, 2) }`)
+    console.log(`PAYLOAD: ${ JSON.stringify({ expression: query }, null, 2) }`)
     searchWrapper(async () => {
       try {
         const { data } = await axios.post(
           API_URL,
-          JSON.stringify({ query }),
+          JSON.stringify({ expression: query }),
           { headers: { 'Content-Type': 'text/html;charset=utf-8' } },
         )
         if (!data) {
