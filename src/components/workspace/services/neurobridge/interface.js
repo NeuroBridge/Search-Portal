@@ -48,7 +48,6 @@ export const Interface = ({ searchWrapper }) => {
   }
 
   const handleClickQueryButton = () => {
-    console.log(`PAYLOAD: ${ JSON.stringify({ query: { expression: query } }, null, 2) }`)
     searchWrapper(async () => {
       try {
         const { data } = await axios.post(
