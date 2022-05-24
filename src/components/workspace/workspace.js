@@ -177,7 +177,9 @@ export const Workspace = () => {
                   results.map((result, i) => (
                     <Publication
                       key={ `${ i }_${ result.pmid }` }
+                      pmid={ result.pmid }
                       title={ result.title }
+                      snippet={ result.snippet }
                       url={ result.url }
                     />
                   ))

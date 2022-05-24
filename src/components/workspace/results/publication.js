@@ -1,15 +1,32 @@
 import PropTypes from 'prop-types'
-import { Button, Card, CardContent, CardHeader } from '@mui/material'
+import { Button, Card, CardContent, CardHeader, Divider, Typography } from '@mui/material'
 
-export const Publication = ({ title, url }) => {
+export const Publication = ({ title, pmid, snippet, url }) => {
   return (
     <Card sx={{
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'stretch',
     }}>
-      <CardHeader disableTypography title={ title } sx={{ flex: 1, textAign: 'left' }} />
-      <CardContent sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+      <CardHeader
+        title={ title }
+        titleTypographyProps={{ variant: "h6", align: 'center' }}
+      />
+
+      <Divider />
+      
+      <CardContent sx={{ flex: 1 }}>
+        <Typography paragraph>{ snippet || 'Snippet unavailable' }</Typography>
+      </CardContent>
+
+      <Divider />
+      
+      <CardContent sx={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+      }}>
+        <Typography align="right">PMID: { pmid }</Typography>
         <Button variant="outlined" size="small" href={ url } target="_blank">View</Button>
       </CardContent>
     </Card>
@@ -18,6 +35,8 @@ export const Publication = ({ title, url }) => {
 
 Publication.propTypes = {
   title: PropTypes.string.isRequired,
+  pmid: PropTypes.string,
+  snippet: PropTypes.string,
   url: PropTypes.string,
 }
 

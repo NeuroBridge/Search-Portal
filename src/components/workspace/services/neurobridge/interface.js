@@ -60,9 +60,11 @@ export const Interface = ({ searchWrapper }) => {
         }
         const results = Object.values(data).map(result => ({
           title: result.title[0],
+          snippet: result.snippet,
           pmid: result.pmid,
           url: result.pmc_link,
         }))
+        console.log(results)
         return results
       } catch (error) {
         console.error(error.message)

@@ -51,6 +51,7 @@ export const Interface = ({ searchWrapper }) => {
         }
         return response.data.data.map(result => ({
           title: result.title,
+          snippet: result.snippet,
           url: result.pubmed_url,
           pmid: result.pmid,
         }))
