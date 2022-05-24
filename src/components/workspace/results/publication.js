@@ -35,7 +35,7 @@ export const Publication = ({ title, pmid, snippet, url }) => {
 
 Publication.propTypes = {
   title: PropTypes.string.isRequired,
-  pmid: PropTypes.string,
+  pmid: PropTypes.number,
   snippet: PropTypes.string,
   url: PropTypes.string,
 }
