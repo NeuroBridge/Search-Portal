@@ -7,10 +7,18 @@ export const Publication = ({ title, pmid, snippet, url }) => {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'stretch',
+      filter: 'brightness(0.97)',
+      '&:hover': {
+        filter: 'brightness(1.0)',
+      }
     }}>
       <CardHeader
         title={ title }
-        titleTypographyProps={{ variant: "h6", align: 'center' }}
+        titleTypographyProps={{
+          variant: 'h6',
+          align: 'center',
+          sx: { fontSize: '120%' },
+        }}
       />
 
       <Divider />
@@ -26,7 +34,7 @@ export const Publication = ({ title, pmid, snippet, url }) => {
         justifyContent: 'space-between',
         alignItems: 'center',
       }}>
-        <Typography align="right">PMID: { pmid }</Typography>
+        <Typography align="right" variant="caption">PMID: { pmid }</Typography>
         <Button variant="outlined" size="small" href={ url } target="_blank">View</Button>
       </CardContent>
     </Card>
