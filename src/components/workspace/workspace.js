@@ -172,10 +172,10 @@ export const Workspace = () => {
                     key={ `${ key }-results-toggle` }
                     icon={ results[key].visibility
                       ? <ResultsVisibleIcon /> : <ResultsHiddenIcon /> }
+                    variant="outlined"
+                    color={ results[key].visibility ? 'primary' : 'default' }
                     label={ `${ key } (${ results[key].items.length })` }
                     onClick={ toggleResultVisibility(key) }
-                    color={ results[key].visibility ? 'primary' : 'default' }
-                    variant={ results[key].visibility ? 'filled' : 'outlined' }
                   />
                 ))
               }
