@@ -64,7 +64,6 @@ export const Interface = ({ searchWrapper }) => {
           pmid: result.pmid[0],
           url: result.pmc_link,
         }))
-        console.log(results)
         return results
       } catch (error) {
         console.error(error.message)
