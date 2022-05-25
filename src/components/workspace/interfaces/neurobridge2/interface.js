@@ -94,7 +94,6 @@ export const Interface = ({ searchWrapper }) => {
   }, [roots, values])
 
   const fetchResults = () => {
-    console.log(`PAYLOAD: ${ JSON.stringify({ query: { expression: query } }) }`)
     searchWrapper(async () => {
       try {
         const { data } = await axios.post(
@@ -107,7 +106,8 @@ export const Interface = ({ searchWrapper }) => {
         }
         const results = Object.values(data).map(result => ({
           title: result.title[0],
-          pmid: result.pmid,
+          snippet: result.snippet,
+          pmid: result.pmid[0],
           url: result.pmc_link,
         }))
         return results
