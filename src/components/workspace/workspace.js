@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import {
   Box, Card, Chip, Collapse, Divider, IconButton, LinearProgress,
   Stack, Tab, Tabs, Tooltip, Typography, useTheme,
@@ -20,7 +20,6 @@ export const Workspace = () => {
   const basket = useBasket()
   const [currentServiceIndex, setCurrentServiceIndex] = useState(0)
   const [results, setResults] = useState({})
-  const [resultsCount, setResultsCount] = useState(0)
   const [loading, setLoading] = useState(false)
   const [showHelp, setShowHelp] = useState(false)
 
@@ -35,10 +34,19 @@ export const Workspace = () => {
       },
     }
     setResults(newResults)
-    setResultsCount(Object.keys(newResults)
-      .reduce((sum, key) => sum + newResults[key].items.length, 0))
     setLoading(false)
   }
+
+  const resultsCount = useMemo(() => {
+    return Object.keys(results)
+      .reduce((countObj, key) => {
+        const total = countObj.total + results[key].items.length
+        const visible = results[key].visibility
+          ? countObj.visible + results[key].items.length
+          : countObj.visible
+        return { total, visible }
+      }, { total: 0, visible: 0 })
+  }, [results])
 
   const handleChangeService = (event, newIndex) => {
     setCurrentServiceIndex(newIndex)
@@ -163,7 +171,7 @@ export const Workspace = () => {
             alignItems: 'center',
           }}>
             <Typography>
-              { resultsCount } results
+              Showing { resultsCount.visible } / { resultsCount.total } results
             </Typography>
             <Stack direction="row" spacing={ 2 }>
               {
