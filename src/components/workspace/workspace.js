@@ -175,7 +175,7 @@ export const Workspace = () => {
                 { resultsCount.total } results
               </Typography>
               <Typography variant="caption">
-                Showing { resultsCount.visible } / { resultsCount.total }
+                Showing { resultsCount.total === resultsCount.visible ? 'all' : `${ resultsCount.visible } of` } { resultsCount.total } results
               </Typography>
             </Stack>
             <Stack direction="row" spacing={ 2 }>
