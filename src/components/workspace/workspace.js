@@ -170,9 +170,14 @@ export const Workspace = () => {
             justifyContent: 'space-between',
             alignItems: 'center',
           }}>
-            <Typography>
-              Showing { resultsCount.visible } / { resultsCount.total } results
-            </Typography>
+            <Stack>
+              <Typography>
+                { resultsCount.total } results
+              </Typography>
+              <Typography variant="caption">
+                Showing { resultsCount.total === resultsCount.visible ? 'all' : `${ resultsCount.visible } of` } { resultsCount.total } results
+              </Typography>
+            </Stack>
             <Stack direction="row" spacing={ 2 }>
               {
                 Object.keys(results).map(key => (
