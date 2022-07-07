@@ -9,6 +9,25 @@ import { useBasket } from '../basket'
 import { SearchBar } from './search-bar'
 import { TermCard } from './term-card'
 import { HistoryItemCard } from './history-item-card'
+import { Link } from '../link'
+
+//
+
+const TermSuggestionRequest = ({ suggestion }) => {
+  return (
+    <Box sx={{
+      display: 'flex',
+      justifyContent: 'space-between',
+    }}>
+      No matching terms!
+      <Link to="#">suggest &quot;{ suggestion }&quot;</Link>
+    </Box>
+  )
+}
+
+TermSuggestionRequest.propTypes = {
+  suggestion: PropTypes.string.isRequired,
+}
 
 //
 
@@ -138,7 +157,7 @@ export const SearchForm = ({ inputRef, searchText, searchHandler, matches }) => 
                         matches.length > 0
                         ? `Showing 1 to ${ matches.length >= 15 ? '15' : matches.length }
                           of ${ matches.length } terms ${ searchText !== '' ? `matching "${ searchText }"` : '' }`
-                        : 'No matching terms'
+                        : <TermSuggestionRequest suggestion={ searchText } />
                       }
                     </Typography>
                     
