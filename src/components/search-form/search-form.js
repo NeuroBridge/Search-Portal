@@ -9,24 +9,50 @@ import { useBasket } from '../basket'
 import { SearchBar } from './search-bar'
 import { TermCard } from './term-card'
 import { HistoryItemCard } from './history-item-card'
-import { Link } from '../link'
 
 //
 
-const TermSuggestionRequest = ({ suggestion }) => {
+const TermSuggestionRequest = ({ suggestion, clickHandler }) => {
   return (
-    <Box sx={{
-      display: 'flex',
-      justifyContent: 'space-between',
-    }}>
-      No matching terms!
-      <Link to="#">suggest &quot;{ suggestion }&quot;</Link>
-    </Box>
+    <Fade in={ true }>
+      <Box sx={{
+        height: '250px',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: '2rem',
+        textAlign: 'left',
+        '& .title': {},
+        '& .note': {
+          width: '100%',
+          maxWidth: '600px',
+          margin: '0 auto',
+        },
+        '& .button': {
+          margin: '0 auto',
+        },
+      }}>
+        <Typography align="center" variant="h4" color="primary" className="title">
+          No matching terms!
+        </Typography>
+        <Typography paragraph align="center" color="text.secondary" className="note">
+          Oh no! It looks like &quot;{ suggestion }&quot; doesn&apos;t match any terms in our ontology.
+          Please send us a note to suggest that we consider adding it!
+        </Typography>
+        <Button
+          variant="contained"
+          onClick={ clickHandler }
+          className="button"
+        >suggest &quot;{ suggestion }&quot;</Button>
+      </Box>
+    </Fade>
   )
 }
 
 TermSuggestionRequest.propTypes = {
   suggestion: PropTypes.string.isRequired,
+  clickHandler: PropTypes.func.isRequired,
 }
 
 //
@@ -50,6 +76,10 @@ export const SearchForm = ({ inputRef, searchText, searchHandler, matches }) => 
     basket.add(id)
     addToSearchHistory(id)
     setOpen(false)
+  }
+
+  const handleClickTermSuggest = () => {
+    searchHandler('')
   }
 
   return (
@@ -157,7 +187,7 @@ export const SearchForm = ({ inputRef, searchText, searchHandler, matches }) => 
                         matches.length > 0
                         ? `Showing 1 to ${ matches.length >= 15 ? '15' : matches.length }
                           of ${ matches.length } terms ${ searchText !== '' ? `matching "${ searchText }"` : '' }`
-                        : <TermSuggestionRequest suggestion={ searchText } />
+                        : <TermSuggestionRequest suggestion={ searchText } clickHandler={ handleClickTermSuggest } />
                       }
                     </Typography>
                     
