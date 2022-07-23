@@ -1,4 +1,5 @@
 export * from './about'
 export * from './browse'
+export * from './contact'
 export * from './not-found'
 export * from './search'
