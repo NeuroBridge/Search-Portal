@@ -43,7 +43,7 @@
     "@mui/material": "^5.4.4",
     "axios": "^0.27.2",
     "core-js": "^3.22.5",
-    "dotenv-webpack": "^7.0.3",
+    "dotenv-webpack": "^8.0.0",
     "performant-array-to-tree": "^1.11.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
