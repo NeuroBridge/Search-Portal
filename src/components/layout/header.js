@@ -92,6 +92,7 @@ export const Header = () => {
                 <NavLink to="/">Search</NavLink>
                 <NavLink to="/browse">Browse</NavLink>
                 <NavLink to="/about">About</NavLink>
+                <NavLink to="/contact">Contact</NavLink>
               </Box>
             </Container>
           </Toolbar>
