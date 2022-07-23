@@ -19,7 +19,11 @@ export const TermActionButtons = ({ termId, stopEventPropagation, tooltipPlaceme
     }
     switch (button) {
       case 'basket':
-        basket.toggle(termId)
+        if (basket.contains(termId)) {
+          basket.remove(termId)
+        } else {
+          basket.add(termId)
+        }
         break
       case 'drawer':
         drawer.setTermId(termId)
