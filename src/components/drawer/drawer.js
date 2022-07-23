@@ -34,8 +34,6 @@ export const Drawer = () => {
 
   const handleMouseMove = useCallback(event => {
     const newWidth = document.body.offsetLeft + document.body.offsetWidth - event.clientX
-    console.log(newWidth)
-    console.log(event)
     if (DRAWER_CONFIG.minWidth < newWidth && newWidth < DRAWER_CONFIG.maxWidth) {
       setDrawerWidth(newWidth)
     }
