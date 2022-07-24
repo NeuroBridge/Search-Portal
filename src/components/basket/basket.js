@@ -10,8 +10,8 @@ import { useDrawer } from '../drawer'
 import { useOntology } from '../ontology'
 import {
   Delete as CloseIcon,
-  Check as SelectedIcon,
-  DoNotDisturbAlt as IgnoreIcon,
+  Visibility as SelectedIcon,
+  VisibilityOff as IgnoreIcon,
 } from '@mui/icons-material'
 
 //
@@ -32,12 +32,15 @@ export const BasketItem = ({ term }) => {
         <CardActionArea onClick={ () => drawer.setTermId(term.id) }>
           <CardHeader title={ term.id } disableTypography />
         </CardActionArea>
-        <Tooltip title="Toggle term selection" placement="top">
+        <Tooltip
+          title={ `${ basket.contents[term.id] === 0 ? 'Show' : 'Hide' } term` }
+          placement="top"
+        >
           <CardActionArea onClick={ () => basket.toggle(term.id) } sx={{ padding: '0.5rem' }}>
             { basket.contents[term.id] === 0 &&
-                <IgnoreIcon fontSize="small" sx={{ color: '#f99' }} /> }
+                <IgnoreIcon fontSize="small" sx={{ color: '#aaa' }} /> }
             { basket.contents[term.id] === 1 &&
-                <SelectedIcon fontSize="small" sx={{ color: '#9f9' }} /> }
+                <SelectedIcon fontSize="small" sx={{ color: '#fff' }} /> }
           </CardActionArea>
         </Tooltip>
         <Tooltip title="Remove term from workspace" placement="top">
