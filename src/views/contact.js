@@ -1,4 +1,5 @@
 import { Container, Typography } from '@mui/material'
+import { ContactForm } from '../components/contact-form'
 
 export const ContactView = () => {
   return (
@@ -14,6 +15,8 @@ export const ContactView = () => {
         Esse quis aliquip ut adipisicing nulla magna eu excepteur do sunt reprehenderit deserunt ad sed minim.
         Velit nisi in occaecat in officia in culpa amet sit sint reprehenderit.
       </Typography>
+
+      <ContactForm />
 
     </Container>
   )
