@@ -16,6 +16,8 @@ export const ContactView = () => {
         Velit nisi in occaecat in officia in culpa amet sit sint reprehenderit.
       </Typography>
 
+      <br />
+      
       <ContactForm />
 
     </Container>
