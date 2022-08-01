@@ -1,6 +1,6 @@
 import "core-js/stable"
 import "regenerator-runtime/runtime"
-import { render } from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import { App } from './app'
 import { BasketProvider } from './components/basket'
@@ -23,4 +23,6 @@ const ProvisionedApp = () => {
   )
 }
 
-render(<ProvisionedApp />, document.getElementById('root'))
+const root = createRoot(document.getElementById('root'))
+
+root.render(<ProvisionedApp />)
