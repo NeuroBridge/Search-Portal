@@ -31,7 +31,7 @@ const schema = yup.object().shape({
 
 //
 
-export const ContactForm = ({ presetSubject }) => {
+export const ContactForm = ({ presetFields }) => {
   const {
     handleSubmit,
     formState,
@@ -82,7 +82,7 @@ export const ContactForm = ({ presetSubject }) => {
           name="subject"
           label="Subject"
           variant="outlined"
-          defaultValue={ presetSubject }
+          defaultValue={ presetFields.subject }
           { ...register('subject') }
           error={ !!formState.errors.subject }
         >
@@ -106,6 +106,7 @@ export const ContactForm = ({ presetSubject }) => {
         label="Message"
         variant="outlined"
         fullWidth
+        defaultValue={ presetFields.message }
         { ...register('message') }
         error={ !!formState.errors.message }
         multiline rows={ 5 }
@@ -119,9 +120,5 @@ export const ContactForm = ({ presetSubject }) => {
 }
 
 ContactForm.propTypes = {
-  presetSubject: PropTypes.string.isRequired,
-}
-
-ContactForm.defaultProps = {
-  presetSubject: 'general',
+  presetFields: PropTypes.object,
 }

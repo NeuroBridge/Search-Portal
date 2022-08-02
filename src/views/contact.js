@@ -27,7 +27,8 @@ export const ContactView = () => {
 
           <br /><br />
           
-          <ContactForm presetSubject={ location?.state?.subject } />
+          <ContactForm presetFields={{ ...location.state }} />
+          
         </CardContent>
       </Card>
 

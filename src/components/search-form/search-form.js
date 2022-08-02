@@ -82,7 +82,10 @@ export const SearchForm = ({ inputRef, searchText, searchHandler, matches }) => 
 
   const handleClickTermSuggest = () => {
     searchHandler('')
-    navigate('/contact', { state: { subject: 'suggestion' } })
+    navigate('/contact', { state: {
+      subject: 'suggestion',
+      message: `Please consider adding "${ searchText }" to the NeuroBridge ontology.`
+    } })
   }
 
   return (
