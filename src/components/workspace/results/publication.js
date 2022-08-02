@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types'
 import { Button, Card, CardContent, CardHeader, Divider, Typography } from '@mui/material'
 
-export const Publication = ({ title, pmid, snippet, url }) => {
+export const Publication = ({ result: publication }) => {
+  const { title, pmid, snippet, url, authors, similarity } = publication
+
   return (
     <Card sx={{
       display: 'flex',
@@ -24,9 +26,23 @@ export const Publication = ({ title, pmid, snippet, url }) => {
       <Divider />
       
       <CardContent sx={{ flex: 1 }}>
-        <Typography paragraph>{ snippet || 'Snippet unavailable' }</Typography>
+        <Typography title={ similarity }>
+          Score: {
+            similarity.toFixed(2) || <span style={{ fontStyle: 'italic', color: '#999' }}>Unavailable</span>
+          }
+        </Typography>
+        <Typography>
+          Snippet: {
+            snippet || <span style={{ fontStyle: 'italic', color: '#999' }}>Unavailable</span>
+          }
+          </Typography>
+        <Typography>
+          Authors: {
+            authors|| <span style={{ fontStyle: 'italic', color: '#999' }}>Unavailable</span>
+          }
+        </Typography>
       </CardContent>
-
+      
       <Divider />
       
       <CardContent sx={{
@@ -35,19 +51,19 @@ export const Publication = ({ title, pmid, snippet, url }) => {
         alignItems: 'center',
       }}>
         <Typography align="right" variant="caption">PMID: { pmid }</Typography>
-        <Button variant="outlined" size="small" href={ url } target="_blank">View</Button>
+        <Button variant="outlined" size="small" href={ url } target="_blank">View Full Text</Button>
       </CardContent>
     </Card>
   )
 }
 
 Publication.propTypes = {
-  title: PropTypes.string.isRequired,
-  pmid: PropTypes.number,
-  snippet: PropTypes.string,
-  url: PropTypes.string,
-}
-
-Publication.defaultProps = {
-  title: '',
+  result: PropTypes.shape({
+    title: PropTypes.string,
+    pmid: PropTypes.number,
+    snippet: PropTypes.string,
+    url: PropTypes.string,
+    authors: PropTypes.string,
+    similarity: PropTypes.number,
+  }).isRequired,
 }

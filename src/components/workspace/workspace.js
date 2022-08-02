@@ -216,10 +216,7 @@ export const Workspace = () => {
                 .map(interfaceName => results[interfaceName].items.map(result => (
                   <Publication
                     key={ `result-${ interfaceName }-${ result.pmid }` }
-                    pmid={ result.pmid }
-                    title={ result.title }
-                    snippet={ result.snippet }
-                    url={ result.url }
+                    result={ result }
                   />
                 )))
             }
