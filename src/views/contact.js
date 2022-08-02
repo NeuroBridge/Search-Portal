@@ -4,7 +4,6 @@ import { useLocation } from 'react-router-dom'
 
 export const ContactView = () => {
   const location = useLocation()
-  console.log(location)
 
   return (
     <Container maxWidth="md">
