@@ -1,5 +1,6 @@
 import { Fragment, useState } from 'react'
 import PropTypes from 'prop-types'
+import { useNavigate } from 'react-router-dom'
 import {
   Box, Button, Card, CardContent,
   Fade, Typography,
@@ -59,6 +60,7 @@ TermSuggestionRequest.propTypes = {
 
 export const SearchForm = ({ inputRef, searchText, searchHandler, matches }) => {
   const basket = useBasket()
+  const navigate = useNavigate()
   const [open, setOpen] = useState(false)
   const [searchHistory, setSearchHistory] = useLocalStorage('nb-search-history', {})
 
@@ -80,6 +82,7 @@ export const SearchForm = ({ inputRef, searchText, searchHandler, matches }) => 
 
   const handleClickTermSuggest = () => {
     searchHandler('')
+    navigate('/contact')
   }
 
   return (
