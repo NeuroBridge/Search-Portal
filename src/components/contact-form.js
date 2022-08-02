@@ -1,17 +1,37 @@
-import { useEffect } from 'react'
-import { Button, FormControl, FormHelperText, InputLabel, MenuItem, Select, Stack, TextField } from '@mui/material'
+import PropTypes from 'prop-types'
+import {
+  Button, FormControl, FormHelperText, InputLabel, MenuItem, Select, Stack, TextField,
+} from '@mui/material'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 
+const subjectOptions = [
+  { value: 'question', displayText: 'I have a question' },
+  { value: 'suggestion', displayText: 'I have a suggestion' },
+  { value: 'technical-difficulties', displayText: 'I found a bug!' },
+  { value: 'other', displayText: 'Other' },
+]
+
 const schema = yup.object().shape({
-  name: yup.string().required('Please enter your name.'),
-  email: yup.string().email('Invalid email format'),
-  subject: yup.string().oneOf(['question', 'other', 'suggestion', 'technical-difficulties']).required('Please select the most applicable subject.'),
-  message: yup.string().required('Please enter a message.'),
+  name: yup
+    .string()
+    .required('Please enter your name.'),
+  email: yup
+    .string()
+    .email('Invalid email format'),
+  subject: yup
+    .string()
+    .oneOf(subjectOptions.map(option => option.value))
+    .required('Please select the most applicable subject.'),
+  message: yup
+    .string()
+    .required('Please enter a message.'),
 })
 
-export const ContactForm = () => {
+//
+
+export const ContactForm = ({ presetSubject }) => {
   const {
     handleSubmit,
     formState,
@@ -25,13 +45,6 @@ export const ContactForm = () => {
     console.log('SUBMIT')
     console.table(data)
   }
-
-  // debugging
-  useEffect(() => {
-    if (formState) {
-      console.table(formState.errors)
-    }
-  })
 
   return (
     <Stack spacing={ 2 }>
@@ -69,13 +82,18 @@ export const ContactForm = () => {
           name="subject"
           label="Subject"
           variant="outlined"
+          defaultValue={ presetSubject }
           { ...register('subject') }
           error={ !!formState.errors.subject }
         >
-          <MenuItem value="question">Question</MenuItem>
-          <MenuItem value="suggestion">Suggestion</MenuItem>
-          <MenuItem value="technical-difficulties">Technical difficulties</MenuItem>
-          <MenuItem value="other">Other</MenuItem>
+          {
+            subjectOptions.map(option => (
+              <MenuItem
+                key={ `subject-option-${ option.value }` }
+                value={ option.value }
+              >{ option.displayText }</MenuItem>
+            ))
+          }
         </Select>
       </FormControl>
       {
@@ -98,4 +116,12 @@ export const ContactForm = () => {
       <Button onClick={ handleSubmit(onSubmit) } variant="contained">Submit</Button>
     </Stack>
   )
+}
+
+ContactForm.propTypes = {
+  presetSubject: PropTypes.string.isRequired,
+}
+
+ContactForm.defaultProps = {
+  presetSubject: 'general',
 }

@@ -1,7 +1,11 @@
 import { Card, CardContent, Container, Divider, Typography } from '@mui/material'
 import { ContactForm } from '../components/contact-form'
+import { useLocation } from 'react-router-dom'
 
 export const ContactView = () => {
+  const location = useLocation()
+  console.log(location)
+
   return (
     <Container maxWidth="md">
       <Typography variant="h4" component="h1" align="center">
@@ -24,7 +28,7 @@ export const ContactView = () => {
 
           <br /><br />
           
-          <ContactForm />
+          <ContactForm presetSubject={ location?.state?.subject } />
         </CardContent>
       </Card>
 

@@ -82,7 +82,7 @@ export const SearchForm = ({ inputRef, searchText, searchHandler, matches }) => 
 
   const handleClickTermSuggest = () => {
     searchHandler('')
-    navigate('/contact')
+    navigate('/contact', { state: { subject: 'suggestion' } })
   }
 
   return (
