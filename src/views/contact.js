@@ -1,4 +1,4 @@
-import { Card, CardContent, Container, Divider, Typography } from '@mui/material'
+import { Card, CardContent, CardHeader, Container, Divider, Typography } from '@mui/material'
 import { ContactForm } from '../components/contact-form'
 import { useLocation } from 'react-router-dom'
 
@@ -13,22 +13,24 @@ export const ContactView = () => {
 
       <br />
       
+      <Typography paragraph>
+        Cillum aute exercitation sit nostrud ea fugiat irure sint ut dolore esse tempor ullamco culpa adipisicing elit.
+        Esse quis aliquip ut adipisicing nulla magna eu excepteur do sunt reprehenderit deserunt ad sed minim.
+        Velit nisi in occaecat in officia in culpa amet sit sint reprehenderit.
+      </Typography>
+
+      <br />
+
       <Card>
+        <CardHeader
+          title="Send us a note"
+          titleTypographyProps={{ align: 'center' }}
+        />
+
+        <Divider />
+
         <CardContent>
-          <Typography paragraph>
-            Cillum aute exercitation sit nostrud ea fugiat irure sint ut dolore esse tempor ullamco culpa adipisicing elit.
-            Esse quis aliquip ut adipisicing nulla magna eu excepteur do sunt reprehenderit deserunt ad sed minim.
-            Velit nisi in occaecat in officia in culpa amet sit sint reprehenderit.
-          </Typography>
-
-          <br />
-
-          <Divider />
-
-          <br /><br />
-          
-          <ContactForm presetFields={{ ...location.state }} />
-          
+          <ContactForm presets={{ ...location.state }} />
         </CardContent>
       </Card>
 

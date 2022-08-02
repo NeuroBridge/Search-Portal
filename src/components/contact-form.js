@@ -1,15 +1,16 @@
+import { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import {
   Button, FormControl, FormHelperText, InputLabel, MenuItem, Select, Stack, TextField,
 } from '@mui/material'
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 
 const subjectOptions = [
   { value: 'question', displayText: 'I have a question' },
   { value: 'suggestion', displayText: 'I have a suggestion' },
-  { value: 'technical-difficulties', displayText: 'I found a bug!' },
+  { value: 'bug', displayText: 'I found a bug!' },
   { value: 'other', displayText: 'Other' },
 ]
 
@@ -31,15 +32,31 @@ const schema = yup.object().shape({
 
 //
 
-export const ContactForm = ({ presetFields }) => {
+const defaults = {
+  name: '',
+  email: '',
+  subject: '',
+  message: '',
+}
+
+//
+
+export const ContactForm = ({ presets }) => {
   const {
+    control,
     handleSubmit,
     formState,
     register,
+    setFocus,
   } = useForm({
     schema,
-    resolver: yupResolver(schema)
+    resolver: yupResolver(schema),
+    defaultValues: { ...defaults, ...presets },
   })
+
+  useEffect(() => {
+    setFocus('name')
+  }, [])
 
   const onSubmit = data => {
     console.log('SUBMIT')
@@ -47,78 +64,89 @@ export const ContactForm = ({ presetFields }) => {
   }
 
   return (
-    <Stack spacing={ 2 }>
+    <Stack spacing={ 4 } m={ 2 }>
       { /* NAME */ }
-      <TextField
-        name="name"
-        label="Name"
-        variant="outlined"
-        fullWidth
-        { ...register('name') }
-        error={ !!formState.errors.name }
-      />
-      {
-        'name' in formState.errors && <FormHelperText>{ formState.errors.name.message }</FormHelperText>
-      }
+      <FormControl>
+        <TextField
+          name="name"
+          label="Name"
+          variant="outlined"
+          { ...register('name') }
+          error={ !!formState.errors.name }
+        />
+        {
+          'name' in formState.errors && <FormHelperText>{ formState.errors.name.message }</FormHelperText>
+        }
+      </FormControl>
 
       { /* EMAIL */ }
-      <TextField
-        name="email"
-        label="Email"
-        variant="outlined"
-        fullWidth
-        { ...register('email') }
-        error={ !!formState.errors.email }
-      />
-      {
-        'email' in formState.errors && <FormHelperText>{ formState.errors.email.message }</FormHelperText>
-      }
+      <FormControl>
+        <TextField
+          name="email"
+          label="Email"
+          variant="outlined"
+          { ...register('email') }
+          error={ !!formState.errors.email }
+        />
+        {
+          'email' in formState.errors && <FormHelperText>{ formState.errors.email.message }</FormHelperText>
+        }
+      </FormControl>
 
       { /* SUBJECT */ }
-      <FormControl fullWidth>
+      <FormControl>
         <InputLabel id="subject-select-label">Subject</InputLabel>
-        <Select
-          labelId="subject-select-label"
+        <Controller
           name="subject"
-          label="Subject"
-          variant="outlined"
-          defaultValue={ presetFields.subject }
-          { ...register('subject') }
-          error={ !!formState.errors.subject }
-        >
-          {
-            subjectOptions.map(option => (
-              <MenuItem
-                key={ `subject-option-${ option.value }` }
-                value={ option.value }
-              >{ option.displayText }</MenuItem>
-            ))
-          }
-        </Select>
+          control={ control }
+          render={ ({ field }) => (
+            <Select
+              labelId="subject-select-label"
+              name="subject"
+              label="Subject"
+              variant="outlined"
+              { ...field }
+              error={ !!formState.errors.subject }
+            >
+              {
+                subjectOptions.map(option => (
+                  <MenuItem
+                    key={ `subject-option-${ option.value }` }
+                    value={ option.value }
+                  >{ option.displayText }</MenuItem>
+                ))
+              }
+            </Select>
+          ) }
+        />
+        {
+          'subject' in formState.errors && <FormHelperText>{ formState.errors.subject.message }</FormHelperText>
+        }
       </FormControl>
-      {
-        'subject' in formState.errors && <FormHelperText>{ formState.errors.subject.message }</FormHelperText>
-      }
 
       { /* MESSAGE */ }
-      <TextField
-        name="message"
-        label="Message"
-        variant="outlined"
-        fullWidth
-        defaultValue={ presetFields.message }
-        { ...register('message') }
-        error={ !!formState.errors.message }
-        multiline rows={ 5 }
-      />
-      {
-        'message' in formState.errors && <FormHelperText>{ formState.errors.message.message }</FormHelperText>
-      }
-      <Button onClick={ handleSubmit(onSubmit) } variant="contained">Submit</Button>
+      <FormControl>
+        <TextField
+          name="message"
+          label="Message"
+          variant="outlined"
+          { ...register('message') }
+          error={ !!formState.errors.message }
+          multiline rows={ 5 }
+        />
+        {
+          'message' in formState.errors && <FormHelperText>{ formState.errors.message.message }</FormHelperText>
+        }
+      </FormControl>
+      <Button
+        onClick={ handleSubmit(onSubmit) }
+        variant="contained"
+        disabled={ Object.keys(formState.errors).length > 0 }
+      >Submit</Button>
     </Stack>
   )
 }
 
 ContactForm.propTypes = {
-  presetFields: PropTypes.object,
+  presets: PropTypes.object,
 }
