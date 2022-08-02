@@ -34,8 +34,6 @@ export const Drawer = () => {
 
   const handleMouseMove = useCallback(event => {
     const newWidth = document.body.offsetLeft + document.body.offsetWidth - event.clientX
-    console.log(newWidth)
-    console.log(event)
     if (DRAWER_CONFIG.minWidth < newWidth && newWidth < DRAWER_CONFIG.maxWidth) {
       setDrawerWidth(newWidth)
     }
@@ -77,13 +75,14 @@ export const Drawer = () => {
             gap: '0.5rem',
             padding: '0.5rem 2.4rem',
           }}>
-          <Button
-            variant="text"
-            onClick={ () => drawer.setTermId(drawer.currentTerm.parentId) }
-            disabled={ drawer.currentTerm.parentId === null }
-          >
-            { drawer.currentTerm.parentId || 'No parent' }
-          </Button>            {
+            <Button
+              variant="text"
+              onClick={ () => drawer.setTermId(drawer.currentTerm.parentId) }
+              disabled={ drawer.currentTerm.parentId === null }
+            >
+              { drawer.currentTerm.parentId || 'No parent' }
+            </Button>
+            {
               drawer.currentTerm.parentId && (
                 <TermActionButtons
                   termId={ drawer.currentTerm.parentId }

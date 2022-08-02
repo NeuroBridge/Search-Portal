@@ -1,171 +1,66 @@
 import { Fragment, useState } from 'react'
 import PropTypes from 'prop-types'
+import { useNavigate } from 'react-router-dom'
 import {
-  Box, Button, Card, CardActionArea, CardContent,
-  Fade, IconButton,
-  TextField, Typography,
+  Box, Button, Card, CardContent,
+  Fade, Typography,
 } from '@mui/material'
-import {
-  AccessTime as HistoryIcon,
-  Clear as ClearIcon,
-  Search as SearchIcon,
-} from '@mui/icons-material'
-import TimeAgo from 'react-timeago'
-import { useLocalStorage } from '../hooks'
-import { useBasket } from './basket'
-import { TermActionButtons } from './term-action-buttons'
+import { useLocalStorage } from '../../hooks'
+import { useBasket } from '../basket'
+import { SearchBar } from './search-bar'
+import { TermCard } from './term-card'
+import { HistoryItemCard } from './history-item-card'
 
 //
 
-const SearchBar = ({ value, onChange, clearSearch, inputRef, onFocus }) => {
+const TermSuggestionRequest = ({ suggestion, clickHandler }) => {
   return (
-    <TextField
-      className="search-field"
-      fullWidth
-      inputRef={ inputRef }
-      value={ value }
-      onChange={ onChange }
-      placeholder="Search…"
-      onFocus={ onFocus }
-      InputProps={{
-        style: {
-          height: '5rem',
-          fontSize: '150%',
+    <Fade in={ true }>
+      <Box sx={{
+        height: '250px',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: '2rem',
+        textAlign: 'left',
+        '& .title': {},
+        '& .note': {
+          width: '100%',
+          maxWidth: '600px',
+          margin: '0 auto',
         },
-        startAdornment: <SearchIcon fontSize="small" sx={{ margin: '1rem'}} />,
-        endAdornment: (
-          <IconButton
-            title="Clear"
-            aria-label="Clear"
-            size="small"
-            sx={{
-              margin: '1rem',
-              visibility: value ? 'visible' : 'hidden',
-            }}
-            onClick={ clearSearch }
-          >
-            <ClearIcon fontSize="small" />
-          </IconButton>
-        ),
-      }}
-    />
+        '& .button': {
+          margin: '0 auto',
+        },
+      }}>
+        <Typography align="center" variant="h4" color="primary" className="title">
+          No matching terms!
+        </Typography>
+        <Typography paragraph align="center" color="text.secondary" className="note">
+          Oh no! It looks like &quot;{ suggestion }&quot; doesn&apos;t match any terms in our ontology.
+          Please send us a note to suggest that we consider adding it!
+        </Typography>
+        <Button
+          variant="contained"
+          onClick={ clickHandler }
+          className="button"
+        >suggest &quot;{ suggestion }&quot;</Button>
+      </Box>
+    </Fade>
   )
 }
 
-SearchBar.propTypes = {
-  clearSearch: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired,
-  onFocus: PropTypes.func,
-  value: PropTypes.string.isRequired,
-  inputRef: PropTypes.object,
-}
-
-//
-
-const LabelList = ({ labels }) => {
-  if (!labels.length) {
-    return 'no labels'
-  }
-  return (
-    <Box>
-      {
-        labels
-          .filter(label => typeof label === 'string')
-          .sort((l, m) => l.toLowerCase() < m.toLowerCase() ? -1 : 1)
-          .map(label => (
-            <div key={ label }>
-              <Typography variant="caption"> &bull; { label }</Typography>
-            </div>
-          ))
-      }
-    </Box>
-  )
-}
-
-LabelList.propTypes = {
-  labels: PropTypes.array.isRequired,
-}
-
-//
-
-export const TermCard = ({ term, selected, compact, onClick }) => {
-  return (
-    <Card sx={{
-      border: `1px solid #1976d2${ selected ? 'ff' : '11' }`,
-      transition: 'border-color 250ms',
-      display: 'flex',
-      alignItems: 'center',
-      '&:hover': {
-        border: `1px solid #1976d2${ selected ? 'ff' : '66' }`,
-        cursor: 'pointer',
-      },
-    }}>
-      <CardActionArea onClick={ onClick } sx={{ flex: 1 }}>
-        <CardContent>
-          <Typography>{ term.id }</Typography>
-          { !compact && <LabelList labels={ term.labels } /> }
-        </CardContent>
-      </CardActionArea>
-      <CardContent>
-        <TermActionButtons termId={ term.id} />
-      </CardContent>
-    </Card>
-  )
-}
-
-TermCard.propTypes = {
-  term: PropTypes.object.isRequired,
-  selected: PropTypes.bool.isRequired,
-  compact: PropTypes.bool.isRequired,
-  onClick: PropTypes.func,
-}
-
-TermCard.defaultProps = {
-  selected: false,
-  compact: false,
-}
-
-//
-
-const HistoryItemCard = ({ termId, timestamp, onClick }) => {
-  return (
-    <Card sx={{
-      border: `1px solid #1976d211`,
-      display: 'flex',
-    }}>
-      <CardActionArea onClick={ onClick } >
-        <CardContent sx={{
-          flex: 1,
-          display: 'flex',
-          alignItems: 'center',
-          gap: '1rem',
-        }}>
-          <HistoryIcon />
-          <Box>
-            <Typography>{ termId }</Typography>
-            <Typography variant="caption">
-              <TimeAgo date={ timestamp } />
-            </Typography>
-          </Box>
-        </CardContent>
-      </CardActionArea>
-      <CardContent>
-        <TermActionButtons termId={ termId } />
-      </CardContent>
-    </Card>
-  )
-}
-
-HistoryItemCard.propTypes = {
-  termId: PropTypes.string.isRequired,
-  timestamp: PropTypes.number.isRequired,
-  onClick: PropTypes.func,
+TermSuggestionRequest.propTypes = {
+  suggestion: PropTypes.string.isRequired,
+  clickHandler: PropTypes.func.isRequired,
 }
 
 //
 
 export const SearchForm = ({ inputRef, searchText, searchHandler, matches }) => {
   const basket = useBasket()
+  const navigate = useNavigate()
   const [open, setOpen] = useState(false)
   const [searchHistory, setSearchHistory] = useLocalStorage('nb-search-history', {})
 
@@ -183,6 +78,14 @@ export const SearchForm = ({ inputRef, searchText, searchHandler, matches }) => 
     basket.add(id)
     addToSearchHistory(id)
     setOpen(false)
+  }
+
+  const handleClickTermSuggest = () => {
+    searchHandler('')
+    navigate('/contact', { state: {
+      subject: 'suggestion',
+      message: `Please consider adding "${ searchText }" to the NeuroBridge ontology.`
+    } })
   }
 
   return (
@@ -290,7 +193,7 @@ export const SearchForm = ({ inputRef, searchText, searchHandler, matches }) => 
                         matches.length > 0
                         ? `Showing 1 to ${ matches.length >= 15 ? '15' : matches.length }
                           of ${ matches.length } terms ${ searchText !== '' ? `matching "${ searchText }"` : '' }`
-                        : 'No matching terms'
+                        : <TermSuggestionRequest suggestion={ searchText } clickHandler={ handleClickTermSuggest } />
                       }
                     </Typography>
                     
