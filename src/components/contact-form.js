@@ -1,11 +1,15 @@
 import { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import {
-  Button, FormControl, FormHelperText, InputLabel, MenuItem, Select, Stack, TextField,
+  Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider,
+  FormControl, FormHelperText, InputLabel, MenuItem, Select,
+  Stack, TextField, Typography,
 } from '@mui/material'
 import { Controller, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
+
+//
 
 const subjectOptions = [
   { value: 'question', displayText: 'I have a question' },
@@ -13,6 +17,8 @@ const subjectOptions = [
   { value: 'bug', displayText: 'I found a bug!' },
   { value: 'other', displayText: 'Other' },
 ]
+
+//
 
 const schema = yup.object().shape({
   name: yup
@@ -47,6 +53,7 @@ export const ContactForm = ({ presets }) => {
     handleSubmit,
     formState,
     register,
+    reset,
     setFocus,
   } = useForm({
     schema,
@@ -143,6 +150,22 @@ export const ContactForm = ({ presets }) => {
         variant="contained"
         disabled={ Object.keys(formState.errors).length > 0 }
       >Submit</Button>
+      <Dialog
+        open={ formState.isSubmitted }
+        onClose={ () => reset() }
+      >
+        <DialogTitle>Under Construction</DialogTitle>
+        <Divider />
+        <DialogContent>
+          <Typography>
+            Note that this form is in-development and currently non-functional.
+            Your entries will be erased when this dialog is closed.
+          </Typography>
+        </DialogContent>
+        <DialogActions sx={{ m: 2 }}>
+          <Button variant="contained" onClick={ () => reset() }>Close</Button>
+        </DialogActions>
+      </Dialog>
     </Stack>
   )
 }

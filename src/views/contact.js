@@ -8,22 +8,18 @@ export const ContactView = () => {
   return (
     <Container maxWidth="md">
       <Typography variant="h4" component="h1" align="center">
-        Contact
+        Contact NeuroBridge
       </Typography>
 
-      <br />
-      
-      <Typography paragraph>
+      <Typography paragraph sx={{ my: 4 }}>
         Cillum aute exercitation sit nostrud ea fugiat irure sint ut dolore esse tempor ullamco culpa adipisicing elit.
         Esse quis aliquip ut adipisicing nulla magna eu excepteur do sunt reprehenderit deserunt ad sed minim.
         Velit nisi in occaecat in officia in culpa amet sit sint reprehenderit.
       </Typography>
 
-      <br />
-
       <Card>
         <CardHeader
-          title="Send us a note"
+          title="Get in Touch!"
           titleTypographyProps={{ align: 'center' }}
         />
 
