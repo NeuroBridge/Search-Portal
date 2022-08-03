@@ -1,4 +1,4 @@
-import { Box, Card, CardContent, Container } from '@mui/material'
+import { Box, Card, CardContent, Container, Typography } from '@mui/material'
 import { useOntology } from '../components/ontology'
 import { TreeList } from '../components/tree-list'
 
@@ -7,6 +7,12 @@ export const BrowseView = () => {
 
   return (
     <Container maxWidth="md">
+      <Typography variant="h4" component="h1" align="center">
+        Ontology Browser
+      </Typography>
+
+      <br /><br />
+
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         {
           ontology.trees
