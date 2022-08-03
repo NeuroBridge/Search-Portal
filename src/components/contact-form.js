@@ -65,6 +65,10 @@ export const ContactForm = ({ presets }) => {
     setFocus('name')
   }, [])
 
+  const handleClickClearForm = () => {
+    reset(defaults)
+  }
+
   const onSubmit = data => {
     console.log('SUBMIT')
     console.table(data)
@@ -145,13 +149,21 @@ export const ContactForm = ({ presets }) => {
           'message' in formState.errors && <FormHelperText>{ formState.errors.message.message }</FormHelperText>
         }
       </FormControl>
-      <Button
-        onClick={ handleSubmit(onSubmit) }
-        variant="contained"
-        disabled={ Object.keys(formState.errors).length > 0 }
-      >Submit</Button>
+      <Stack direction="horizontal" gap={ 4 } sx={{ '& > button': { flex: 1 } }}>
+        <Button
+          onClick={ handleClickClearForm }
+          variant="outlined"
+        >Clear</Button>
+        <Button
+          onClick={ handleSubmit(onSubmit) }
+          variant="contained"
+          disabled={ Object.keys(formState.errors).length > 0 }
+        >Submit</Button>
+      </Stack>
+
+      { /* DIALOG */ }
       <Dialog
-        open={ formState.isSubmitted }
+        open={ formState.isSubmitted && !formState.errors }
         onClose={ () => reset() }
       >
         <DialogTitle>Under Construction</DialogTitle>
@@ -163,7 +175,7 @@ export const ContactForm = ({ presets }) => {
           </Typography>
         </DialogContent>
         <DialogActions sx={{ m: 2 }}>
-          <Button variant="contained" onClick={ () => reset() }>Close</Button>
+          <Button variant="contained" onClick={ () => reset(defaults) }>Close</Button>
         </DialogActions>
       </Dialog>
     </Stack>
