@@ -54,7 +54,7 @@ export const Interface = ({ searchWrapper }) => {
           snippet: result.snippet,
           url: result.pubmed_url,
           pmid: result.pmid,
-          similarity: result.similarity,
+          score: result.similarity,
         }))
       } catch (error) {
         console.error(error)
