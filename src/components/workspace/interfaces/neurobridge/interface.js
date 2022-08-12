@@ -59,10 +59,13 @@ export const Interface = ({ searchWrapper }) => {
           throw new Error('An error occurred while fetching results.')
         }
         const results = Object.values(data).map(result => ({
-          title: result.title[0],
+          title: result.title,
           snippet: result.snippet,
-          pmid: result.pmid[0],
+          pmc_link: result.pmc_link,
           url: result.pmc_link,
+          score: result.score,
+          pmid: result.pmid,
+          pmcid: result.pmcid,
         }))
         return results
       } catch (error) {

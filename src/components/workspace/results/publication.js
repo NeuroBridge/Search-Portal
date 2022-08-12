@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import { Button, Card, CardContent, CardHeader, Divider, Typography } from '@mui/material'
 
 export const Publication = ({ result: publication }) => {
-  const { title, pmid, snippet, url, authors, similarity } = publication
+  const { title, pmid, snippet, url, authors, score } = publication
 
   return (
     <Card sx={{
@@ -26,9 +26,9 @@ export const Publication = ({ result: publication }) => {
       <Divider />
       
       <CardContent sx={{ flex: 1 }}>
-        <Typography title={ similarity }>
+        <Typography title={ score }>
           Score: {
-            similarity.toFixed(2) || <span style={{ fontStyle: 'italic', color: '#999' }}>Unavailable</span>
+            score ? score.toFixed(2) : <span style={{ fontStyle: 'italic', color: '#999' }}>Unavailable</span>
           }
         </Typography>
         <Typography>
@@ -38,7 +38,7 @@ export const Publication = ({ result: publication }) => {
           </Typography>
         <Typography>
           Authors: {
-            authors|| <span style={{ fontStyle: 'italic', color: '#999' }}>Unavailable</span>
+            authors || <span style={{ fontStyle: 'italic', color: '#999' }}>Unavailable</span>
           }
         </Typography>
       </CardContent>
@@ -64,6 +64,6 @@ Publication.propTypes = {
     snippet: PropTypes.string,
     url: PropTypes.string,
     authors: PropTypes.string,
-    similarity: PropTypes.number,
+    score: PropTypes.number,
   }).isRequired,
 }
