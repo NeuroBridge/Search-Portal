@@ -4,7 +4,7 @@ import { AppBar, Box, Container, IconButton, Slide, Toolbar, Tooltip, useTheme, 
 import { Link } from '../link'
 import { useMatch, useResolvedPath } from 'react-router-dom'
 import { useDrawer } from '../drawer'
-import { Web as DrawerIcon } from '@mui/icons-material'
+import { MenuOpen as DrawerIcon } from '@mui/icons-material'
 
 const HideOnScroll = ({ children }) => {
   const trigger = useScrollTrigger()
