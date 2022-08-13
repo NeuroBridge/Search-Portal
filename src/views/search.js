@@ -15,10 +15,6 @@ var index = elasticlunr(function () {
 
 //
 
-const escapeRegExp = value => value.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')
-
-//
-
 export const SearchView = () => {
   const ontology = useOntology()
   const [searchText, setSearchText] = useState('')
