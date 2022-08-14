@@ -134,6 +134,7 @@ export const Drawer = () => {
             <Button
               variant="text"
               onClick={ drawer.currentTerm.parentId ? () => drawer.setTermId(drawer.currentTerm.parentId) : () => drawer.setTermId(null) }
+              startIcon={ !drawer.currentTerm.parentId && <HomeIcon /> }
             >
               { drawer.currentTerm.parentId || 'ROOT' }
             </Button>
