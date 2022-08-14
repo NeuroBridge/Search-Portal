@@ -1,8 +1,10 @@
 import { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { AppBar, Toolbar, Box, Container, useScrollTrigger, Slide, useTheme } from '@mui/material'
+import { AppBar, Box, Container, IconButton, Slide, Toolbar, Tooltip, useTheme, useScrollTrigger } from '@mui/material'
 import { Link } from '../link'
 import { useMatch, useResolvedPath } from 'react-router-dom'
+import { useDrawer } from '../drawer'
+import { MenuOpen as DrawerIcon } from '@mui/icons-material'
 
 const HideOnScroll = ({ children }) => {
   const trigger = useScrollTrigger()
@@ -22,8 +24,11 @@ HideOnScroll.propTypes = {
 
 const navStyle = {
   display: 'flex',
+  flex: 1,
+  justifyContent: 'flex-end',
   alignItems: 'stretch',
   height: '100%',
+  mr: 2,
   '& a': {
     display: 'flex',
     justifyContent: 'center',
@@ -68,6 +73,7 @@ NavLink.propTypes = {
 
 export const Header = () => {
   const theme = useTheme()
+  const drawer = useDrawer()
 
   return (
     <Fragment>
@@ -90,10 +96,12 @@ export const Header = () => {
               </Box>
               <Box sx={ navStyle }>
                 <NavLink to="/">Search</NavLink>
-                <NavLink to="/browse">Browse</NavLink>
                 <NavLink to="/about">About</NavLink>
                 <NavLink to="/contact">Contact</NavLink>
               </Box>
+              <Tooltip title="Open Ontology Browser" placement="bottom">
+                <IconButton onClick={ () => drawer.open() }><DrawerIcon /></IconButton>
+              </Tooltip>
             </Container>
           </Toolbar>
         </AppBar>

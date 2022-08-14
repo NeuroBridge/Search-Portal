@@ -1,7 +1,12 @@
 import { Fragment, useCallback, useState } from 'react'
 import {
-  Box, Button, Divider, Drawer as MuiDrawer, Fade, List, ListItem, ListItemText, Typography
+  Box, Breadcrumbs as MuiBreadcrumbs, Button, Divider, Drawer as MuiDrawer,
+  IconButton, Fade, List, ListItem, ListItemText, Stack, Typography,
 } from '@mui/material'
+import {
+  NavigateNext as BreadcrumbSeparatorIcon,
+  Home as HomeIcon,
+} from '@mui/icons-material'
 import { useDrawer } from './context'
 import { useOntology } from '../ontology'
 import { TermActionButtons } from '../term-action-buttons'
@@ -38,6 +43,57 @@ export const Drawer = () => {
       setDrawerWidth(newWidth)
     }
   }, [])
+
+  const Breadcrumbs = useCallback(() => {
+    let path = drawer.currentTerm ? ontology.pathToRoot(drawer.currentTerm.id) : []
+    // remove internal nodes if the nav list will be long,
+    // marking placeholder/ellipsis element, which we'll look
+    // for in the return statement that maps this array of
+    // strings (`path`) to components.
+    if (path.length > 3) {
+      path = [
+        path[0],
+        'PLACEHOLDER',
+        path[path.length - 2],
+        path[path.length - 1],
+      ]
+    }
+    return (
+      <MuiBreadcrumbs
+        separator={ <BreadcrumbSeparatorIcon fontSize="small" /> }
+        sx={{
+          px: 1,
+          fontSize: '90%',
+          backgroundColor: '#d6d9dc',
+          '& .MuiBreadcrumbs-separator': { mx: 0 }
+        }}
+      >
+        <IconButton
+          sx={{ fontSize: '90%', borderRadius: 0 }}
+          key={ `breadcrumb-root` }
+          size="small"
+          variant="text"
+          onClick={ () => drawer.setTermId(null) }
+          disabled={ !drawer.currentTerm }
+          color="primary"
+        ><HomeIcon fontSize="small" /></IconButton>
+        {
+          path.map((id, index) => id === 'PLACEHOLDER' ? (
+            <Typography key={ `breadcrumb-${ index }-ellipsis }` }>...</Typography>
+          ) : (
+            <Button
+              sx={{ fontSize: '90%', borderRadius: 0 }}
+              key={ `breadcrumb-${ index }-${ id }` }
+              size="small"
+              variant="text"
+              onClick={ () => drawer.setTermId(id) }
+              disabled={ id === drawer.currentTerm.id }
+            >{ id }</Button>
+          ))
+        }
+      </MuiBreadcrumbs>
+    )
+  }, [drawer.currentTerm])
 
   const LabelsList = useCallback(() => {
     return (
@@ -77,10 +133,9 @@ export const Drawer = () => {
           }}>
             <Button
               variant="text"
-              onClick={ () => drawer.setTermId(drawer.currentTerm.parentId) }
-              disabled={ drawer.currentTerm.parentId === null }
+              onClick={ drawer.currentTerm.parentId ? () => drawer.setTermId(drawer.currentTerm.parentId) : () => drawer.setTermId(null) }
             >
-              { drawer.currentTerm.parentId || 'No parent' }
+              { drawer.currentTerm.parentId || 'ROOT' }
             </Button>
             {
               drawer.currentTerm.parentId && (
@@ -132,9 +187,7 @@ export const Drawer = () => {
       PaperProps={{ style: { width: drawerWidth } }}
       sx={{
         '.MuiDrawer-paper': {
-          '& > .MuiBox-root': {
-            padding: '1rem 2rem',
-          },
+          '& > .MuiBox-root': { px: 2, py: 1, },
           '& .handle': {
             padding: 0,
           }
@@ -144,7 +197,8 @@ export const Drawer = () => {
       <Box
         className="handle"
         onMouseDown={ handleMouseDown }
-        sx={{ backgroundColor: '#789',
+        sx={{
+          backgroundColor: '#789',
           position: 'absolute',
           top: 0,
           left: 0,
@@ -161,8 +215,12 @@ export const Drawer = () => {
         }}
       />
       {
-        drawer.currentTerm && (
+        drawer.currentTerm ? (
           <Fragment>
+            <Breadcrumbs />
+
+            <Divider />
+
             <Box sx={{
               width: '100%',
               backgroundColor: '#e6e9ec',
@@ -194,6 +252,48 @@ export const Drawer = () => {
             <Divider />
 
             <DescendantsList />
+
+            <Divider />
+
+          </Fragment>
+        ) : (
+          <Fragment>
+            <Breadcrumbs />
+
+            <Divider />
+            
+            <Box sx={{
+              width: '100%',
+              backgroundColor: '#e6e9ec',
+              display: 'flex',
+              alignItems: 'flex-start',
+              position: 'sticky',
+              top: 0,
+              zIndex: 9,
+            }}>
+              <Typography variant="h5" sx={{ my: 1 }}>
+                Ontology Browser
+              </Typography>
+            </Box>
+
+            <Divider />
+
+            <Box>
+              <Stack>
+                {
+                  ontology.trees
+                    .sort((t, s) => t.data.id.toLowerCase() < s.data.id.toLowerCase() ? -1 : 1)
+                    .map(root => <TreeList
+                      key={ `root-${ root.data.id }` }
+                      rootTerm={{
+                        ...ontology.find(root.data.id),
+                        children: ontology.childrenOf(root.data.id),
+                        descendants: ontology.descendantsOf(root.data.id),
+                      }}
+                    />)
+                }
+              </Stack>
+            </Box>
 
             <Divider />
 

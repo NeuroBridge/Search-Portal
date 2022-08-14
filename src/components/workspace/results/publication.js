@@ -60,7 +60,7 @@ export const Publication = ({ result: publication }) => {
 Publication.propTypes = {
   result: PropTypes.shape({
     title: PropTypes.string,
-    pmid: PropTypes.number,
+    pmid: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     snippet: PropTypes.string,
     url: PropTypes.string,
     authors: PropTypes.string,

@@ -3,22 +3,37 @@ import { Box, Container } from '@mui/material'
 import { useOntology } from '../components/ontology'
 import { SearchForm } from '../components/search-form'
 import { Workspace } from '../components/workspace'
+import elasticlunr from 'elasticlunr'
 
 //
 
-const escapeRegExp = value => value.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')
+var index = elasticlunr(function () {
+  this.addField('id')
+  this.addField('labels')
+  this.setRef('id')
+})
 
 //
 
 export const SearchView = () => {
-  const { terms, termFields } = useOntology()
+  const ontology = useOntology()
   const [searchText, setSearchText] = useState('')
-  const [filteredTerms, setFilteredTerms] = useState(terms)
+  const [filteredTerms, setFilteredTerms] = useState(ontology.terms)
   const searchInputRef = useRef()
 
   useEffect(() => {
-    setFilteredTerms(terms)
-  }, [terms])
+    setFilteredTerms(ontology.terms)
+  }, [ontology.terms])
+
+  // if/when the terms change, let's re-index.
+  useEffect(() => {
+    if (ontology.terms.length === 0) {
+      return
+    }
+    ontology.terms.forEach(term => {
+      index.addDoc(term)
+    })
+  }, [ontology.terms])
   
   // add functionality to let the user press backslash to
   // focus the search input field.
@@ -40,42 +55,11 @@ export const SearchView = () => {
   // this function uses the incoming query to filter terms to those that match.
   // currently, this fires with every keypress in the search input field.
   const requestSearch = incomingQuery => {
-    // depending on how this search query compares to what it was on the
-    // previous keystroke, we will either filter from what's already
-    // filtered or start over and filter everything.
-    const termsToFilter = incomingQuery.includes(searchText) ? filteredTerms : terms
-    
-    // the first thing we'll do is save that search query to state
+    const results = index.search(incomingQuery, {
+      expand: true,
+    })
     setSearchText(incomingQuery)
-    
-    // now, we construct a regular expression from the text in the search field.
-    const searchRegex = new RegExp(escapeRegExp(incomingQuery), 'i')
-    
-    // filter out terms that don't match the search regex above
-    setFilteredTerms(termsToFilter.filter(row => {
-      // we check for _some_ matching field.
-      return termFields.some(field => {
-        // if the field contains a string value, test regex.
-        if (typeof row[field.key] === 'string') {
-          return searchRegex.test(row[field.key])
-        }
-        
-        // if the field contains an array value,
-        // test for _some_ matching item.
-        if (Array.isArray(row[field.key])) {
-          return row[field.key].some(item => {
-            // now we test each item in the array.
-            // they should be strings.
-            // return false otherwise.
-            if (typeof item === 'string') {
-              return searchRegex.test(item)
-            }
-            return false
-          })
-        }
-        return false
-      })
-    }))
+    setFilteredTerms(results.map(res => ontology.find(res.ref)))
   }
 
   return (
