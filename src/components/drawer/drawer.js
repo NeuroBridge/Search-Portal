@@ -77,10 +77,9 @@ export const Drawer = () => {
           }}>
             <Button
               variant="text"
-              onClick={ () => drawer.setTermId(drawer.currentTerm.parentId) }
-              disabled={ drawer.currentTerm.parentId === null }
+              onClick={ drawer.currentTerm.parentId ? () => drawer.setTermId(drawer.currentTerm.parentId) : () => drawer.setTermId(null) }
             >
-              { drawer.currentTerm.parentId || 'No parent' }
+              { drawer.currentTerm.parentId || 'ROOT' }
             </Button>
             {
               drawer.currentTerm.parentId && (
@@ -161,7 +160,7 @@ export const Drawer = () => {
         }}
       />
       {
-        drawer.currentTerm && (
+        drawer.currentTerm ? (
           <Fragment>
             <Box sx={{
               width: '100%',
@@ -194,6 +193,44 @@ export const Drawer = () => {
             <Divider />
 
             <DescendantsList />
+
+            <Divider />
+
+          </Fragment>
+        ) : (
+          <Fragment>
+            <Box sx={{
+              width: '100%',
+              backgroundColor: '#e6e9ec',
+              display: 'flex',
+              alignItems: 'flex-start',
+              position: 'sticky',
+              top: 0,
+              zIndex: 9,
+            }}>
+              <Typography variant="h5" sx={{ my: 1 }}>
+                Ontology Browser
+              </Typography>
+            </Box>
+
+            <Divider />
+
+            <Box>
+              <List dense disablePadding sx={{ '.MuiListItem-root': { padding: 0 } }}>
+                {
+                  ontology.trees
+                    .sort((t, s) => t.data.id.toLowerCase() < s.data.id.toLowerCase() ? -1 : 1)
+                    .map(root => <TreeList
+                      key={ `root-${ root.data.id }` }
+                      rootTerm={{
+                        ...ontology.find(root.data.id),
+                        children: ontology.childrenOf(root.data.id),
+                        descendants: ontology.descendantsOf(root.data.id),
+                      }}
+                    />)
+                }
+              </List>
+            </Box>
 
             <Divider />
 

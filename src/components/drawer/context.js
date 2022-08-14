@@ -10,6 +10,9 @@ export const DrawerProvider = ({ children }) => {
   const [currentTerm, setCurrentTerm] = useState()
 
   const setTermId = useCallback(id => {
+    if (!id) {
+      setCurrentTerm(null)
+    }
     const termToDetail = ontology.find(id)
     if (!termToDetail) {
       console.log(`Failed to locate term "${ id }"`)
