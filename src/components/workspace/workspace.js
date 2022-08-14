@@ -1,16 +1,12 @@
-import { useMemo, useState } from 'react'
+import { Fragment, useCallback, useState } from 'react'
 import {
-  Box, Button, Card, Chip, Collapse, Divider, IconButton, LinearProgress,
-  Stack, Tab, Tabs, Tooltip, Typography, useTheme,
+  Box, Button, Card, Collapse, Divider, IconButton, LinearProgress,
+  Stack, Tab, Tabs, Typography, useTheme,
 } from '@mui/material'
-import interfaces from './interfaces'
 import { Basket, useBasket } from '../basket'
-import { Publication } from './results'
+import interfaces from './interfaces'
 import {
-  ClearAll as ClearResultsIcon,
   ExpandMore as HelpToggleIcon,
-  Visibility as ResultsVisibleIcon,
-  VisibilityOff as ResultsHiddenIcon,
 } from '@mui/icons-material'
 
 //
@@ -18,52 +14,43 @@ import {
 export const Workspace = () => {
   const theme = useTheme()
   const basket = useBasket()
-  const [currentServiceIndex, setCurrentServiceIndex] = useState(0)
-  const [results, setResults] = useState({})
-  const [loading, setLoading] = useState(false)
+  const [currentInterfaceIndex, setCurrentInterfaceIndex] = useState(0)
   const [showHelp, setShowHelp] = useState(false)
+  const [loading, ] = useState(false)
 
-  // const doSearch = name => async fn => {
-  //   setLoading(true)
-  //   const data = await fn()
-  //   const newResults = {
-  //     ...results,
-  //     [name]: {
-  //       visibility: true,
-  //       items: data,
-  //     },
-  //   }
-  //   setResults(newResults)
-  //   setLoading(false)
-  // }
-
-  const resultsCount = useMemo(() => {
-    return Object.keys(results)
-      .reduce((countObj, key) => {
-        const total = countObj.total + results[key].items.length
-        const visible = results[key].visibility
-          ? countObj.visible + results[key].items.length
-          : countObj.visible
-        return { total, visible }
-      }, { total: 0, visible: 0 })
-  }, [results])
-
-  const handleChangeService = (event, newIndex) => {
-    setCurrentServiceIndex(newIndex)
+  const handleChangeInterface = (event, newIndex) => {
+    setCurrentInterfaceIndex(newIndex)
   }
 
-  const toggleResultVisibility = key => () => {
-    const newResults = { ...results }
-    newResults[key].visibility = !newResults[key].visibility
-    setResults(newResults)
-  }
+  const WorkspaceHeader = useCallback(() => {
+    return (
+      <Box sx={{
+        position: 'absolute',
+        top: 0,
+        left: '50%',
+        width: '75%',
+        maxWidth: '400px',
+        transform: 'translate(-50%)',
+        padding: '0.33rem 0.5rem',
+        backgroundColor: '#336699cc',
+        color: '#fff',
+        fontSize: '75%',
+        display: 'flex',
+        justifyContent: 'center',
+        borderBottomLeftRadius: '4px',
+        borderBottomRightRadius: '4px',
+      }}>
+        WORKSPACE {
+          basket.ids.length > 0
+            ? `  —  ${ basket.ids.length } TERM${ basket.ids.length === 1 ? '' : 'S' }`
+            : ''
+        }
+      </Box>
+    )
+  }, [basket.ids.length])
 
   return (
-    <Box sx={{
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '1rem',
-    }}>
+    <Fragment>
       <Card sx={{
         display: 'flex',
         flexDirection: 'column',
@@ -73,34 +60,10 @@ export const Workspace = () => {
         borderWidth: '1px',
         position: 'relative',
       }}>
-        <Box sx={{
-          position: 'absolute',
-          top: 0,
-          left: '50%',
-          width: '75%',
-          maxWidth: '400px',
-          transform: 'translate(-50%)',
-          padding: '0.33rem 0.5rem',
-          backgroundColor: '#336699cc',
-          color: '#fff',
-          fontSize: '75%',
-          display: 'flex',
-          justifyContent: 'center',
-          borderBottomLeftRadius: '4px',
-          borderBottomRightRadius: '4px',
-        }}>
-          WORKSPACE {
-            basket.ids.length > 0
-              ? `  —  ${ basket.ids.length } TERM${ basket.ids.length === 1 ? '' : 'S' }`
-              : ''
-          }
-        </Box>
-
+        <WorkspaceHeader />
         <Basket />
-
         <Collapse in={ basket.ids.length > 0 }>
           <LinearProgress variant={ loading ? 'indeterminate' : 'determinate' } value={ 0 } />
-
           <Box sx={{
             width: '100%',
             flexGrow: 1,
@@ -111,8 +74,8 @@ export const Workspace = () => {
             <Tabs
               orientation="vertical"
               variant="scrollable"
-              value={ currentServiceIndex }
-              onChange={ handleChangeService }
+              value={ currentInterfaceIndex }
+              onChange={ handleChangeInterface }
               sx={{ borderRight: `1px solid #ddd`, mt: '50px', flex: `0 0 200px`, }}
             >
               {
@@ -133,7 +96,7 @@ export const Workspace = () => {
               interfaces.map((ui, i) => (
                 <Stack
                   key={ `ui-${ ui.id }` }
-                  sx={{ flex: 1, display: currentServiceIndex === i ? 'flex' : 'none', }}
+                  sx={{ flex: 1, display: currentInterfaceIndex === i ? 'flex' : 'none', }}
                   role="tabpanel"
                   id={ `tabpanel-${ ui.id }` }
                   aria-labelledby={ `tab-${ ui.id }` }
@@ -170,83 +133,21 @@ export const Workspace = () => {
                   <Box sx={{ flex: 1, p: 2 }}>
                     { ui.Interface }
                   </Box>
-                  <Divider />
-                  <Box sx={{
-                    display: 'flex',
-                    justifyContent: 'flex-end',
-                    alignItems: 'center',
-                    p: 2,
-                  }}>
-                    <Button variant="contained" onClick={ ui.request }>Search</Button>
-                  </Box>
                 </Stack>
               ))
             }
           </Box>
-        </Collapse>
-      </Card>
-
-      {
-        results && Object.keys(results).length > 0 && (
+          <Divider />
           <Box sx={{
             display: 'flex',
-            justifyContent: 'space-between',
+            justifyContent: 'flex-end',
             alignItems: 'center',
+            p: 2,
           }}>
-            <Stack>
-              <Typography>
-                { resultsCount.total } results
-              </Typography>
-              <Typography variant="caption">
-                Showing { resultsCount.total === resultsCount.visible ? 'all' : `${ resultsCount.visible } of` } { resultsCount.total } results
-              </Typography>
-            </Stack>
-            <Stack direction="row" spacing={ 2 }>
-              {
-                Object.keys(results).map(key => (
-                  <Chip
-                    key={ `${ key }-results-toggle` }
-                    icon={ results[key].visibility
-                      ? <ResultsVisibleIcon /> : <ResultsHiddenIcon /> }
-                    variant="outlined"
-                    color={ results[key].visibility ? 'primary' : 'default' }
-                    label={ `${ key } (${ results[key].items.length })` }
-                    onClick={ toggleResultVisibility(key) }
-                  />
-                ))
-              }
-            </Stack>
-            <Tooltip title="Clear results" placement="left">
-              <IconButton onClick={ () => setResults({}) }>
-                <ClearResultsIcon />
-              </IconButton>
-            </Tooltip>
+            <Button variant="contained" onClick={ () => console.log('search all') }>Search All</Button>
           </Box>
-        )
-      }
-
-      {
-        results && Object.keys(results).length > 0 && (
-          <Box sx={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))',
-            gap: '1rem',
-            filter: `opacity(${ loading ? '0.5' : '1.0' })`,
-          }}>
-            {
-              Object.keys(results)
-                .filter(interfaceName => results[interfaceName].visibility)
-                .map(interfaceName => results[interfaceName].items.map(result => (
-                  <Publication
-                    key={ `result-${ interfaceName }-${ result.pmid }` }
-                    result={ result }
-                  />
-                )))
-            }
-          </Box>
-        )
-      }
-    </Box>
+        </Collapse>
+      </Card>
+    </Fragment>
   )
 }
-
