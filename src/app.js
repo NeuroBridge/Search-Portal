@@ -2,7 +2,7 @@ import { Fragment } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { Box } from '@mui/material'
 import {
-  AboutView, BrowseView, ContactView, NotFoundView, SearchView,
+  AboutView, ContactView, NotFoundView, SearchView,
 } from './views'
 import { Drawer } from './components/drawer'
 import { Header } from './components/layout'
@@ -11,7 +11,6 @@ const Router = () => {
   return (
     <Routes>
       <Route path="/"       element={ <SearchView /> } />
-      <Route path="/browse" element={ <BrowseView /> } />
       <Route path="/contact" element={ <ContactView /> } />
       <Route path="/about"  element={ <AboutView /> } />
       <Route path="*"       element={ <NotFoundView /> } />
@@ -38,6 +37,7 @@ export const App = () => {
           &copy; { new Date().getFullYear() }
         </Box>
       </footer>
+
       <Drawer />
     </Fragment>
   )

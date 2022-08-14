@@ -107,9 +107,18 @@ export const OntologyProvider = ({ children, owlFile }) => {
     return { nodes, links }
   }
 
+  const pathToRoot = id => {
+    let path = []
+    let term = find(id)
+    while (term) {
+      path.unshift(term.id)
+      term = find(term.parentId)
+    }
+    return path
+  }
 
   return (
-    <OntologyContext.Provider value={{ terms, termFields, trees, find, childrenOf, descendantsOf, generateGraph }}>
+    <OntologyContext.Provider value={{ terms, termFields, trees, find, childrenOf, descendantsOf, pathToRoot, generateGraph }}>
       { children }
     </OntologyContext.Provider>
   )
