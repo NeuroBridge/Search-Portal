@@ -1,5 +1,7 @@
-import * as NeuroQuery from './neuroquery'
+import ExampleInterface from './example'
+import NeuroQueryInterface from './neuroquery'
 
-export const interfaces = [
-  { id: 'nq',     name: 'NeuroQuery',     ...NeuroQuery },
+export default [
+  ExampleInterface,
+  NeuroQueryInterface,
 ]

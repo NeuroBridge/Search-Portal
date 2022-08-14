@@ -1,9 +1,9 @@
 import { useMemo, useState } from 'react'
 import {
-  Box, Card, Chip, Collapse, Divider, IconButton, LinearProgress,
+  Box, Button, Card, Chip, Collapse, Divider, IconButton, LinearProgress,
   Stack, Tab, Tabs, Tooltip, Typography, useTheme,
 } from '@mui/material'
-import { interfaces } from './interfaces'
+import interfaces from './interfaces'
 import { Basket, useBasket } from '../basket'
 import { Publication } from './results'
 import {
@@ -101,65 +101,85 @@ export const Workspace = () => {
         <Collapse in={ basket.ids.length > 0 }>
           <LinearProgress variant={ loading ? 'indeterminate' : 'determinate' } value={ 0 } />
 
-          <Tabs
-            variant="scrollable"
-            value={ currentServiceIndex }
-            onChange={ handleChangeService }
-          >
+          <Box sx={{
+            width: '100%',
+            flexGrow: 1,
+            bgcolor: 'background.paper',
+            display: 'flex',
+            minHeight: 200,
+          }}>
+            <Tabs
+              orientation="vertical"
+              variant="scrollable"
+              value={ currentServiceIndex }
+              onChange={ handleChangeService }
+              sx={{ borderRight: `1px solid #ddd`, mt: '50px', flex: `0 0 200px`, }}
+            >
+              {
+                interfaces.map(ui => (
+                  <Tab
+                    key={ ui.id }
+                    label={ ui.displayName }
+                    id={ `tab-${ ui.id }` }
+                    aria-controls={ `tabpanel-${ ui.id }` }
+                  />
+                ))
+              }
+            </Tabs>
+
+            <Divider />
+
             {
-              interfaces.map(service => (
-                <Tab key={ service.id } label={ service.name } />
-              ))
-            }
-          </Tabs>
-
-          <Divider />
-
-          {
-            interfaces.map((service, i) => {
-              const { Interface, HelpText } = interfaces[i]
-              return (
-                <Box
-                  key={ `service-${ service.id }` }
-                  sx={{ display: currentServiceIndex === i ? 'block' : 'none' }}
+              interfaces.map((ui, i) => (
+                <Stack
+                  key={ `ui-${ ui.id }` }
+                  sx={{ flex: 1, display: currentServiceIndex === i ? 'flex' : 'none', }}
+                  role="tabpanel"
+                  id={ `tabpanel-${ ui.id }` }
+                  aria-labelledby={ `tab-${ ui.id }` }
                 >
+                  <Box sx={{
+                    alignItems: 'center',
+                    p: 1, pl: 2,
+                  }}>
+                    <Typography component="h2" variant="h6" color="primary">{ ui.displayName }</Typography>
+                    <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 1, }}>
+                      <Typography sx={{ fontSize: '75%', filter: 'opacity(0.5)', textTransform: 'uppercase' }}>
+                        { showHelp ? 'Hide' : 'Show' } Help
+                      </Typography>
+                      <IconButton onClick={ () => setShowHelp(!showHelp) } size="small">
+                        <HelpToggleIcon
+                          fontSize="small"
+                          sx={{
+                            color: theme.palette.primary.dark,
+                            filter: 'saturate(0.1) opacity(0.5)',
+                            transition: 'filter 250ms, transform 250ms',
+                            transform: showHelp ? 'rotate(180deg)' : 'rotate(0)',
+                            '&:hover': { filter: 'saturate(0.9) opacity(1)' },
+                          }}
+                        />
+                      </IconButton>
+                    </Box>
+                  </Box>
+                  <Collapse in={ showHelp } sx={{ backgroundColor: theme.palette.grey[100] }}>
+                    <Divider />
+                    <Box sx={{ p: 2 }}>{ ui.helpText }</Box>
+                  </Collapse>
+                  <Divider />
+                  <Box sx={{ flex: 1, p: 2 }}>{ ui.Interface }</Box>
+                  <Divider />
                   <Box sx={{
                     display: 'flex',
                     justifyContent: 'flex-end',
                     alignItems: 'center',
-                    gap: '0.25rem',
-                    padding: '0.25rem',
-                    filter: 'opacity(0.5)',
-                    transition: 'filter 250ms',
-                    '&:hover': {
-                      filter: 'opacity(1.0)',
-                    }
+                    p: 2,
                   }}>
-                    <Typography sx={{ fontSize: '75%', filter: 'opacity(0.5)', }}>
-                      { showHelp ? 'HIDE' : 'SHOW' } { service.name.toUpperCase() } HELP
-                    </Typography>
-                    <IconButton onClick={ () => setShowHelp(!showHelp) } size="small">
-                      <HelpToggleIcon
-                        fontSize="small"
-                        sx={{
-                          color: theme.palette.primary.dark,
-                          filter: 'saturate(0.1) opacity(0.5)',
-                          transition: 'filter 250ms, transform 250ms',
-                          transform: showHelp ? 'rotate(180deg)' : 'rotate(0)',
-                          '&:hover': { filter: 'saturate(0.9) opacity(1)' },
-                        }}
-                      />
-                    </IconButton>
+                    <Button variant="contained" onClick={ () => console.log(ui.id) }>Search</Button>
                   </Box>
-                  <Collapse in={ showHelp }>
-                    <HelpText />
-                  </Collapse>
-                  <Divider />
-                  <Interface searchWrapper={ doSearch(service.name) } />
-                </Box>
-              )
-            })
-          }
+                </Stack>
+              ))
+            }
+          </Box>
         </Collapse>
       </Card>
 
