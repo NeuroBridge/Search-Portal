@@ -23,19 +23,19 @@ export const Workspace = () => {
   const [loading, setLoading] = useState(false)
   const [showHelp, setShowHelp] = useState(false)
 
-  const doSearch = name => async fn => {
-    setLoading(true)
-    const data = await fn()
-    const newResults = {
-      ...results,
-      [name]: {
-        visibility: true,
-        items: data,
-      },
-    }
-    setResults(newResults)
-    setLoading(false)
-  }
+  // const doSearch = name => async fn => {
+  //   setLoading(true)
+  //   const data = await fn()
+  //   const newResults = {
+  //     ...results,
+  //     [name]: {
+  //       visibility: true,
+  //       items: data,
+  //     },
+  //   }
+  //   setResults(newResults)
+  //   setLoading(false)
+  // }
 
   const resultsCount = useMemo(() => {
     return Object.keys(results)
@@ -167,7 +167,9 @@ export const Workspace = () => {
                     <Box sx={{ p: 2 }}>{ ui.helpText }</Box>
                   </Collapse>
                   <Divider />
-                  <Box sx={{ flex: 1, p: 2 }}>{ ui.Interface }</Box>
+                  <Box sx={{ flex: 1, p: 2 }}>
+                    { ui.Interface }
+                  </Box>
                   <Divider />
                   <Box sx={{
                     display: 'flex',
@@ -175,7 +177,7 @@ export const Workspace = () => {
                     alignItems: 'center',
                     p: 2,
                   }}>
-                    <Button variant="contained" onClick={ () => console.log(ui.id) }>Search</Button>
+                    <Button variant="contained" onClick={ ui.request }>Search</Button>
                   </Box>
                 </Stack>
               ))
