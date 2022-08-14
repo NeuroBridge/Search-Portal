@@ -73,7 +73,7 @@ export const Drawer = () => {
           key={ `breadcrumb-root` }
           size="small"
           variant="text"
-          onClick={ () => drawer.setTermId(null) }
+          onClick={ () => drawer.setTermId() }
           disabled={ !drawer.currentTerm }
           color="primary"
         ><HomeIcon fontSize="small" /></IconButton>

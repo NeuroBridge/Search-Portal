@@ -12,6 +12,7 @@ export const DrawerProvider = ({ children }) => {
   const setTermId = useCallback(id => {
     if (!id) {
       setCurrentTerm(null)
+      return
     }
     const termToDetail = ontology.find(id)
     if (!termToDetail) {
