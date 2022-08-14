@@ -139,6 +139,7 @@ export const Workspace = () => {
                   aria-labelledby={ `tab-${ ui.id }` }
                 >
                   <Box sx={{
+                    display: 'flex',
                     alignItems: 'center',
                     p: 1, pl: 2,
                   }}>
