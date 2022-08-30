@@ -1,8 +1,10 @@
+import { Form } from './form'
+
 const ui = {
   id: 'example',
   displayName: 'Example Interface',
   helpText: 'This is helpful example text.',
-  Interface: <div>example interface</div>,
+  Interface: Form,
   request: function exampleRequest() {
     console.log('making example request...')
   },

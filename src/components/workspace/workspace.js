@@ -131,7 +131,7 @@ export const Workspace = () => {
                   </Collapse>
                   <Divider />
                   <Box sx={{ flex: 1, p: 2 }}>
-                    { ui.Interface }
+                    <ui.Interface />
                   </Box>
                 </Stack>
               ))

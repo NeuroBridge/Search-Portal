@@ -4,7 +4,7 @@ const ui = {
   id: 'nq',
   displayName: 'NeuroQuery',
   helpText: 'This is helpful nq text.',
-  Interface: <Interface />,
+  Interface: Interface,
   request: function exampleRequest() {
     console.log('making nq request...')
   },
