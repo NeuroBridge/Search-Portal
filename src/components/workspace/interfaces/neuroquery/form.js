@@ -1,8 +1,9 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 import axios from 'axios'
 import { Box, Button, CardContent, MenuItem, Select, Stack, Typography } from '@mui/material'
 import { Add as PlusIcon } from '@mui/icons-material'
+import { useWorkspace } from '../../workspace'
 
 import { useBasket } from '../../../basket'
 import { useOntology } from '../../../ontology'
@@ -18,6 +19,7 @@ const API_URL = `https://neurobridges.renci.org:13374/query`
 //
 
 export const Form = (/*{ searchWrapper }*/) => {
+  const { register } = useWorkspace()
   const ontology = useOntology()
   const basket = useBasket()
   // `termLabels` is an object whose keys are term ids,
@@ -38,7 +40,7 @@ export const Form = (/*{ searchWrapper }*/) => {
   const querystring = useMemo(() => terms.map(term => term.labels[termLabels[term.id]]).join('+'), [termLabels])
   const url = useMemo(() => `${ API_URL }?${ querystring }`, [querystring])
 
-  const fetchResults = async () => {
+  const fetchResults = useCallback(async () => {
     try {
       const response = await axios.get(url, {
         params: { searchTerms: querystring }
@@ -57,7 +59,11 @@ export const Form = (/*{ searchWrapper }*/) => {
       console.error(error)
     }
     return
-  }
+  }, [querystring, termLabels, url])
+
+  useEffect(() => {
+    register('nq', fetchResults)
+  }, [fetchResults])
 
   const handleChangeTermLabel = id => event => {
     const newTermLabels = { ...termLabels, [id]: event.target.value }

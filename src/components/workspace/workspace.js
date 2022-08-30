@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useState } from 'react'
+import { createContext, useCallback, useContext, useRef, useState } from 'react'
 import {
   Box, Button, Card, Collapse, Divider, IconButton, LinearProgress,
   Stack, Tab, Tabs, Typography, useTheme,
@@ -11,12 +11,20 @@ import {
 
 //
 
+const WorkspaceContext = createContext({ })
+export const useWorkspace = () => useContext(WorkspaceContext)
+
+//
+
 export const Workspace = () => {
   const theme = useTheme()
   const basket = useBasket()
   const [currentInterfaceIndex, setCurrentInterfaceIndex] = useState(0)
   const [showHelp, setShowHelp] = useState(false)
   const [loading, ] = useState(false)
+  const requests = useRef({ })
+
+  console.table(requests)
 
   const handleChangeInterface = (event, newIndex) => {
     setCurrentInterfaceIndex(newIndex)
@@ -25,6 +33,10 @@ export const Workspace = () => {
   const searchWrapper = id => func => {
     console.log(id, func)
     return 
+  }
+
+  const register = (id, func) => {
+    requests.current = { ...requests.current, [id]: func }
   }
 
   const WorkspaceHeader = useCallback(() => {
@@ -55,7 +67,7 @@ export const Workspace = () => {
   }, [basket.ids.length])
 
   return (
-    <Fragment>
+    <WorkspaceContext.Provider value={{ register }}>
       <Card sx={{
         display: 'flex',
         flexDirection: 'column',
@@ -153,6 +165,6 @@ export const Workspace = () => {
           </Box>
         </Collapse>
       </Card>
-    </Fragment>
+    </WorkspaceContext.Provider>
   )
 }
