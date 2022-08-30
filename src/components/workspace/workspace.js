@@ -22,6 +22,11 @@ export const Workspace = () => {
     setCurrentInterfaceIndex(newIndex)
   }
 
+  const searchWrapper = id => func => {
+    console.log(id, func)
+    return func()
+  }
+
   const WorkspaceHeader = useCallback(() => {
     return (
       <Box sx={{
@@ -131,7 +136,7 @@ export const Workspace = () => {
                   </Collapse>
                   <Divider />
                   <Box sx={{ flex: 1, p: 2 }}>
-                    <ui.Form />
+                    <ui.Form searchWrapper={ () => searchWrapper(ui.id) }/>
                   </Box>
                 </Stack>
               ))
