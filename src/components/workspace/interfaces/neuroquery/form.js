@@ -18,7 +18,7 @@ const API_URL = `https://neurobridges.renci.org:13374/query`
 
 const InterfaceContext = createContext({})
 
-export const Interface = ({ searchWrapper }) => {
+export const Form = ({ searchWrapper }) => {
   const ontology = useOntology()
   const basket = useBasket()
   // `termLabels` is an object whose keys are term ids,
@@ -78,7 +78,7 @@ export const Interface = ({ searchWrapper }) => {
   )
 } 
 
-Interface.propTypes = {
+Form.propTypes = {
   searchWrapper: PropTypes.func.isRequired,
 }
 
