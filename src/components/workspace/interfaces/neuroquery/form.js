@@ -1,7 +1,7 @@
-import { createContext, useContext, useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 import axios from 'axios'
-import { Box, CardContent, MenuItem, Select, Stack, Typography } from '@mui/material'
+import { Box, Button, CardContent, MenuItem, Select, Stack, Typography } from '@mui/material'
 import { Add as PlusIcon } from '@mui/icons-material'
 
 import { useBasket } from '../../../basket'
@@ -17,12 +17,7 @@ const API_URL = `https://neurobridges.renci.org:13374/query`
 
 //
 
-const InterfaceContext = createContext({})
-const useInterfaceContext = () => useContext(InterfaceContext)
-
-//
-
-export const Form = ({ searchWrapper }) => {
+export const Form = (/*{ searchWrapper }*/) => {
   const ontology = useOntology()
   const basket = useBasket()
   // `termLabels` is an object whose keys are term ids,
@@ -39,57 +34,35 @@ export const Form = ({ searchWrapper }) => {
     setTermLabels({ ...newTermLabels, ...termLabels })
   }, [terms])
 
+
   const querystring = useMemo(() => terms.map(term => term.labels[termLabels[term.id]]).join('+'), [termLabels])
   const url = useMemo(() => `${ API_URL }?${ querystring }`, [querystring])
 
-  const fetchResults = () => {
-    searchWrapper(async () => {
-      try {
-        const response = await axios.get(url, {
-          params: { searchTerms: querystring }
-        })
-        if (!response?.data?.data) {
-          throw new Error('An error occurred while querying NeuroQuery.')
-        }
-        return response.data.data.map(result => ({
-          title: result.title,
-          snippet: result.snippet,
-          url: result.pubmed_url,
-          pmid: result.pmid,
-          score: result.similarity,
-        }))
-      } catch (error) {
-        console.error(error)
+  const fetchResults = async () => {
+    try {
+      const response = await axios.get(url, {
+        params: { searchTerms: querystring }
+      })
+      if (!response?.data?.data) {
+        throw new Error('An error occurred while querying NeuroQuery.')
       }
-      return
-    })
+      return response.data.data.map(result => ({
+        title: result.title,
+        snippet: result.snippet,
+        url: result.pubmed_url,
+        pmid: result.pmid,
+        score: result.similarity,
+      }))
+    } catch (error) {
+      console.error(error)
+    }
+    return
   }
 
   const handleChangeTermLabel = id => event => {
     const newTermLabels = { ...termLabels, [id]: event.target.value }
     setTermLabels(newTermLabels)
   }
-
-  return (
-    <InterfaceContext.Provider value={{
-      fetchResults,
-      terms, termLabels,
-      querystring, url,
-      handleChangeTermLabel,
-    }}>
-      <TermSelects />
-    </InterfaceContext.Provider>
-  )
-} 
-
-Form.propTypes = {
-  searchWrapper: PropTypes.func.isRequired,
-}
-
-//
-
-const TermSelects = () => {
-  const { handleChangeTermLabel, terms, termLabels } = useInterfaceContext()
 
   return (
     <CardContent>
@@ -132,7 +105,12 @@ const TermSelects = () => {
             )
           )
         }
+        <Button onClick={ () => fetchResults() }>search</Button>
       </Stack>
     </CardContent>
   )
+} 
+
+Form.propTypes = {
+  searchWrapper: PropTypes.func.isRequired,
 }

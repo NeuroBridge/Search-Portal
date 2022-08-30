@@ -24,7 +24,7 @@ export const Workspace = () => {
 
   const searchWrapper = id => func => {
     console.log(id, func)
-    return func()
+    return 
   }
 
   const WorkspaceHeader = useCallback(() => {
