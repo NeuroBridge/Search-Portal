@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { TextField } from '@mui/material'
 import axios from 'axios'
 import { useWorkspace } from '../../workspace'
@@ -20,17 +20,15 @@ export const Form = () => {
   const handleChangeQuery = event => setQuery(event.target.value)
 
   useEffect(() => {
-    const requestFunction = async () => {
-      try {
-        const { data } = await axios.post(
-          API_URL,
-          JSON.stringify({ query: { expression: query } }),
-          { headers: { 'content-type': 'text/html;charset=utf-8' } },
-        )
+    const fetchResults = () => axios.post(
+        API_URL, // url
+        { query: { expression: JSON.parse(query) } }, // data
+        { headers: { 'content-type': 'application/json' } }, // options
+      ).then(response => {
+        const { data } = response
         if (!data) {
           throw new Error('An error occurred while fetching results.')
         }
-        console.log(data)
         const results = Object.values(data).map(result => ({
           title: result.title,
           snippet: result.snippet,
@@ -41,12 +39,11 @@ export const Form = () => {
           pmcid: result.pmcid,
         }))
         return results
-      } catch (error) {
+      }).catch(error => {
         console.error(error.message)
         return []
-      }
-    }
-    register('example', requestFunction)
+      })
+    register('example', fetchResults)
   }, [query])
 
   return (

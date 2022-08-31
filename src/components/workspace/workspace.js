@@ -1,4 +1,5 @@
 import { createContext, useCallback, useContext, useRef, useState } from 'react'
+import PropTypes from 'prop-types'
 import {
   Box, Button, Card, Collapse, Divider, IconButton, LinearProgress,
   Stack, Tab, Tabs, Typography, useTheme,
@@ -16,15 +17,14 @@ export const useWorkspace = () => useContext(WorkspaceContext)
 
 //
 
-export const Workspace = () => {
+export const Workspace = ({ results, setResults }) => {
+  console.log({ results, setResults })
   const theme = useTheme()
   const basket = useBasket()
   const [currentInterfaceIndex, setCurrentInterfaceIndex] = useState(0)
   const [showHelp, setShowHelp] = useState(false)
   const [loading, ] = useState(false)
-  const requests = useRef({ })
-
-  console.table(requests)
+  const requests = useRef({ })  // change to state var
 
   const handleChangeInterface = (event, newIndex) => {
     setCurrentInterfaceIndex(newIndex)
@@ -36,7 +36,24 @@ export const Workspace = () => {
   }
 
   const register = (id, func) => {
-    requests.current = { ...requests.current, [id]: func }
+    requests.current = { ...requests.current, [id]: func } // use setRequests
+  }
+
+  const requestAll = () => {
+    if (basket.ids.length === 0) {
+      return
+    }
+    Promise.all([...Object.values(requests.current)].map(f => f()))
+      .then(responses => {
+        responses.forEach((response, i) => {
+          const id = Object.keys(requests.current)[i]
+          console.log({ [id]: response })
+          // setResults({ ...results, [id]: response })
+        })
+      })
+      .catch(error => {
+        console.error(error.message)
+      })
   }
 
   const WorkspaceHeader = useCallback(() => {
@@ -161,10 +178,15 @@ export const Workspace = () => {
             alignItems: 'center',
             p: 2,
           }}>
-            <Button variant="contained" onClick={ () => console.log('search all') }>Search All</Button>
+            <Button variant="contained" onClick={ requestAll }>Search All</Button>
           </Box>
         </Collapse>
       </Card>
     </WorkspaceContext.Provider>
   )
+}
+
+Workspace.propTypes = {
+  results: PropTypes.object,
+  setResults: PropTypes.func,
 }

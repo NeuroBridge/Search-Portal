@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 import axios from 'axios'
-import { Box, Button, CardContent, MenuItem, Select, Stack, Typography } from '@mui/material'
+import { Box, CardContent, MenuItem, Select, Stack, Typography } from '@mui/material'
 import { Add as PlusIcon } from '@mui/icons-material'
 import { useWorkspace } from '../../workspace'
 
@@ -38,32 +38,26 @@ export const Form = (/*{ searchWrapper }*/) => {
 
 
   const querystring = useMemo(() => terms.map(term => term.labels[termLabels[term.id]]).join('+'), [termLabels])
-  const url = useMemo(() => `${ API_URL }?${ querystring }`, [querystring])
-
-  const fetchResults = useCallback(async () => {
-    try {
-      const response = await axios.get(url, {
-        params: { searchTerms: querystring }
-      })
-      if (!response?.data?.data) {
-        throw new Error('An error occurred while querying NeuroQuery.')
-      }
-      return response.data.data.map(result => ({
-        title: result.title,
-        snippet: result.snippet,
-        url: result.pubmed_url,
-        pmid: result.pmid,
-        score: result.similarity,
-      }))
-    } catch (error) {
-      console.error(error)
-    }
-    return
-  }, [querystring, termLabels, url])
 
   useEffect(() => {
+    const fetchResults = () => axios.get(API_URL, { params: { searchTerms: querystring } })
+      .then(response => {
+        if (!response?.data?.data) {
+          throw new Error('An error occurred while querying NeuroQuery.')
+        }
+        const results = response.data.data.map(result => ({
+          title: result.title,
+          snippet: result.snippet,
+          url: result.pubmed_url,
+          pmid: result.pmid,
+          score: result.similarity,
+        }))
+        return results
+      }).catch(error => {
+        console.error(error)
+      })
     register('nq', fetchResults)
-  }, [fetchResults])
+  }, [termLabels])
 
   const handleChangeTermLabel = id => event => {
     const newTermLabels = { ...termLabels, [id]: event.target.value }
@@ -111,7 +105,6 @@ export const Form = (/*{ searchWrapper }*/) => {
             )
           )
         }
-        <Button onClick={ () => fetchResults() }>search</Button>
       </Stack>
     </CardContent>
   )

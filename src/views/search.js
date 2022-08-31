@@ -104,7 +104,7 @@ export const SearchView = () => {
           />
         </Box>
         
-        <Workspace />
+        <Workspace results={ results } setResults={ setResults } />
 
         {
           /* results summary header */
