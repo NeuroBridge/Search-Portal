@@ -1,7 +1,7 @@
-import ExampleInterface from './example'
+import NeuroBridge from './neurobridge'
 import NeuroQueryInterface from './neuroquery'
 
 export default [
-  ExampleInterface,
+  NeuroBridge,
   NeuroQueryInterface,
 ]
