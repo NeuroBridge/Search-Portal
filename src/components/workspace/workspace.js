@@ -1,5 +1,4 @@
 import { createContext, useCallback, useContext, useRef, useState } from 'react'
-import PropTypes from 'prop-types'
 import {
   Box, Button, Card, Collapse, Divider, IconButton, LinearProgress,
   Stack, Tab, Tabs, Typography, useTheme,
@@ -17,8 +16,7 @@ export const useWorkspace = () => useContext(WorkspaceContext)
 
 //
 
-export const Workspace = ({ results, setResults }) => {
-  console.log({ results, setResults })
+export const Workspace = () => {
   const theme = useTheme()
   const basket = useBasket()
   const [currentInterfaceIndex, setCurrentInterfaceIndex] = useState(0)
@@ -179,9 +177,4 @@ export const Workspace = ({ results, setResults }) => {
       </Card>
     </WorkspaceContext.Provider>
   )
-}
-
-Workspace.propTypes = {
-  results: PropTypes.object,
-  setResults: PropTypes.func,
 }
