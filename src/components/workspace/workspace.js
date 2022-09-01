@@ -30,11 +30,6 @@ export const Workspace = ({ results, setResults }) => {
     setCurrentInterfaceIndex(newIndex)
   }
 
-  const searchWrapper = id => func => {
-    console.log(id, func)
-    return 
-  }
-
   const register = (id, func) => {
     requests.current = { ...requests.current, [id]: func } // use setRequests
   }
@@ -165,7 +160,7 @@ export const Workspace = ({ results, setResults }) => {
                   </Collapse>
                   <Divider />
                   <Box sx={{ flex: 1, p: 2 }}>
-                    <ui.Form searchWrapper={ () => searchWrapper(ui.id) }/>
+                    <ui.Form />
                   </Box>
                 </Stack>
               ))
