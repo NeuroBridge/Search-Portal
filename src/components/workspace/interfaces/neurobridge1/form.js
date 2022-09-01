@@ -72,7 +72,7 @@ export const Form = () => {
       }).catch(error => {
         console.error(error)
       })
-      register('nb', fetchResults)
+      register('nb1', fetchResults)
   }, [selections])
 
   return (

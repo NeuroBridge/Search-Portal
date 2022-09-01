@@ -1,9 +1,11 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
+import PropTypes from 'prop-types'
+import { Divider } from '@mui/material'
 import { useBasket } from '../../../basket'
 import { useOntology } from '../../../ontology'
 import axios from 'axios'
 import { Forest } from './selection-forest'
-import { useWorkspace } from '../../workspace'
+import { QueryForm } from './query-form'
 
 //
 
@@ -17,8 +19,7 @@ const API_URL = `https://neurobridges-ml.renci.org/nb_translator`
 
 const InterfaceContext = createContext({})
 
-export const Form = () => {
-  const { register } = useWorkspace()
+export const Interface = ({ searchWrapper }) => {
   const ontology = useOntology()
   const basket = useBasket()
   const [values, setValues] = useState({})
@@ -92,16 +93,18 @@ export const Form = () => {
     return _query
   }, [roots, values])
 
-  useEffect(() => {
-    const fetchResults = () => axios.post(
-        API_URL,
-        JSON.stringify({ query: { expression: query } }),
-        { headers: { 'Content-Type': 'text/html;charset=utf-8' } },
-      ).then(response => {
-        if (!response?.data) {
+  const fetchResults = () => {
+    searchWrapper(async () => {
+      try {
+        const { data } = await axios.post(
+          API_URL,
+          JSON.stringify({ query: { expression: query } }),
+          { headers: { 'Content-Type': 'text/html;charset=utf-8' } },
+        )
+        if (!data) {
           throw new Error('An error occurred while fetching results.')
         }
-        const results = Object.values(response.data).map(result => ({
+        const results = Object.values(data).map(result => ({
           title: result.title,
           snippet: result.snippet,
           pmc_link: result.pmc_link,
@@ -111,17 +114,26 @@ export const Form = () => {
           pmcid: result.pmcid,
         }))
         return results
-      }).catch(error => {
+      } catch (error) {
         console.error(error.message)
-      })
-      register('nb2', fetchResults)
-  }, [values])
+        return []
+      }
+    })
+  }
 
   return (
-    <InterfaceContext.Provider value={{ values, toggleTermSelection, query }}>
+    <InterfaceContext.Provider value={{ values, toggleTermSelection, query, fetchResults }}>
       <Forest />
+
+      <Divider />
+      
+      <QueryForm />
     </InterfaceContext.Provider>
   )
 } 
+
+Interface.propTypes = {
+  searchWrapper: PropTypes.func.isRequired,
+}
 
 export const useInterfaceContext = () => useContext(InterfaceContext)
