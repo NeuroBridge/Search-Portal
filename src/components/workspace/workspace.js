@@ -8,6 +8,7 @@ import interfaces from './interfaces'
 import {
   ExpandMore as HelpToggleIcon,
 } from '@mui/icons-material'
+import { SearchResults } from './results'
 
 //
 
@@ -103,7 +104,7 @@ export const Workspace = () => {
   }, [basket.ids.length])
 
   return (
-    <WorkspaceContext.Provider value={{ register }}>
+    <WorkspaceContext.Provider value={{ register, results }}>
       <Card sx={{
         display: 'flex',
         flexDirection: 'column',
@@ -203,14 +204,7 @@ export const Workspace = () => {
       </Card>
 
       {
-        !!Object.keys(results).length && (
-          <Box>
-            <Box>Results!</Box>
-            <Box component="pre" sx={{ backgroundColor: '#0002', p: 2, fontSize: '80%' }}>
-              { JSON.stringify(results, null, 2) }
-            </Box>
-          </Box>
-        )
+        !!Object.keys(results).length && <SearchResults />
       }
     </WorkspaceContext.Provider>
   )
