@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect, useState } from 'react'
+import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react'
 import {
   Box, Button, Card, Collapse, Divider, IconButton, LinearProgress,
   Stack, Tab, Tabs, Typography, useTheme,
@@ -22,7 +22,7 @@ export const Workspace = () => {
   const [currentInterfaceIndex, setCurrentInterfaceIndex] = useState(0)
   const [showHelp, setShowHelp] = useState(false)
   const [loading, ] = useState(false)
-  const [requests, setRequests] = useState({ })
+  const requests = useRef({ })
   /*
     search results are held in Workspace state
     as an object with the shape
@@ -42,28 +42,28 @@ export const Workspace = () => {
     this function registers interface request functions
     for use when the search button is clicked.
   */
-  const register = useCallback((id, func) => {
-    setRequests({ ...requests, [id]: func })
-  }, [requests])
+  const register = (id, func) => {
+    requests.current = { ...requests.current, [id]: func }
+  }
 
   /* debugging */
-  useEffect(() => console.log(requests), [requests])
+  useEffect(() => console.log(requests.current), [requests.current])
 
   /*
     using all registered interface request functions,
     this function makes fetches every interface's results
     and dumps them into the `results` object.
   */
-  const requestAll = useCallback(async () => {
+  const requestAll = useCallback(() => {
     if (basket.ids.length === 0) {
       return
     }
     let newResults = {}
-    await Promise.all([...Object.values(requests).map(f => f())])
+    Promise.all([...Object.values(requests.current).map(f => f())])
       .then(responses => {
         responses.forEach((response, i) => {
           // let's grab the id associated with this, the ith, request
-          const id = Object.keys(requests)[i]
+          const id = Object.keys(requests.current)[i]
           // and save that to our results object, with that id as its key.
           newResults = { ...newResults, [id]: response }
         })
@@ -72,7 +72,7 @@ export const Workspace = () => {
       .catch(error => {
         console.error(error.message)
       })
-  }, [requests])
+  }, [requests.current])
 
   const WorkspaceHeader = useCallback(() => {
     return (
@@ -200,12 +200,21 @@ export const Workspace = () => {
           </Box>
         </Collapse>
       </Card>
-      <Box>
-        Results!
-        <Box component="pre" sx={{ backgroundColor: '#0003', p: 2, fontSize: '80%' }}>
-          { JSON.stringify(results, null, 2) }
-        </Box>
+
+      <Box component="pre" sx={{ backgroundColor: '#0002', p: 2, fontSize: '80%' }}>
+        registered requests = { JSON.stringify(Object.keys(requests.current), null, 2) }
       </Box>
+
+      {
+        !!Object.keys(results).length && (
+          <Box>
+            <Box>Results!</Box>
+            <Box component="pre" sx={{ backgroundColor: '#0002', p: 2, fontSize: '80%' }}>
+              { JSON.stringify(results, null, 2) }
+            </Box>
+          </Box>
+        )
+      }
     </WorkspaceContext.Provider>
   )
 }

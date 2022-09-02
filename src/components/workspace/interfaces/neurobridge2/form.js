@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useLayoutEffect, useMemo, useState } from 'react'
+import { createContext, useCallback, useContext, useEffect, useLayoutEffect, useMemo, useState } from 'react'
 import { useBasket } from '../../../basket'
 import { useOntology } from '../../../ontology'
 import axios from 'axios'
@@ -92,31 +92,34 @@ export const Form = () => {
     return _query
   }, [roots, values])
 
-  useLayoutEffect(() => {
-    const fetchResults = () => axios.post(
-        API_URL,
-        JSON.stringify({ query: { expression: query } }),
-        { headers: { 'Content-Type': 'text/html;charset=utf-8' } },
-      ).then(response => {
-        if (!response?.data) {
-          throw new Error('An error occurred while fetching results.')
-        }
-        const results = Object.values(response.data).map(result => ({
-          title: result.title,
-          snippet: result.snippet,
-          pmc_link: result.pmc_link,
-          url: result.pmc_link,
-          score: result.score,
-          pmid: result.pmid,
-          pmcid: result.pmcid,
-        }))
-        return results
-      }).catch(error => {
-        console.error(error.message)
-        return []
-      })
-      register('neurobridge2', fetchResults)
+  const fetchResults = useCallback(() => {
+    return axios.post(
+      API_URL,
+      JSON.stringify({ query: { expression: query } }),
+      { headers: { 'Content-Type': 'text/html;charset=utf-8' } },
+    ).then(response => {
+      if (!response?.data) {
+        throw new Error('An error occurred while fetching results.')
+      }
+      const results = Object.values(response.data).map(result => ({
+        title: result.title,
+        snippet: result.snippet,
+        pmc_link: result.pmc_link,
+        url: result.pmc_link,
+        score: result.score,
+        pmid: result.pmid,
+        pmcid: result.pmcid,
+      }))
+      return results
+    }).catch(error => {
+      console.error(error.message)
+      return []
+    })
   }, [values])
+
+  useLayoutEffect(() => {
+    register('neurobridge2', fetchResults)
+  }, [fetchResults])
 
   return (
     <InterfaceContext.Provider value={{ values, toggleTermSelection, query }}>

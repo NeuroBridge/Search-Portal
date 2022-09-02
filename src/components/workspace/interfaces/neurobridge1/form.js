@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import axios from 'axios'
 import { Box, CardContent, Divider, List, ListItem, ListItemText, MenuItem, Select, Stack, Switch } from '@mui/material'
 import { useBasket } from '../../../basket'
@@ -49,32 +49,34 @@ export const Form = () => {
     setSelections({ ...newSelections })
   }
 
-  useLayoutEffect(() => {
-    const fetchResults = () => axios.post(
-        API_URL,
-        JSON.stringify({ query: { expression: query } }),
-        { headers: { 'content-type': 'text/html;charset=utf-8' } },
-      ).then(response => {
-        if (!response?.data) {
-          throw new Error('An error occurred while fetching NeuroBridge results.')
-        }
-        const results = Object.values(response.data).map(result => ({
-          title: result.title,
-          snippet: result.snippet,
-          pmc_link: result.pmc_link,
-          url: result.pmc_link,
-          score: result.score,
-          pmid: result.pmid,
-          pmcid: result.pmcid,
-        }))
-        return results
-
-      }).catch(error => {
-        console.error(error)
-        return []
-      })
-      register('neurobridge1', fetchResults)
+  const fetchResults = useCallback(() => {
+    return axios.post(
+      API_URL,
+      JSON.stringify({ query: { expression: query } }),
+      { headers: { 'content-type': 'text/html;charset=utf-8' } },
+    ).then(response => {
+      if (!response?.data) {
+        throw new Error('An error occurred while fetching NeuroBridge results.')
+      }
+      const results = Object.values(response.data).map(result => ({
+        title: result.title,
+        snippet: result.snippet,
+        pmc_link: result.pmc_link,
+        url: result.pmc_link,
+        score: result.score,
+        pmid: result.pmid,
+        pmcid: result.pmcid,
+      }))
+      return results
+    }).catch(error => {
+      console.error(error)
+      return []
+    })
   }, [selections])
+
+  useEffect(() => {
+    register('neurobridge1', fetchResults)
+  }, [fetchResults])
 
   return (
     <Box>
