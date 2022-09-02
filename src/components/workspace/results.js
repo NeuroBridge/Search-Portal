@@ -31,7 +31,7 @@ export const SearchResults = () => {
   }
 
   return (
-    <Card sx={{ height: '100%' }}>
+    <Card>
       <DataGrid
         autoHeight
         rows={ tableData }
