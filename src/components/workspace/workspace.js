@@ -21,7 +21,7 @@ export const Workspace = () => {
   const basket = useBasket()
   const [currentInterfaceIndex, setCurrentInterfaceIndex] = useState(0)
   const [showHelp, setShowHelp] = useState(false)
-  const [loading, ] = useState(false)
+  const [loading, setLoading] = useState(false)
   const requests = useRef({ })
   /*
     search results are held in Workspace state
@@ -58,6 +58,7 @@ export const Workspace = () => {
     if (basket.ids.length === 0) {
       return
     }
+    setLoading(true)
     let newResults = {}
     Promise.all([...Object.values(requests.current).map(f => f())])
       .then(responses => {
@@ -71,6 +72,9 @@ export const Workspace = () => {
       })
       .catch(error => {
         console.error(error.message)
+      })
+      .finally(() => {
+        setLoading(false)
       })
   }, [requests.current])
 
