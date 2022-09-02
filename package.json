@@ -42,6 +42,7 @@
     "@mui/icons-material": "^5.4.4",
     "@mui/lab": "^5.0.0-alpha.72",
     "@mui/material": "^5.4.4",
+    "@mui/x-data-grid": "^5.16.0",
     "axios": "^0.27.2",
     "core-js": "^3.22.5",
     "dotenv-webpack": "^8.0.0",

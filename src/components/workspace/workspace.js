@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react'
+import { createContext, useCallback, useContext, useRef, useState } from 'react'
 import {
   Box, Button, Card, Collapse, Divider, IconButton, LinearProgress,
   Stack, Tab, Tabs, Typography, useTheme,
@@ -8,6 +8,7 @@ import interfaces from './interfaces'
 import {
   ExpandMore as HelpToggleIcon,
 } from '@mui/icons-material'
+import { SearchResults } from './results'
 
 //
 
@@ -46,15 +47,12 @@ export const Workspace = () => {
     requests.current = { ...requests.current, [id]: func }
   }
 
-  /* debugging */
-  useEffect(() => console.log(requests.current), [requests.current])
-
   /*
     using all registered interface request functions,
     this function makes fetches every interface's results
     and dumps them into the `results` object.
   */
-  const requestAll = useCallback(() => {
+  const requestAll = () => {
     if (basket.ids.length === 0) {
       return
     }
@@ -76,7 +74,7 @@ export const Workspace = () => {
       .finally(() => {
         setLoading(false)
       })
-  }, [requests.current])
+  }
 
   const WorkspaceHeader = useCallback(() => {
     return (
@@ -106,7 +104,7 @@ export const Workspace = () => {
   }, [basket.ids.length])
 
   return (
-    <WorkspaceContext.Provider value={{ register }}>
+    <WorkspaceContext.Provider value={{ register, results }}>
       <Card sx={{
         display: 'flex',
         flexDirection: 'column',
@@ -205,20 +203,8 @@ export const Workspace = () => {
         </Collapse>
       </Card>
 
-      <Box component="pre" sx={{ backgroundColor: '#0002', p: 2, fontSize: '80%' }}>
-        registered requests = { JSON.stringify(Object.keys(requests.current), null, 2) }
-      </Box>
+      <SearchResults />
 
-      {
-        !!Object.keys(results).length && (
-          <Box>
-            <Box>Results!</Box>
-            <Box component="pre" sx={{ backgroundColor: '#0002', p: 2, fontSize: '80%' }}>
-              { JSON.stringify(results, null, 2) }
-            </Box>
-          </Box>
-        )
-      }
     </WorkspaceContext.Provider>
   )
 }
