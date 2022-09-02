@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useState } from 'react'
 import axios from 'axios'
 import { Box, CardContent, Divider, List, ListItem, ListItemText, MenuItem, Select, Stack, Switch } from '@mui/material'
 import { useBasket } from '../../../basket'
@@ -49,7 +49,7 @@ export const Form = () => {
     setSelections({ ...newSelections })
   }
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const fetchResults = () => axios.post(
         API_URL,
         JSON.stringify({ query: { expression: query } }),

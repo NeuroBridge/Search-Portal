@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useState } from 'react'
+import { createContext, useContext, useEffect, useLayoutEffect, useMemo, useState } from 'react'
 import { useBasket } from '../../../basket'
 import { useOntology } from '../../../ontology'
 import axios from 'axios'
@@ -92,7 +92,7 @@ export const Form = () => {
     return _query
   }, [roots, values])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const fetchResults = () => axios.post(
         API_URL,
         JSON.stringify({ query: { expression: query } }),
