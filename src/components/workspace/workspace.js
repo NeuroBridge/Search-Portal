@@ -202,10 +202,6 @@ export const Workspace = () => {
         </Collapse>
       </Card>
 
-      <Box component="pre" sx={{ backgroundColor: '#0002', p: 2, fontSize: '80%' }}>
-        registered requests = { JSON.stringify(Object.keys(requests.current), null, 2) }
-      </Box>
-
       {
         !!Object.keys(results).length && (
           <Box>
