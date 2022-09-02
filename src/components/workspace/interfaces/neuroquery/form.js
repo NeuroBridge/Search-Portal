@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from 'react'
-import PropTypes from 'prop-types'
 import axios from 'axios'
 import { Box, CardContent, MenuItem, Select, Stack, Typography } from '@mui/material'
 import { Add as PlusIcon } from '@mui/icons-material'
@@ -108,8 +107,4 @@ export const Form = (/*{ searchWrapper }*/) => {
       </Stack>
     </CardContent>
   )
-} 
-
-Form.propTypes = {
-  searchWrapper: PropTypes.func.isRequired,
 }

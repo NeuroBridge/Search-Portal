@@ -113,8 +113,9 @@ export const Form = () => {
         return results
       }).catch(error => {
         console.error(error.message)
+        return []
       })
-      register('nb2', fetchResults)
+      register('neurobridge2', fetchResults)
   }, [values])
 
   return (

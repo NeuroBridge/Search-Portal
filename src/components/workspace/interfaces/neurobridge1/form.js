@@ -71,8 +71,9 @@ export const Form = () => {
 
       }).catch(error => {
         console.error(error)
+        return []
       })
-      register('nb1', fetchResults)
+      register('neurobridge1', fetchResults)
   }, [selections])
 
   return (
