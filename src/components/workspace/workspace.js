@@ -54,7 +54,7 @@ export const Workspace = () => {
     this function makes fetches every interface's results
     and dumps them into the `results` object.
   */
-  const requestAll = useCallback(() => {
+  const requestAll = () => {
     if (basket.ids.length === 0) {
       return
     }
@@ -76,7 +76,7 @@ export const Workspace = () => {
       .finally(() => {
         setLoading(false)
       })
-  }, [requests.current])
+  }
 
   const WorkspaceHeader = useCallback(() => {
     return (
