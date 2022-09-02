@@ -1,14 +1,12 @@
 import { createContext, useCallback, useContext, useRef, useState } from 'react'
 import {
-  Box, Button, Card, Collapse, Divider, IconButton, LinearProgress,
-  Stack, Tab, Tabs, Typography, useTheme,
+  Box, Button, Card, Collapse, Divider, LinearProgress,
+  Stack, Tab, Tabs,
 } from '@mui/material'
 import { Basket, useBasket } from '../basket'
-import interfaces from './interfaces'
-import {
-  ExpandMore as HelpToggleIcon,
-} from '@mui/icons-material'
-import { SearchResults } from './results'
+import { interfaces, interfaceDisplayNames } from './interfaces'
+import { SearchResultsTable } from './results-table'
+import { Interface } from './interface'
 
 //
 
@@ -18,22 +16,23 @@ export const useWorkspace = () => useContext(WorkspaceContext)
 //
 
 export const Workspace = () => {
-  const theme = useTheme()
   const basket = useBasket()
   const [currentInterfaceIndex, setCurrentInterfaceIndex] = useState(0)
-  const [showHelp, setShowHelp] = useState(false)
   const [loading, setLoading] = useState(false)
   const requests = useRef({ })
   /*
-    search results are held in Workspace state
-    as an object with the shape
+    search results are held in Workspace's
+    state as an object with this shape:
     {
+      // [interfaceId]: [Result], Result: {Object}
       neurobridge1: [{...}, {...}, ...],
       neurobridge2: [{...}, {...}, ...],
       ...
     }.
   */
   const [results, setResults] = useState({ })
+
+  const clearResults = () => setResults({ })
 
   const handleChangeInterface = (event, newIndex) => {
     setCurrentInterfaceIndex(newIndex)
@@ -66,12 +65,12 @@ export const Workspace = () => {
           // and save that to our results object, with that id as its key.
           newResults = { ...newResults, [id]: response }
         })
-        setResults(newResults)
       })
       .catch(error => {
         console.error(error.message)
       })
       .finally(() => {
+        setResults(newResults)
         setLoading(false)
       })
   }
@@ -104,7 +103,12 @@ export const Workspace = () => {
   }, [basket.ids.length])
 
   return (
-    <WorkspaceContext.Provider value={{ register, results }}>
+    <WorkspaceContext.Provider value={{
+      register,
+      results,
+      clearResults,
+      interfaceDisplayNames,
+    }}>
       <Stack dirction="column" gap={ 3 }>
         <Card sx={{
           display: 'flex',
@@ -149,46 +153,11 @@ export const Workspace = () => {
 
               {
                 interfaces.map((ui, i) => (
-                  <Stack
+                  <Interface
                     key={ `ui-${ ui.id }` }
-                    sx={{ flex: 1, display: currentInterfaceIndex === i ? 'flex' : 'none', }}
-                    role="tabpanel"
-                    id={ `tabpanel-${ ui.id }` }
-                    aria-labelledby={ `tab-${ ui.id }` }
-                  >
-                    <Box sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      p: 1, pl: 2,
-                    }}>
-                      <Typography component="h2" variant="h6" color="primary">{ ui.displayName }</Typography>
-                      <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 1, }}>
-                        <Typography sx={{ fontSize: '75%', filter: 'opacity(0.5)', textTransform: 'uppercase' }}>
-                          { showHelp ? 'Hide' : 'Show' } Help
-                        </Typography>
-                        <IconButton onClick={ () => setShowHelp(!showHelp) } size="small">
-                          <HelpToggleIcon
-                            fontSize="small"
-                            sx={{
-                              color: theme.palette.primary.dark,
-                              filter: 'saturate(0.1) opacity(0.5)',
-                              transition: 'filter 250ms, transform 250ms',
-                              transform: showHelp ? 'rotate(180deg)' : 'rotate(0)',
-                              '&:hover': { filter: 'saturate(0.9) opacity(1)' },
-                            }}
-                          />
-                        </IconButton>
-                      </Box>
-                    </Box>
-                    <Collapse in={ showHelp } sx={{ backgroundColor: theme.palette.grey[100] }}>
-                      <Divider />
-                      <Box sx={{ p: 2 }}>{ ui.helpText }</Box>
-                    </Collapse>
-                    <Divider />
-                    <Box sx={{ flex: 1, p: 2 }}>
-                      <ui.Form />
-                    </Box>
-                  </Stack>
+                    ui={ ui }
+                    active={ currentInterfaceIndex === i }
+                  />
                 ))
               }
             </Box>
@@ -199,12 +168,12 @@ export const Workspace = () => {
               alignItems: 'center',
               p: 2,
             }}>
-              <Button variant="contained" onClick={ requestAll }>Search All</Button>
+              <Button variant="contained" onClick={ requestAll }>Search</Button>
             </Box>
           </Collapse>
         </Card>
 
-        <SearchResults />
+        <SearchResultsTable />
       </Stack>
 
     </WorkspaceContext.Provider>

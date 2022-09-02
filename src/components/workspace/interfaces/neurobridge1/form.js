@@ -79,36 +79,34 @@ export const Form = () => {
   }, [fetchResults])
 
   return (
-    <Box>
-      <CardContent>
-        <Stack
-          direction="row"
-          divider={ <Divider orientation="vertical" flexItem /> }
-        >
-          <Box sx={{ pr: 4 }}>
-            <Select
-              value={ operator }
-              onChange={ () => setOperator(operator === AND ? OR : AND) }
-              sx={{ '.MuiSelect-select': { padding: '0.5rem' }, width: '100px' }}
-            >
-              <MenuItem value={ AND }>{ AND }</MenuItem>
-              <MenuItem value={ OR }>{ OR }</MenuItem>
-            </Select>
-          </Box>
-          <List>
-            {
-              Object.keys(basket.contents)
-                .filter(id => basket.contents[id])
-                .map(id => (
-                  <ListItem key={ `basket-item=${ id }` }>
-                    <Switch edge="start" checked={ id in selections && selections[id] } tabIndex={ -1 } onChange={ handleClickToggleTermSelection(id) } />
-                    <ListItemText>{ id }</ListItemText>
-                  </ListItem>
-                ))
-            }
-          </List>
-        </Stack>
-      </CardContent>
-    </Box>
+    <CardContent>
+      <Stack
+        direction="row"
+        divider={ <Divider orientation="vertical" flexItem /> }
+      >
+        <Box sx={{ pr: 4 }}>
+          <Select
+            value={ operator }
+            onChange={ () => setOperator(operator === AND ? OR : AND) }
+            sx={{ '.MuiSelect-select': { padding: '0.5rem' }, width: '100px' }}
+          >
+            <MenuItem value={ AND }>{ AND }</MenuItem>
+            <MenuItem value={ OR }>{ OR }</MenuItem>
+          </Select>
+        </Box>
+        <List>
+          {
+            Object.keys(basket.contents)
+              .filter(id => basket.contents[id])
+              .map(id => (
+                <ListItem key={ `basket-item=${ id }` }>
+                  <Switch edge="start" checked={ id in selections && selections[id] } tabIndex={ -1 } onChange={ handleClickToggleTermSelection(id) } />
+                  <ListItemText>{ id }</ListItemText>
+                </ListItem>
+              ))
+          }
+        </List>
+      </Stack>
+    </CardContent>
   )
 }

@@ -2,59 +2,14 @@ import { Fragment, useState } from 'react'
 import PropTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom'
 import {
-  Box, Button, Card, CardContent,
-  Fade, Typography,
+  Box, Button, Card, CardContent, Fade, Typography,
 } from '@mui/material'
 import { useLocalStorage } from '../../hooks'
 import { useBasket } from '../basket'
 import { SearchBar } from './search-bar'
 import { TermCard } from './term-card'
 import { HistoryItemCard } from './history-item-card'
-
-//
-
-const TermSuggestionRequest = ({ suggestion, clickHandler }) => {
-  return (
-    <Fade in={ true }>
-      <Box sx={{
-        height: '250px',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        gap: '2rem',
-        textAlign: 'left',
-        '& .title': {},
-        '& .note': {
-          width: '100%',
-          maxWidth: '600px',
-          margin: '0 auto',
-        },
-        '& .button': {
-          margin: '0 auto',
-        },
-      }}>
-        <Typography align="center" variant="h4" color="primary" className="title">
-          No matching terms!
-        </Typography>
-        <Typography paragraph align="center" color="text.secondary" className="note">
-          Oh no! It looks like &quot;{ suggestion }&quot; doesn&apos;t match any terms in our ontology.
-          Please send us a note to suggest that we consider adding it!
-        </Typography>
-        <Button
-          variant="contained"
-          onClick={ clickHandler }
-          className="button"
-        >suggest &quot;{ suggestion }&quot;</Button>
-      </Box>
-    </Fade>
-  )
-}
-
-TermSuggestionRequest.propTypes = {
-  suggestion: PropTypes.string.isRequired,
-  clickHandler: PropTypes.func.isRequired,
-}
+import { TermSuggestionRequest } from './term-suggestion-request'
 
 //
 
