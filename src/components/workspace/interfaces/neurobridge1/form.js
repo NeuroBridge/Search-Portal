@@ -1,8 +1,9 @@
-import { useEffect, useMemo, useState } from 'react'
-import PropTypes from 'prop-types'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import axios from 'axios'
-import { Box, Button, CardContent, Divider, List, ListItem, ListItemText, MenuItem, Select, Stack, Switch } from '@mui/material'
+import { Box, CardContent, Divider, List, ListItem, ListItemText, MenuItem, Select, Stack, Switch } from '@mui/material'
 import { useBasket } from '../../../basket'
+import { useWorkspace } from '../../workspace'
+
 
 //
 
@@ -16,7 +17,8 @@ const OR = 'OR'
 
 //
 
-export const Interface = ({ searchWrapper }) => {
+export const Form = () => {
+  const { register } = useWorkspace()
   const basket = useBasket()
   const [operator, setOperator] = useState(AND)
   const [selections, setSelections] = useState({})
@@ -42,38 +44,39 @@ export const Interface = ({ searchWrapper }) => {
     ]
   }), [operator, selections])
 
-  const handleClickToggletermSelection = id => event => {
+  const handleClickToggleTermSelection = id => event => {
     const newSelections = { ...selections, [id]: event.target.checked}
     setSelections({ ...newSelections })
   }
 
-  const handleClickQueryButton = () => {
-    searchWrapper(async () => {
-      try {
-        const { data } = await axios.post(
-          API_URL,
-          JSON.stringify({ query: { expression: query } }),
-          { headers: { 'content-type': 'text/html;charset=utf-8' } },
-        )
-        if (!data) {
-          throw new Error('An error occurred while fetching results.')
-        }
-        const results = Object.values(data).map(result => ({
-          title: result.title,
-          snippet: result.snippet,
-          pmc_link: result.pmc_link,
-          url: result.pmc_link,
-          score: result.score,
-          pmid: result.pmid,
-          pmcid: result.pmcid,
-        }))
-        return results
-      } catch (error) {
-        console.error(error.message)
-        return []
+  const fetchResults = useCallback(() => {
+    return axios.post(
+      API_URL,
+      JSON.stringify({ query: { expression: query } }),
+      { headers: { 'content-type': 'text/html;charset=utf-8' } },
+    ).then(response => {
+      if (!response?.data) {
+        throw new Error('An error occurred while fetching NeuroBridge results.')
       }
+      const results = Object.values(response.data).map(result => ({
+        title: result.title,
+        snippet: result.snippet,
+        pmc_link: result.pmc_link,
+        url: result.pmc_link,
+        score: result.score,
+        pmid: result.pmid,
+        pmcid: result.pmcid,
+      }))
+      return results
+    }).catch(error => {
+      console.error(error)
+      return []
     })
-  }
+  }, [selections])
+
+  useEffect(() => {
+    register('neurobridge1', fetchResults)
+  }, [fetchResults])
 
   return (
     <Box>
@@ -82,11 +85,11 @@ export const Interface = ({ searchWrapper }) => {
           direction="row"
           divider={ <Divider orientation="vertical" flexItem /> }
         >
-          <Box>
+          <Box sx={{ pr: 4 }}>
             <Select
               value={ operator }
               onChange={ () => setOperator(operator === AND ? OR : AND) }
-              sx={{ '.MuiSelect-select': { padding: '0.5rem' }, margin: '1rem' }}
+              sx={{ '.MuiSelect-select': { padding: '0.5rem' }, width: '100px' }}
             >
               <MenuItem value={ AND }>{ AND }</MenuItem>
               <MenuItem value={ OR }>{ OR }</MenuItem>
@@ -98,7 +101,7 @@ export const Interface = ({ searchWrapper }) => {
                 .filter(id => basket.contents[id])
                 .map(id => (
                   <ListItem key={ `basket-item=${ id }` }>
-                    <Switch edge="start" checked={ id in selections && selections[id] } tabIndex={ -1 } onChange={ handleClickToggletermSelection(id) } />
+                    <Switch edge="start" checked={ id in selections && selections[id] } tabIndex={ -1 } onChange={ handleClickToggleTermSelection(id) } />
                     <ListItemText>{ id }</ListItemText>
                   </ListItem>
                 ))
@@ -106,24 +109,6 @@ export const Interface = ({ searchWrapper }) => {
           </List>
         </Stack>
       </CardContent>
-
-      <Divider />
-
-      <CardContent>
-        <pre style={{ backgroundColor: '#eee', color: '#789', fontSize: '75%', margin: 0, padding: '0.5rem', whiteSpace: 'pre-wrap' }}>
-          { JSON.stringify(query, null, 2) }
-        </pre>
-      </CardContent>
-
-      <Divider />
-
-      <CardContent sx={{ display: 'flex', gap: '1rem', alignItems: 'center', justifyContent: 'flex-end' }}>
-        <Button variant="contained" onClick={ handleClickQueryButton }>Send Query</Button>
-      </CardContent>
     </Box>
   )
-}
-
-Interface.propTypes = {
-  searchWrapper: PropTypes.func.isRequired,
 }
