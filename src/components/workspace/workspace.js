@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react'
+import { createContext, useCallback, useContext, useRef, useState } from 'react'
 import {
   Box, Button, Card, Collapse, Divider, IconButton, LinearProgress,
   Stack, Tab, Tabs, Typography, useTheme,
@@ -45,9 +45,6 @@ export const Workspace = () => {
   const register = (id, func) => {
     requests.current = { ...requests.current, [id]: func }
   }
-
-  /* debugging */
-  useEffect(() => console.log(requests.current), [requests.current])
 
   /*
     using all registered interface request functions,
