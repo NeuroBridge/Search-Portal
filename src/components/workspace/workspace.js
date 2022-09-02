@@ -203,9 +203,8 @@ export const Workspace = () => {
         </Collapse>
       </Card>
 
-      {
-        !!Object.keys(results).length && <SearchResults />
-      }
+      <SearchResults />
+
     </WorkspaceContext.Provider>
   )
 }

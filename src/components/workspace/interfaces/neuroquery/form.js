@@ -55,7 +55,7 @@ export const Form = (/*{ searchWrapper }*/) => {
       }).catch(error => {
         console.error(error)
       })
-    register('nq', fetchResults)
+    register('neuroquery', fetchResults)
   }, [termLabels])
 
   const handleChangeTermLabel = id => event => {
