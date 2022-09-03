@@ -34,14 +34,7 @@ export function renderFullTextCell(params) {
       {
         (params.value == null || !params.row.pmc_url)
           ? <Typography sx={{ filter: 'opacity(0.25)' }}>-</Typography>
-          : <Link
-              to={ params.row.pmc_url }
-              onClick={
-               /* this stopPropagation is necessary to prevent link clicks
-               from selecting the row. remove if rows are not selectable. */
-               e => e.stopPropagation()
-              }
-            >{ params.row.pmcid }</Link>
+          : <Link to={ params.row.pmc_url }>{ params.row.pmcid }</Link>
       }
     </Stack>
   )
