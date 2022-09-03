@@ -47,7 +47,7 @@ export const Form = (/*{ searchWrapper }*/) => {
         const results = response.data.data.map(result => ({
           title: result.title,
           snippet: result.snippet,
-          url: result.pubmed_url,
+          pubmed_url: result.pubmed_url,
           pmid: result.pmid,
           score: result.similarity,
         }))

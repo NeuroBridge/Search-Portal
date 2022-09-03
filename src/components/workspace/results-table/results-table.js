@@ -1,25 +1,16 @@
 import { useMemo, useState } from 'react'
-import {
-  Box, Card, Divider, Fade, IconButton, Stack, Tooltip, Typography,
-} from '@mui/material'
-import {
-  Clear as ClearResultsIcon,
-} from '@mui/icons-material'
+import { Card, Fade } from '@mui/material'
 import { useWorkspace } from '../workspace'
 import {
   DataGrid,
-  GridToolbarContainer,
-  GridToolbarColumnsButton,
-  GridToolbarFilterButton,
-  GridToolbarDensitySelector,
-  GridToolbarExport,
 } from '@mui/x-data-grid'
 import { columns } from './columns'
+import { TableHeader } from './table-header'
 
 //
 
 export const SearchResultsTable = () => {
-  const { results, clearResults, interfaceDisplayNames } = useWorkspace()
+  const { results, interfaceDisplayNames } = useWorkspace()
   
   // tableData will be a memoized array consisting of just
   // the items from each interface in the results object.
@@ -55,54 +46,6 @@ export const SearchResultsTable = () => {
     return <div />
   }
 
-  const TableToolbar = () => (
-    <GridToolbarContainer sx={{
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'stretch',
-      p: 0,
-    }}>
-      <Box sx={{
-        p: 1,
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-      }}>
-        <Stack
-          direction="row"
-          gap={ 2 }
-          divider={ <Divider orientation="vertical" flexItem /> }
-          alignItems="center"
-        >
-          <Typography>{ rowsCount } Total results</Typography>
-          <Typography
-            sx={{ fontStyle: 'italic', filter: 'opacity(0.66)', fontSize: '95%' }}
-          >
-            {
-              Object.keys(results)
-                .sort()
-                .map(interfaceId => `${ interfaceDisplayNames[interfaceId] } (${ results[interfaceId].length })`)
-                .join(', ')
-            }
-          </Typography>
-        </Stack>
-        <Tooltip title="Clear all results" placement="left">
-          <IconButton onClick={ clearResults }>
-            <ClearResultsIcon />
-          </IconButton>
-        </Tooltip>
-      </Box>
-      <Divider />
-      <Stack direction="row" gap={ 1 } sx={{ backgroundColor: '#0001', p: 1 }}>
-        <GridToolbarColumnsButton />
-        <GridToolbarFilterButton />
-        <GridToolbarDensitySelector />
-        <GridToolbarExport />
-      </Stack>
-      <Divider />
-    </GridToolbarContainer>
-  )
-
   return (
     <Fade in={ !!tableData.length }>
       <Card>
@@ -116,10 +59,18 @@ export const SearchResultsTable = () => {
           getRowId={ row => row.pmid }
           pageSize={ pageSize }
           onPageSizeChange={ newSize => setPageSize(newSize) }
-          pagination
           rowsPerPageOptions={ [20, 50, 100] }
           components={{
-            Toolbar: TableToolbar,
+            Toolbar: TableHeader,
+          }}
+          componentsProps={{
+            toolbar: {
+              heading: `${ rowsCount } total results`,
+              subheading: Object.keys(results)
+                .sort()
+                .map(interfaceId => `${ interfaceDisplayNames[interfaceId] } (${ results[interfaceId].length })`)
+                .join(', ')
+            },
           }}
           onRowClick={ handleRowClick }
         />

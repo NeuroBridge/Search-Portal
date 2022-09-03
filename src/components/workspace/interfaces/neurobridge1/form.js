@@ -61,11 +61,11 @@ export const Form = () => {
       const results = Object.values(response.data).map(result => ({
         title: result.title,
         snippet: result.snippet,
-        pmc_link: result.pmc_link,
-        url: result.pmc_link,
         score: result.score,
         pmid: result.pmid,
+        pubmed_url: result.pmc_link,
         pmcid: result.pmcid,
+        pmc_url: result.pmc_link,
       }))
       return results
     }).catch(error => {
