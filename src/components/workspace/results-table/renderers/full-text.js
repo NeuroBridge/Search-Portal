@@ -1,18 +1,16 @@
 import * as React from 'react'
-import { Stack } from '@mui/material'
+import { Stack, Typography } from '@mui/material'
 import { Link } from '../../../link'
 import pubmedHeaderIcon from '../../../../images/pubmed-icon.png'
 
-export function renderPubMedIdCell(params) {
-  if (params.value == null) {
-    return ''
+export function renderFullTextCell(params) {
+  if (params.value == null || !params.row.pmc_url) {
+    return <Typography sx={{ filter: 'opacity(0.25)' }}>-</Typography>
   }
-  if (!params.row.pubmed_url) {
-    return ''
-  }
+  
   return (
-    <Link to={ params.row.pubmed_url }>
-      { params.row.pmid }
+    <Link to={ params.row.pmc_url }>
+      { params.row.pmcid }
     </Link>
   )
 }
@@ -25,7 +23,7 @@ export function renderPubMedIdCell(params) {
 // }
 
 
-export function renderPubMedIdHeader() {
+export function renderFullTextHeader() {
   return (
     <Stack
       direction="row"
@@ -33,7 +31,12 @@ export function renderPubMedIdHeader() {
       justifyContent="center"
       alignItems="center"
     >
-      PMID <img src={ pubmedHeaderIcon } width="20" style={{ filter: 'opacity(0.5)' }}/>
+      Full Text
+      <img
+        src={ pubmedHeaderIcon }
+        width="16"
+        style={{ filter: 'opacity(0.5)' }}
+      />
     </Stack>
   )
 }

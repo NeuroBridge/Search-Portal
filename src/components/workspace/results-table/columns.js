@@ -1,42 +1,48 @@
+import { interfaceDisplayNames } from '../interfaces'
 import {
-  renderPubMedIdHeader,
-  renderPubMedIdCell,
+  renderAbstractHeader,
+  renderAbstractCell,
+  renderFullTextHeader,
+  renderFullTextCell,
   renderScoreCell,
 } from './renderers'
-import { interfaceDisplayNames } from '../interfaces'
 
 export const columns = [
   {
     field: 'title',
     headerName: 'Title',
-    flex: 9,
+    flex: 1,
   },
   {
     field: 'pmid',
-    headerName: 'PubMed ID',
-    flex: 1,
+    headerName: 'Abstract',
     sortable: false,
     filterable: false,
-    renderHeader: renderPubMedIdHeader,
-    renderCell: renderPubMedIdCell,
-    width: 50,
+    renderHeader: renderAbstractHeader,
+    renderCell: renderAbstractCell,
+    width: 125,
   },
   {
     field: 'pmcid',
-    headerName: 'PMCID',
-    flex: 1,
+    headerName: 'Full Text',
+    sortable: false,
+    filterable: false,
+    renderHeader: renderFullTextHeader,
+    renderCell: renderFullTextCell,
+    width: 125,
   },
   // { field: 'snippet', headerName: 'Snippet' },
   {
     field: 'score',
     headerName: 'Score',
     renderCell: renderScoreCell,
+    width: 110,
   },
   {
     field: 'source',
     headerName: 'Source',
     valueGetter: ({ value }) => interfaceDisplayNames[value],
-    flex: 1,
+    width: 125,
   },
 ]
 
