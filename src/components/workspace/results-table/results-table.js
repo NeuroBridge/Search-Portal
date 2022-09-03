@@ -72,6 +72,7 @@ export const SearchResultsTable = () => {
                 .join(', ')
             },
           }}
+          checkboxSelection
           onRowClick={ handleRowClick }
         />
       </Card>
