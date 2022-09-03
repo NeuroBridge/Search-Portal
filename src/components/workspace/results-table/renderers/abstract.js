@@ -34,22 +34,9 @@ export function renderAbstractCell(params) {
       {
         (params.value == null || !params.row.pubmed_url)
           ? <Typography sx={{ filter: 'opacity(0.25)' }}>-</Typography>
-          : <Link
-              to={ params.row.pubmed_url }
-              onClick={
-               /* this stopPropagation is necessary to prevent link clicks
-               from selecting the row. remove if rows are not selectable. */
-               e => e.stopPropagation()
-              }
-            >{ params.row.pmid }</Link>
+          : <Link to={ params.row.pubmed_url }>{ params.row.pmid }</Link>
       }
     </Stack>
   )
 }
-
-// use on above Link if table has checkboxSelection={ true }:
-// onClick={
-//   /* this stopPropagation is necessary to prevent link clicks
-//   from selecting the row. remove if rows are not selectable. */
-//   e => e.stopPropagation()
-// }
+  

@@ -72,6 +72,7 @@ export const SearchResultsTable = () => {
                 .join(', ')
             },
           }}
+          disableSelectionOnClick
           checkboxSelection
           onRowClick={ handleRowClick }
         />
