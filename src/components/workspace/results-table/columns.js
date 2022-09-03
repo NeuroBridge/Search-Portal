@@ -10,6 +10,7 @@ import {
 export const columns = [
   {
     field: 'title',
+    description: 'Publication Title',
     headerName: 'Title',
     flex: 1,
   },
@@ -34,12 +35,14 @@ export const columns = [
   // { field: 'snippet', headerName: 'Snippet' },
   {
     field: 'score',
+    description: 'Score',
     headerName: 'Score',
     renderCell: renderScoreCell,
     width: 110,
   },
   {
     field: 'source',
+    description: 'Source Query Interface',
     headerName: 'Source',
     valueGetter: ({ value }) => interfaceDisplayNames[value],
     width: 125,

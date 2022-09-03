@@ -1,7 +1,27 @@
 import * as React from 'react'
-import { Stack } from '@mui/material'
+import { Stack, Tooltip } from '@mui/material'
 import { Link } from '../../../link'
 import pubmedHeaderIcon from '../../../../images/pubmed-icon.png'
+
+export function renderAbstractHeader() {
+  return (
+    <Tooltip placement="bottom" title="PubMed ID - link to astract">
+      <Stack
+        direction="row"
+        gap={ 1 }
+        justifyContent="center"
+        alignItems="center"
+      >
+        Abstract
+        <img
+          src={ pubmedHeaderIcon }
+          width="16"
+          style={{ filter: 'opacity(0.5)' }}
+        />
+      </Stack>
+    </Tooltip>
+  )
+}
 
 export function renderAbstractCell(params) {
   if (params.value == null) {
@@ -23,22 +43,3 @@ export function renderAbstractCell(params) {
 //   from selecting the row. remove if rows are not selectable. */
 //   e => e.stopPropagation()
 // }
-
-
-export function renderAbstractHeader() {
-  return (
-    <Stack
-      direction="row"
-      gap={ 1 }
-      justifyContent="center"
-      alignItems="center"
-    >
-      Abstract
-      <img
-        src={ pubmedHeaderIcon }
-        width="16"
-        style={{ filter: 'opacity(0.5)' }}
-      />
-    </Stack>
-  )
-}
