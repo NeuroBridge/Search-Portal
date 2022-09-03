@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Stack, Tooltip } from '@mui/material'
+import { Stack, Tooltip, Typography } from '@mui/material'
 import { Link } from '../../../link'
 import pubmedHeaderIcon from '../../../../images/pubmed-icon.png'
 
@@ -24,16 +24,26 @@ export function renderAbstractHeader() {
 }
 
 export function renderAbstractCell(params) {
-  if (params.value == null) {
-    return ''
-  }
-  if (!params.row.pubmed_url) {
-    return ''
-  }
   return (
-    <Link to={ params.row.pubmed_url }>
-      { params.row.pmid }
-    </Link>
+    <Stack
+      sx={{ width: '100%' }}
+      direction="row"
+      justifyContent="center"
+      alignItems="center"
+    >
+      {
+        (params.value == null || !params.row.pubmed_url)
+          ? <Typography sx={{ filter: 'opacity(0.25)' }}>-</Typography>
+          : <Link
+              to={ params.row.pubmed_url }
+              onClick={
+               /* this stopPropagation is necessary to prevent link clicks
+               from selecting the row. remove if rows are not selectable. */
+               e => e.stopPropagation()
+              }
+            >{ params.row.pmid }</Link>
+      }
+    </Stack>
   )
 }
 
