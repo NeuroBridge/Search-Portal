@@ -1,11 +1,9 @@
-import { createContext, useContext, useEffect, useMemo, useState } from 'react'
-import PropTypes from 'prop-types'
-import { Divider } from '@mui/material'
+import { createContext, useCallback, useContext, useEffect, useLayoutEffect, useMemo, useState } from 'react'
 import { useBasket } from '../../../basket'
 import { useOntology } from '../../../ontology'
 import axios from 'axios'
 import { Forest } from './selection-forest'
-import { QueryForm } from './query-form'
+import { useWorkspace } from '../../workspace'
 
 //
 
@@ -19,7 +17,8 @@ const API_URL = `https://neurobridges-ml.renci.org/nb_translator`
 
 const InterfaceContext = createContext({})
 
-export const Interface = ({ searchWrapper }) => {
+export const Form = () => {
+  const { register } = useWorkspace()
   const ontology = useOntology()
   const basket = useBasket()
   const [values, setValues] = useState({})
@@ -93,47 +92,41 @@ export const Interface = ({ searchWrapper }) => {
     return _query
   }, [roots, values])
 
-  const fetchResults = () => {
-    searchWrapper(async () => {
-      try {
-        const { data } = await axios.post(
-          API_URL,
-          JSON.stringify({ query: { expression: query } }),
-          { headers: { 'Content-Type': 'text/html;charset=utf-8' } },
-        )
-        if (!data) {
-          throw new Error('An error occurred while fetching results.')
-        }
-        const results = Object.values(data).map(result => ({
+  const fetchResults = useCallback(() => {
+    return axios.post(
+      API_URL,
+      JSON.stringify({ query: { expression: query } }),
+      { headers: { 'Content-Type': 'text/html;charset=utf-8' } },
+    ).then(response => {
+      if (!response?.data) {
+        throw new Error('An error occurred while fetching results.')
+      }
+      const results = Object.values(response.data)
+        .map(result => ({
           title: result.title,
           snippet: result.snippet,
-          pmc_link: result.pmc_link,
-          url: result.pmc_link,
           score: result.score,
           pmid: result.pmid,
+          pubmed_url: result.pmc_link,
           pmcid: result.pmcid,
+          pmc_url: result.pmc_link,
         }))
-        return results
-      } catch (error) {
-        console.error(error.message)
-        return []
-      }
+      return results
+    }).catch(error => {
+      console.error(error.message)
+      return []
     })
-  }
+  }, [values])
+
+  useLayoutEffect(() => {
+    register('neurobridge2', fetchResults)
+  }, [fetchResults])
 
   return (
-    <InterfaceContext.Provider value={{ values, toggleTermSelection, query, fetchResults }}>
+    <InterfaceContext.Provider value={{ values, toggleTermSelection, query }}>
       <Forest />
-
-      <Divider />
-      
-      <QueryForm />
     </InterfaceContext.Provider>
   )
 } 
-
-Interface.propTypes = {
-  searchWrapper: PropTypes.func.isRequired,
-}
 
 export const useInterfaceContext = () => useContext(InterfaceContext)

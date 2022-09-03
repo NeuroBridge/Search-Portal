@@ -11,7 +11,7 @@ import {
 } from '@mui/icons-material'
 import { arrayToTree } from 'performant-array-to-tree'
 import { useOntology } from '../../../ontology'
-import { useInterfaceContext } from './'
+import { useInterfaceContext } from './form'
 
 export const SelectionTree = ({ rootTermId }) => {
   const theme = useTheme()

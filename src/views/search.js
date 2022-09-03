@@ -63,20 +63,24 @@ export const SearchView = () => {
   }
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-      <Container maxWidth="md" sx={{ padding: '2rem 1rem' }}>
-        <SearchForm
-          searchText={ searchText }
-          searchHandler={ requestSearch }
-          inputRef={ searchInputRef }
-          matches={ filteredTerms }
-        />
-      </Container>
-
-      <Container maxWidth="xl">
+    <Container maxWidth="xl">
+      <Box sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 2,
+      }}>
+        <Box sx={{ p: 4 }}>
+          <SearchForm
+            searchText={ searchText }
+            searchHandler={ requestSearch }
+            inputRef={ searchInputRef }
+            matches={ filteredTerms }
+          />
+        </Box>
+        
         <Workspace />
-      </Container>
 
-    </Box>
+      </Box>
+    </Container>
   )
 }
