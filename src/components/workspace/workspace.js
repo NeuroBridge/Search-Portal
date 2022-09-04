@@ -169,7 +169,6 @@ export const Workspace = () => {
                   borderRight: `1px solid ${ theme.palette.divider }`,
                   mt: 6.5,
                   flex: `0 0 200px`,
-                  '.iconWrapper': { border: '2px dashed crimson'}
                 }}
               >
                 {
