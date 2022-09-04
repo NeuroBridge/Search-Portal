@@ -173,8 +173,7 @@ export const Workspace = () => {
                 value={ currentInterfaceIndex }
                 onChange={ handleChangeInterface }
                 sx={{
-                  borderRight: `1px solid ${ theme.palette.divider }`,
-                  mt: 6.5,
+                  mt: 6.1,
                   flex: `0 0 200px`,
                 }}
               >
@@ -207,7 +206,7 @@ export const Workspace = () => {
                 }
               </Tabs>
 
-              <Divider />
+              <Divider orientation="vertical" flexItem />
 
               {
                 interfaces.map((ui, i) => (
