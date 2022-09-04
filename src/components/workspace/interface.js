@@ -46,7 +46,7 @@ export const Interface = ({ ui, active }) => {
               <HelpIcon
                 fontSize="small"
                 sx={{
-                  color: showHelp ? theme.palette.primary.main : theme.palette.common.grey,
+                  color: showHelp ? theme.palette.primary.main : theme.palette.grey[400],
                   transition: 'filter 250ms, transform 250ms',
                 }}
               />
@@ -56,8 +56,8 @@ export const Interface = ({ ui, active }) => {
             <span><ToggleButton
               on={ isDisabled === false }
               onChange={ toggleInterface(ui.id) }
-              OnIcon={ OnIcon }
-              OffIcon={ OffIcon }
+              OnIcon={ <OnIcon sx={{ backgroundColor: '#65c015', color: '#fff' }} /> }
+              OffIcon={ <OffIcon sx={{ backgroundColor: theme.palette.grey[400], color: '#fff' }} /> }
             /></span>
           </Tooltip>
         </Box>

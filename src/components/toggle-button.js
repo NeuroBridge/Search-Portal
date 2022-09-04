@@ -10,11 +10,7 @@ export const ToggleButton = ({ on, onChange, OnIcon, OffIcon }) => {
       size="small"
       sx={{ p: 0 }}
     >
-      {
-        on
-          ? <OnIcon sx={{ backgroundColor: '#65c015', color: '#fff' }} />
-          : <OffIcon />
-      }
+      { on ? OnIcon : OffIcon }
     </MuiToggleButton>
   )
 }
