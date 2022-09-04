@@ -20,6 +20,12 @@ export const Workspace = () => {
   const [currentInterfaceIndex, setCurrentInterfaceIndex] = useState(0)
   const [loading, setLoading] = useState(false)
   const requests = useRef({ })
+
+  const [activeInterfaces, setActiveInterfaces] = useState({})
+  const toggleInterface = id => {
+    setActiveInterfaces({ ...activeInterfaces, [id]: !activeInterfaces[id] })
+  }
+
   /*
     search results are held in Workspace's
     state as an object with this shape:
@@ -108,6 +114,7 @@ export const Workspace = () => {
       results,
       clearResults,
       interfaceDisplayNames,
+      toggleInterface,
     }}>
       <Stack dirction="column" gap={ 3 }>
         <Card sx={{
