@@ -1,12 +1,12 @@
 import { useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 import {
-  Box, Collapse, Divider, IconButton, Stack, Typography, useTheme,
+  Box, Collapse, Divider, IconButton, Stack, Tooltip, Typography, useTheme,
 } from '@mui/material'
 import {
   Power as OnIcon,
   PowerOff as OffIcon,
-  ExpandMore as HelpToggleIcon,
+  Help as HelpIcon,
 } from '@mui/icons-material'
 import { useWorkspace } from './workspace'
 import { ToggleButton } from '../toggle-button'
@@ -29,15 +29,9 @@ export const Interface = ({ ui, active }) => {
       <Box sx={{
         display: 'flex',
         alignItems: 'center',
-        p: 1, pl: 2,
+        px: 2, py: 1,
       }}>
         <Stack direction="row" alignItems="center" gap={ 3 }>
-          <ToggleButton
-            on={ isDisabled === false }
-            onChange={ toggleInterface(ui.id) }
-            OnIcon={ OnIcon }
-            OffIcon={ OffIcon }
-          />
           <Typography
             component="h2"
             variant="h6"
@@ -47,21 +41,25 @@ export const Interface = ({ ui, active }) => {
         </Stack>
 
         <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 1, }}>
-          <Typography sx={{ fontSize: '75%', filter: 'opacity(0.5)', textTransform: 'uppercase' }}>
-            { showHelp ? 'Hide' : 'Show' } Help
-          </Typography>
-          <IconButton onClick={ () => setShowHelp(!showHelp) } size="small">
-            <HelpToggleIcon
-              fontSize="small"
-              sx={{
-                color: theme.palette.primary.dark,
-                filter: 'saturate(0.1) opacity(0.5)',
-                transition: 'filter 250ms, transform 250ms',
-                transform: showHelp ? 'rotate(180deg)' : 'rotate(0)',
-                '&:hover': { filter: 'saturate(0.9) opacity(1)' },
-              }}
-            />
-          </IconButton>
+          <Tooltip placement="bottom" title={ `${ showHelp ? 'Hide' : 'Show' } help` }>
+            <span><IconButton onClick={ () => setShowHelp(!showHelp) } size="small">
+              <HelpIcon
+                fontSize="small"
+                sx={{
+                  color: showHelp ? theme.palette.primary.main : theme.palette.common.grey,
+                  transition: 'filter 250ms, transform 250ms',
+                }}
+              />
+            </IconButton></span>
+          </Tooltip>
+          <Tooltip placement="bottom" title={ `${ isDisabled === false ? 'Disable' : 'Enable' } interface` }>
+            <span><ToggleButton
+              on={ isDisabled === false }
+              onChange={ toggleInterface(ui.id) }
+              OnIcon={ OnIcon }
+              OffIcon={ OffIcon }
+            /></span>
+          </Tooltip>
         </Box>
       </Box>
 
