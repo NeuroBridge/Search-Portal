@@ -22,7 +22,6 @@ export const columns = [
     renderHeader: renderAbstractHeader,
     renderCell: renderAbstractCell,
     width: 125,
-    headerAlign: 'center',
   },
   {
     field: 'pmcid',
@@ -32,7 +31,6 @@ export const columns = [
     renderHeader: renderFullTextHeader,
     renderCell: renderFullTextCell,
     width: 125,
-    headerAlign: 'center',
   },
   // { field: 'snippet', headerName: 'Snippet' },
   {
