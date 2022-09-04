@@ -1,7 +1,7 @@
 import { createContext, useCallback, useContext, useRef, useState } from 'react'
 import {
   Box, Button, Card, Collapse, Divider, LinearProgress,
-  Stack, Tab, Tabs,
+  Stack, Tab, Tabs, useTheme,
 } from '@mui/material'
 import { Basket, useBasket } from '../basket'
 import { interfaces, interfaceDisplayNames } from './interfaces'
@@ -16,6 +16,7 @@ export const useWorkspace = () => useContext(WorkspaceContext)
 //
 
 export const Workspace = () => {
+  const theme = useTheme()
   const basket = useBasket()
   const [currentInterfaceIndex, setCurrentInterfaceIndex] = useState(0)
   const [loading, setLoading] = useState(false)
@@ -36,7 +37,7 @@ export const Workspace = () => {
     search results are held in Workspace's
     state as an object with this shape:
     {
-      // [interfaceId]: [Result], Result: {Object}
+      // [interfaceId]: [Result], Result: { title: 'The...', ... }
       neurobridge1: [{...}, {...}, ...],
       neurobridge2: [{...}, {...}, ...],
       ...
@@ -67,22 +68,27 @@ export const Workspace = () => {
     if (basket.ids.length === 0) {
       return
     }
-    setLoading(true)
     let newResults = {}
-    const activeRequests = Object.keys(requests.current)
-      ? Object.keys(requests.current)
-        .filter(id => !disabledInterfaces.has(id))
-        .map(id => requests.current[id])
-      : []
+    /* nonDisabledRequests is the property-value pairs
+    from the requests.current object that aren't disabled */
+    const nonDisabledRequests = Object.keys(requests.current)
+      ? Object.keys(requests.current).reduce((obj, interfaceId) => {
+        if (disabledInterfaces.has(interfaceId)) {
+          return { ...obj }
+        }
+        return { ...obj, [interfaceId]: requests.current[interfaceId] }
+      }, {}) : {}
 
-    console.log(activeRequests)
-
-    if (activeRequests.length > 0) {
-      Promise.all(activeRequests.map(f => f()))
+    /* if we have any non-disabled requests,
+    then we can start firing them off now,
+    aggregating results into the results object. */
+    if (Object.keys(nonDisabledRequests).length) {
+      setLoading(true)
+      Promise.all(Object.keys(nonDisabledRequests).map(id => nonDisabledRequests[id]).map(f => f()))
         .then(responses => {
           responses.forEach((response, i) => {
             // let's grab the id associated with this, the ith, request
-            const id = Object.keys(requests.current)[i]
+            const id = Object.keys(nonDisabledRequests)[i]
             // and save that to our results object, with that id as its key.
             newResults = { ...newResults, [id]: response }
           })
@@ -159,7 +165,12 @@ export const Workspace = () => {
                 variant="scrollable"
                 value={ currentInterfaceIndex }
                 onChange={ handleChangeInterface }
-                sx={{ borderRight: `1px solid #ddd`, mt: '50px', flex: `0 0 200px`, '.iconWrapper': {border: '2px dashed crimson'}}}
+                sx={{
+                  borderRight: `1px solid ${ theme.palette.divider }`,
+                  mt: 6.5,
+                  flex: `0 0 200px`,
+                  '.iconWrapper': { border: '2px dashed crimson'}
+                }}
               >
                 {
                   interfaces.map(ui => (
@@ -192,7 +203,11 @@ export const Workspace = () => {
               alignItems: 'center',
               p: 2,
             }}>
-              <Button variant="contained" onClick={ requestAll }>Search</Button>
+              <Button
+                variant="contained"
+                onClick={ requestAll }
+                disabled={ disabledInterfaces.size === interfaces.length }
+              >Search</Button>
             </Box>
           </Collapse>
         </Card>
