@@ -59,7 +59,7 @@ export const SearchResultsTable = () => {
           getRowId={ row => row.pmid }
           pageSize={ pageSize }
           onPageSizeChange={ newSize => setPageSize(newSize) }
-          rowsPerPageOptions={ [20, 50, 100] }
+          rowsPerPageOptions={ [10, 20, 50] }
           components={{
             Toolbar: TableHeader,
           }}
