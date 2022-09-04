@@ -21,10 +21,16 @@ export const Workspace = () => {
   const [loading, setLoading] = useState(false)
   const requests = useRef({ })
 
-  const [activeInterfaces, setActiveInterfaces] = useState({})
-  const toggleInterface = id => {
-    setActiveInterfaces({ ...activeInterfaces, [id]: !activeInterfaces[id] })
-  }
+  const [disabledInterfaces, setDisabledInterfaces] = useState(new Set())
+  const toggleInterface = useCallback(id => () => {
+    const newDisabledInterfaces = new Set(disabledInterfaces)
+    if (newDisabledInterfaces.has(id)) {
+      newDisabledInterfaces.delete(id)
+    } else {
+      newDisabledInterfaces.add(id)
+    }
+    setDisabledInterfaces(newDisabledInterfaces)
+  }, [disabledInterfaces])
 
   /*
     search results are held in Workspace's
@@ -63,22 +69,32 @@ export const Workspace = () => {
     }
     setLoading(true)
     let newResults = {}
-    Promise.all([...Object.values(requests.current).map(f => f())])
-      .then(responses => {
-        responses.forEach((response, i) => {
-          // let's grab the id associated with this, the ith, request
-          const id = Object.keys(requests.current)[i]
-          // and save that to our results object, with that id as its key.
-          newResults = { ...newResults, [id]: response }
+    const activeRequests = Object.keys(requests.current)
+      ? Object.keys(requests.current)
+        .filter(id => !disabledInterfaces.has(id))
+        .map(id => requests.current[id])
+      : []
+
+    console.log(activeRequests)
+
+    if (activeRequests.length > 0) {
+      Promise.all(activeRequests.map(f => f()))
+        .then(responses => {
+          responses.forEach((response, i) => {
+            // let's grab the id associated with this, the ith, request
+            const id = Object.keys(requests.current)[i]
+            // and save that to our results object, with that id as its key.
+            newResults = { ...newResults, [id]: response }
+          })
         })
-      })
-      .catch(error => {
-        console.error(error.message)
-      })
-      .finally(() => {
-        setResults(newResults)
-        setLoading(false)
-      })
+        .catch(error => {
+          console.error(error.message)
+        })
+        .finally(() => {
+          setResults(newResults)
+          setLoading(false)
+        })
+    }
   }
 
   const WorkspaceHeader = useCallback(() => {
@@ -114,6 +130,7 @@ export const Workspace = () => {
       results,
       clearResults,
       interfaceDisplayNames,
+      disabledInterfaces,
       toggleInterface,
     }}>
       <Stack dirction="column" gap={ 3 }>
@@ -142,7 +159,7 @@ export const Workspace = () => {
                 variant="scrollable"
                 value={ currentInterfaceIndex }
                 onChange={ handleChangeInterface }
-                sx={{ borderRight: `1px solid #ddd`, mt: '50px', flex: `0 0 200px`, }}
+                sx={{ borderRight: `1px solid #ddd`, mt: '50px', flex: `0 0 200px`, '.iconWrapper': {border: '2px dashed crimson'}}}
               >
                 {
                   interfaces.map(ui => (
