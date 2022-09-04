@@ -176,7 +176,10 @@ export const Workspace = () => {
                   interfaces.map(ui => (
                     <Tab
                       key={ ui.id }
-                      label={ ui.displayName }
+                      label={
+                        disabledInterfaces.has(ui.id)
+                          ? <Box sx={{ filter: 'opacity(0.5)' }}>{ ui.displayName }</Box>
+                          : ui.displayName }
                       id={ `tab-${ ui.id }` }
                       aria-controls={ `tabpanel-${ ui.id }` }
                     />
