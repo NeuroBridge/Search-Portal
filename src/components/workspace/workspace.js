@@ -3,6 +3,9 @@ import {
   Box, Button, Card, Collapse, Divider, LinearProgress,
   Stack, Tab, Tabs, useTheme,
 } from '@mui/material'
+import {
+  Circle as DisabledIndicatorIcon,
+} from '@mui/icons-material'
 import { Basket, useBasket } from '../basket'
 import { interfaces, interfaceDisplayNames } from './interfaces'
 import { SearchResultsTable } from './results-table'
@@ -69,8 +72,10 @@ export const Workspace = () => {
       return
     }
     let newResults = {}
-    /* nonDisabledRequests is the property-value pairs
-    from the requests.current object that aren't disabled */
+    /*
+      nonDisabledRequests is the property-value pairs
+      from the requests.current object that aren't disabled.
+    */
     const nonDisabledRequests = Object.keys(requests.current)
       ? Object.keys(requests.current).reduce((obj, interfaceId) => {
         if (disabledInterfaces.has(interfaceId)) {
@@ -79,9 +84,11 @@ export const Workspace = () => {
         return { ...obj, [interfaceId]: requests.current[interfaceId] }
       }, {}) : {}
 
-    /* if we have any non-disabled requests,
-    then we can start firing them off now,
-    aggregating results into the results object. */
+    /*
+      if we have any non-disabled requests,
+      then we can start firing them off now,
+      aggregating results into the results object.
+    */
     if (Object.keys(nonDisabledRequests).length) {
       setLoading(true)
       Promise.all(Object.keys(nonDisabledRequests).map(id => nonDisabledRequests[id]).map(f => f()))
@@ -176,9 +183,23 @@ export const Workspace = () => {
                     <Tab
                       key={ ui.id }
                       label={
-                        disabledInterfaces.has(ui.id)
-                          ? <Box sx={{ filter: 'opacity(0.5)' }}>{ ui.displayName }</Box>
-                          : ui.displayName }
+                        <Stack
+                          direction="row"
+                          gap={ 1 }
+                          alignItems="center"
+                          justifyContent="space-between"
+                          sx={{ width: '100%' }}
+                        >
+                          { ui.displayName }
+                          <DisabledIndicatorIcon sx={{
+                            fontSize: '85%',
+                            transition: 'color 500ms ease-out',
+                            color: disabledInterfaces.has(ui.id)
+                              ? theme.palette.grey[300]
+                              : '#65c015'
+                          }} />
+                        </Stack>
+                      }
                       id={ `tab-${ ui.id }` }
                       aria-controls={ `tabpanel-${ ui.id }` }
                     />
