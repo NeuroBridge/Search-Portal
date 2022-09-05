@@ -1,7 +1,7 @@
 import { createContext, useCallback, useContext, useRef, useState } from 'react'
 import {
-  Box, Button, Card, Collapse, Divider, LinearProgress,
-  Stack, Tab, Tabs, useTheme,
+  Box, Button, Card, Collapse, Divider,
+  LinearProgress, Stack, Tab, Tabs, 
 } from '@mui/material'
 import {
   Circle as DisabledIndicatorIcon,
@@ -19,7 +19,6 @@ export const useWorkspace = () => useContext(WorkspaceContext)
 //
 
 export const Workspace = () => {
-  const theme = useTheme()
   const basket = useBasket()
   const [currentInterfaceIndex, setCurrentInterfaceIndex] = useState(0)
   const [loading, setLoading] = useState(false)
@@ -191,11 +190,12 @@ export const Workspace = () => {
                         >
                           { ui.displayName }
                           <DisabledIndicatorIcon sx={{
+                            color: '#65c015',
                             fontSize: '85%',
-                            transition: 'color 250ms ease-out 200ms',
-                            color: disabledInterfaces.has(ui.id)
-                              ? theme.palette.grey[300]
-                              : '#65c015'
+                            transition: 'filter 350ms',
+                            filter: disabledInterfaces.has(ui.id)
+                              ? `drop-shadow(0 0 0 #65c015) grayscale(1.0) brightness(1.25)`
+                              : `drop-shadow(0 0 3px #65c015) grayscale(0.0) brightness(1.0)`,
                           }} />
                         </Stack>
                       }
