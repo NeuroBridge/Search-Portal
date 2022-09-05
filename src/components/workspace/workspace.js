@@ -192,7 +192,7 @@ export const Workspace = () => {
                           { ui.displayName }
                           <DisabledIndicatorIcon sx={{
                             fontSize: '85%',
-                            transition: 'color 500ms ease-out',
+                            transition: 'color 250ms ease-out 200ms',
                             color: disabledInterfaces.has(ui.id)
                               ? theme.palette.grey[300]
                               : '#65c015'

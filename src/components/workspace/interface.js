@@ -75,7 +75,7 @@ export const Interface = ({ ui, active }) => {
       <Box sx={{
         flex: 1,
         p: 2,
-        filter: isDisabled ? 'blur(3px) brightness(0.9)' : 'blur(0)',
+        filter: isDisabled ? 'blur(3px) saturate(0.25)' : 'blur(0)',
         transition: 'filter 250ms',
         pointerEvents: isDisabled ? 'none' : 'auto',
       }}>
