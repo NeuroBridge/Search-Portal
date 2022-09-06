@@ -149,7 +149,7 @@ export const ContactForm = ({ presets }) => {
           'message' in formState.errors && <FormHelperText>{ formState.errors.message.message }</FormHelperText>
         }
       </FormControl>
-      <Stack direction="horizontal" gap={ 4 } sx={{ '& > button': { flex: 1 } }}>
+      <Stack direction="row" gap={ 4 } sx={{ '& > button': { flex: 1 } }}>
         <Button
           onClick={ handleClickClearForm }
           variant="outlined"

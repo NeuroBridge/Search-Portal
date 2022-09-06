@@ -1,8 +1,11 @@
 import { createContext, useCallback, useContext, useRef, useState } from 'react'
 import {
-  Box, Button, Card, Collapse, Divider, LinearProgress,
-  Stack, Tab, Tabs,
+  Box, Button, Card, Collapse, Divider,
+  LinearProgress, Stack, Tab, Tabs, 
 } from '@mui/material'
+import {
+  Circle as DisabledIndicatorIcon,
+} from '@mui/icons-material'
 import { Basket, useBasket } from '../basket'
 import { interfaces, interfaceDisplayNames } from './interfaces'
 import { SearchResultsTable } from './results-table'
@@ -20,11 +23,23 @@ export const Workspace = () => {
   const [currentInterfaceIndex, setCurrentInterfaceIndex] = useState(0)
   const [loading, setLoading] = useState(false)
   const requests = useRef({ })
+
+  const [disabledInterfaces, setDisabledInterfaces] = useState(new Set())
+  const toggleInterface = useCallback(id => () => {
+    const newDisabledInterfaces = new Set(disabledInterfaces)
+    if (newDisabledInterfaces.has(id)) {
+      newDisabledInterfaces.delete(id)
+    } else {
+      newDisabledInterfaces.add(id)
+    }
+    setDisabledInterfaces(newDisabledInterfaces)
+  }, [disabledInterfaces])
+
   /*
     search results are held in Workspace's
     state as an object with this shape:
     {
-      // [interfaceId]: [Result], Result: {Object}
+      // [interfaceId]: [Result], Result: { title: 'The...', ... }
       neurobridge1: [{...}, {...}, ...],
       neurobridge2: [{...}, {...}, ...],
       ...
@@ -55,24 +70,43 @@ export const Workspace = () => {
     if (basket.ids.length === 0) {
       return
     }
-    setLoading(true)
     let newResults = {}
-    Promise.all([...Object.values(requests.current).map(f => f())])
-      .then(responses => {
-        responses.forEach((response, i) => {
-          // let's grab the id associated with this, the ith, request
-          const id = Object.keys(requests.current)[i]
-          // and save that to our results object, with that id as its key.
-          newResults = { ...newResults, [id]: response }
+    /*
+      nonDisabledRequests is the property-value pairs
+      from the requests.current object that aren't disabled.
+    */
+    const nonDisabledRequests = Object.keys(requests.current)
+      ? Object.keys(requests.current).reduce((obj, interfaceId) => {
+        if (disabledInterfaces.has(interfaceId)) {
+          return { ...obj }
+        }
+        return { ...obj, [interfaceId]: requests.current[interfaceId] }
+      }, {}) : {}
+
+    /*
+      if we have any non-disabled requests,
+      then we can start firing them off now,
+      aggregating results into the results object.
+    */
+    if (Object.keys(nonDisabledRequests).length) {
+      setLoading(true)
+      Promise.all(Object.keys(nonDisabledRequests).map(id => nonDisabledRequests[id]).map(f => f()))
+        .then(responses => {
+          responses.forEach((response, i) => {
+            // let's grab the id associated with this, the ith, request
+            const id = Object.keys(nonDisabledRequests)[i]
+            // and save that to our results object, with that id as its key.
+            newResults = { ...newResults, [id]: response }
+          })
         })
-      })
-      .catch(error => {
-        console.error(error.message)
-      })
-      .finally(() => {
-        setResults(newResults)
-        setLoading(false)
-      })
+        .catch(error => {
+          console.error(error.message)
+        })
+        .finally(() => {
+          setResults(newResults)
+          setLoading(false)
+        })
+    }
   }
 
   const WorkspaceHeader = useCallback(() => {
@@ -108,6 +142,8 @@ export const Workspace = () => {
       results,
       clearResults,
       interfaceDisplayNames,
+      disabledInterfaces,
+      toggleInterface,
     }}>
       <Stack dirction="column" gap={ 3 }>
         <Card sx={{
@@ -135,13 +171,34 @@ export const Workspace = () => {
                 variant="scrollable"
                 value={ currentInterfaceIndex }
                 onChange={ handleChangeInterface }
-                sx={{ borderRight: `1px solid #ddd`, mt: '50px', flex: `0 0 200px`, }}
+                sx={{
+                  mt: 6.1,
+                  flex: `0 0 200px`,
+                }}
               >
                 {
                   interfaces.map(ui => (
                     <Tab
                       key={ ui.id }
-                      label={ ui.displayName }
+                      label={
+                        <Stack
+                          direction="row"
+                          gap={ 1 }
+                          alignItems="center"
+                          justifyContent="space-between"
+                          sx={{ width: '100%' }}
+                        >
+                          { ui.displayName }
+                          <DisabledIndicatorIcon sx={{
+                            color: '#65c015',
+                            fontSize: '85%',
+                            transition: 'filter 350ms',
+                            filter: disabledInterfaces.has(ui.id)
+                              ? `drop-shadow(0 0 0 #65c015) grayscale(1.0) brightness(1.25)`
+                              : `drop-shadow(0 0 3px #65c015) grayscale(0.0) brightness(1.0)`,
+                          }} />
+                        </Stack>
+                      }
                       id={ `tab-${ ui.id }` }
                       aria-controls={ `tabpanel-${ ui.id }` }
                     />
@@ -149,7 +206,7 @@ export const Workspace = () => {
                 }
               </Tabs>
 
-              <Divider />
+              <Divider orientation="vertical" flexItem />
 
               {
                 interfaces.map((ui, i) => (
@@ -168,7 +225,11 @@ export const Workspace = () => {
               alignItems: 'center',
               p: 2,
             }}>
-              <Button variant="contained" onClick={ requestAll }>Search</Button>
+              <Button
+                variant="contained"
+                onClick={ requestAll }
+                disabled={ disabledInterfaces.size === interfaces.length }
+              >Search</Button>
             </Box>
           </Collapse>
         </Card>

@@ -39,7 +39,7 @@ export const Form = (/*{ searchWrapper }*/) => {
   const querystring = useMemo(() => terms.map(term => term.labels[termLabels[term.id]]).join('+'), [termLabels])
 
   useEffect(() => {
-    const fetchResults = () => axios.get(API_URL, { params: { searchTerms: querystring } })
+    const nqFetchResults = () => axios.get(API_URL, { params: { searchTerms: querystring } })
       .then(response => {
         if (!response?.data?.data) {
           throw new Error('An error occurred while querying NeuroQuery.')
@@ -55,7 +55,7 @@ export const Form = (/*{ searchWrapper }*/) => {
       }).catch(error => {
         console.error(error)
       })
-    register('neuroquery', fetchResults)
+    register('neuroquery', nqFetchResults)
   }, [termLabels])
 
   const handleChangeTermLabel = id => event => {
