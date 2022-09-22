@@ -10,7 +10,12 @@ import { TableHeader } from './table-header'
 //
 
 export const SearchResultsTable = () => {
-  const { results, interfaceDisplayNames } = useWorkspace()
+  const { results } = useWorkspace()
+  const [currentTabIndex, setCurrentTabIndex] = useState(0)
+
+  const handleChangeTab = (event, newIndex) => {
+    setCurrentTabIndex(newIndex)
+  }
   
   // tableData will be a memoized array consisting of just
   // the items from each interface in the results object.
@@ -18,23 +23,14 @@ export const SearchResultsTable = () => {
     if (!Object.keys(results).length) {
       return []
     }
-    return Object.keys(results).reduce((arr, interfaceId) => {
-      const newResults = results[interfaceId].map(result => ({
-        ...result,
-        source: interfaceId,
-      }))
-      return [...arr, ...newResults]
-    }, [])
-  }, [results])
+    const interfaceId = Object.keys(results)[currentTabIndex]
+    return results[interfaceId]
+  }, [currentTabIndex, results])
 
   const [pageSize, setPageSize] = useState(20)
 
-  const rowsCount = useMemo(() => {
-    if (!Object.keys(results).length) {
-      return 0
-    }
-    return tableData.length
-  }, [results])
+  const rowsCount = useMemo(() => Object.keys(results)
+    .reduce((sum, interfaceId) => sum + results[interfaceId].length, 0), [results])
 
   const handleRowClick = params => {
     console.log(params)
@@ -47,8 +43,9 @@ export const SearchResultsTable = () => {
   }
 
   return (
-    <Fade in={ !!tableData.length }>
+    <Fade in={ !!Object.keys(results).length }>
       <Card>
+        
         <DataGrid
           sx={{
             '.MuiDataGrid-row': { cursor: 'pointer' },
@@ -66,11 +63,9 @@ export const SearchResultsTable = () => {
           componentsProps={{
             toolbar: {
               heading: `${ rowsCount } total results`,
-              subheading: Object.keys(results)
-                .sort()
-                .map(interfaceId => `${ interfaceDisplayNames[interfaceId] } (${ results[interfaceId].length })`)
-                .join(', ')
-            },
+              currentTabIndex,
+              handleChangeTab,
+            }
           }}
           disableSelectionOnClick
           checkboxSelection
