@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import {
-  Box, Divider, IconButton, Stack, Tooltip, Typography,
+  Box, Divider, IconButton, Stack, Tab, Tabs, Tooltip, Typography,
 } from '@mui/material'
 import {
   Clear as ClearResultsIcon,
@@ -14,8 +14,8 @@ import {
   GridToolbarExport,
 } from '@mui/x-data-grid'
 
-export const TableHeader = ({ heading, subheading }) => {
-  const { clearResults } = useWorkspace()
+export const TableHeader = ({ heading, currentTabIndex, handleChangeTab }) => {
+  const { results, clearResults } = useWorkspace()
   
   return (
     <GridToolbarContainer sx={{
@@ -37,9 +37,23 @@ export const TableHeader = ({ heading, subheading }) => {
           alignItems="center"
         >
           <Typography>{ heading }</Typography>
-          <Typography
-            sx={{ fontStyle: 'italic', filter: 'opacity(0.66)', fontSize: '95%' }}
-          >{ subheading }</Typography>
+
+        <Tabs
+          value={ currentTabIndex }
+          onChange={ handleChangeTab }
+          variant="scrollable"
+        >
+          {
+            Object.keys(results).map(interfaceId => (
+              <Tab
+                key={ `results-tab-${ interfaceId }` }
+                label={ `${ interfaceId } (${ results[interfaceId].length })` }
+                id={ `results-tab-${ interfaceId }` }
+                aria-controls={ `results-tabpanel-${ interfaceId }` }
+              />
+            ))
+          }
+        </Tabs>
         </Stack>
         <Tooltip title="Clear all results" placement="left">
           <IconButton onClick={ clearResults }>
@@ -61,5 +75,6 @@ export const TableHeader = ({ heading, subheading }) => {
 
 TableHeader.propTypes = {
   heading: PropTypes.string.isRequired,
-  subheading: PropTypes.string.isRequired,
+  currentTabIndex: PropTypes.number.isRequired,
+  handleChangeTab: PropTypes.func.isRequired,
 }
