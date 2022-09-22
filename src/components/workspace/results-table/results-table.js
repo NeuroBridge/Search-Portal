@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { Card, Fade } from '@mui/material'
+import { Card, Fade, Tab, Tabs } from '@mui/material'
 import { useWorkspace } from '../workspace'
 import {
   DataGrid,
@@ -11,6 +11,7 @@ import { TableHeader } from './table-header'
 
 export const SearchResultsTable = () => {
   const { results, interfaceDisplayNames } = useWorkspace()
+  const [currentTabIndex, setCurrentTabIndex] = useState(0)
   
   // tableData will be a memoized array consisting of just
   // the items from each interface in the results object.
@@ -19,10 +20,7 @@ export const SearchResultsTable = () => {
       return []
     }
     return Object.keys(results).reduce((arr, interfaceId) => {
-      const newResults = results[interfaceId].map(result => ({
-        ...result,
-        source: interfaceId,
-      }))
+      const newResults = []
       return [...arr, ...newResults]
     }, [])
   }, [results])
@@ -49,6 +47,18 @@ export const SearchResultsTable = () => {
   return (
     <Fade in={ !!tableData.length }>
       <Card>
+        <Tabs value={ currentTabIndex }>
+          {
+            Object.keys(results).map(interfaceId => (
+              <Tab
+                key={ `results-tab-${ interfaceId }` }
+                label={ interfaceId }
+                id={ `results-tab-${ interfaceId }` }
+                aria-controls={ `results-tabpanel-${ interfaceId }` }
+              >{ interfaceId }</Tab>
+            ))
+          }
+        </Tabs>
         <DataGrid
           sx={{
             '.MuiDataGrid-row': { cursor: 'pointer' },
@@ -68,7 +78,7 @@ export const SearchResultsTable = () => {
               heading: `${ rowsCount } total results`,
               subheading: Object.keys(results)
                 .sort()
-                .map(interfaceId => `${ interfaceDisplayNames[interfaceId] } (${ results[interfaceId].length })`)
+                .map(interfaceId => `${ interfaceDisplayNames[interfaceId] }`)
                 .join(', ')
             },
           }}
