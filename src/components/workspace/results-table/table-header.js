@@ -13,6 +13,9 @@ import {
   GridToolbarDensitySelector,
   GridToolbarExport,
 } from '@mui/x-data-grid'
+import { interfaceDisplayNames } from '../interfaces'
+
+console.log(interfaceDisplayNames)
 
 export const TableHeader = ({ heading, currentTabIndex, handleChangeTab }) => {
   const { results, clearResults } = useWorkspace()
@@ -44,10 +47,12 @@ export const TableHeader = ({ heading, currentTabIndex, handleChangeTab }) => {
           variant="scrollable"
         >
           {
-            Object.keys(results).map(interfaceId => (
+            Object.keys(results)
+            .sort()
+            .map(interfaceId => (
               <Tab
                 key={ `results-tab-${ interfaceId }` }
-                label={ `${ interfaceId } (${ results[interfaceId].length })` }
+                label={ `${ interfaceDisplayNames[interfaceId] } (${ results[interfaceId].length })` }
                 id={ `results-tab-${ interfaceId }` }
                 aria-controls={ `results-tabpanel-${ interfaceId }` }
               />
