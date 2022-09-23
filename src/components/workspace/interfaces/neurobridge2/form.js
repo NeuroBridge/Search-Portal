@@ -95,7 +95,7 @@ export const Form = () => {
   const fetchResults = useCallback(() => {
     return axios.post(
       API_URL,
-      JSON.stringify({ query: { expression: query } }),
+      JSON.stringify({ query: { expression: query }, max_res: 100 }),
       { headers: { 'Content-Type': 'text/html;charset=utf-8' } },
     ).then(response => {
       if (!response?.data) {
