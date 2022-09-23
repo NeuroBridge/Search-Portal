@@ -23,14 +23,11 @@ export const SearchResultsTable = () => {
     if (!Object.keys(results).length) {
       return []
     }
-    const interfaceId = Object.keys(results)[currentTabIndex]
+    const interfaceId = Object.keys(results).sort()[currentTabIndex]
     return results[interfaceId]
   }, [currentTabIndex, results])
 
   const [pageSize, setPageSize] = useState(20)
-
-  const rowsCount = useMemo(() => Object.keys(results)
-    .reduce((sum, interfaceId) => sum + results[interfaceId].length, 0), [results])
 
   const handleRowClick = params => {
     console.log(params)
@@ -61,11 +58,7 @@ export const SearchResultsTable = () => {
             Toolbar: TableHeader,
           }}
           componentsProps={{
-            toolbar: {
-              heading: `${ rowsCount } total results`,
-              currentTabIndex,
-              handleChangeTab,
-            }
+            toolbar: { currentTabIndex, handleChangeTab }
           }}
           disableSelectionOnClick
           checkboxSelection

@@ -1,4 +1,3 @@
-import { interfaceDisplayNames } from '../interfaces'
 import {
   renderAbstractHeader,
   renderAbstractCell,
@@ -39,13 +38,6 @@ export const columns = [
     headerName: 'Score',
     renderCell: renderScoreCell,
     width: 110,
-  },
-  {
-    field: 'source',
-    description: 'Source Query Interface',
-    headerName: 'Source',
-    valueGetter: ({ value }) => interfaceDisplayNames[value],
-    width: 125,
   },
 ]
 

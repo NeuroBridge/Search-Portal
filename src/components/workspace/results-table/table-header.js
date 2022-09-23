@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import {
-  Divider, IconButton, Stack, Tab, Tabs, Tooltip, Typography,
+  Box, Divider, IconButton, Stack, Tab, Tabs, Tooltip,
 } from '@mui/material'
 import {
   Clear as ClearResultsIcon,
@@ -15,9 +15,9 @@ import {
 } from '@mui/x-data-grid'
 import { interfaceDisplayNames } from '../interfaces'
 
-export const TableHeader = ({ heading, currentTabIndex, handleChangeTab }) => {
+export const TableHeader = ({ currentTabIndex, handleChangeTab }) => {
   const { results, clearResults } = useWorkspace()
-  
+
   return (
     <GridToolbarContainer sx={{
       display: 'flex',
@@ -27,18 +27,15 @@ export const TableHeader = ({ heading, currentTabIndex, handleChangeTab }) => {
     }}>
       <Stack
         direction="row"
-        gap={ 2 }
         divider={ <Divider orientation="vertical" flexItem /> }
-        alignItems="center"
-        sx={{ p: 1 }}
+        alignItems="stretch"
       >
-        <Typography>{ heading }</Typography>
-
+        <Box sx={{ p: 2 }}>RESULTS</Box>
         <Tabs
           value={ currentTabIndex }
           onChange={ handleChangeTab }
           variant="scrollable"
-          sx={{ flex: 1 }}
+          sx={{ flex: 1, height: '100%' }}
         >
           {
             Object.keys(results)
@@ -58,12 +55,14 @@ export const TableHeader = ({ heading, currentTabIndex, handleChangeTab }) => {
           justifyContent="flex-end"
           alignItems="center"
           className="results-action-buttons"
+          sx={{ p: '0 1 0 0'}}
         >
           <Tooltip title="Clear all results" placement="top">
             <IconButton
               onClick={ clearResults }
               size="small"
               aria-label="Clear all results"
+              sx={{ borderRadius: 0 }}
             >
               <ClearResultsIcon />
             </IconButton>
@@ -83,7 +82,6 @@ export const TableHeader = ({ heading, currentTabIndex, handleChangeTab }) => {
 }
 
 TableHeader.propTypes = {
-  heading: PropTypes.string.isRequired,
   currentTabIndex: PropTypes.number.isRequired,
   handleChangeTab: PropTypes.func.isRequired,
 }
