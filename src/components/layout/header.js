@@ -1,6 +1,6 @@
 import { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { AppBar, Box, Container, IconButton, Slide, Toolbar, Tooltip, useTheme, useScrollTrigger } from '@mui/material'
+import { AppBar, Box, Container, IconButton, Slide, Toolbar, Tooltip, useScrollTrigger } from '@mui/material'
 import { Link } from '../link'
 import { useMatch, useResolvedPath } from 'react-router-dom'
 import { useDrawer } from '../drawer'
@@ -72,14 +72,14 @@ NavLink.propTypes = {
 //
 
 export const Header = () => {
-  const theme = useTheme()
   const drawer = useDrawer()
 
   return (
     <Fragment>
       <HideOnScroll>
         <AppBar elevation={ 1 } sx={{
-          backgroundColor: theme.palette.background.paper,
+          backgroundColor: 'rgba(255, 255, 255, 0.8)',
+          backdropFilter: 'blur(5px)',
         }}>
           <Toolbar>
             <Container maxWidth="xl" sx={{

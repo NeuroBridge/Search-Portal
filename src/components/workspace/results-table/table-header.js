@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import {
-  Box, Divider, IconButton, Stack, Tooltip, Typography,
+  Box, Divider, IconButton, Stack, Tab, Tabs, Tooltip,
 } from '@mui/material'
 import {
   Clear as ClearResultsIcon,
@@ -13,10 +13,11 @@ import {
   GridToolbarDensitySelector,
   GridToolbarExport,
 } from '@mui/x-data-grid'
+import { interfaceDisplayNames } from '../interfaces'
 
-export const TableHeader = ({ heading, subheading }) => {
-  const { clearResults } = useWorkspace()
-  
+export const TableHeader = ({ currentTabIndex, handleChangeTab }) => {
+  const { results, clearResults } = useWorkspace()
+
   return (
     <GridToolbarContainer sx={{
       display: 'flex',
@@ -24,29 +25,50 @@ export const TableHeader = ({ heading, subheading }) => {
       alignItems: 'stretch',
       p: 0,
     }}>
-      <Box sx={{
-        p: 1,
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-      }}>
+      <Stack
+        direction="row"
+        divider={ <Divider orientation="vertical" flexItem /> }
+        alignItems="stretch"
+      >
+        <Box sx={{ p: 2 }}>RESULTS</Box>
+        <Tabs
+          value={ currentTabIndex }
+          onChange={ handleChangeTab }
+          variant="scrollable"
+          sx={{ flex: 1, height: '100%' }}
+        >
+          {
+            Object.keys(results)
+            .sort()
+            .map(interfaceId => (
+              <Tab
+                key={ `results-tab-${ interfaceId }` }
+                label={ `${ interfaceDisplayNames[interfaceId] } (${ results[interfaceId].length })` }
+                id={ `results-tab-${ interfaceId }` }
+                aria-controls={ `results-tabpanel-${ interfaceId }` }
+              />
+            ))
+          }
+        </Tabs>
         <Stack
           direction="row"
-          gap={ 2 }
-          divider={ <Divider orientation="vertical" flexItem /> }
+          justifyContent="flex-end"
           alignItems="center"
+          className="results-action-buttons"
+          sx={{ p: '0 1 0 0'}}
         >
-          <Typography>{ heading }</Typography>
-          <Typography
-            sx={{ fontStyle: 'italic', filter: 'opacity(0.66)', fontSize: '95%' }}
-          >{ subheading }</Typography>
+          <Tooltip title="Clear all results" placement="top">
+            <IconButton
+              onClick={ clearResults }
+              size="small"
+              aria-label="Clear all results"
+              sx={{ borderRadius: 0 }}
+            >
+              <ClearResultsIcon />
+            </IconButton>
+          </Tooltip>
         </Stack>
-        <Tooltip title="Clear all results" placement="left">
-          <IconButton onClick={ clearResults }>
-            <ClearResultsIcon />
-          </IconButton>
-        </Tooltip>
-      </Box>
+      </Stack>
       <Divider />
       <Stack direction="row" gap={ 1 } sx={{ backgroundColor: '#0001', p: 1 }}>
         <GridToolbarColumnsButton />
@@ -60,6 +82,6 @@ export const TableHeader = ({ heading, subheading }) => {
 }
 
 TableHeader.propTypes = {
-  heading: PropTypes.string.isRequired,
-  subheading: PropTypes.string.isRequired,
+  currentTabIndex: PropTypes.number.isRequired,
+  handleChangeTab: PropTypes.func.isRequired,
 }

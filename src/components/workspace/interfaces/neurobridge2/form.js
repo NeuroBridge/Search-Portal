@@ -95,13 +95,13 @@ export const Form = () => {
   const fetchResults = useCallback(() => {
     return axios.post(
       API_URL,
-      JSON.stringify({ query: { expression: query } }),
+      JSON.stringify({ query: { expression: query }, max_res: 100 }),
       { headers: { 'Content-Type': 'text/html;charset=utf-8' } },
     ).then(response => {
-      if (!response?.data) {
+      if (!response?.data?.docs) {
         throw new Error('An error occurred while fetching results.')
       }
-      const results = Object.values(response.data)
+      const results = response.data.docs
         .map(result => ({
           title: result.title,
           snippet: result.snippet,
