@@ -6,7 +6,7 @@ export const Forest = () => {
   const basket = useBasket()
 
   return (
-    <CardContent>
+    <CardContent sx={{ minHeight: '150px' }}>
       <Stack divider={ <Divider sx={{ margin: '1rem 0' }}/> }>
         {
           Object.keys(basket.contents)
