@@ -1,7 +1,9 @@
 import { createContext, useCallback, useContext, useEffect, useLayoutEffect, useMemo, useState } from 'react'
+import { Accordion, AccordionDetails, AccordionSummary, Divider } from '@mui/material'
+import { ExpandMore as AccordionIcon } from '@mui/icons-material'
+import axios from 'axios'
 import { useBasket } from '../../../basket'
 import { useOntology } from '../../../ontology'
-import axios from 'axios'
 import { Forest } from './selection-forest'
 import { useWorkspace } from '../../workspace'
 
@@ -21,7 +23,13 @@ export const Form = () => {
   const { register } = useWorkspace()
   const ontology = useOntology()
   const basket = useBasket()
-  const [values, setValues] = useState({})
+  const [values, setValues] = useState({ })
+
+  // this is basically a copy of the ids of the basket contents,
+  // with the non-checked (value = 0) ones filtered out.
+  const roots = useMemo(() => {
+    return [...basket.ids.filter(id => basket.contents[id] === 1)]
+  }, [basket.ids])
 
   // this effect gets triggered when the basket contents update.
   // it handles updating the values this component holds in its state by
@@ -30,19 +38,21 @@ export const Form = () => {
   useEffect(() => {
     const previousValues = { ...values }
     let baseValues
-    basket.ids
-      .forEach(id => {
-        const descendants = [
-          id,
-          ...ontology.descendantsOf(id).map(term => term.id),
-        ]
-        baseValues = {
-          ...baseValues,
-          ...descendants
-            .reduce((obj, id) => ({ [id]: 0, ...obj }), {}),
-        }
-      })
-      setValues({ ...baseValues, ...previousValues })
+    roots.forEach(id => {
+      const descendants = [
+        id,
+        ...ontology.descendantsOf(id).map(term => term.id),
+      ]
+      baseValues = {
+        ...baseValues,
+        ...descendants
+          .reduce((obj, id) => ({
+            [id]: basket.ids.includes(id) ? 1 : 0,
+            ...obj,
+          }), {}),
+      }
+    })
+    setValues({ ...baseValues, ...previousValues })
   }, [basket.ids])
 
   const toggleTermSelection = id => event => {
@@ -57,12 +67,6 @@ export const Form = () => {
     }
     setValues(newValues)
   }
-
-  // this is basically a copy of the ids of the basket contents,
-  // with the non-checked (value = 0) ones filtered out.
-  const roots = useMemo(() => {
-    return [...basket.ids.filter(id => basket.contents[id] === 1)]
-  }, [basket.ids])
 
   // here, we construct the query.
   const query = useMemo(() => {
@@ -119,13 +123,35 @@ export const Form = () => {
   }, [values])
 
   useLayoutEffect(() => {
-    register('neurobridge2', fetchResults)
+    register('neurobridge', fetchResults)
   }, [fetchResults])
 
   return (
     <InterfaceContext.Provider value={{ values, toggleTermSelection, query }}>
       <Forest />
-    </InterfaceContext.Provider>
+      <Divider />
+      <Accordion
+        square
+        disableGutters
+        elevation={ 0 }
+        sx={{ '.MuiButtonBase-root': { minHeight: 0 } }}
+      >
+        <AccordionSummary expandIcon={ <AccordionIcon color="primary" /> }>
+          Raw Query
+        </AccordionSummary>
+        <AccordionDetails sx={{
+          p: 0,
+          '.query': {
+            m: 0, p: 1,
+            backgroundColor: '#556',
+            color: '#eee',
+            fontSize: '85%',
+          },
+        }}>
+          <pre className="query">{ JSON.stringify(query, null, 2) }</pre>
+        </AccordionDetails>
+      </Accordion>
+   </InterfaceContext.Provider>
   )
 } 
 

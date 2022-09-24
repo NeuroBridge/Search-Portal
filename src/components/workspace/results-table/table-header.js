@@ -39,15 +39,15 @@ export const TableHeader = ({ currentTabIndex, handleChangeTab }) => {
         >
           {
             Object.keys(results)
-            .sort()
-            .map(interfaceId => (
-              <Tab
-                key={ `results-tab-${ interfaceId }` }
-                label={ `${ interfaceDisplayNames[interfaceId] } (${ results[interfaceId].length })` }
-                id={ `results-tab-${ interfaceId }` }
-                aria-controls={ `results-tabpanel-${ interfaceId }` }
-              />
-            ))
+              .sort()
+              .map(interfaceId => (
+                <Tab
+                  key={ `results-tab-${ interfaceId }` }
+                  label={ `${ interfaceDisplayNames[interfaceId] } (${ results[interfaceId].length })` }
+                  id={ `results-tab-${ interfaceId }` }
+                  aria-controls={ `results-tabpanel-${ interfaceId }` }
+                />
+              ))
           }
         </Tabs>
         <Stack

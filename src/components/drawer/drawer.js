@@ -101,7 +101,7 @@ export const Drawer = () => {
         <Box>
           <List dense disablePadding sx={{
             '.MuiListItem-root': {
-              padding: 0,
+              p: 0,
               whiteSpace: 'nowrap',
               overflow: 'hidden',
               textOverflow: 'ellipsis',
@@ -128,8 +128,8 @@ export const Drawer = () => {
           <Box sx={{
             display: 'flex',
             flexDirection: 'row',
-            gap: '0.5rem',
-            padding: '0.5rem 2.4rem',
+            gap: 1,
+            p: 1,
           }}>
             <Button
               variant="text"
@@ -159,7 +159,7 @@ export const Drawer = () => {
         <Box>
           <Typography variant="h6">Descendants</Typography>
 
-          <List dense disablePadding sx={{ '.MuiListItem-root': { padding: 0 } }}>
+          <List dense disablePadding sx={{ '.MuiListItem-root': { p: 0 } }}>
             {
               drawer.currentTerm.children.length > 0
                 ? drawer.currentTerm.children.map(child => (
@@ -188,10 +188,8 @@ export const Drawer = () => {
       PaperProps={{ style: { width: drawerWidth } }}
       sx={{
         '.MuiDrawer-paper': {
-          '& > .MuiBox-root': { px: 2, py: 1, },
-          '& .handle': {
-            padding: 0,
-          }
+          '& > .MuiBox-root': { px: 3, py: 2 },
+          '& .handle': { p: 0 }
         },
       }}
     >
@@ -206,7 +204,7 @@ export const Drawer = () => {
           height: '100%',
           minWidth: '5px',
           transition: 'min-width 100ms, filter 250ms',
-          padding: 0,
+          p: 0,
           cursor: 'ew-resize',
           '&:hover': {
             minWidth: '10px',
@@ -231,13 +229,13 @@ export const Drawer = () => {
               top: 0,
               zIndex: 9,
             }}>
-              <Box sx={{ flex: 1, paddingTop: '1rem' }}>
+              <Box sx={{ flex: 1 }}>
                 <Typography variant="h5" sx={{ margin: 0 }}>
                   { drawer.currentTerm.id }
                 </Typography>
                 <LabelsList />
               </Box>
-              <Box sx={{ paddingTop: '1rem' }}>
+              <Box sx={{ p: 1 }}>
                 <TermActionButtons
                   termId={ drawer.currentTerm.id }
                   tooltipPlacement="left"
