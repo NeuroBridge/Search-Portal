@@ -39,7 +39,10 @@ export const Form = () => {
         baseValues = {
           ...baseValues,
           ...descendants
-            .reduce((obj, id) => ({ [id]: 0, ...obj }), {}),
+            .reduce((obj, id) => ({
+              [id]: basket.ids.includes(id) ? 1 : 0,
+              ...obj,
+            }), {}),
         }
       })
       setValues({ ...baseValues, ...previousValues })
