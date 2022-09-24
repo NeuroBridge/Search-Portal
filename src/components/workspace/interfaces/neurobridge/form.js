@@ -119,7 +119,7 @@ export const Form = () => {
   }, [values])
 
   useLayoutEffect(() => {
-    register('neurobridge1', fetchResults)
+    register('neurobridge', fetchResults)
   }, [fetchResults])
 
   return (
