@@ -1,9 +1,9 @@
 import { Form } from './form'
 
 const ui = {
-  id: 'neurobridge2',
+  id: 'neurobridge',
 
-  displayName: 'NeuroBridge 2',
+  displayName: 'NeuroBridge',
 
   helpText: 'This is NeuroBridge 2 help text.',
 
