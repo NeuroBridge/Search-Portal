@@ -8,8 +8,18 @@ import {
   PowerOff as OffIcon,
   Help as HelpIcon,
 } from '@mui/icons-material'
+import { Link } from '../link'
 import { useWorkspace } from './workspace'
 import { ToggleButton } from '../toggle-button'
+import ReactMarkdown from 'react-markdown'
+
+//
+
+const markdownComponentMap = {
+  a: props => <Link to={ props.href }>{ props.children }</Link>,
+}
+
+//
 
 export const Interface = ({ ui, active }) => {
   const theme = useTheme()
@@ -66,7 +76,11 @@ export const Interface = ({ ui, active }) => {
       {/* Help Text */}
       <Collapse in={ showHelp } sx={{ backgroundColor: theme.palette.grey[100] }}>
         <Divider />
-        <Box sx={{ p: 2 }}>{ ui.helpText }</Box>
+        <Box sx={{ p: 2 }}>
+        <ReactMarkdown components={ markdownComponentMap }>
+          { ui.helpText }
+        </ReactMarkdown>
+        </Box>
       </Collapse>
 
       <Divider />
