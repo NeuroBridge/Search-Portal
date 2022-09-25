@@ -147,7 +147,7 @@ export const Form = () => {
   return (
     <InterfaceContext.Provider value={{ values, toggleTermSelection, query }}>
       <Stack direction="row" gap={ 2 } sx={{ p: 2 }}>
-        <FormControl fullWidth>
+        <FormControl fullWidth size="small">
           <InputLabel id="outer-operator-select-label">Outer Operator</InputLabel>
           <Select
             labelId="outer-operator-select-label"
@@ -163,7 +163,7 @@ export const Form = () => {
             }
           </Select>
         </FormControl>
-        <FormControl fullWidth>
+        <FormControl fullWidth size="small">
           <InputLabel id="inner-operator-select-label">Inner Operator</InputLabel>
           <Select
             labelId="inner-operator-select-label"
@@ -180,8 +180,13 @@ export const Form = () => {
           </Select>
         </FormControl>
       </Stack>
-      <Forest />
+
       <Divider />
+
+      <Forest />
+
+      <Divider />
+
       <Accordion
         square
         disableGutters
