@@ -39,15 +39,15 @@ export const TableHeader = ({ currentTabIndex, handleChangeTab }) => {
         >
           {
             Object.keys(results)
-            .sort()
-            .map(interfaceId => (
-              <Tab
-                key={ `results-tab-${ interfaceId }` }
-                label={ `${ interfaceDisplayNames[interfaceId] } (${ results[interfaceId].length })` }
-                id={ `results-tab-${ interfaceId }` }
-                aria-controls={ `results-tabpanel-${ interfaceId }` }
-              />
-            ))
+              .sort()
+              .map(interfaceId => (
+                <Tab
+                  key={ `results-tab-${ interfaceId }` }
+                  label={ `${ interfaceDisplayNames[interfaceId] } (${ results[interfaceId].length })` }
+                  id={ `results-tab-${ interfaceId }` }
+                  aria-controls={ `results-tabpanel-${ interfaceId }` }
+                />
+              ))
           }
         </Tabs>
         <Stack
@@ -62,7 +62,7 @@ export const TableHeader = ({ currentTabIndex, handleChangeTab }) => {
               onClick={ clearResults }
               size="small"
               aria-label="Clear all results"
-              sx={{ borderRadius: 0 }}
+              sx={{ borderRadius: 0, height: '100%', p: 1 }}
             >
               <ClearResultsIcon />
             </IconButton>

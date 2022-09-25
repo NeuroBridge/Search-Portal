@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { Fragment, useEffect, useMemo, useState } from 'react'
 import axios from 'axios'
 import { Box, CardContent, Divider, MenuItem, Select, Stack, Typography } from '@mui/material'
 import { Add as PlusIcon } from '@mui/icons-material'
@@ -64,57 +64,57 @@ export const Form = (/*{ searchWrapper }*/) => {
   }
 
   return (
-    <CardContent>
-      <Stack direction="column" gap={ 4 } divider={ <Divider flexItem /> }>
-        <Stack
-          direction="row"
-          divider={ <PlusIcon color="disabled" /> }
-          spacing={ 0 }
-          alignItems="center"
-          sx={{ flexWrap: 'wrap' }}
-        >
-          {
-            terms.map(term => term.labels.length === 1
-              ? (
-                <Box
-                  key={ `${ term.id }-select-box` }
-                  sx={{
-                    border: '1px solid #c4c4c4',
-                    borderRadius: '4px',
-                    padding: '0.4rem 0.5rem',
-                    margin: '0 0.5rem',
-                  }}
-                >
-                  <Typography>{ term.id }</Typography>
-                </Box>
-              ) : (
-                <Box key={ `${ term.id }-select-box` } sx={{ padding: '0.5rem' }}>
-                  <Select
-                    id={ `${ term.id }-select` }
-                    value={ termLabels[term.id] || 0 }
-                    onChange={ handleChangeTermLabel(term.id) }
-                    sx={{ '.MuiSelect-select': { padding: '0.5rem' } }}
+    <Fragment>
+      <CardContent sx={{ minHeight: '150px' }}>
+        <Stack direction="column" gap={ 4 } divider={ <Divider flexItem /> }>
+          <Stack
+            direction="row"
+            divider={ <PlusIcon color="disabled" /> }
+            spacing={ 0 }
+            alignItems="center"
+            sx={{ flexWrap: 'wrap' }}
+          >
+            {
+              terms.map(term => term.labels.length === 1
+                ? (
+                  <Box
+                    key={ `${ term.id }-select-box` }
+                    sx={{
+                      border: '1px solid #c4c4c4',
+                      borderRadius: '4px',
+                      padding: '0.4rem 0.5rem',
+                      margin: '0 0.5rem',
+                    }}
                   >
-                    {
-                      term.labels.map((label, i) => (
-                        <MenuItem key={ `${ term.id }-label-${ i }` } value={ i }>{ label }</MenuItem>
-                      ))
-                    }
-                  </Select>
-                </Box>
+                    <Typography>{ term.id }</Typography>
+                  </Box>
+                ) : (
+                  <Box key={ `${ term.id }-select-box` } sx={{ p: 2 }}>
+                    <Select
+                      id={ `${ term.id }-select` }
+                      value={ termLabels[term.id] || 0 }
+                      onChange={ handleChangeTermLabel(term.id) }
+                      sx={{ '.MuiSelect-select': { padding: '0.5rem' } }}
+                    >
+                      {
+                        term.labels.map((label, i) => (
+                          <MenuItem key={ `${ term.id }-label-${ i }` } value={ i }>{ label }</MenuItem>
+                        ))
+                      }
+                    </Select>
+                  </Box>
+                )
               )
-            )
-          }
+            }
+          </Stack>
         </Stack>
-        <Box sx={{
-          display: 'flex',
-          justifyContent: 'flex-end',
-        }}>
-          <Link to={ `https://neuroquery.org/query?text=${ querystring }` }>
-            Get results at NeuroQuery.org
-          </Link>
-        </Box>
+      </CardContent>
+      <Divider />
+      <Stack direction="row" justifyContent="flex-end" alignItems="center" sx={{ p: 1 }}>
+        <Link to={ `https://neuroquery.org/query?text=${ querystring }` } className="nq-link">
+          Get results at NeuroQuery.org
+        </Link>
       </Stack>
-    </CardContent>
+    </Fragment>
   )
 }

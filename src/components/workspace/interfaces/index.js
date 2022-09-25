@@ -1,10 +1,8 @@
-import NeuroBridge1 from './neurobridge1'
-import NeuroBridge2 from './neurobridge2'
+import NeuroBridgeInterface from './neurobridge'
 import NeuroQueryInterface from './neuroquery'
 
 export const interfaces = [
-  NeuroBridge1,
-  NeuroBridge2,
+  NeuroBridgeInterface,
   NeuroQueryInterface,
 ]
 
