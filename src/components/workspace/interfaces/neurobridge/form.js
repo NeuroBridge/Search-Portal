@@ -180,8 +180,13 @@ export const Form = () => {
           </Select>
         </FormControl>
       </Stack>
-      <Forest />
+
       <Divider />
+
+      <Forest />
+
+      <Divider />
+
       <Accordion
         square
         disableGutters
