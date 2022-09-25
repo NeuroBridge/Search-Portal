@@ -10,6 +10,11 @@ const ui = {
 This interface allows you to construct a NeuroBridge query
 from the terms in your workspace.
 
+Each visible term in your workspace defines a tree in this interface from
+which to build your query. You have the option of joining trees with the
+\`AND\` or \`OR \` operators &mdash; the "outer operator". Similarly, you
+can select the "inner operator" between terms selected within the same tree.
+
 Clicking the bullet in front of a term toggles that
 term's presence in the query. Each term is one of the following:
 
