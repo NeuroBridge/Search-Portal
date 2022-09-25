@@ -1,5 +1,8 @@
 import { createContext, useCallback, useContext, useEffect, useLayoutEffect, useMemo, useState } from 'react'
-import { Accordion, AccordionDetails, AccordionSummary, Divider } from '@mui/material'
+import {
+  Accordion, AccordionDetails, AccordionSummary, Divider,
+  InputLabel, FormControl, MenuItem, Select, Stack,
+} from '@mui/material'
 import { ExpandMore as AccordionIcon } from '@mui/icons-material'
 import axios from 'axios'
 import { useBasket } from '../../../basket'
@@ -17,6 +20,10 @@ const API_URL = `https://neurobridges-ml.renci.org/nb_translator`
 
 //
 
+const operators = ['AND', 'OR']
+
+//
+
 const InterfaceContext = createContext({})
 
 export const Form = () => {
@@ -24,6 +31,8 @@ export const Form = () => {
   const ontology = useOntology()
   const basket = useBasket()
   const [values, setValues] = useState({ })
+  const [outerOperator, setOuterOperator] = useState(operators[1])
+  const [innerOperator, setInnerOperator] = useState(operators[0])
 
   // this is basically a copy of the ids of the basket contents,
   // with the non-checked (value = 0) ones filtered out.
@@ -68,6 +77,15 @@ export const Form = () => {
     setValues(newValues)
   }
 
+  const handleChangeOperator = whichOperator => event => {
+    if (whichOperator === 'inner') {
+      return setInnerOperator(event.target.value)
+    }
+    if (whichOperator === 'outer') {
+      return setOuterOperator(event.target.value)
+    }
+  }
+  
   // here, we construct the query.
   const query = useMemo(() => {
     const groups = roots.reduce((obj, root) => {
@@ -80,10 +98,10 @@ export const Form = () => {
         ]
       }
     }, {})
-    let _query = { and: [] }
+    let _query = { [outerOperator]: [] }
     roots.forEach(id => {
-      _query.and.push({
-        or: [
+      _query[outerOperator].push({
+        [innerOperator]: [
           ...groups[id]
             .filter(id => values[id] !== 0)
             .map(id => values[id] === 1 ? id : { not: [id] }),
@@ -91,10 +109,10 @@ export const Form = () => {
       })
     })
     if (roots.length === 1) {
-      _query = _query.and[0]
+      _query = _query[outerOperator][0]
     }
     return _query
-  }, [roots, values])
+  }, [roots, values, innerOperator, outerOperator])
 
   const fetchResults = useCallback(() => {
     return axios.post(
@@ -128,6 +146,40 @@ export const Form = () => {
 
   return (
     <InterfaceContext.Provider value={{ values, toggleTermSelection, query }}>
+      <Stack direction="row" gap={ 2 } sx={{ p: 2 }}>
+        <FormControl fullWidth>
+          <InputLabel id="outer-operator-select-label">Outer Operator</InputLabel>
+          <Select
+            labelId="outer-operator-select-label"
+            id="outer-operator-select"
+            value={ outerOperator }
+            label="Outer Operator"
+            onChange={ handleChangeOperator('outer') }
+          >
+            {
+              operators.map(op => (
+                <MenuItem key={ `outer-operator-option-${ op }` } value={ op }>{ op }</MenuItem>
+              ))
+            }
+          </Select>
+        </FormControl>
+        <FormControl fullWidth>
+          <InputLabel id="inner-operator-select-label">Inner Operator</InputLabel>
+          <Select
+            labelId="inner-operator-select-label"
+            id="inner-operator-select"
+            value={ innerOperator }
+            label="Inner Operator"
+            onChange={ handleChangeOperator('inner') }
+          >
+            {
+              operators.map(op => (
+                <MenuItem key={ `inner-operator-option-${ op }` } value={ op }>{ op }</MenuItem>
+              ))
+            }
+          </Select>
+        </FormControl>
+      </Stack>
       <Forest />
       <Divider />
       <Accordion
