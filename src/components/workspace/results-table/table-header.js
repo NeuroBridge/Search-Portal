@@ -62,7 +62,7 @@ export const TableHeader = ({ currentTabIndex, handleChangeTab }) => {
               onClick={ clearResults }
               size="small"
               aria-label="Clear all results"
-              sx={{ borderRadius: 0 }}
+              sx={{ borderRadius: 0, height: '100%', p: 1 }}
             >
               <ClearResultsIcon />
             </IconButton>
