@@ -1,7 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useLayoutEffect, useMemo, useState } from 'react'
 import {
   Accordion, AccordionDetails, AccordionSummary, Divider,
-  InputLabel, FormControl, MenuItem, Select, Stack,
+  InputLabel, FormControl, MenuItem, Select, Stack, Typography,
 } from '@mui/material'
 import { ExpandMore as AccordionIcon } from '@mui/icons-material'
 import axios from 'axios'
@@ -20,10 +20,6 @@ const API_URL = `https://neurobridges-ml.renci.org/nb_translator`
 
 //
 
-const operators = ['AND', 'OR']
-
-//
-
 const InterfaceContext = createContext({})
 
 export const Form = () => {
@@ -31,8 +27,8 @@ export const Form = () => {
   const ontology = useOntology()
   const basket = useBasket()
   const [values, setValues] = useState({ })
-  const [outerOperator, setOuterOperator] = useState(operators[1])
-  const [innerOperator, setInnerOperator] = useState(operators[0])
+  const [outerOperator, setOuterOperator] = useState('OR')
+  const [innerOperator, setInnerOperator] = useState('AND')
 
   // this is basically a copy of the ids of the basket contents,
   // with the non-checked (value = 0) ones filtered out.
@@ -160,37 +156,33 @@ export const Form = () => {
           Configuration
         </AccordionSummary>
         <AccordionDetails>
+          <Typography component="div">Select Operators</Typography>
+          <br />
           <Stack direction="row" gap={ 2 }>
             <FormControl fullWidth size="small">
-              <InputLabel id="outer-operator-select-label">Outer Operator</InputLabel>
+              <InputLabel id="outer-operator-select-label">Between Concept Trees</InputLabel>
               <Select
                 labelId="outer-operator-select-label"
                 id="outer-operator-select"
                 value={ outerOperator }
-                label="Outer Operator"
+                label="Between Concept Trees"
                 onChange={ handleChangeOperator('outer') }
               >
-                {
-                  operators.map(op => (
-                    <MenuItem key={ `outer-operator-option-${ op }` } value={ op }>{ op }</MenuItem>
-                  ))
-                }
+                <MenuItem key={ `outer-operator-option-and` } value="AND">AND</MenuItem>
+                <MenuItem key={ `outer-operator-option-or` } value="OR">OR</MenuItem>
               </Select>
             </FormControl>
             <FormControl fullWidth size="small">
-              <InputLabel id="inner-operator-select-label">Inner Operator</InputLabel>
+              <InputLabel id="inner-operator-select-label">Within Concept Trees</InputLabel>
               <Select
                 labelId="inner-operator-select-label"
                 id="inner-operator-select"
                 value={ innerOperator }
-                label="Inner Operator"
+                label="Within Concept Trees"
                 onChange={ handleChangeOperator('inner') }
               >
-                {
-                  operators.map(op => (
-                    <MenuItem key={ `inner-operator-option-${ op }` } value={ op }>{ op }</MenuItem>
-                  ))
-                }
+                <MenuItem key={ `inner-operator-option-and` } value="AND">AND</MenuItem>
+                <MenuItem key={ `inner-operator-option-or` } value="OR">OR</MenuItem>
               </Select>
             </FormControl>
           </Stack>
