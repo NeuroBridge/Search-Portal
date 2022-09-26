@@ -1,7 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useLayoutEffect, useMemo, useState } from 'react'
 import {
-  Accordion, AccordionDetails, AccordionSummary, Divider,
-  InputLabel, FormControl, MenuItem, Select, Stack, Typography,
+  Accordion, AccordionDetails, AccordionSummary, Divider, InputLabel,
+  FormControl, MenuItem, Select, Stack, Typography, useTheme,
 } from '@mui/material'
 import { ExpandMore as AccordionIcon } from '@mui/icons-material'
 import axios from 'axios'
@@ -23,6 +23,7 @@ const API_URL = `https://neurobridges-ml.renci.org/nb_translator`
 const InterfaceContext = createContext({})
 
 export const Form = () => {
+  const theme = useTheme()
   const { register } = useWorkspace()
   const ontology = useOntology()
   const basket = useBasket()
@@ -155,7 +156,7 @@ export const Form = () => {
         <AccordionSummary expandIcon={ <AccordionIcon color="primary" /> }>
           Configuration
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails sx={{ backgroundColor: theme.palette.grey[100] }}>
           <Typography component="div">Select Operators</Typography>
           <br />
           <Stack direction="row" gap={ 2 }>
