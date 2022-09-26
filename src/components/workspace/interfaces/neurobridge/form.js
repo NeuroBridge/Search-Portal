@@ -74,12 +74,12 @@ export const Form = () => {
     setValues(newValues)
   }
 
-  const handleChangeOperator = whichOperator => event => {
+  const handleChangeOperator = whichOperator => {
     if (whichOperator === 'inner') {
-      return setInnerOperator(event.target.value)
+      return event => setInnerOperator(event.target.value)
     }
     if (whichOperator === 'outer') {
-      return setOuterOperator(event.target.value)
+      return event => setOuterOperator(event.target.value)
     }
   }
   
@@ -169,8 +169,8 @@ export const Form = () => {
                 label="Between Concept Trees"
                 onChange={ handleChangeOperator('outer') }
               >
-                <MenuItem key={ `outer-operator-option-and` } value="AND">AND</MenuItem>
-                <MenuItem key={ `outer-operator-option-or` } value="OR">OR</MenuItem>
+                <MenuItem value="AND">AND</MenuItem>
+                <MenuItem value="OR">OR</MenuItem>
               </Select>
             </FormControl>
             <FormControl fullWidth size="small">
@@ -182,8 +182,8 @@ export const Form = () => {
                 label="Within Concept Trees"
                 onChange={ handleChangeOperator('inner') }
               >
-                <MenuItem key={ `inner-operator-option-and` } value="AND">AND</MenuItem>
-                <MenuItem key={ `inner-operator-option-or` } value="OR">OR</MenuItem>
+                <MenuItem value="AND">AND</MenuItem>
+                <MenuItem value="OR">OR</MenuItem>
               </Select>
             </FormControl>
           </Stack>
@@ -213,7 +213,6 @@ export const Form = () => {
           <pre className="query">{ JSON.stringify(query, null, 2) }</pre>
         </AccordionDetails>
       </Accordion>
-
 
       <Divider />
 
