@@ -1,7 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useLayoutEffect, useMemo, useState } from 'react'
 import {
-  Accordion, AccordionDetails, AccordionSummary, Divider,
-  InputLabel, FormControl, MenuItem, Select, Stack, Typography,
+  Accordion, AccordionDetails, AccordionSummary, Divider, InputLabel,
+  FormControl, MenuItem, Select, Stack, Typography, useTheme,
 } from '@mui/material'
 import { ExpandMore as AccordionIcon } from '@mui/icons-material'
 import axios from 'axios'
@@ -23,6 +23,7 @@ const API_URL = `https://neurobridges-ml.renci.org/nb_translator`
 const InterfaceContext = createContext({})
 
 export const Form = () => {
+  const theme = useTheme()
   const { register } = useWorkspace()
   const ontology = useOntology()
   const basket = useBasket()
@@ -73,12 +74,12 @@ export const Form = () => {
     setValues(newValues)
   }
 
-  const handleChangeOperator = whichOperator => event => {
+  const handleChangeOperator = whichOperator => {
     if (whichOperator === 'inner') {
-      return setInnerOperator(event.target.value)
+      return event => setInnerOperator(event.target.value)
     }
     if (whichOperator === 'outer') {
-      return setOuterOperator(event.target.value)
+      return event => setOuterOperator(event.target.value)
     }
   }
   
@@ -155,7 +156,7 @@ export const Form = () => {
         <AccordionSummary expandIcon={ <AccordionIcon color="primary" /> }>
           Configuration
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails sx={{ backgroundColor: theme.palette.grey[100] }}>
           <Typography component="div">Select Operators</Typography>
           <br />
           <Stack direction="row" gap={ 2 }>
@@ -168,8 +169,8 @@ export const Form = () => {
                 label="Between Concept Trees"
                 onChange={ handleChangeOperator('outer') }
               >
-                <MenuItem key={ `outer-operator-option-and` } value="AND">AND</MenuItem>
-                <MenuItem key={ `outer-operator-option-or` } value="OR">OR</MenuItem>
+                <MenuItem value="AND">AND</MenuItem>
+                <MenuItem value="OR">OR</MenuItem>
               </Select>
             </FormControl>
             <FormControl fullWidth size="small">
@@ -181,8 +182,8 @@ export const Form = () => {
                 label="Within Concept Trees"
                 onChange={ handleChangeOperator('inner') }
               >
-                <MenuItem key={ `inner-operator-option-and` } value="AND">AND</MenuItem>
-                <MenuItem key={ `inner-operator-option-or` } value="OR">OR</MenuItem>
+                <MenuItem value="AND">AND</MenuItem>
+                <MenuItem value="OR">OR</MenuItem>
               </Select>
             </FormControl>
           </Stack>
@@ -212,7 +213,6 @@ export const Form = () => {
           <pre className="query">{ JSON.stringify(query, null, 2) }</pre>
         </AccordionDetails>
       </Accordion>
-
 
       <Divider />
 

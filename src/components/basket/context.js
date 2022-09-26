@@ -31,6 +31,10 @@ export const BasketProvider = ({ children }) => {
     setContents(newContents)
   }
 
+  const empty = () => {
+    setContents({})
+  }
+
   const ids = useMemo(() => Object.keys(contents), [contents])
 
   const contains = id => id in contents
@@ -43,6 +47,7 @@ export const BasketProvider = ({ children }) => {
       toggle,
       add,
       remove,
+      empty,
     }}>
       { children }
     </BasketContext.Provider>
