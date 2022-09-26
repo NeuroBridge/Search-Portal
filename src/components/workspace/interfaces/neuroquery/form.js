@@ -93,7 +93,7 @@ export const Form = (/*{ searchWrapper }*/) => {
                     <Typography>{ term.id }</Typography>
                   </Box>
                 ) : (
-                  <Box key={ `${ term.id }-select-box` } sx={{ p: 2 }}>
+                  <Box key={ `${ term.id }-select-box` } sx={{ p: 1 }}>
                     <Select
                       id={ `${ term.id }-select` }
                       value={ termLabels[term.id] || 0 }
