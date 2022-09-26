@@ -1,6 +1,10 @@
 import { Fragment, useEffect, useMemo, useState } from 'react'
 import axios from 'axios'
-import { Box, CardContent, Divider, MenuItem, Select, Stack, Typography } from '@mui/material'
+import {
+  Accordion, AccordionDetails, AccordionSummary,
+  Box, CardContent, Divider, MenuItem, Select, Stack, Typography,
+} from '@mui/material'
+import { ExpandMore as AccordionIcon } from '@mui/icons-material'
 import { Add as PlusIcon } from '@mui/icons-material'
 import { useWorkspace } from '../../workspace'
 import { Link } from '../../../link'
@@ -89,7 +93,7 @@ export const Form = (/*{ searchWrapper }*/) => {
                     <Typography>{ term.id }</Typography>
                   </Box>
                 ) : (
-                  <Box key={ `${ term.id }-select-box` } sx={{ p: 2 }}>
+                  <Box key={ `${ term.id }-select-box` } sx={{ p: 1 }}>
                     <Select
                       id={ `${ term.id }-select` }
                       value={ termLabels[term.id] || 0 }
@@ -109,10 +113,34 @@ export const Form = (/*{ searchWrapper }*/) => {
           </Stack>
         </Stack>
       </CardContent>
+
       <Divider />
-      <Stack direction="row" justifyContent="flex-end" alignItems="center" sx={{ p: 1 }}>
-        <Link to={ `https://neuroquery.org/query?text=${ querystring }` } className="nq-link">
-          Get results at NeuroQuery.org
+
+      <Accordion
+        square
+        disableGutters
+        elevation={ 0 }
+        sx={{ '.MuiButtonBase-root': { minHeight: 0 } }}
+      >
+        <AccordionSummary expandIcon={ <AccordionIcon color="primary" /> }>
+          Raw Query
+        </AccordionSummary>
+        <AccordionDetails sx={{
+          p: 1,
+          backgroundColor: '#556',
+          color: '#eee',
+          fontSize: '85%',
+          fontFamily: 'monospace',
+        }}>
+          &quot;https://neuroquery.org/query?text={ querystring }&quot;
+        </AccordionDetails>
+      </Accordion>
+
+      <Divider />
+
+      <Stack direction="row" justifyContent="flex-end" alignItems="center" sx={{ py: 1.5, px: 2.5 }}>
+        <Link to={ `https://neuroquery.org/query?text=${ querystring }` }>
+          View the results at NeuroQuery.org
         </Link>
       </Stack>
     </Fragment>
