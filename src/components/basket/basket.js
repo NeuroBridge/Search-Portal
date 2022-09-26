@@ -1,15 +1,13 @@
 import { Fragment, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import {
-  Box, Paper,
-  Card, CardActionArea, CardHeader,
-  Tooltip,
+  Box, Fab, Paper, Card, CardActionArea, CardHeader, Tooltip, Zoom,
 } from '@mui/material'
 import { useBasket } from './context'
 import { useDrawer } from '../drawer'
 import { useOntology } from '../ontology'
 import {
-  Delete as CloseIcon,
+  Delete as RemoveIcon,
   Visibility as SelectedIcon,
   VisibilityOff as IgnoreIcon,
 } from '@mui/icons-material'
@@ -45,7 +43,7 @@ export const BasketItem = ({ term }) => {
         </Tooltip>
         <Tooltip title="Remove term from workspace" placement="top">
           <CardActionArea onClick={ () => basket.remove(term.id) } sx={{padding: '0.5rem' }}>
-            <CloseIcon fontSize="small" />
+            <RemoveIcon fontSize="small" />
           </CardActionArea>
         </Tooltip>  
       </Card>
@@ -86,6 +84,7 @@ export const Basket = () => {
       minHeight: '80px',
       borderRadius: 0,
       paddingTop: '1.5rem',
+      position: 'relative',
     }}>
       <Box sx={{
         display: 'flex',
@@ -97,6 +96,16 @@ export const Basket = () => {
           terms.map(term => <BasketItem key={ `workspace-item-${ term.id }` } term={ term } />)
         }
       </Box>
+      <Zoom in={ !!basket.ids.length }>
+        <Tooltip placement="top" title="Clear all terms from workspace">
+          <Fab
+            color="primary"
+            size="small"
+            sx={{ position: 'absolute', right: '1rem', bottom: '1rem', zIndex: 9, }}
+            onClick={ basket.empty }
+          ><RemoveIcon /></Fab>
+        </Tooltip>
+      </Zoom>
     </Paper>
   )
 }
