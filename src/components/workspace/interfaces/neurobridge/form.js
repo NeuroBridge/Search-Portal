@@ -146,44 +146,56 @@ export const Form = () => {
 
   return (
     <InterfaceContext.Provider value={{ values, toggleTermSelection, query }}>
-      <Stack direction="row" gap={ 2 } sx={{ p: 2 }}>
-        <FormControl fullWidth size="small">
-          <InputLabel id="outer-operator-select-label">Outer Operator</InputLabel>
-          <Select
-            labelId="outer-operator-select-label"
-            id="outer-operator-select"
-            value={ outerOperator }
-            label="Outer Operator"
-            onChange={ handleChangeOperator('outer') }
-          >
-            {
-              operators.map(op => (
-                <MenuItem key={ `outer-operator-option-${ op }` } value={ op }>{ op }</MenuItem>
-              ))
-            }
-          </Select>
-        </FormControl>
-        <FormControl fullWidth size="small">
-          <InputLabel id="inner-operator-select-label">Inner Operator</InputLabel>
-          <Select
-            labelId="inner-operator-select-label"
-            id="inner-operator-select"
-            value={ innerOperator }
-            label="Inner Operator"
-            onChange={ handleChangeOperator('inner') }
-          >
-            {
-              operators.map(op => (
-                <MenuItem key={ `inner-operator-option-${ op }` } value={ op }>{ op }</MenuItem>
-              ))
-            }
-          </Select>
-        </FormControl>
-      </Stack>
+      <Forest />
 
       <Divider />
 
-      <Forest />
+      <Accordion
+        square
+        disableGutters
+        elevation={ 0 }
+        sx={{ '.MuiButtonBase-root': { minHeight: 0 } }}
+      >
+        <AccordionSummary expandIcon={ <AccordionIcon color="primary" /> }>
+          Configuration
+        </AccordionSummary>
+        <AccordionDetails>
+          <Stack direction="row" gap={ 2 }>
+            <FormControl fullWidth size="small">
+              <InputLabel id="outer-operator-select-label">Outer Operator</InputLabel>
+              <Select
+                labelId="outer-operator-select-label"
+                id="outer-operator-select"
+                value={ outerOperator }
+                label="Outer Operator"
+                onChange={ handleChangeOperator('outer') }
+              >
+                {
+                  operators.map(op => (
+                    <MenuItem key={ `outer-operator-option-${ op }` } value={ op }>{ op }</MenuItem>
+                  ))
+                }
+              </Select>
+            </FormControl>
+            <FormControl fullWidth size="small">
+              <InputLabel id="inner-operator-select-label">Inner Operator</InputLabel>
+              <Select
+                labelId="inner-operator-select-label"
+                id="inner-operator-select"
+                value={ innerOperator }
+                label="Inner Operator"
+                onChange={ handleChangeOperator('inner') }
+              >
+                {
+                  operators.map(op => (
+                    <MenuItem key={ `inner-operator-option-${ op }` } value={ op }>{ op }</MenuItem>
+                  ))
+                }
+              </Select>
+            </FormControl>
+          </Stack>
+        </AccordionDetails>
+      </Accordion>
 
       <Divider />
 
@@ -208,6 +220,11 @@ export const Form = () => {
           <pre className="query">{ JSON.stringify(query, null, 2) }</pre>
         </AccordionDetails>
       </Accordion>
+
+
+      <Divider />
+
+
    </InterfaceContext.Provider>
   )
 } 
