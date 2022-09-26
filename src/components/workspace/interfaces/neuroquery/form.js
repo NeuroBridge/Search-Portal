@@ -114,6 +114,8 @@ export const Form = (/*{ searchWrapper }*/) => {
         </Stack>
       </CardContent>
 
+      <Divider />
+
       <Accordion
         square
         disableGutters
@@ -124,7 +126,7 @@ export const Form = (/*{ searchWrapper }*/) => {
           Raw Query
         </AccordionSummary>
         <AccordionDetails sx={{
-          m: 0, p: 1,
+          p: 1,
           backgroundColor: '#556',
           color: '#eee',
           fontSize: '85%',
@@ -136,9 +138,9 @@ export const Form = (/*{ searchWrapper }*/) => {
 
       <Divider />
 
-      <Stack direction="row" justifyContent="flex-end" alignItems="center" sx={{ p: 1 }}>
-        <Link to={ `https://neuroquery.org/query?text=${ querystring }` } className="nq-link">
-          Get results at NeuroQuery.org
+      <Stack direction="row" justifyContent="flex-end" alignItems="center" sx={{ py: 1.5, px: 2.5 }}>
+        <Link to={ `https://neuroquery.org/query?text=${ querystring }` }>
+          View the results at NeuroQuery.org
         </Link>
       </Stack>
     </Fragment>
