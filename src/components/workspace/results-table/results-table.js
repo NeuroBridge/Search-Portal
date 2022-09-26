@@ -6,12 +6,14 @@ import {
 } from '@mui/x-data-grid'
 import { columns } from './columns'
 import { TableHeader } from './table-header'
+import { PublicationDialog } from './publication-dialog'
 
 //
 
 export const SearchResultsTable = () => {
   const { results } = useWorkspace()
   const [currentTabIndex, setCurrentTabIndex] = useState(0)
+  const [activeRow, setActiveRow] = useState()
 
   const handleChangeTab = (event, newIndex) => {
     setCurrentTabIndex(newIndex)
@@ -30,7 +32,7 @@ export const SearchResultsTable = () => {
   const [pageSize, setPageSize] = useState(20)
 
   const handleRowClick = params => {
-    console.log(params)
+    setActiveRow(params.row)
   }
 
   //
@@ -42,7 +44,6 @@ export const SearchResultsTable = () => {
   return (
     <Fade in={ !!Object.keys(results).length }>
       <Card>
-        
         <DataGrid
           sx={{
             '.MuiDataGrid-row': { cursor: 'pointer' },
@@ -63,6 +64,9 @@ export const SearchResultsTable = () => {
           disableSelectionOnClick
           checkboxSelection
           onRowClick={ handleRowClick }
+        />
+        <PublicationDialog
+          publication={ activeRow }
         />
       </Card>
     </Fade>
