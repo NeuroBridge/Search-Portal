@@ -103,7 +103,7 @@ export const Basket = () => {
             size="small"
             sx={{ position: 'absolute', right: '1rem', bottom: '1rem', zIndex: 9, }}
             onClick={ basket.empty }
-          ><RemoveIcon /></Fab>
+          ><RemoveIcon fontSize="small" /></Fab>
         </Tooltip>
       </Zoom>
     </Paper>
