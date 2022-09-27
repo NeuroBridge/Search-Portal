@@ -14,7 +14,7 @@ import nihLogoIcon from '../../../images/pubmed-icon.png'
 
 //
 
-const NihLogo  = () => <img src={ nihLogoIcon } height="12" />
+const LittleNihLogo  = () => <img src={ nihLogoIcon } height="12" />
 
 //
 
@@ -46,11 +46,13 @@ export const SearchResultsTable = () => {
 
   const handleCloseDialog = () => {
     setDialogOpen(false)
+    // we'll let the closing animation finish before unsetting the active row
     const unmountDelay = setTimeout(() => setActiveRow(null), 250)
     return () => clearTimeout(unmountDelay)
   }
 
   useEffect(() => {
+    // but on a new active row, we'll open right up.
     if (activeRow) {
       setDialogOpen(true)
     }
@@ -93,20 +95,22 @@ export const SearchResultsTable = () => {
                 sx={{ px: 3 }}
               >
                 <Stack direction="row" alignItems="center" gap={ 1 } sx={{ p: 1 }}>
-                  <NihLogo />
-                  <Typography>Abstract: { activeRow.pmid && (
-                    <Link to={ activeRow.pubmed_url }>
-                      { activeRow.pmid }
-                    </Link>) }
-                  </Typography>
+                  <LittleNihLogo />
+                  <Typography>Abstract: {
+                    activeRow.pmid && activeRow.pubmed_url && (
+                      <Link to={ activeRow.pubmed_url }>
+                        { activeRow.pmid }
+                      </Link>)
+                  }</Typography>
                 </Stack>
                 <Stack direction="row" alignItems="center" gap={ 1 } sx={{ p: 1 }}>
-                  <NihLogo />
-                  <Typography>Full text: { activeRow.pmcid && (
-                    <Link to={ activeRow.pmc_url }>
-                      { activeRow.pmcid }
-                    </Link>) }
-                  </Typography>
+                  <LittleNihLogo />
+                  <Typography>Full text: {
+                    activeRow.pmcid && activeRow.pmc_url && (
+                      <Link to={ activeRow.pmc_url }>
+                        { activeRow.pmcid }
+                      </Link>)
+                  }</Typography>
                 </Stack>
               </Stack>
               <Divider />
