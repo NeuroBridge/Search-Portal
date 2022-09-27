@@ -52,7 +52,7 @@ export const SearchResultsTable = () => {
   }
 
   useEffect(() => {
-    // but on a new active row, we'll open right up.
+    // but on a new active row, we'll just open the dialog right away.
     if (activeRow) {
       setDialogOpen(true)
     }
@@ -94,27 +94,29 @@ export const SearchResultsTable = () => {
                 divider={ <Divider orientation="vertical" flexItem /> }
                 sx={{ px: 3 }}
               >
-                <Stack direction="row" alignItems="center" gap={ 1 } sx={{ p: 1 }}>
-                  <LittleNihLogo />
-                  <Typography>Abstract: {
-                    activeRow.pmid && activeRow.pubmed_url && (
+                {
+                  activeRow.pmid && activeRow.pubmed_url && (
+                    <Stack direction="row" alignItems="center" gap={ 1 } sx={{ p: 1 }}>
+                      <LittleNihLogo />
                       <Link to={ activeRow.pubmed_url }>
-                        { activeRow.pmid }
-                      </Link>)
-                  }</Typography>
-                </Stack>
-                <Stack direction="row" alignItems="center" gap={ 1 } sx={{ p: 1 }}>
-                  <LittleNihLogo />
-                  <Typography>Full text: {
-                    activeRow.pmcid && activeRow.pmc_url && (
+                        Abstract
+                      </Link>
+                    </Stack>
+                  )
+                }
+                {
+                  activeRow.pmcid && activeRow.pmc_url && (
+                    <Stack direction="row" alignItems="center" gap={ 1 } sx={{ p: 1 }}>
+                      <LittleNihLogo />
                       <Link to={ activeRow.pmc_url }>
-                        { activeRow.pmcid }
-                      </Link>)
-                  }</Typography>
-                </Stack>
+                        Full Text
+                      </Link>
+                    </Stack>
+                  )
+                }
               </Stack>
               <Divider />
-              <DialogContent>
+              <DialogContent sx={{ minHeight: '300px' }}>
                 <Typography paragraph>
                   <strong>Snippet:</strong> <em>{ activeRow.snippet }</em>
                 </Typography>
