@@ -1,21 +1,10 @@
 import { useEffect, useMemo, useState } from 'react'
-import PropTypes from 'prop-types'
-import {
-  Card, Dialog, Divider, DialogContent, DialogTitle,
-  Fade, Stack, Typography,
-} from '@mui/material'
+import { Card, Fade } from '@mui/material'
+import { DataGrid } from '@mui/x-data-grid'
 import { useWorkspace } from '../workspace'
-import {
-  DataGrid,
-} from '@mui/x-data-grid'
-import { Link } from '../../link'
 import { columns } from './columns'
 import { TableHeader } from './table-header'
-import nihLogoIcon from '../../../images/pubmed-icon.png'
-
-//
-
-const LittleNihLogo  = () => <img src={ nihLogoIcon } height="12" />
+import { PublicationDialog } from './publication-dialog'
 
 //
 
@@ -95,51 +84,4 @@ export const SearchResultsTable = () => {
       </Card>
     </Fade>
   )
-}
-
-const PublicationDialog = ({ onClose, open, publication }) => {
-  return (
-    <Dialog onClose={ onClose } open={ open }>
-      <DialogTitle>{ publication.title }</DialogTitle>
-      <Divider />
-      <Stack
-        direction="row"
-        divider={ <Divider orientation="vertical" flexItem /> }
-        sx={{ px: 3 }}
-      >
-        {
-          publication.pmid && publication.pubmed_url && (
-            <Stack direction="row" alignItems="center" gap={ 1 } sx={{ p: 1 }}>
-              <LittleNihLogo />
-              <Link to={ publication.pubmed_url }>
-                Abstract
-              </Link>
-            </Stack>
-          )
-        }
-        {
-          publication.pmcid && publication.pmc_url && (
-            <Stack direction="row" alignItems="center" gap={ 1 } sx={{ p: 1 }}>
-              <LittleNihLogo />
-              <Link to={ publication.pmc_url }>
-                Full Text
-              </Link>
-            </Stack>
-          )
-        }
-      </Stack>
-      <Divider />
-      <DialogContent sx={{ minHeight: '300px' }}>
-        <Typography paragraph>
-          <strong>Snippet:</strong> <em>{ publication.snippet }</em>
-        </Typography>
-      </DialogContent>
-    </Dialog>
-  )
-}
-
-PublicationDialog.propTypes = {
-  publication: PropTypes.object,
-  open: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired,
 }
