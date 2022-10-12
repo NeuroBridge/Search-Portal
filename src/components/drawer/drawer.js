@@ -1,11 +1,12 @@
 import { Fragment, useCallback, useState } from 'react'
 import {
   Box, Breadcrumbs as MuiBreadcrumbs, Button, Divider, Drawer as MuiDrawer,
-  IconButton, Fade, List, ListItem, ListItemText, Stack, Typography,
+  IconButton, Fade, List, ListItem, ListItemText, Stack, Tooltip, Typography, useTheme,
 } from '@mui/material'
 import {
   NavigateNext as BreadcrumbSeparatorIcon,
   Home as HomeIcon,
+  Close as CloseIcon,
 } from '@mui/icons-material'
 import { useDrawer } from './context'
 import { useOntology } from '../ontology'
@@ -23,6 +24,7 @@ const DRAWER_CONFIG = {
 //
 
 export const Drawer = () => {
+  const theme = useTheme()
   const drawer = useDrawer()
   const ontology = useOntology()
   const [drawerWidth, setDrawerWidth] = useState(DRAWER_CONFIG.initialWidth)
@@ -59,39 +61,56 @@ export const Drawer = () => {
       ]
     }
     return (
-      <MuiBreadcrumbs
-        separator={ <BreadcrumbSeparatorIcon fontSize="small" /> }
-        sx={{
-          px: 1,
-          fontSize: '90%',
-          backgroundColor: '#d6d9dc',
-          '& .MuiBreadcrumbs-separator': { mx: 0 }
-        }}
-      >
-        <IconButton
-          sx={{ fontSize: '90%', borderRadius: 0 }}
-          key={ `breadcrumb-root` }
-          size="small"
-          variant="text"
-          onClick={ () => drawer.setTermId() }
-          disabled={ !drawer.currentTerm }
-          color="primary"
-        ><HomeIcon fontSize="small" /></IconButton>
-        {
-          path.map((id, index) => id === 'PLACEHOLDER' ? (
-            <Typography key={ `breadcrumb-${ index }-ellipsis }` }>...</Typography>
-          ) : (
-            <Button
-              sx={{ fontSize: '90%', borderRadius: 0 }}
-              key={ `breadcrumb-${ index }-${ id }` }
-              size="small"
-              variant="text"
-              onClick={ () => drawer.setTermId(id) }
-              disabled={ id === drawer.currentTerm.id }
-            >{ id }</Button>
-          ))
-        }
-      </MuiBreadcrumbs>
+      <Stack direction="horizontal" sx={{ borderBottom: `1px solid ${ theme.palette.grey[400] }` }}>
+        <MuiBreadcrumbs
+          separator={ <BreadcrumbSeparatorIcon fontSize="small" /> }
+          sx={{
+            flex: 1,
+            px: 1,
+            fontSize: '90%',
+            backgroundColor: '#d6d9dc',
+            '& .MuiBreadcrumbs-separator': { mx: 0 }
+          }}
+        >
+          <IconButton
+            sx={{ fontSize: '90%', borderRadius: 0 }}
+            key={ `breadcrumb-root` }
+            size="small"
+            variant="text"
+            onClick={ () => drawer.setTermId() }
+            disabled={ !drawer.currentTerm }
+            color="primary"
+          ><HomeIcon fontSize="small" /></IconButton>
+          {
+            path.map((id, index) => id === 'PLACEHOLDER' ? (
+              <Typography key={ `breadcrumb-${ index }-ellipsis }` }>...</Typography>
+            ) : (
+              <Button
+                sx={{ fontSize: '90%', borderRadius: 0 }}
+                key={ `breadcrumb-${ index }-${ id }` }
+                size="small"
+                variant="text"
+                onClick={ () => drawer.setTermId(id) }
+                disabled={ id === drawer.currentTerm.id }
+              >{ id }</Button>
+            ))
+          }
+        </MuiBreadcrumbs>
+        <Tooltip placement="left" title="Close drawer">
+          <IconButton
+            size="small"
+            onClick={ drawer.close }
+            sx={{
+              position: 'absolute',
+              top: 0,
+              right: 0,
+              borderRadius: 0,
+              borderLeft: `1px solid ${ theme.palette.grey[400] }`,
+            }}
+          >
+          <CloseIcon fontSize="small" /></IconButton>
+        </Tooltip>
+      </Stack>
     )
   }, [drawer.currentTerm])
 

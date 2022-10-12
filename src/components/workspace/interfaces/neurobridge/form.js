@@ -28,8 +28,8 @@ export const Form = () => {
   const ontology = useOntology()
   const basket = useBasket()
   const [values, setValues] = useState({ })
-  const [outerOperator, setOuterOperator] = useState('OR')
-  const [innerOperator, setInnerOperator] = useState('AND')
+  const [outerOperator, setOuterOperator] = useState('AND')
+  const [innerOperator, setInnerOperator] = useState('OR')
 
   // this is basically a copy of the ids of the basket contents,
   // with the non-checked (value = 0) ones filtered out.
