@@ -1,7 +1,7 @@
 import { Fragment, useCallback, useState } from 'react'
 import {
   Box, Breadcrumbs as MuiBreadcrumbs, Button, Divider, Drawer as MuiDrawer,
-  IconButton, Fade, List, ListItem, ListItemText, Stack, Typography, useTheme,
+  IconButton, Fade, List, ListItem, ListItemText, Stack, Tooltip, Typography, useTheme,
 } from '@mui/material'
 import {
   NavigateNext as BreadcrumbSeparatorIcon,
@@ -96,18 +96,20 @@ export const Drawer = () => {
             ))
           }
         </MuiBreadcrumbs>
-        <IconButton
-          size="small"
-          onClick={ drawer.close }
-          sx={{
-            position: 'absolute',
-            top: 0,
-            right: 0,
-            borderRadius: 0,
-            borderLeft: `1px solid ${ theme.palette.grey[400] }`,
-          }}
-        >
-        <CloseIcon fontSize="small" /></IconButton>
+        <Tooltip placement="left" title="Close drawer">
+          <IconButton
+            size="small"
+            onClick={ drawer.close }
+            sx={{
+              position: 'absolute',
+              top: 0,
+              right: 0,
+              borderRadius: 0,
+              borderLeft: `1px solid ${ theme.palette.grey[400] }`,
+            }}
+          >
+          <CloseIcon fontSize="small" /></IconButton>
+        </Tooltip>
       </Stack>
     )
   }, [drawer.currentTerm])
