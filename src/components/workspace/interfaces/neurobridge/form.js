@@ -135,7 +135,7 @@ export const Form = () => {
       console.error(error.message)
       return []
     })
-  }, [values])
+  }, [roots, values, innerOperator, outerOperator])
 
   useLayoutEffect(() => {
     register('neurobridge', fetchResults)
