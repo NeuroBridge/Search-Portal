@@ -85,6 +85,8 @@ export const Form = () => {
   
   // here, we construct the query.
   const query = useMemo(() => {
+    // build an easy way to lookup descendants.
+    // `groups` has shape { [termId]: [descendants], [termId]: [descendants], ... }
     const groups = roots.reduce((obj, root) => {
       return {
         ...obj,
@@ -97,13 +99,15 @@ export const Form = () => {
     }, {})
     let _query = { [outerOperator]: [] }
     roots.forEach(id => {
-      _query[outerOperator].push({
-        [innerOperator]: [
-          ...groups[id]
-            .filter(id => values[id] !== 0)
-            .map(id => values[id] === 1 ? id : { not: [id] }),
-        ]
-      })
+      if (groups[id].some(desc => values[desc] !== 0)) {
+        _query[outerOperator].push({
+          [innerOperator]: [
+            ...groups[id]
+              .filter(id => values[id] !== 0)
+              .map(id => values[id] === 1 ? id : { not: [id] }),
+          ]
+        })
+      }
     })
     if (roots.length === 1) {
       _query = _query[outerOperator][0]
