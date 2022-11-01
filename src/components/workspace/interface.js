@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 import {
-  Box, Collapse, Divider, IconButton, Stack, Tooltip, Typography, useTheme,
+  Box, Collapse, Divider, IconButton, Stack, Tooltip, useTheme,
 } from '@mui/material'
 import {
   Power as OnIcon,
@@ -41,15 +41,6 @@ export const Interface = ({ ui, active }) => {
         alignItems: 'center',
         px: 2, py: 1,
       }}>
-        <Stack direction="row" alignItems="center" gap={ 3 }>
-          <Typography
-            component="h2"
-            variant="h6"
-            color={ isDisabled ? '#999' : 'primary' }
-            sx={{ transition: 'color 250ms' }}
-          >{ ui.displayName }</Typography>
-        </Stack>
-
         <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 1, }}>
           <Tooltip placement="bottom" title={ `${ showHelp ? 'Hide' : 'Show' } help` }>
             <span><IconButton onClick={ () => setShowHelp(!showHelp) } size="small">
