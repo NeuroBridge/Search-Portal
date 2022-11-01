@@ -159,65 +159,49 @@ export const Workspace = () => {
           <Basket />
           <Collapse in={ basket.ids.length > 0 }>
             <LinearProgress variant={ loading ? 'indeterminate' : 'determinate' } value={ 0 } />
-            <Box sx={{
-              width: '100%',
-              flexGrow: 1,
-              bgcolor: 'background.paper',
-              display: 'flex',
-              minHeight: 200,
-            }}>
-              <Tabs
-                orientation="vertical"
-                variant="scrollable"
-                value={ currentInterfaceIndex }
-                onChange={ handleChangeInterface }
-                sx={{
-                  mt: 6.1,
-                  flex: `0 0 200px`,
-                }}
-              >
-                {
-                  interfaces.map(ui => (
-                    <Tab
-                      key={ ui.id }
-                      label={
-                        <Stack
-                          direction="row"
-                          gap={ 1 }
-                          alignItems="center"
-                          justifyContent="space-between"
-                          sx={{ width: '100%' }}
-                        >
-                          { ui.displayName }
-                          <DisabledIndicatorIcon sx={{
-                            color: '#65c015',
-                            fontSize: '85%',
-                            transition: 'filter 350ms',
-                            filter: disabledInterfaces.has(ui.id)
-                              ? `drop-shadow(0 0 0 #65c015) grayscale(1.0) brightness(1.25)`
-                              : `drop-shadow(0 0 3px #65c015) grayscale(0.0) brightness(1.0)`,
-                          }} />
-                        </Stack>
-                      }
-                      id={ `tab-${ ui.id }` }
-                      aria-controls={ `tabpanel-${ ui.id }` }
-                    />
-                  ))
-                }
-              </Tabs>
-
-              <Divider orientation="vertical" flexItem />
-
+            <Tabs
+              value={ currentInterfaceIndex }
+              onChange={ handleChangeInterface }
+            >
               {
-                interfaces.map((ui, i) => (
-                  <Interface
-                    key={ `ui-${ ui.id }` }
-                    ui={ ui }
-                    active={ currentInterfaceIndex === i }
+                interfaces.map(ui => (
+                  <Tab
+                    key={ ui.id }
+                    label={
+                      <Stack
+                        direction="row"
+                        gap={ 1 }
+                        alignItems="center"
+                        justifyContent="space-between"
+                        sx={{ width: '100%' }}
+                      >
+                        { ui.displayName }
+                        <DisabledIndicatorIcon sx={{
+                          color: '#65c015',
+                          fontSize: '85%',
+                          transition: 'filter 350ms',
+                          filter: disabledInterfaces.has(ui.id)
+                            ? `drop-shadow(0 0 0 #65c015) grayscale(1.0) brightness(1.25)`
+                            : `drop-shadow(0 0 3px #65c015) grayscale(0.0) brightness(1.0)`,
+                        }} />
+                      </Stack>
+                    }
+                    id={ `tab-${ ui.id }` }
+                    aria-controls={ `tabpanel-${ ui.id }` }
                   />
                 ))
               }
-            </Box>
+            </Tabs>
+            <Divider />
+            {
+              interfaces.map((ui, i) => (
+                <Interface
+                  key={ `ui-${ ui.id }` }
+                  ui={ ui }
+                  active={ currentInterfaceIndex === i }
+                />
+              ))
+            }
             <Divider />
             <Box sx={{
               display: 'flex',
