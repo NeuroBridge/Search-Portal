@@ -153,7 +153,7 @@ export const Form = (/*{ searchWrapper }*/) => {
 
       <Divider />
 
-      <Stack direction="row" justifyContent="flex-end" alignItems="center" sx={{ py: 1.5, px: 2.5 }}>
+      <Stack direction="row" justifyContent="flex-start" alignItems="center" sx={{ py: 1.5, px: 2.5 }}>
         <Link to={ `https://neuroquery.org/query?text=${ querystring }` }>
           View the results at NeuroQuery.org
         </Link>
