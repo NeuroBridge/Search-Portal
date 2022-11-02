@@ -7,7 +7,8 @@ import { useBasket } from './context'
 import { useDrawer } from '../drawer'
 import { useOntology } from '../ontology'
 import {
-  Delete as RemoveIcon,
+  Close as RemoveIcon,
+  Delete as ClearIcon,
   Visibility as SelectedIcon,
   VisibilityOff as IgnoreIcon,
 } from '@mui/icons-material'
@@ -26,24 +27,33 @@ export const BasketItem = ({ term }) => {
         fontSize: '75%',
         borderRadius: '3px',
         display: 'flex',
+        '& button': {
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          pl: 1,
+        },
+        '& .MuiSvgIcon-root': {
+          transform: 'scale(0.75)',
+        }
       }}>
         <CardActionArea onClick={ () => drawer.setTermId(term.id) }>
-          <CardHeader title={ term.id } disableTypography />
+          <CardHeader title={ term.id } disableTypography sx={{ p: 1 }} />
         </CardActionArea>
         <Tooltip
           title={ `${ basket.contents[term.id] === 0 ? 'Show' : 'Hide' } term` }
           placement="top"
         >
-          <CardActionArea onClick={ () => basket.toggle(term.id) } sx={{ padding: '0.5rem' }}>
+          <CardActionArea onClick={ () => basket.toggle(term.id) } sx={{ p: 1 }}>
             { basket.contents[term.id] === 0 &&
-                <IgnoreIcon fontSize="small" sx={{ color: '#aaa' }} /> }
+                <IgnoreIcon sx={{ color: '#aaa' }} /> }
             { basket.contents[term.id] === 1 &&
-                <SelectedIcon fontSize="small" sx={{ color: '#fff' }} /> }
+                <SelectedIcon sx={{ color: '#fff' }} /> }
           </CardActionArea>
         </Tooltip>
         <Tooltip title="Remove term from workspace" placement="top">
-          <CardActionArea onClick={ () => basket.remove(term.id) } sx={{padding: '0.5rem' }}>
-            <RemoveIcon fontSize="small" />
+          <CardActionArea onClick={ () => basket.remove(term.id) } sx={{p: 1 }}>
+            <RemoveIcon />
           </CardActionArea>
         </Tooltip>  
       </Card>
@@ -103,7 +113,7 @@ export const Basket = () => {
             size="small"
             sx={{ position: 'absolute', right: '1rem', bottom: '1rem', zIndex: 9, }}
             onClick={ basket.empty }
-          ><RemoveIcon fontSize="small" /></Fab>
+          ><ClearIcon fontSize="small" /></Fab>
         </Tooltip>
       </Zoom>
     </Paper>
