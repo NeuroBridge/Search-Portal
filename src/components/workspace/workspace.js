@@ -157,6 +157,8 @@ export const Workspace = () => {
         }}>
           <WorkspaceHeader />
           <Basket />
+        </Card>
+        <Card>
           <Collapse in={ basket.ids.length > 0 }>
             <LinearProgress variant={ loading ? 'indeterminate' : 'determinate' } value={ 0 } />
             <Tabs
