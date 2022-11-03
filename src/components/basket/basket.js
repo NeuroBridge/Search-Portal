@@ -9,8 +9,6 @@ import { useOntology } from '../ontology'
 import {
   Close as RemoveIcon,
   Delete as ClearIcon,
-  Visibility as SelectedIcon,
-  VisibilityOff as IgnoreIcon,
 } from '@mui/icons-material'
 
 //
@@ -40,17 +38,6 @@ export const BasketItem = ({ term }) => {
         <CardActionArea onClick={ () => drawer.setTermId(term.id) }>
           <CardHeader title={ term.id } disableTypography sx={{ p: 1 }} />
         </CardActionArea>
-        <Tooltip
-          title={ `${ basket.contents[term.id] === 0 ? 'Show' : 'Hide' } term` }
-          placement="top"
-        >
-          <CardActionArea onClick={ () => basket.toggle(term.id) } sx={{ p: 1 }}>
-            { basket.contents[term.id] === 0 &&
-                <IgnoreIcon sx={{ color: '#aaa' }} /> }
-            { basket.contents[term.id] === 1 &&
-                <SelectedIcon sx={{ color: '#fff' }} /> }
-          </CardActionArea>
-        </Tooltip>
         <Tooltip title="Remove term from workspace" placement="top">
           <CardActionArea onClick={ () => basket.remove(term.id) } sx={{p: 1 }}>
             <RemoveIcon />

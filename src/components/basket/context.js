@@ -7,16 +7,6 @@ const BasketContext = createContext({})
 export const BasketProvider = ({ children }) => {
   const [contents, setContents] = useState({})
 
-  const toggle = id => {
-    const newContents = { ...contents }
-    if (id in contents) {
-      newContents[id] = (newContents[id] + 1) % 2
-    } else {
-      newContents[id] = 1
-    }
-    setContents(newContents)
-  }
-
   const add = id => {
     const newContents = { ...contents }
     if (!(id in newContents)) {
@@ -44,7 +34,6 @@ export const BasketProvider = ({ children }) => {
       contains,
       contents,
       ids,
-      toggle,
       add,
       remove,
       empty,

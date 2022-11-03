@@ -30,8 +30,7 @@ export const Form = (/*{ searchWrapper }*/) => {
   const [termLabels, setTermLabels] = useState({})
 
   const terms = useMemo(() => {
-    return basket.ids.filter(id => basket.contents[id] === 1)
-      .map(item => ontology.find(item))
+    return basket.ids.map(item => ontology.find(item))
   }, [basket.ids])
 
   useEffect(() => {

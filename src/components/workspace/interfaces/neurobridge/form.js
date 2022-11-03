@@ -34,7 +34,7 @@ export const Form = () => {
   // this is basically a copy of the ids of the basket contents,
   // with the non-checked (value = 0) ones filtered out.
   const roots = useMemo(() => {
-    return [...basket.ids.filter(id => basket.contents[id] === 1)]
+    return [...basket.ids]
   }, [basket.ids])
 
   // this effect gets triggered when the basket contents update.

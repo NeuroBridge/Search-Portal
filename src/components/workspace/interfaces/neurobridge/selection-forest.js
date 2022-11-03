@@ -9,16 +9,14 @@ export const Forest = () => {
     <CardContent sx={{ minHeight: '150px' }}>
       <Stack divider={ <Divider sx={{ margin: '1rem 0' }}/> }>
         {
-          Object.keys(basket.contents)
-            .filter(id => basket.contents[id] === 1)
-            .map(id => {
-              return (
-                <SelectionTree
-                  key={ `${ id }-forest` }
-                  rootTermId={ id }
-                />
-              )
-            })
+          basket.ids.map(id => {
+            return (
+              <SelectionTree
+                key={ `${ id }-forest` }
+                rootTermId={ id }
+              />
+            )
+          })
         }
       </Stack>
     </CardContent>
