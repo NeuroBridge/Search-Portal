@@ -1,9 +1,13 @@
 import { createContext, useCallback, useContext, useEffect, useLayoutEffect, useMemo, useState } from 'react'
+import PropTypes from 'prop-types'
 import {
-  Accordion, AccordionDetails, AccordionSummary, Divider, InputLabel,
-  FormControl, MenuItem, Select, Stack, Typography, useTheme,
+  Box, Collapse, Divider, IconButton, InputLabel, FormControl, FormControlLabel, FormGroup,
+  MenuItem, Popover, Select, Stack, Switch, Tooltip,
 } from '@mui/material'
-import { ExpandMore as AccordionIcon } from '@mui/icons-material'
+import {
+  Close as CloseIcon,
+  Settings as ConfigIcon,
+} from '@mui/icons-material'
 import axios from 'axios'
 import { useBasket } from '../../../basket'
 import { useOntology } from '../../../ontology'
@@ -22,14 +26,52 @@ const API_URL = `https://neurobridges-ml.renci.org/nb_translator`
 
 const InterfaceContext = createContext({})
 
+const ConfigMenu = ({ children, sx }) => {
+  const [anchorEl, setAnchorEl] = useState(null)
+
+  const handleClick = event => setAnchorEl(event.currentTarget)
+  const handleClose = () => setAnchorEl(null)
+
+  const open = Boolean(anchorEl)
+  const id = open ? 'config-menu' : undefined;
+
+  return (
+    <Box sx={ sx }>
+      <Tooltip placement="left" title="Configuration Options">
+        <IconButton
+          aria-describedby={ id }
+          variant="contained"
+          onClick={ handleClick }
+          size="small"
+        ><ConfigIcon fontSize="small" /></IconButton>
+      </Tooltip>
+      <Popover
+        id={ id }
+        open={ open }
+        anchorEl={ anchorEl }
+        onClose={ handleClose }
+        anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      >{ children }</Popover>
+    </Box>
+  )
+}
+
+ConfigMenu.propTypes = {
+  children: PropTypes.node.isRequired,
+  sx: PropTypes.object,
+}
+
+//
+
 export const Form = () => {
-  const theme = useTheme()
   const { register } = useWorkspace()
   const ontology = useOntology()
   const basket = useBasket()
   const [values, setValues] = useState({ })
   const [outerOperator, setOuterOperator] = useState('AND')
   const [innerOperator, setInnerOperator] = useState('OR')
+  const [showRawQuery, setShowRawQuery] = useState(false)
 
   // this is basically a copy of the ids of the basket contents,
   // with the non-checked (value = 0) ones filtered out.
@@ -145,81 +187,81 @@ export const Form = () => {
     register('neurobridge', fetchResults)
   }, [fetchResults])
 
+  const toggleShowRawQuery = () => {
+    setShowRawQuery(!showRawQuery)
+  }
+
   return (
     <InterfaceContext.Provider value={{ values, toggleTermSelection, query }}>
+
+      <ConfigMenu sx={{ position: 'absolute', right: 5, top: 5, zIndex: 9 }}>
+        <Stack direction="column" gap={ 2 } sx={{ minWidth: '200px', p: 2 }}>
+          <FormControl fullWidth size="small">
+            <InputLabel id="outer-operator-select-label">Between Concept Trees</InputLabel>
+            <Select
+              labelId="outer-operator-select-label"
+              id="outer-operator-select"
+              value={ outerOperator }
+              label="Between Concept Trees"
+              onChange={ handleChangeOperator('outer') }
+            >
+              <MenuItem value="AND">AND</MenuItem>
+              <MenuItem value="OR">OR</MenuItem>
+            </Select>
+          </FormControl>
+
+          <FormControl fullWidth size="small">
+            <InputLabel id="inner-operator-select-label">Within Concept Trees</InputLabel>
+            <Select
+              labelId="inner-operator-select-label"
+              id="inner-operator-select"
+              value={ innerOperator }
+              label="Within Concept Trees"
+              onChange={ handleChangeOperator('inner') }
+            >
+              <MenuItem value="AND">AND</MenuItem>
+              <MenuItem value="OR">OR</MenuItem>
+            </Select>
+          </FormControl>
+
+          <FormGroup>
+            <FormControlLabel
+              label="Raw Query"
+              control={
+                <Switch checked={ showRawQuery } onChange={ toggleShowRawQuery } />
+              }
+            />
+          </FormGroup>
+
+        </Stack>
+      </ConfigMenu>
+
       <Forest />
 
       <Divider />
 
-      <Accordion
-        square
-        disableGutters
-        elevation={ 0 }
-        sx={{ '.MuiButtonBase-root': { minHeight: 0 } }}
-      >
-        <AccordionSummary expandIcon={ <AccordionIcon color="primary" /> }>
-          Configuration
-        </AccordionSummary>
-        <AccordionDetails sx={{ backgroundColor: theme.palette.grey[100] }}>
-          <Typography component="div">Select Operators</Typography>
-          <br />
-          <Stack direction="row" gap={ 2 }>
-            <FormControl fullWidth size="small">
-              <InputLabel id="outer-operator-select-label">Between Concept Trees</InputLabel>
-              <Select
-                labelId="outer-operator-select-label"
-                id="outer-operator-select"
-                value={ outerOperator }
-                label="Between Concept Trees"
-                onChange={ handleChangeOperator('outer') }
-              >
-                <MenuItem value="AND">AND</MenuItem>
-                <MenuItem value="OR">OR</MenuItem>
-              </Select>
-            </FormControl>
-            <FormControl fullWidth size="small">
-              <InputLabel id="inner-operator-select-label">Within Concept Trees</InputLabel>
-              <Select
-                labelId="inner-operator-select-label"
-                id="inner-operator-select"
-                value={ innerOperator }
-                label="Within Concept Trees"
-                onChange={ handleChangeOperator('inner') }
-              >
-                <MenuItem value="AND">AND</MenuItem>
-                <MenuItem value="OR">OR</MenuItem>
-              </Select>
-            </FormControl>
-          </Stack>
-        </AccordionDetails>
-      </Accordion>
-
-      <Divider />
-
-      <Accordion
-        square
-        disableGutters
-        elevation={ 0 }
-        sx={{ '.MuiButtonBase-root': { minHeight: 0 } }}
-      >
-        <AccordionSummary expandIcon={ <AccordionIcon color="primary" /> }>
-          Raw Query
-        </AccordionSummary>
-        <AccordionDetails sx={{
-          p: 0,
+      <Collapse
+        in={ showRawQuery }
+        sx={{
+          position: 'relative',
           '.query': {
             m: 0, p: 1,
-            backgroundColor: '#556',
-            color: '#eee',
+            backgroundColor: '#eee',
+            color: '#556',
             fontSize: '85%',
           },
         }}>
+          <IconButton
+            onClick={ () => setShowRawQuery(false) }
+            size="small"
+            sx={{
+              position: 'absolute',
+              right: 5, top: 5,
+              '&:hover': { '& svg': { filter: 'opacity(1.0)' } },
+            }}
+          ><CloseIcon fontSize="small" color="danger" sx={{ filter: 'opacity(0.33)' }} /></IconButton>
           <pre className="query">{ JSON.stringify(query, null, 2) }</pre>
-        </AccordionDetails>
-      </Accordion>
-
-      <Divider />
-
+      </Collapse>
 
    </InterfaceContext.Provider>
   )

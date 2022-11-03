@@ -113,50 +113,12 @@ export const Form = (/*{ searchWrapper }*/) => {
         </Stack>
       </CardContent>
 
-      <Divider />
-
-      <Accordion
-        square
-        disableGutters
-        elevation={ 0 }
-        sx={{ '.MuiButtonBase-root': { minHeight: 0 } }}
-      >
-        <AccordionSummary expandIcon={ <AccordionIcon color="primary" /> }>
-          Raw Query
-        </AccordionSummary>
-        <AccordionDetails sx={{
-          fontSize: '90%',
-          p: 0,
-          backgroundColor: '#eee',
-          '.MuiBox-root': {
-            p: 1,
-            lineHeight: 2,
-            backgroundColor: '#eee',
-            whiteSpace: 'nowrap',
-          },
-          '.MuiBox-root.querystring': {
-            textIndent: '-1rem',
-            px: 3, py: 1,
-            lineHeight: 2,
-            fontFamily: 'monospace',
-            whiteSpace: 'pre-wrap',
-            backgroundColor: '#ccc',
-          }
-        }}>
-          <Stack direction="row" justifyContent="flex-start" alignItems="flex-start">
-            <Box className="endpoint">{ `https://neuroquery.org/query?text=` }</Box>
-            <Box className="querystring" sx={{ flex: 1 }}>{ querystring }</Box>
-          </Stack>
-        </AccordionDetails>
-      </Accordion>
-
-      <Divider />
-
-      <Stack direction="row" justifyContent="flex-start" alignItems="center" sx={{ py: 1.5, px: 2.5 }}>
+      <CardContent>
         <Link to={ `https://neuroquery.org/query?text=${ querystring }` }>
           View the results at NeuroQuery.org
         </Link>
-      </Stack>
+      </CardContent>
+
     </Fragment>
   )
 }

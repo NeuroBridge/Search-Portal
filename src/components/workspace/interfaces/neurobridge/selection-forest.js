@@ -1,4 +1,4 @@
-import { CardContent, Divider, Stack } from '@mui/material'
+import { Box, Divider, Stack } from '@mui/material'
 import { SelectionTree } from './selection-tree'
 import { useBasket } from '../../../basket'
 
@@ -6,8 +6,8 @@ export const Forest = () => {
   const basket = useBasket()
 
   return (
-    <CardContent sx={{ minHeight: '150px' }}>
-      <Stack divider={ <Divider sx={{ margin: '1rem 0' }}/> }>
+    <Box sx={{ minHeight: '150px', p: 3 }}>
+      <Stack divider={ <Divider /> }>
         {
           basket.ids.map(id => {
             return (
@@ -19,6 +19,6 @@ export const Forest = () => {
           })
         }
       </Stack>
-    </CardContent>
+    </Box>
   )
 }

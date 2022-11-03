@@ -1,11 +1,8 @@
-import { createContext, useCallback, useContext, useRef, useState } from 'react'
+import { createContext, useContext, useRef, useState } from 'react'
 import {
   Box, Button, Card, Divider,
   LinearProgress, Stack, Tab, Tabs, 
 } from '@mui/material'
-import {
-  Circle as DisabledIndicatorIcon,
-} from '@mui/icons-material'
 import { Basket, useBasket } from '../basket'
 import { interfaces, interfaceDisplayNames } from './interfaces'
 import { SearchResultsTable } from './results-table'
@@ -23,17 +20,6 @@ export const Workspace = () => {
   const [currentInterfaceIndex, setCurrentInterfaceIndex] = useState(0)
   const [loading, setLoading] = useState(false)
   const requests = useRef({ })
-
-  const [disabledInterfaces, setDisabledInterfaces] = useState(new Set())
-  const toggleInterface = useCallback(id => () => {
-    const newDisabledInterfaces = new Set(disabledInterfaces)
-    if (newDisabledInterfaces.has(id)) {
-      newDisabledInterfaces.delete(id)
-    } else {
-      newDisabledInterfaces.add(id)
-    }
-    setDisabledInterfaces(newDisabledInterfaces)
-  }, [disabledInterfaces])
 
   /*
     search results are held in Workspace's
@@ -72,29 +58,17 @@ export const Workspace = () => {
     }
     let newResults = {}
     /*
-      nonDisabledRequests is the property-value pairs
-      from the requests.current object that aren't disabled.
-    */
-    const nonDisabledRequests = Object.keys(requests.current)
-      ? Object.keys(requests.current).reduce((obj, interfaceId) => {
-        if (disabledInterfaces.has(interfaceId)) {
-          return { ...obj }
-        }
-        return { ...obj, [interfaceId]: requests.current[interfaceId] }
-      }, {}) : {}
-
-    /*
       if we have any non-disabled requests,
       then we can start firing them off now,
       aggregating results into the results object.
     */
-    if (Object.keys(nonDisabledRequests).length) {
+    if (Object.keys(requests.current).length) {
       setLoading(true)
-      Promise.all(Object.keys(nonDisabledRequests).map(id => nonDisabledRequests[id]).map(f => f()))
+      Promise.all(Object.keys(requests.current).map(id => requests.current[id]).map(f => f()))
         .then(responses => {
           responses.forEach((response, i) => {
             // let's grab the id associated with this, the ith, request
-            const id = Object.keys(nonDisabledRequests)[i]
+            const id = Object.keys(requests.current)[i]
             // and save that to our results object, with that id as its key.
             newResults = { ...newResults, [id]: response }
           })
@@ -115,8 +89,6 @@ export const Workspace = () => {
       results,
       clearResults,
       interfaceDisplayNames,
-      disabledInterfaces,
-      toggleInterface,
     }}>
       <Stack dirction="column" gap={ 3 }>
         <Basket />
@@ -139,14 +111,6 @@ export const Workspace = () => {
                       sx={{ width: '100%' }}
                     >
                       { ui.displayName }
-                      <DisabledIndicatorIcon sx={{
-                        color: '#65c015',
-                        fontSize: '85%',
-                        transition: 'filter 350ms',
-                        filter: disabledInterfaces.has(ui.id)
-                          ? `drop-shadow(0 0 0 #65c015) grayscale(1.0) brightness(1.25)`
-                          : `drop-shadow(0 0 3px #65c015) grayscale(0.0) brightness(1.0)`,
-                      }} />
                     </Stack>
                   }
                   id={ `tab-${ ui.id }` }
@@ -155,17 +119,28 @@ export const Workspace = () => {
               ))
             }
           </Tabs>
+
           <Divider />
+
           {
-            interfaces.map((ui, i) => (
-              <Interface
-                key={ `ui-${ ui.id }` }
-                ui={ ui }
-                active={ currentInterfaceIndex === i }
-              />
-            ))
+            interfaces.map((ui, i) => <Interface
+                  key={ `ui-${ ui.id }` }
+                  ui={ ui }
+                  active={ currentInterfaceIndex === i }
+                />)
           }
+{/*          {
+            basket.ids.length > 0
+              ? interfaces.map((ui, i) => <Interface
+                  key={ `ui-${ ui.id }` }
+                  ui={ ui }
+                  active={ currentInterfaceIndex === i }
+                />)
+              : <Box sx={{ minHeight: '300px' }}>select terms</Box>
+          }
+*/}
           <Divider />
+
           <Box sx={{
             display: 'flex',
             justifyContent: 'flex-end',
@@ -175,7 +150,7 @@ export const Workspace = () => {
             <Button
               variant="contained"
               onClick={ requestAll }
-              disabled={ disabledInterfaces.size === interfaces.length }
+              disabled={ basket.ids.length === 0 }
             >Search</Button>
           </Box>
         </Card>

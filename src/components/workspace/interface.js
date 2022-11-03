@@ -1,16 +1,13 @@
-import { useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 import {
-  Box, Collapse, Divider, IconButton, Stack, Tooltip, useTheme,
+  Accordion, AccordionDetails, AccordionSummary,
+  Box, Divider, Stack,
 } from '@mui/material'
 import {
-  Power as OnIcon,
-  PowerOff as OffIcon,
+  ExpandMore as AccordionIcon,
   Help as HelpIcon,
 } from '@mui/icons-material'
 import { Link } from '../link'
-import { useWorkspace } from './workspace'
-import { ToggleButton } from '../toggle-button'
 import ReactMarkdown from 'react-markdown'
 
 //
@@ -22,69 +19,48 @@ const markdownComponentMap = {
 //
 
 export const Interface = ({ ui, active }) => {
-  const theme = useTheme()
-  const [showHelp, setShowHelp] = useState(false)
-  const { disabledInterfaces, toggleInterface } = useWorkspace()
-
-  const isDisabled = useMemo(() => disabledInterfaces.has(ui.id), [disabledInterfaces])
-
   return (
     <Stack
-      sx={{ flex: 1, display: active ? 'flex' : 'none', }}
+      sx={{
+        flex: 1,
+        display: active ? 'flex' : 'none',
+        position: 'relative',
+      }}
       role="tabpanel"
       id={ `tabpanel-${ ui.id }` }
       aria-labelledby={ `tab-${ ui.id }` }
     >
-      {/* Heading */}
-      <Box sx={{
-        display: 'flex',
-        alignItems: 'center',
-        px: 2, py: 1,
-      }}>
-        <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 1, }}>
-          <Tooltip placement="bottom" title={ `${ showHelp ? 'Hide' : 'Show' } help` }>
-            <span><IconButton onClick={ () => setShowHelp(!showHelp) } size="small">
-              <HelpIcon
-                fontSize="small"
-                sx={{
-                  color: showHelp ? theme.palette.primary.main : theme.palette.grey[400],
-                  transition: 'filter 250ms, transform 250ms',
-                }}
-              />
-            </IconButton></span>
-          </Tooltip>
-          <Tooltip placement="bottom" title={ `${ isDisabled === false ? 'Disable' : 'Enable' } interface` }>
-            <span><ToggleButton
-              on={ isDisabled === false }
-              onChange={ toggleInterface(ui.id) }
-              OnIcon={ <OnIcon sx={{ backgroundColor: '#65c015', color: '#fff' }} /> }
-              OffIcon={ <OffIcon sx={{ backgroundColor: theme.palette.grey[400], color: '#fff' }} /> }
-            /></span>
-          </Tooltip>
-        </Box>
-      </Box>
-
-      {/* Help Text */}
-      <Collapse in={ showHelp } sx={{ backgroundColor: theme.palette.grey[100] }}>
-        <Divider />
-        <Box sx={{ p: 2 }}>
-        <ReactMarkdown components={ markdownComponentMap }>
-          { ui.helpText }
-        </ReactMarkdown>
-        </Box>
-      </Collapse>
-
-      <Divider />
-      
       {/* Form */}
-      <Box sx={{
-        flex: 1,
-        filter: isDisabled ? 'blur(3px) saturate(0.5) opacity(0.5)' : 'blur(0)',
-        transition: 'filter 250ms',
-        pointerEvents: isDisabled ? 'none' : 'auto',
-      }}>
+      <Box sx={{ flex: 1, minHeight: '150px' }}>
         <ui.Form />
       </Box>
+
+      <Divider />
+
+      {/* Help Text */}
+      <Accordion
+        square
+        disableGutters
+        elevation={ 0 }
+        sx={{ '.MuiButtonBase-root': { minHeight: 0 } }}
+      >
+        <AccordionSummary expandIcon={ <AccordionIcon color="primary" /> }>
+          <HelpIcon color="default" fontSize="small" sx={{ mr: 1 }} /> Help with this Interface
+        </AccordionSummary>
+
+        <Divider />
+        
+        <AccordionDetails sx={{
+          p: 2,
+          backgroundColor: '#f3f3f3',
+          fontSize: '85%',
+        }}>
+          <ReactMarkdown components={ markdownComponentMap }>
+            { ui.helpText }
+          </ReactMarkdown>
+        </AccordionDetails>
+      </Accordion>
+
     </Stack>
   )
 }

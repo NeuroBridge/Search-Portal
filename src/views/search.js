@@ -68,6 +68,7 @@ export const SearchView = () => {
         display: 'flex',
         flexDirection: 'column',
         gap: 2,
+        mb: 6,
       }}>
         <Box sx={{ p: 4 }}>
           <SearchForm
