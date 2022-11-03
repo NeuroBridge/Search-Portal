@@ -1,10 +1,8 @@
 import { Fragment, useEffect, useMemo, useState } from 'react'
 import axios from 'axios'
 import {
-  Accordion, AccordionDetails, AccordionSummary,
   Box, CardContent, Divider, MenuItem, Select, Stack, Typography,
 } from '@mui/material'
-import { ExpandMore as AccordionIcon } from '@mui/icons-material'
 import { Add as PlusIcon } from '@mui/icons-material'
 import { useWorkspace } from '../../workspace'
 import { Link } from '../../../link'

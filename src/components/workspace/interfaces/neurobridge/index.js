@@ -7,29 +7,24 @@ const ui = {
 
   /* help text is processed as markdown */
   helpText:
-`This interface allows you to construct a NeuroBridge query
-from the terms in your workspace.
+`This interface allows you to construct a query to retrieve publications from the NeuroBridge API.
+This query is constructed from the terms in your workspace.
 
-Each visible term in your workspace defines a tree in this interface from
-which to build your query.
+Each term in your workspace defines a tree here from which to build your query.
 
-Clicking the bullet in front of a term toggles that
-term's presence in the query. Each term is one of the following:
+Clicking the bullet in front of a term toggles that term's representation in the query.
+Each term has one of the following states:
 
 - not in the query,
 - in the query, or
-- in the query, but negated (_e.g._, \`NOT Schizophrenia\`).
+- in the query, negated (_e.g._, \`NOT Schizophrenia\`).
 
-Holding Control/Command while clicking will also toggle the term's
-descendants' states to match that of the clicked term.
+CTRL/⌘ + click will also toggle the clicked term's descendants' states to match that of the clicked term.
 
-Using the configuration area at the bottom of
-this interface, you have the option of joining trees with either
-\`AND\` or \`OR \` by selecting the desired "between concept trees" operator.
-Similarly, you can select the "within concept trees" operator, which will join
-selected terms within the same tree.
-
-Additionally, you can view the raw query that will be sent to NeuroBridge.`,
+Using the configuration options (found in the top-right of this interface),
+you have the option of joining trees with either \`AND\` or \`OR \` by selecting the "between concept trees" operator.
+Similarly, you can select the "within concept trees" operator, which will join selected terms within the same tree.
+The effect of these selections on the query are apparent when viewing the raw query.`,
 
   Form: Form,
 }

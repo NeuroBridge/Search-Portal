@@ -45,11 +45,11 @@ export const Interface = ({ ui, active }) => {
         sx={{ '.MuiButtonBase-root': { minHeight: 0 } }}
       >
         <AccordionSummary expandIcon={ <AccordionIcon color="primary" /> }>
-          <HelpIcon color="default" fontSize="small" sx={{ mr: 1 }} /> Help with this Interface
+          <HelpIcon color="default" fontSize="small" sx={{ mr: 1 }} /> Help with this interface
         </AccordionSummary>
 
         <Divider />
-        
+
         <AccordionDetails sx={{
           p: 2,
           backgroundColor: '#f3f3f3',

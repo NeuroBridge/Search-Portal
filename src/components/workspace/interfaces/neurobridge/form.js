@@ -195,6 +195,17 @@ export const Form = () => {
     <InterfaceContext.Provider value={{ values, toggleTermSelection, query }}>
 
       <ConfigMenu sx={{ position: 'absolute', right: 5, top: 5, zIndex: 9 }}>
+        <FormGroup sx={{ p: 2 }}>
+          <FormControlLabel
+            label="Raw Query"
+            control={
+              <Switch checked={ showRawQuery } onChange={ toggleShowRawQuery } />
+            }
+          />
+        </FormGroup>
+
+        <Divider />
+
         <Stack direction="column" gap={ 2 } sx={{ minWidth: '200px', p: 2 }}>
           <FormControl fullWidth size="small">
             <InputLabel id="outer-operator-select-label">Between Concept Trees</InputLabel>
@@ -224,28 +235,17 @@ export const Form = () => {
             </Select>
           </FormControl>
 
-          <FormGroup>
-            <FormControlLabel
-              label="Raw Query"
-              control={
-                <Switch checked={ showRawQuery } onChange={ toggleShowRawQuery } />
-              }
-            />
-          </FormGroup>
-
         </Stack>
       </ConfigMenu>
 
       <Forest />
-
-      <Divider />
 
       <Collapse
         in={ showRawQuery }
         sx={{
           position: 'relative',
           '.query': {
-            m: 0, p: 1,
+            m: 0, p: 1, pl: 3,
             backgroundColor: '#eee',
             color: '#556',
             fontSize: '85%',
