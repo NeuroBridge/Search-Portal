@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import {
-  Box, Fab, Paper, Card, CardActionArea, CardHeader, Tooltip, Zoom,
+  Box, Card, CardActionArea, CardHeader, Fab, Paper, Tooltip, Zoom,
 } from '@mui/material'
 import { useBasket } from './context'
 import { useDrawer } from '../drawer'
@@ -84,18 +84,32 @@ export const Basket = () => {
   }, [basket.ids])
 
   return (
-    <Paper sx={{
+    <Card sx={{
       display: 'flex',
       flexDirection: 'column',
-      background: 'radial-gradient(#33669944 0px, transparent 2px)',
-      backgroundColor: '#44668833',
-      backgroundSize: '0.5rem 0.5rem',
+      backgroundSize: '1rem 1rem',
       overflow: 'hidden',
-      minHeight: '80px',
+      borderTop: '1px solid #44668899',
+      position: 'fixed',
+      bottom: 0,
+      left: 0,
+      width: '100%',
+      zIndex: 9,
       borderRadius: 0,
-      paddingTop: '1.5rem',
-      position: 'relative',
     }}>
+      <Paper sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        background: 'radial-gradient(#33669944 0px, transparent 2px)',
+        backgroundColor: '#44668833',
+        backgroundSize: '0.5rem 0.5rem',
+        overflow: 'hidden',
+        minHeight: '80px',
+        borderRadius: 0,
+        position: 'relative',
+        flexWrap: 'wrap',
+        gap: '0.5rem',
+      }}>
       <Box sx={{
         display: 'flex',
         flexWrap: 'wrap',
@@ -106,17 +120,18 @@ export const Basket = () => {
           terms.map(term => <BasketItem key={ `workspace-item-${ term.id }` } term={ term } />)
         }
       </Box>
-      <Zoom in={ !!basket.ids.length }>
-        <Tooltip placement="top" title="Clear all terms from workspace">
-          <Fab
-            color="primary"
-            size="small"
-            sx={{ position: 'absolute', right: '1rem', bottom: '1rem', zIndex: 9, }}
-            onClick={ basket.empty }
-          ><ClearIcon fontSize="small" /></Fab>
-        </Tooltip>
-      </Zoom>
-    </Paper>
+        <Zoom in={ !!basket.ids.length }>
+          <Tooltip placement="top" title="Clear all terms from workspace">
+            <Fab
+              color="primary"
+              size="small"
+              sx={{ position: 'absolute', right: '1rem', bottom: '1rem', zIndex: 9, }}
+              onClick={ basket.empty }
+            ><ClearIcon fontSize="small" /></Fab>
+          </Tooltip>
+        </Zoom>
+      </Paper>
+    </Card>
   )
 }
 
