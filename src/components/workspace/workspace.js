@@ -3,6 +3,9 @@ import {
   Box, Button, Card, Divider,
   LinearProgress, Stack, Tab, Tabs, 
 } from '@mui/material'
+import {
+  Send as SearchIcon,
+} from '@mui/icons-material'
 import { Basket, useBasket } from '../basket'
 import { interfaces, interfaceDisplayNames } from './interfaces'
 import { SearchResultsTable } from './results-table'
@@ -151,6 +154,7 @@ export const Workspace = () => {
               variant="contained"
               onClick={ requestAll }
               disabled={ basket.ids.length === 0 }
+              startIcon={ <SearchIcon /> }
             >Search</Button>
           </Box>
         </Card>

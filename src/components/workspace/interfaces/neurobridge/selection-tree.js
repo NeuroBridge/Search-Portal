@@ -58,7 +58,7 @@ export const SelectionTree = ({ rootTermId }) => {
       <TreeItem
         key={ node.id }
         nodeId={ node.id }
-        sx={{ borderLeft: '2px solid #eee' }}
+        sx={{ borderLeft: `2px solid ${ rootTermId === node.id ? 'transparent' : '#eee' }` }}
         label={
           <Box sx={{
             display: 'flex',

@@ -1,10 +1,11 @@
 import { createContext, useCallback, useContext, useEffect, useLayoutEffect, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 import {
-  Box, Collapse, Divider, IconButton, FormControlLabel, FormControl, FormLabel, FormGroup,
+  Box, Button, Collapse, Divider, IconButton, FormControlLabel, FormControl, FormLabel, FormGroup,
   Popover, Stack, Switch, Tooltip, ToggleButton, ToggleButtonGroup,
 } from '@mui/material'
 import {
+  Add as AddIcon,
   Close as CloseIcon,
   Settings as ConfigIcon,
 } from '@mui/icons-material'
@@ -202,9 +203,14 @@ export const Form = () => {
     <InterfaceContext.Provider value={{ values, toggleTermSelection, query }}>
 
       <ConfigMenu sx={{ position: 'absolute', right: 5, top: 5, zIndex: 9 }}>
+        <Box sx={{ height: '30px' }} />
+
+        <Divider />
+
         <FormGroup sx={{ p: 2 }}>
           <FormControlLabel
             label="Show raw query"
+            labelPlacement="start"
             control={
               <Switch checked={ showRawQuery } onChange={ toggleShowRawQuery } />
             }
@@ -250,6 +256,13 @@ export const Form = () => {
       </ConfigMenu>
 
       <Forest />
+
+      <Stack justifyContent="center" alignItems="center" sx={{ p: 4 }}>
+        <Button
+          variant="outlined"
+          startIcon={ <AddIcon /> }
+        >Add concept</Button>
+      </Stack>
 
       <Collapse
         in={ showRawQuery }
