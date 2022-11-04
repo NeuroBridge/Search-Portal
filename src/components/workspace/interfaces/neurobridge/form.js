@@ -1,8 +1,8 @@
 import { createContext, useCallback, useContext, useEffect, useLayoutEffect, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 import {
-  Box, Collapse, Divider, IconButton, InputLabel, FormControl, FormControlLabel, FormGroup,
-  MenuItem, Popover, Select, Stack, Switch, Tooltip,
+  Box, Collapse, Divider, IconButton, FormControlLabel, FormControl, FormLabel, FormGroup,
+  Popover, Stack, Switch, Tooltip, ToggleButton, ToggleButtonGroup,
 } from '@mui/material'
 import {
   Close as CloseIcon,
@@ -50,9 +50,16 @@ const ConfigMenu = ({ children, sx }) => {
         open={ open }
         anchorEl={ anchorEl }
         onClose={ handleClose }
-        anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      >{ children }</Popover>
+      >
+        { children }
+        <IconButton
+          size="small"
+          sx={{ position: 'absolute', top: 0, right: 0 }}
+          onClick={ handleClose }
+        ><CloseIcon fontSize="small" /></IconButton>
+      </Popover>
     </Box>
   )
 }
@@ -197,7 +204,7 @@ export const Form = () => {
       <ConfigMenu sx={{ position: 'absolute', right: 5, top: 5, zIndex: 9 }}>
         <FormGroup sx={{ p: 2 }}>
           <FormControlLabel
-            label="Raw Query"
+            label="Show raw query"
             control={
               <Switch checked={ showRawQuery } onChange={ toggleShowRawQuery } />
             }
@@ -206,33 +213,37 @@ export const Form = () => {
 
         <Divider />
 
-        <Stack direction="column" gap={ 2 } sx={{ minWidth: '200px', p: 2 }}>
-          <FormControl fullWidth size="small">
-            <InputLabel id="outer-operator-select-label">Between Concept Trees</InputLabel>
-            <Select
-              labelId="outer-operator-select-label"
-              id="outer-operator-select"
+        <Stack direction="column" gap={ 2 } sx={{ minWidth: '3s00px', p: 2, whiteSpace: 'nowrap' }}>
+          <FormControl>
+            <FormLabel>Between concept trees</FormLabel>
+            <ToggleButtonGroup
+              aria-label="Operator between concept trees"
+              fullWidth
+              size="small"
+              color="primary"
               value={ outerOperator }
-              label="Between Concept Trees"
+              exclusive
               onChange={ handleChangeOperator('outer') }
-            >
-              <MenuItem value="AND">AND</MenuItem>
-              <MenuItem value="OR">OR</MenuItem>
-            </Select>
+              >
+              <ToggleButton value="AND">AND</ToggleButton>
+              <ToggleButton value="OR">OR</ToggleButton>
+            </ToggleButtonGroup>
           </FormControl>
 
-          <FormControl fullWidth size="small">
-            <InputLabel id="inner-operator-select-label">Within Concept Trees</InputLabel>
-            <Select
-              labelId="inner-operator-select-label"
-              id="inner-operator-select"
+          <FormControl>
+            <FormLabel>Within concept trees</FormLabel>
+            <ToggleButtonGroup
+              aria-label="Operator within concept trees"
+              fullWidth
+              size="small"
+              color="primary"
               value={ innerOperator }
-              label="Within Concept Trees"
+              exclusive
               onChange={ handleChangeOperator('inner') }
             >
-              <MenuItem value="AND">AND</MenuItem>
-              <MenuItem value="OR">OR</MenuItem>
-            </Select>
+              <ToggleButton value="AND">AND</ToggleButton>
+              <ToggleButton value="OR">OR</ToggleButton>
+            </ToggleButtonGroup>
           </FormControl>
 
         </Stack>
