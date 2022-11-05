@@ -31,7 +31,7 @@ export const Interface = ({ ui, active }) => {
       aria-labelledby={ `tab-${ ui.id }` }
     >
       {/* Form */}
-      <Box sx={{ flex: 1, minHeight: '150px' }}>
+      <Box className="thisone" sx={{ flex: 1, minHeight: '150px' }}>
         <ui.Form />
       </Box>
 

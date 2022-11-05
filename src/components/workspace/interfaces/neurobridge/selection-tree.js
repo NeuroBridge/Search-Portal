@@ -58,13 +58,16 @@ export const SelectionTree = ({ rootTermId }) => {
       <TreeItem
         key={ node.id }
         nodeId={ node.id }
-        sx={{ borderLeft: `2px solid ${ rootTermId === node.id ? 'transparent' : '#eee' }` }}
+        sx={{
+          borderLeft: rootTermId === node.id ? 0 : '2px solid #eee',
+          '&:last-child': { borderBottomLeftRadius: '0.5rem' },
+        }}
         label={
           <Box sx={{
             display: 'flex',
             justifyContent: 'flex-start',
             alignItems: 'center',
-            gap: '1rem',
+            gap: 2,
           }}>
             <FormControlLabel
               label={ node.id }
@@ -92,7 +95,12 @@ export const SelectionTree = ({ rootTermId }) => {
   return (
     <Fragment>
       <TreeView
-        sx={{ flexGrow: 1, width: '100%', overflowY: 'auto', }}
+        sx={{
+          flexGrow: 1,
+          width: '100%',
+          overflowY: 'auto',
+          border: `2px solid #eee`,
+        }}
         defaultCollapseIcon={ <ExpandIcon /> }
         defaultExpandIcon={ <CollapseIcon /> }
         disabledItemsFocusable

@@ -255,13 +255,23 @@ export const Form = () => {
         </Stack>
       </ConfigMenu>
 
-      <Forest />
 
-      <Stack justifyContent="center" alignItems="center" sx={{ p: 4 }}>
+      <Stack
+        justifyContent="center"
+        alignItems="stretch"
+        sx={{ ml: 3, mr: 5, mb: 3 }}
+      >
+        <Forest />
         <Button
+          fullWidth
           variant="outlined"
           startIcon={ <AddIcon /> }
-        >Add concept</Button>
+          sx={{
+            height: '42px',
+            borderWidth: '2px !important',
+            mb: 2,
+          }}
+        ><Box component="span" sx={{ mt: '3px', }}>Add a concept</Box></Button>
       </Stack>
 
       <Collapse
