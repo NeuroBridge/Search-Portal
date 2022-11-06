@@ -1,6 +1,6 @@
-import { Fragment, useCallback } from 'react'
+import { useCallback } from 'react'
 import PropTypes from 'prop-types'
-import { Box, Checkbox, FormControlLabel, useTheme } from '@mui/material'
+import { Box, Checkbox, IconButton, FormControlLabel, Stack, useTheme } from '@mui/material'
 import { TreeItem, TreeView } from '@mui/lab'
 import {
   ChevronRight as CollapseIcon,
@@ -8,10 +8,11 @@ import {
   AddCircle as TermSelectedIcon,
   RemoveCircle as TermUnselectedIcon,
   Circle as TermNeutralIcon,
+  MoreVert as ConceptMenuIcon,
 } from '@mui/icons-material'
 import { arrayToTree } from 'performant-array-to-tree'
 import { useOntology } from '../../../ontology'
-import { useInterfaceContext } from './form'
+import { useInterfaceContext } from './query-form'
 
 export const SelectionTree = ({ rootTermId }) => {
   const theme = useTheme()
@@ -93,10 +94,15 @@ export const SelectionTree = ({ rootTermId }) => {
   })
 
   return (
-    <Fragment>
+    <Stack
+      direction="row"
+      alignItems="flex-start"
+      gap={ 1 }
+      sx={{ width: '100%' }}
+    >
       <TreeView
         sx={{
-          flexGrow: 1,
+          flex: 1,
           width: '100%',
           overflowY: 'auto',
           border: `2px solid #eee`,
@@ -108,7 +114,10 @@ export const SelectionTree = ({ rootTermId }) => {
       >
         { renderSelectionTree(tree) }
       </TreeView>
-    </Fragment>
+      <IconButton size="small" sx={{ my: 1 }}>
+        <ConceptMenuIcon fontSize="small" />
+      </IconButton>
+    </Stack>
   )
 }
 

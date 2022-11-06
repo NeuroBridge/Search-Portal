@@ -127,21 +127,12 @@ export const Workspace = () => {
 
           {
             interfaces.map((ui, i) => <Interface
-                  key={ `ui-${ ui.id }` }
-                  ui={ ui }
-                  active={ currentInterfaceIndex === i }
-                />)
+              key={ `ui-${ ui.id }` }
+              ui={ ui }
+              active={ currentInterfaceIndex === i }
+            />)
           }
-{/*          {
-            basket.ids.length > 0
-              ? interfaces.map((ui, i) => <Interface
-                  key={ `ui-${ ui.id }` }
-                  ui={ ui }
-                  active={ currentInterfaceIndex === i }
-                />)
-              : <Box sx={{ minHeight: '300px' }}>select terms</Box>
-          }
-*/}
+          
           <Divider />
 
           <Box sx={{

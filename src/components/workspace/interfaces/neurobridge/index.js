@@ -1,4 +1,4 @@
-import { Form } from './form'
+import { QueryForm } from './query-form'
 
 const ui = {
   id: 'neurobridge',
@@ -26,7 +26,7 @@ you have the option of joining trees with either \`AND\` or \`OR \` by selecting
 Similarly, you can select the "within concept trees" operator, which will join selected terms within the same tree.
 The effect of these selections on the query are apparent when viewing the raw query.`,
 
-  Form: Form,
+  Form: QueryForm,
 }
 
 export default ui

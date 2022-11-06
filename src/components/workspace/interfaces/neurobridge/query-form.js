@@ -1,11 +1,10 @@
 import { createContext, useCallback, useContext, useEffect, useLayoutEffect, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 import {
-  Box, Button, Collapse, Divider, IconButton, FormControlLabel, FormControl, FormLabel, FormGroup,
+  Box, Collapse, Divider, IconButton, FormControlLabel, FormControl, FormLabel, FormGroup,
   Popover, Stack, Switch, Tooltip, ToggleButton, ToggleButtonGroup,
 } from '@mui/material'
 import {
-  Add as AddIcon,
   Close as CloseIcon,
   Settings as ConfigIcon,
 } from '@mui/icons-material'
@@ -14,6 +13,7 @@ import { useBasket } from '../../../basket'
 import { useOntology } from '../../../ontology'
 import { Forest } from './selection-forest'
 import { useWorkspace } from '../../workspace'
+import { AddTermForm } from './add-term-form'
 
 //
 
@@ -72,7 +72,7 @@ ConfigMenu.propTypes = {
 
 //
 
-export const Form = () => {
+export const QueryForm = () => {
   const { register } = useWorkspace()
   const ontology = useOntology()
   const basket = useBasket()
@@ -81,11 +81,8 @@ export const Form = () => {
   const [innerOperator, setInnerOperator] = useState('OR')
   const [showRawQuery, setShowRawQuery] = useState(false)
 
-  // this is basically a copy of the ids of the basket contents,
-  // with the non-checked (value = 0) ones filtered out.
-  const roots = useMemo(() => {
-    return [...basket.ids]
-  }, [basket.ids])
+  // this is just a copy of the ids of the basket contents
+  const roots = useMemo(() => [...basket.ids], [basket.ids])
 
   // this effect gets triggered when the basket contents update.
   // it handles updating the values this component holds in its state by
@@ -114,7 +111,7 @@ export const Form = () => {
   const toggleTermSelection = id => event => {
     const newValue = (values[id] + 1) % 3
     const newValues = { ...values, [id]: newValue }
-    // if the CTRL key is held down, then also toggle all
+    // if the CTRL/CMD key is held down, then also toggle all
     // descendants to have the same state as the clicked term.
     if (event.nativeEvent.ctrlKey) {
       ontology.descendantsOf(id).forEach(term => {
@@ -130,7 +127,7 @@ export const Form = () => {
     }
     if (whichOperator === 'outer') {
       return event => setOuterOperator(event.target.value)
-    }
+    }``
   }
   
   // here, we construct the query.
@@ -202,7 +199,7 @@ export const Form = () => {
   return (
     <InterfaceContext.Provider value={{ values, toggleTermSelection, query }}>
 
-      <ConfigMenu sx={{ position: 'absolute', right: 5, top: 5, zIndex: 9 }}>
+      <ConfigMenu sx={{ position: 'absolute', right: 8, top: 8, zIndex: 9 }}>
         <Box sx={{ height: '30px' }} />
 
         <Divider />
@@ -255,23 +252,14 @@ export const Form = () => {
         </Stack>
       </ConfigMenu>
 
-
       <Stack
         justifyContent="center"
         alignItems="stretch"
-        sx={{ ml: 3, mr: 5, mb: 3 }}
+        sx={{ m: 3 }}
       >
         <Forest />
-        <Button
-          fullWidth
-          variant="outlined"
-          startIcon={ <AddIcon /> }
-          sx={{
-            height: '42px',
-            borderWidth: '2px !important',
-            mb: 2,
-          }}
-        ><Box component="span" sx={{ mt: '3px', }}>Add a concept</Box></Button>
+
+        <AddTermForm />
       </Stack>
 
       <Collapse
