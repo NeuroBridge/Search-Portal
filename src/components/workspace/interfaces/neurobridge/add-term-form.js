@@ -29,7 +29,12 @@ const ConceptSelectDialog = ({ open, onClose, onCancel, ...rest }) => {
   const queryField = useRef(null)
 
   useEffect(() => {
-    setFilteredTerms(ontology.terms)
+    if (ontology.terms.length === 0) {
+      return
+    }
+    ontology.terms.forEach(term => {
+      index.addDoc(term)
+    })
   }, [ontology.terms])
 
   const handleEntering = () => {
@@ -39,12 +44,10 @@ const ConceptSelectDialog = ({ open, onClose, onCancel, ...rest }) => {
   // this function uses the incoming query to filter terms to those that match.
   // currently, this fires with every keypress in the search input field.
   const requestSearch = event => {
-    console.log(event.target.value)
     const results = index.search(event.target.value, { expand: true })
-    console.log(results)
     setSearchText(event.target.value)
-    console.log(results.map(res => ontology.find(res.ref)))
-    setFilteredTerms(results.map(res => ontology.find(res.ref)))
+    const newFilteredTerms = results.map(result => ontology.find(result.ref))
+    setFilteredTerms(newFilteredTerms)
   }
 
   const renderRow = ({ index }) => {
@@ -76,15 +79,22 @@ const ConceptSelectDialog = ({ open, onClose, onCancel, ...rest }) => {
         }}
       />
       <DialogContent>
-        <FixedSizeList
-          height={ 450 }
-          width={ 600 }
-          itemSize={ 48 }
-          itemCount={ filteredTerms.length }
-          overscanCount={ 50 }
-        >
-          { renderRow }
-        </FixedSizeList>
+        { searchText ? (
+          <FixedSizeList
+            height={ 450 }
+            width={ 600 }
+            itemSize={ 48 }
+            itemCount={ filteredTerms.length }
+            overscanCount={ 50 }
+          >
+            { renderRow }
+          </FixedSizeList>
+        ) : (
+          <Box sx={{ width: '600px' }}>
+            Enter search text
+          </Box>
+        )
+      }
       </DialogContent>
       <DialogActions>
         <Button autoFocus onClick={ onCancel }>Cancel</Button>
@@ -130,7 +140,6 @@ export const AddTermForm = () => {
         }}
       ><Box component="span" sx={{ mt: '3px', }}>Add a concept</Box></Button>
       <ConceptSelectDialog
-        keepMounted
         open={ open }
         onClose={ handleClose }
         onCancel={ handleClose }
