@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import {
   Box, Button, Dialog, DialogActions, DialogContent,
@@ -27,6 +27,10 @@ const ConceptSelectDialog = ({ open, onClose, ...rest }) => {
   const [searchText, setSearchText] = useState('')
   const [filteredTerms, setFilteredTerms] = useState(ontology.terms)
   const queryField = useRef(null)
+
+  useEffect(() => {
+    setFilteredTerms(ontology.terms)
+  }, [ontology.terms])
 
   const handleEntering = () => {
     console.log('entering...')
