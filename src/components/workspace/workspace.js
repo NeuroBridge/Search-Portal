@@ -67,22 +67,26 @@ export const Workspace = () => {
     */
     if (Object.keys(requests.current).length) {
       setLoading(true)
-      Promise.all(Object.keys(requests.current).map(id => requests.current[id]).map(f => f()))
-        .then(responses => {
-          responses.forEach((response, i) => {
-            // let's grab the id associated with this, the ith, request
-            const id = Object.keys(requests.current)[i]
-            // and save that to our results object, with that id as its key.
-            newResults = { ...newResults, [id]: response }
-          })
+      Promise.all(
+        Object.keys(requests.current)
+          .map(id => requests.current[id])
+          .map(f => f())
+      )
+      .then(responses => {
+        responses.forEach((response, i) => {
+          // let's grab the id associated with this, the ith, request
+          const id = Object.keys(requests.current)[i]
+          // and save that to our results object, with that id as its key.
+          newResults = { ...newResults, [id]: response }
         })
-        .catch(error => {
-          console.error(error.message)
-        })
-        .finally(() => {
-          setResults(newResults)
-          setLoading(false)
-        })
+      })
+      .catch(error => {
+        console.error(error.message)
+      })
+      .finally(() => {
+        setResults(newResults)
+        setLoading(false)
+      })
     }
   }
 

@@ -22,7 +22,7 @@ var index = elasticlunr(function () {
 
 //
 
-const ConceptSelectDialog = ({ open, onClose, ...rest }) => {
+const ConceptSelectDialog = ({ open, onClose, onCancel, ...rest }) => {
   const ontology = useOntology()
   const [searchText, setSearchText] = useState('')
   const [filteredTerms, setFilteredTerms] = useState(ontology.terms)
@@ -48,10 +48,10 @@ const ConceptSelectDialog = ({ open, onClose, ...rest }) => {
   }
 
   const renderRow = ({ index }) => {
-    console.log(index)
+    // console.log(index)
     return (
       <ListItem key={ `option-${ index }` } component="div" disablePadding>
-        <ListItemButton>
+        <ListItemButton onClick={ () => onClose(filteredTerms[index].id) }>
           <ListItemText primary={ filteredTerms[index].id } />
         </ListItemButton>
       </ListItem>
@@ -70,7 +70,7 @@ const ConceptSelectDialog = ({ open, onClose, ...rest }) => {
         fullWidth
         onChange={ requestSearch }
         value={ searchText }
-        InputRef={ queryField }
+        inputRef={ queryField }
         InputProps={{ 
           sx: { borderRadius: 0 },
         }}
@@ -87,13 +87,14 @@ const ConceptSelectDialog = ({ open, onClose, ...rest }) => {
         </FixedSizeList>
       </DialogContent>
       <DialogActions>
-        <Button autoFocus onClick={ onClose }>Cancel</Button>
+        <Button autoFocus onClick={ onCancel }>Cancel</Button>
       </DialogActions>
     </Dialog>
   )
 }
 
 ConceptSelectDialog.propTypes = {
+  onCancel: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
 }
@@ -107,7 +108,7 @@ export const AddTermForm = () => {
   const handleClose = newValue => {
     setOpen(false)
 
-    if (newValue) {
+    if (typeof newValue === 'string') {
       basket.add(newValue)
     }
   }
@@ -132,6 +133,7 @@ export const AddTermForm = () => {
         keepMounted
         open={ open }
         onClose={ handleClose }
+        onCancel={ handleClose }
       />
     </Box>
   )
