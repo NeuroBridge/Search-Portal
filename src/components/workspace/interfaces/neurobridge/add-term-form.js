@@ -77,11 +77,11 @@ const ConceptSelectDialog = ({ open, onClose, onCancel, ...rest }) => {
       />
       <DialogContent>
         <FixedSizeList
-          height={ 500 }
+          height={ 450 }
           width={ 600 }
           itemSize={ 48 }
           itemCount={ filteredTerms.length }
-          overscanCount={ 10 }
+          overscanCount={ 50 }
         >
           { renderRow }
         </FixedSizeList>
