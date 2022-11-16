@@ -2,10 +2,12 @@ import { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import {
   Box, Button, Dialog, DialogActions, DialogContent,
+  IconButton, InputAdornment, 
   ListItem, ListItemButton, ListItemText, TextField,
 } from '@mui/material'
 import {
   Add as AddIcon,
+  Clear as ClearIcon,
 } from '@mui/icons-material'
 import { useBasket } from '../../../basket'
 import { useOntology } from '../../../ontology'
@@ -76,6 +78,14 @@ const ConceptSelectDialog = ({ open, onClose, onCancel, ...rest }) => {
         inputRef={ queryField }
         InputProps={{ 
           sx: { borderRadius: 0 },
+          endAdornment:
+            <InputAdornment position="end">
+              <IconButton
+                aria-label="clear input"
+                onClick={ () => setSearchText('') }
+                edge="end"
+              ><ClearIcon /></IconButton>
+            </InputAdornment>
         }}
       />
       <DialogContent>
