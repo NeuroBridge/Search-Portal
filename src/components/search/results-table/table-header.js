@@ -5,7 +5,7 @@ import {
 import {
   Clear as ClearResultsIcon,
 } from '@mui/icons-material'
-import { useWorkspace } from '../workspace'
+import { useQueryBuilder } from '../query-builder'
 import {
   GridToolbarContainer,
   GridToolbarColumnsButton,
@@ -13,10 +13,9 @@ import {
   GridToolbarDensitySelector,
   GridToolbarExport,
 } from '@mui/x-data-grid'
-import { interfaceDisplayNames } from '../interfaces'
 
 export const TableHeader = ({ currentTabIndex, handleChangeTab }) => {
-  const { results, clearResults } = useWorkspace()
+  const { results, clearResults } = useQueryBuilder()
 
   return (
     <GridToolbarContainer sx={{
@@ -38,12 +37,11 @@ export const TableHeader = ({ currentTabIndex, handleChangeTab }) => {
           sx={{ flex: 1, height: '100%' }}
         >
           {
-            Object.keys(results)
-              .sort()
+            ['NeuroBridge', 'NeuroQuery']
               .map(interfaceId => (
                 <Tab
                   key={ `results-tab-${ interfaceId }` }
-                  label={ `${ interfaceDisplayNames[interfaceId] } (${ results[interfaceId].length })` }
+                  label={ `${ interfaceId } (${ results[interfaceId].length })` }
                   id={ `results-tab-${ interfaceId }` }
                   aria-controls={ `results-tabpanel-${ interfaceId }` }
                 />

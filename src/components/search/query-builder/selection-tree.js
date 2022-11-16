@@ -1,24 +1,31 @@
 import { useCallback } from 'react'
 import PropTypes from 'prop-types'
-import { Box, Checkbox, IconButton, FormControlLabel, Stack, useTheme } from '@mui/material'
+import {
+  Box, Checkbox, FormControlLabel,
+  MenuList, MenuItem, ListItemIcon, ListItemText,
+  Stack, useTheme,
+} from '@mui/material'
 import { TreeItem, TreeView } from '@mui/lab'
 import {
   ChevronRight as CollapseIcon,
   ExpandMore as ExpandIcon,
+  Delete as RemoveTermIcon,
   AddCircle as TermSelectedIcon,
   RemoveCircle as TermUnselectedIcon,
   Circle as TermNeutralIcon,
-  MoreVert as ConceptMenuIcon,
 } from '@mui/icons-material'
 import { arrayToTree } from 'performant-array-to-tree'
-import { useOntology } from '../../../ontology'
-import { useInterfaceContext } from './query-form'
+import { useBasket } from '../../basket'
+import { useOntology } from '../../ontology'
+import { useQueryBuilder } from './query-builder'
+import { SelectionTreeMenu } from './selection-tree-menu'
 
 export const SelectionTree = ({ rootTermId }) => {
   const theme = useTheme()
+  const basket = useBasket()
   const ontology = useOntology()
-  const { toggleTermSelection } = useInterfaceContext()
-  const { values } = useInterfaceContext()
+  const { toggleTermSelection } = useQueryBuilder()
+  const { values } = useQueryBuilder()
 
   // to play nicely with `arrayToTree`, we'll set
   // our root term to have no parent so that it doesn't
@@ -93,6 +100,8 @@ export const SelectionTree = ({ rootTermId }) => {
     )
   })
 
+  const handleClickRemoveTerm = () => basket.remove(rootTermId)
+
   return (
     <Stack
       direction="row"
@@ -114,9 +123,16 @@ export const SelectionTree = ({ rootTermId }) => {
       >
         { renderSelectionTree(tree) }
       </TreeView>
-      <IconButton size="small" sx={{ my: 1 }}>
-        <ConceptMenuIcon fontSize="small" />
-      </IconButton>
+      <SelectionTreeMenu>
+        <MenuList>
+          <MenuItem>
+          <ListItemIcon>
+            <RemoveTermIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText onClick={ handleClickRemoveTerm }>Remove</ListItemText>
+        </MenuItem>
+        </MenuList>
+      </SelectionTreeMenu>
     </Stack>
   )
 }
@@ -124,6 +140,3 @@ export const SelectionTree = ({ rootTermId }) => {
 SelectionTree.propTypes = {
   rootTermId: PropTypes.string.isRequired,
 }
-
-//
-

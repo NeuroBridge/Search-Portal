@@ -1,6 +1,6 @@
 import { Box, Stack, Typography } from '@mui/material'
 import { SelectionTree } from './selection-tree'
-import { useBasket } from '../../../basket'
+import { useBasket } from '../../basket'
 
 export const Forest = () => {
   const basket = useBasket()

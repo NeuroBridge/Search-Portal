@@ -1,18 +1,16 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Card, Fade } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
-import { useWorkspace } from '../workspace'
 import { columns } from './columns'
 import { TableHeader } from './table-header'
-import { PublicationDialog } from './publication-dialog'
+import { useSearch } from '../context'
 
 //
 
-export const SearchResultsTable = () => {
-  const { results } = useWorkspace()
+export const ResultsTable = () => {
+  const { results } = useSearch()
+
   const [currentTabIndex, setCurrentTabIndex] = useState(0)
-  const [activeRow, setActiveRow] = useState()
-  const [dialogOpen, setDialogOpen] = useState(false)
 
   const handleChangeTab = (event, newIndex) => {
     setCurrentTabIndex(newIndex)
@@ -29,24 +27,6 @@ export const SearchResultsTable = () => {
   }, [currentTabIndex, results])
 
   const [pageSize, setPageSize] = useState(20)
-
-  const handleRowClick = params => {
-    setActiveRow(params.row)
-  }
-
-  const handleCloseDialog = () => {
-    setDialogOpen(false)
-    // we'll let the closing animation finish before unsetting the active row
-    const unmountDelay = setTimeout(() => setActiveRow(null), 250)
-    return () => clearTimeout(unmountDelay)
-  }
-
-  useEffect(() => {
-    // but on a new active row, we'll just open the dialog right away.
-    if (activeRow) {
-      setDialogOpen(true)
-    }
-  }, [activeRow])
 
   //
 
@@ -72,15 +52,7 @@ export const SearchResultsTable = () => {
           }}
           disableSelectionOnClick
           checkboxSelection
-          onRowClick={ handleRowClick }
         />
-        {
-          activeRow && <PublicationDialog
-            publication={ activeRow }
-            open={ dialogOpen }
-            onClose={ handleCloseDialog }
-          />
-        }
       </Card>
     </Fade>
   )

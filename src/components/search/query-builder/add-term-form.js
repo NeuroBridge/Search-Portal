@@ -1,22 +1,22 @@
 import { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import {
-  Box, Button, Dialog, DialogActions, DialogContent,
+  Box, Button, Dialog, DialogActions, DialogContent, Divider, 
   IconButton, InputAdornment, 
   ListItem, ListItemButton, ListItemText, TextField,
 } from '@mui/material'
 import {
   Add as AddIcon,
-  Clear as ClearIcon,
+  Backspace as ClearIcon,
 } from '@mui/icons-material'
-import { useBasket } from '../../../basket'
-import { useOntology } from '../../../ontology'
+import { useBasket } from '../../basket'
+import { useOntology } from '../../ontology'
 import elasticlunr from 'elasticlunr'
 import { FixedSizeList } from 'react-window'
 
 //
 
-var index = elasticlunr(function () {
+let index = elasticlunr(function () {
   this.addField('id')
   this.addField('labels')
   this.setRef('id')
@@ -37,25 +37,36 @@ const ConceptSelectDialog = ({ open, onClose, onCancel, ...rest }) => {
     ontology.terms.forEach(term => {
       index.addDoc(term)
     })
+    setFilteredTerms(Object.values(index.documentStore.docs))
   }, [ontology.terms])
 
+  const clearSearchText = () => setSearchText('')
+
   const handleEntering = () => {
-    console.log('entering...')
+      if (!open || !queryField?.current) {
+        return
+      }
+      queryField.current.focus()
+      queryField.current.select()
   }
 
   // this function uses the incoming query to filter terms to those that match.
   // currently, this fires with every keypress in the search input field.
   const requestSearch = event => {
-    const results = index.search(event.target.value, { expand: true })
-    setSearchText(event.target.value)
+    const newSearchText = event.target.value || ''
+    setSearchText(newSearchText)
+    const results = index.search(newSearchText, { expand: true })
+    if (newSearchText === '') {
+      setFilteredTerms(Object.values(index.documentStore.docs))
+      return
+    }
     const newFilteredTerms = results.map(result => ontology.find(result.ref))
     setFilteredTerms(newFilteredTerms)
   }
 
-  const renderRow = ({ index }) => {
-    // console.log(index)
+  const renderRow = ({ index, style }) => {
     return (
-      <ListItem key={ `option-${ index }` } component="div" disablePadding>
+      <ListItem key={ `option-${ index }` } component="div" disablePadding sx={ style }>
         <ListItemButton onClick={ () => onClose(filteredTerms[index].id) }>
           <ListItemText primary={ filteredTerms[index].id } />
         </ListItemButton>
@@ -65,11 +76,12 @@ const ConceptSelectDialog = ({ open, onClose, onCancel, ...rest }) => {
 
   return (
     <Dialog
-      sx={{ '& .MuiDialog-paper': {  height: '80%', maxHeight: 600 } }}
-      maxWidth="md"
+      sx={{ '& .MuiDialog-paper': { height: '80%', maxHeight: 600 } }}
+      maxWidth="sm"
       TransitionProps={{ onEntering: handleEntering }}
       open={ open }
       { ...rest }
+      onClose={ () => onClose() }
     >
       <TextField
         fullWidth
@@ -82,32 +94,30 @@ const ConceptSelectDialog = ({ open, onClose, onCancel, ...rest }) => {
             <InputAdornment position="end">
               <IconButton
                 aria-label="clear input"
-                onClick={ () => setSearchText('') }
+                onClick={ clearSearchText }
                 edge="end"
               ><ClearIcon /></IconButton>
             </InputAdornment>
         }}
       />
-      <DialogContent>
-        { searchText ? (
-          <FixedSizeList
-            height={ 450 }
-            width={ 600 }
-            itemSize={ 48 }
-            itemCount={ filteredTerms.length }
-            overscanCount={ 50 }
-          >
-            { renderRow }
-          </FixedSizeList>
-        ) : (
-          <Box sx={{ width: '600px' }}>
-            Enter search text
-          </Box>
-        )
-      }
+      <DialogContent sx={{ p: 0 }}>
+        <FixedSizeList
+          height={ 480 }
+          width={ 600 }
+          itemSize={ 48 }
+          itemCount={ filteredTerms.length }
+          overscanCount={ 50 }
+        >
+          { renderRow }
+        </FixedSizeList>
       </DialogContent>
+      <Divider />
       <DialogActions>
-        <Button autoFocus onClick={ onCancel }>Cancel</Button>
+        <Button
+          autoFocus
+          onClick={ onCancel }
+          variant="outlined"
+        >Cancel</Button>
       </DialogActions>
     </Dialog>
   )
@@ -137,18 +147,20 @@ export const AddTermForm = () => {
     <Box sx={{
       height: '100px',
       position: 'relative',
+      '.add-term-button': {
+        borderWidth: '2px !important',
+        '& span': {
+          mt: '3px',
+        }
+      }
     }}>
       <Button
         fullWidth
         variant="outlined"
         startIcon={ <AddIcon /> }
+        className="add-term-button"
         onClick={ () => setOpen(true) }
-        sx={{
-          height: '42px',
-          borderWidth: '2px !important',
-          mr: 5,
-        }}
-      ><Box component="span" sx={{ mt: '3px', }}>Add a concept</Box></Button>
+      ><Box component="span">Add a concept</Box></Button>
       <ConceptSelectDialog
         open={ open }
         onClose={ handleClose }

@@ -59,6 +59,8 @@ export const OntologyProvider = ({ children, owlFile }) => {
         termObject.parentId = extractIdFromIri(term['rdfs:subClassOf'][0]['$']['rdf:resource'])
       }
       return termObject
+    }).sort((t, u) => {
+      return t.id.toLowerCase() < u.id.toLowerCase() ? -1 : 1
     })
   }, [owlFile])
 
