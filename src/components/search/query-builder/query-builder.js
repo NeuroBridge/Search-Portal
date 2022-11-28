@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import {
   Box, Button, Card, CardContent, Collapse, Divider, IconButton,
-  FormControlLabel, FormControl, FormLabel, FormGroup,
+  FormControlLabel, FormControl, FormLabel, FormGroup, LinearProgress,
   Stack, Switch, ToggleButton, ToggleButtonGroup,
 } from '@mui/material'
 import {
@@ -26,7 +26,7 @@ export const QueryBuilder = () => {
   const [outerOperator, setOuterOperator] = useState('AND')
   const [innerOperator, setInnerOperator] = useState('OR')
   const [showRawQuery, setShowRawQuery] = useState(false)
-  const { fetchResults } = useSearch()
+  const { fetchResults, loading } = useSearch()
 
 
   // this is just a copy of the ids of the basket contents
@@ -99,7 +99,7 @@ export const QueryBuilder = () => {
           [innerOperator]: [
             ...groups[id]
               .filter(id => values[id] !== 0)
-              .map(id => values[id] === 1 ? id : { not: [id] }),
+              .map(id => values[id] === 1 ? id : { NOT: [id] }),
           ]
         })
       }
@@ -176,6 +176,7 @@ export const QueryBuilder = () => {
           alignItems="stretch"
           sx={{ m: 3 }}
         >
+
           <Forest />
 
           <AddTermForm />
@@ -212,6 +213,7 @@ export const QueryBuilder = () => {
         </CardContent>
 
       </QueryBuilderContext.Provider>
+      <LinearProgress variant={ loading ? 'indeterminate' : 'determinate' } value={ 0 } />
     </Card>
   )
 } 

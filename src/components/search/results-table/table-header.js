@@ -5,7 +5,7 @@ import {
 import {
   Clear as ClearResultsIcon,
 } from '@mui/icons-material'
-import { useQueryBuilder } from '../query-builder'
+import { useSearch } from '../context'
 import {
   GridToolbarContainer,
   GridToolbarColumnsButton,
@@ -15,7 +15,7 @@ import {
 } from '@mui/x-data-grid'
 
 export const TableHeader = ({ currentTabIndex, handleChangeTab }) => {
-  const { results, clearResults } = useQueryBuilder()
+  const { results, clearResults } = useSearch()
 
   return (
     <GridToolbarContainer sx={{
@@ -55,7 +55,7 @@ export const TableHeader = ({ currentTabIndex, handleChangeTab }) => {
           className="results-action-buttons"
           sx={{ p: '0 1 0 0'}}
         >
-          <Tooltip title="Clear all results" placement="top">
+          <Tooltip title="Clear all results" placement="left">
             <IconButton
               onClick={ clearResults }
               size="small"

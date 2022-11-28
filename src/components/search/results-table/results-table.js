@@ -8,7 +8,7 @@ import { useSearch } from '../context'
 //
 
 export const ResultsTable = () => {
-  const { results } = useSearch()
+  const { results, lastRequestTime, totalResultCount } = useSearch()
 
   const [currentTabIndex, setCurrentTabIndex] = useState(0)
 
@@ -18,27 +18,28 @@ export const ResultsTable = () => {
   
   // tableData will be a memoized array consisting of just
   // the items from each interface in the results object.
-  const tableData = useMemo(() => {
-    if (!Object.keys(results).length) {
+  const currentTableData = useMemo(() => {
+    if (!results || !Object.keys(results).length) {
       return []
     }
-    const interfaceId = Object.keys(results).sort()[currentTabIndex]
-    return results[interfaceId]
-  }, [currentTabIndex, results])
+    const serviceId = Object.keys(results).sort()[currentTabIndex]
+    return results[serviceId] || []
+  }, [currentTabIndex, totalResultCount, lastRequestTime])
 
   const [pageSize, setPageSize] = useState(20)
 
   //
 
   return (
-    <Fade in={ !!Object.keys(results).length }>
-      <Card>
+    <Fade in={ totalResultCount > 0 }>
+      <Card sx={{ height: '100%' }}>
+
         <DataGrid
           sx={{
             '.MuiDataGrid-row': { cursor: 'pointer' },
           }}
           autoHeight
-          rows={ tableData }
+          rows={ currentTableData }
           columns={ columns }
           getRowId={ row => row.pmid }
           pageSize={ pageSize }
@@ -53,6 +54,7 @@ export const ResultsTable = () => {
           disableSelectionOnClick
           checkboxSelection
         />
+
       </Card>
     </Fade>
   )

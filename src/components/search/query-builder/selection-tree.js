@@ -129,7 +129,7 @@ export const SelectionTree = ({ rootTermId }) => {
           <ListItemIcon>
             <RemoveTermIcon fontSize="small" />
           </ListItemIcon>
-          <ListItemText onClick={ handleClickRemoveTerm }>Remove</ListItemText>
+          <ListItemText onClick={ handleClickRemoveTerm }>Remove Term</ListItemText>
         </MenuItem>
         </MenuList>
       </SelectionTreeMenu>

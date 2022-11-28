@@ -1,5 +1,5 @@
 import { Box, Container } from '@mui/material'
-import { QueryBuilder, /*ResultsTable*/ } from '../components/search'
+import { QueryBuilder, ResultsTable } from '../components/search'
 import { SearchProvider } from '../components/search'
 
 //
@@ -15,9 +15,12 @@ export const SearchView = () => {
         mb: 6,
       }}>      
         <SearchProvider>
+
           <QueryBuilder />
-{/*          <ResultsTable />
-*/}        </SearchProvider>
+
+          <ResultsTable />
+          
+        </SearchProvider>
       </Box>
     </Container>
   )
