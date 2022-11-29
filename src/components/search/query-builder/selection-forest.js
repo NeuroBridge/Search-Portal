@@ -13,14 +13,13 @@ export const Forest = () => {
         alignItems="center"
       >
         {
-          basket.ids.length === 0
-            ? <Typography variant="h6">Add a concept to start building a query!</Typography>
-            : basket.ids.map(id => (
-              <SelectionTree
-                key={ `${ id }-forest` }
-                rootTermId={ id }
-              />
-            ))
+          basket.ids.length === 0 ? (
+            <Typography paragraph sx={{ filter: 'opacity(0.8)', fontSize: '150%' }}>
+              Add concepts to start building a query!
+            </Typography>
+          ) : basket.ids.map(id => (
+            <SelectionTree key={ `${ id }-forest` } rootTermId={ id } />
+          ))
         }
       </Stack>
     </Box>

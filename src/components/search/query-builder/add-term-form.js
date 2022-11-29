@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import {
-  Box, Button, Dialog, DialogActions, DialogContent, Divider, 
-  IconButton, InputAdornment, 
-  ListItem, ListItemButton, ListItemText, TextField,
+  Box, Button, Dialog, DialogActions, DialogContent, DialogTitle,
+  Divider, IconButton, InputAdornment, 
+  ListItem, ListItemButton, ListItemText, Stack, TextField,
 } from '@mui/material'
 import {
   Add as AddIcon,
@@ -40,7 +40,10 @@ const ConceptSelectDialog = ({ open, onClose, onCancel, ...rest }) => {
     setFilteredTerms(Object.values(index.documentStore.docs))
   }, [ontology.terms])
 
-  const clearSearchText = () => setSearchText('')
+  const clearSearchText = () => {
+    setSearchText('')
+    setFilteredTerms(Object.values(index.documentStore.docs))
+  }
 
   const handleEntering = () => {
       if (!open || !queryField?.current) {
@@ -64,15 +67,13 @@ const ConceptSelectDialog = ({ open, onClose, onCancel, ...rest }) => {
     setFilteredTerms(newFilteredTerms)
   }
 
-  const renderRow = ({ index, style }) => {
-    return (
-      <ListItem key={ `option-${ index }` } component="div" disablePadding sx={ style }>
-        <ListItemButton onClick={ () => onClose(filteredTerms[index].id) }>
-          <ListItemText primary={ filteredTerms[index].id } />
-        </ListItemButton>
-      </ListItem>
-    )
-  }
+  const renderRow = useCallback(({ index, style }) => (
+    <ListItem key={ `option-${ index }` } component="div" disablePadding sx={ style }>
+      <ListItemButton onClick={ () => onClose(filteredTerms[index].id) }>
+        <ListItemText primary={ filteredTerms[index].id } />
+      </ListItemButton>
+    </ListItem>
+  ), [filteredTerms])
 
   return (
     <Dialog
@@ -83,6 +84,7 @@ const ConceptSelectDialog = ({ open, onClose, onCancel, ...rest }) => {
       { ...rest }
       onClose={ () => onClose() }
     >
+      <DialogTitle>Add term</DialogTitle>
       <TextField
         fullWidth
         onChange={ requestSearch }
@@ -144,28 +146,30 @@ export const AddTermForm = () => {
   }
 
   return (
-    <Box sx={{
-      height: '100px',
-      position: 'relative',
-      '.add-term-button': {
-        borderWidth: '2px !important',
-        '& span': {
-          mt: '3px',
+    <Stack
+      direction="row"
+      justifyContent="center"
+      sx={{
+        '.add-term-button': {
+          borderWidth: '2px !important',
+          '.label': {
+            pt: '4px',
+            margin: 'auto'
+          }
         }
-      }
-    }}>
+      }}
+    >
       <Button
-        fullWidth
         variant="outlined"
         startIcon={ <AddIcon /> }
         className="add-term-button"
         onClick={ () => setOpen(true) }
-      ><Box component="span">Add a concept</Box></Button>
+      ><Box component="span" className="label">Add term</Box></Button>
       <ConceptSelectDialog
         open={ open }
         onClose={ handleClose }
         onCancel={ handleClose }
       />
-    </Box>
+    </Stack>
   )
 }

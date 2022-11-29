@@ -36,17 +36,20 @@ export const TableHeader = ({ currentTabIndex, handleChangeTab }) => {
           variant="scrollable"
           sx={{ flex: 1, height: '100%' }}
         >
-          {
-            ['NeuroBridge', 'NeuroQuery']
-              .map(interfaceId => (
-                <Tab
-                  key={ `results-tab-${ interfaceId }` }
-                  label={ `${ interfaceId } (${ results[interfaceId].length })` }
-                  id={ `results-tab-${ interfaceId }` }
-                  aria-controls={ `results-tabpanel-${ interfaceId }` }
-                />
-              ))
-          }
+          <Tooltip title="Sorted by number of matches terms" placement="top">
+            <Tab
+              label={ `NeuroBridge (${ results.NeuroBridge.length })` }
+              id={ `results-tab-NeuroBridge` }
+              aria-controls="results-tabpanel-NeuroBridge"
+            />
+          </Tooltip>
+          <Tooltip title="Sorted by relevance" placement="top">
+            <Tab
+              label={ `NeuroQuery (${ results.NeuroQuery.length })` }
+              id={ `results-tab-NeuroQuery` }
+              aria-controls="results-tabpanel-NeuroQuery"
+            />
+          </Tooltip>
         </Tabs>
         <Stack
           direction="row"

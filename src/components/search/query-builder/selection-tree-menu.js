@@ -13,7 +13,7 @@ import {
 export const SelectionTreeMenu = ({ children, sx }) => {
   const [anchorEl, setAnchorEl] = useState(null)
 
-  const handleClick = event => setAnchorEl(event.currentTarget)
+  const handleClickMenuButton = event => setAnchorEl(event.currentTarget)
   const handleClose = () => setAnchorEl(null)
 
   const open = Boolean(anchorEl)
@@ -25,7 +25,7 @@ export const SelectionTreeMenu = ({ children, sx }) => {
         <IconButton
           aria-describedby={ id }
           variant="contained"
-          onClick={ handleClick }
+          onClick={ handleClickMenuButton }
           size="small"
           sx={{ my: 1 }}
         ><MenuIcon fontSize="small" /></IconButton>
@@ -37,6 +37,7 @@ export const SelectionTreeMenu = ({ children, sx }) => {
         onClose={ handleClose }
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        onClick={ handleClose }
       >
         <Box sx={{ height: '22px' }} />
         <Divider />

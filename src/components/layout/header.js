@@ -4,7 +4,7 @@ import { AppBar, Box, Container, IconButton, Slide, Toolbar, Tooltip, useScrollT
 import { Link } from '../link'
 import { useMatch, useResolvedPath } from 'react-router-dom'
 import { useDrawer } from '../drawer'
-import { MenuOpen as DrawerIcon } from '@mui/icons-material'
+import { OpenInBrowser as DrawerIcon } from '@mui/icons-material'
 
 const HideOnScroll = ({ children }) => {
   const trigger = useScrollTrigger()
@@ -89,18 +89,16 @@ export const Header = () => {
               height: '5rem',
               padding: '0 1rem',
             }}>
-              <Box>
-                <Link to="/" style={ brandStyle }>
-                  NeuroBridge
-                </Link>
-              </Box>
+              <Link to="/" style={ brandStyle }>
+                NeuroBridge
+              </Link>
               <Box sx={ navStyle }>
                 <NavLink to="/">Search</NavLink>
                 <NavLink to="/about">About</NavLink>
                 <NavLink to="/contact">Contact</NavLink>
               </Box>
               <Tooltip title="Open Ontology Browser" placement="bottom">
-                <IconButton onClick={ () => drawer.open() }><DrawerIcon /></IconButton>
+                <IconButton onClick={ () => drawer.open() }><DrawerIcon sx={{ transform: 'rotate(90deg)' }} /></IconButton>
               </Tooltip>
             </Container>
           </Toolbar>

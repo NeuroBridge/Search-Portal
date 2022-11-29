@@ -1,11 +1,12 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import {
-  Box, Button, Card, CardContent, Collapse, Divider, IconButton,
+  Box, Button, Card, CardContent, CardHeader, Collapse, Divider, IconButton,
   FormControlLabel, FormControl, FormLabel, FormGroup, LinearProgress,
   Stack, Switch, ToggleButton, ToggleButtonGroup,
 } from '@mui/material'
 import {
   Close as CloseIcon,
+  Send as SearchIcon,
 } from '@mui/icons-material'
 import { useBasket } from '../../basket'
 import { useOntology } from '../../ontology'
@@ -35,7 +36,7 @@ export const QueryBuilder = () => {
   // this effect gets triggered when the basket contents update.
   // it handles updating the values this component holds in its state by
   // first starting with a base selection of "0" for all basket terms and their
-  // descendants, and then spreading in the existing state already in state.
+  // descendants, and then spreading in the existing values already in state.
   useEffect(() => {
     const previousValues = { ...values }
     let baseValues
@@ -117,6 +118,9 @@ export const QueryBuilder = () => {
   return (
     <Card sx={{ position: 'relative' }}>
       <QueryBuilderContext.Provider value={{ values, toggleTermSelection, query }}>
+        <CardHeader title="Query Builder" />
+
+        <Divider />
 
         <ConfigMenu sx={{ position: 'absolute', right: 8, top: 8, zIndex: 9 }}>
           <Box sx={{ height: '30px' }} />
@@ -204,15 +208,31 @@ export const QueryBuilder = () => {
             ><CloseIcon fontSize="small" color="danger" sx={{ filter: 'opacity(0.33)' }} /></IconButton>
             <pre className="query">{ JSON.stringify(query, null, 2) }</pre>
         </Collapse>
+
+        <Divider />
         
-        <CardContent sx={{ textAlign: 'right' }}>
+        <CardContent sx={{
+          textAlign: 'right',
+          '.button': {
+            borderRadius: '23px',
+          },
+          '.label': {
+            pt: '4px',
+            margin: 'auto',
+          },
+         }}>
           <Button
             onClick={ () => fetchResults(query) }
             variant="contained"
-          >Search</Button>
+            size="large"
+            endIcon={ <SearchIcon /> }
+            className="button"
+            disabled={ basket.ids.length === 0 }
+          ><span className="label">Search</span></Button>
         </CardContent>
 
       </QueryBuilderContext.Provider>
+
       <LinearProgress variant={ loading ? 'indeterminate' : 'determinate' } value={ 0 } />
     </Card>
   )

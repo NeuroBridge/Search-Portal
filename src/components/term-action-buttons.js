@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types'
 import { Box, IconButton, Tooltip } from '@mui/material'
 import {
-  Add as AddIcon,
-  Remove as RemoveIcon,
-  MenuOpen as ViewTermIcon,
+  CheckBoxOutlineBlank as AddIcon,
+  CheckBox as RemoveIcon,
+  OpenInBrowser as ViewTermIcon,
 } from '@mui/icons-material'
 import { useBasket } from './basket'
 import { useDrawer } from './drawer'
@@ -11,7 +11,7 @@ import { useDrawer } from './drawer'
 export const TermActionButtons = ({ termId, stopEventPropagation, tooltipPlacement, hideDrawerButton }) => {
   const basket = useBasket()
   const drawer = useDrawer()
-  const tip = basket.contains(termId) ? 'Remove term from workspace' : 'Add term to workspace'
+  const tip = basket.contains(termId) ? 'Remove term from query builder' : 'Add term to query builder'
 
   const handleClickTermButton = button => event => {
     if (stopEventPropagation) {
@@ -50,7 +50,7 @@ export const TermActionButtons = ({ termId, stopEventPropagation, tooltipPlaceme
         !hideDrawerButton && (
           <Tooltip title="View term details" placement={ tooltipPlacement }>
             <IconButton color="default" size="small" onClick={ handleClickTermButton('drawer') }>
-              <ViewTermIcon fontSize="small" sx={{ transform: 'scale(-1, 1)' }} />
+              <ViewTermIcon fontSize="small" sx={{ transform: 'scale(-1, 1) rotate(90deg)' }} />
             </IconButton>
           </Tooltip>
         )

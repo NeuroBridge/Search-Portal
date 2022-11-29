@@ -9,6 +9,7 @@ import { TreeItem, TreeView } from '@mui/lab'
 import {
   ChevronRight as CollapseIcon,
   ExpandMore as ExpandIcon,
+  OpenInBrowser as InspectTermIcon,
   Delete as RemoveTermIcon,
   AddCircle as TermSelectedIcon,
   RemoveCircle as TermUnselectedIcon,
@@ -16,6 +17,7 @@ import {
 } from '@mui/icons-material'
 import { arrayToTree } from 'performant-array-to-tree'
 import { useBasket } from '../../basket'
+import { useDrawer } from '../../drawer'
 import { useOntology } from '../../ontology'
 import { useQueryBuilder } from './query-builder'
 import { SelectionTreeMenu } from './selection-tree-menu'
@@ -23,6 +25,7 @@ import { SelectionTreeMenu } from './selection-tree-menu'
 export const SelectionTree = ({ rootTermId }) => {
   const theme = useTheme()
   const basket = useBasket()
+  const drawer = useDrawer()
   const ontology = useOntology()
   const { toggleTermSelection } = useQueryBuilder()
   const { values } = useQueryBuilder()
@@ -102,6 +105,8 @@ export const SelectionTree = ({ rootTermId }) => {
 
   const handleClickRemoveTerm = () => basket.remove(rootTermId)
 
+  const handleClickInspectTerm = () => drawer.setTermId(rootTermId)
+
   return (
     <Stack
       direction="row"
@@ -125,12 +130,14 @@ export const SelectionTree = ({ rootTermId }) => {
       </TreeView>
       <SelectionTreeMenu>
         <MenuList>
-          <MenuItem>
-          <ListItemIcon>
-            <RemoveTermIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText onClick={ handleClickRemoveTerm }>Remove Term</ListItemText>
-        </MenuItem>
+          <MenuItem onClick={ handleClickRemoveTerm }>
+            <ListItemIcon><RemoveTermIcon fontSize="small" color="warning" /></ListItemIcon>
+            <ListItemText>Remove term</ListItemText>
+          </MenuItem>
+          <MenuItem onClick={ handleClickInspectTerm }>
+            <ListItemIcon><InspectTermIcon fontSize="small" color="primary" sx={{ transform: 'rotate(90deg)' }} /></ListItemIcon>
+            <ListItemText>View in browser</ListItemText>
+          </MenuItem>
         </MenuList>
       </SelectionTreeMenu>
     </Stack>
