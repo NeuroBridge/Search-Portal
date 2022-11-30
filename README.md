@@ -12,3 +12,10 @@ You'll need Node v14.16.0 or higher. If you don't have that version installed, u
 ### 🎁 Production
 
 Build the application for production with `npm run build`. The `dist` directory will contain the bundled files.
+
+A [Dockerfile](Dockerfile) exists for easy, consistent deployment. Commands to get going would look something like the following.
+
+```
+docker build -t neurobridge/search-portal .
+docker run -d --expose=80 neurobridge/search-portal
+```
