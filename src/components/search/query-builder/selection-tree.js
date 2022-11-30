@@ -132,11 +132,11 @@ export const SelectionTree = ({ rootTermId }) => {
         <MenuList>
           <MenuItem onClick={ handleClickRemoveTerm }>
             <ListItemIcon><RemoveTermIcon fontSize="small" color="warning" /></ListItemIcon>
-            <ListItemText>Remove term</ListItemText>
+            <ListItemText>Remove</ListItemText>
           </MenuItem>
           <MenuItem onClick={ handleClickInspectTerm }>
             <ListItemIcon><InspectTermIcon fontSize="small" color="primary" sx={{ transform: 'rotate(90deg)' }} /></ListItemIcon>
-            <ListItemText>View in browser</ListItemText>
+            <ListItemText>View in Browser</ListItemText>
           </MenuItem>
         </MenuList>
       </SelectionTreeMenu>

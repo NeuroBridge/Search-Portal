@@ -36,7 +36,7 @@ export const TableHeader = ({ currentTabIndex, handleChangeTab }) => {
           variant="scrollable"
           sx={{ flex: 1, height: '100%' }}
         >
-          <Tooltip title="Sorted by number of matches terms" placement="top">
+          <Tooltip title="Sorted by number of matching terms" placement="top">
             <Tab
               label={ `NeuroBridge (${ results.NeuroBridge.length })` }
               id={ `results-tab-NeuroBridge` }

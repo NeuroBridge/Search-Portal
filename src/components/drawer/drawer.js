@@ -96,7 +96,7 @@ export const Drawer = () => {
             ))
           }
         </MuiBreadcrumbs>
-        <Tooltip placement="left" title="Close drawer">
+        <Tooltip placement="left" title="Close Ontology Browser">
           <IconButton
             size="small"
             onClick={ drawer.close }
@@ -117,15 +117,24 @@ export const Drawer = () => {
   const LabelsList = useCallback(() => {
     return (
       <Fade in={ true } style={{ transitionDelay: '50ms' }}>
-        <Box>
-          <List dense disablePadding sx={{
-            '.MuiListItem-root': {
-              p: 0,
-              whiteSpace: 'nowrap',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
+        <Stack
+          direction="column"
+          sx={{
+            mt: 1,
+            '& .list-title': { textTransform: 'uppercase' },
+            '& .labels-list': {
+              flex: 1,
+              '& .MuiListItem-root': {
+                p: 0,
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }
             }
-          }}>
+          }}
+        >
+          <Typography variant="caption" className="list-title">Labels</Typography>
+          <List dense disablePadding className="labels-list">
             {
               drawer.currentTerm.labels.map(label => (
                 <ListItem key={ `${ drawer.currentTerm.id }-label-${ label }` }>
@@ -134,7 +143,7 @@ export const Drawer = () => {
               ))
             }
           </List>
-        </Box>
+        </Stack>
       </Fade>
     )
   }, [drawer.currentTerm])
@@ -175,7 +184,7 @@ export const Drawer = () => {
     return (
       <Fade in={ true } style={{ transitionDelay: '150ms' }}>
         <Box>
-          <Typography variant="h6">Descendants:</Typography>
+          <Typography variant="h6">Children:</Typography>
 
           <List dense disablePadding sx={{ '.MuiListItem-root': { p: 0 } }}>
             {
@@ -255,7 +264,7 @@ export const Drawer = () => {
             }}>
               <Box sx={{ flex: 1 }}>
                 <Typography variant="h5" sx={{ margin: 0 }}>
-                  { drawer.currentTerm.id }
+                  Current Term: { drawer.currentTerm.id }
                 </Typography>
                 <LabelsList />
               </Box>

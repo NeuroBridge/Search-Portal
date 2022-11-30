@@ -10,36 +10,39 @@ import { TermActionButtons } from './term-action-buttons'
 import { arrayToTree } from 'performant-array-to-tree'
 import { useDrawer } from './drawer'
 
-const renderTree = node => {
-  const drawer = useDrawer()
-
-  return (
-    <TreeItem
-      key={ node.id }
-      nodeId={ node.id }
-      label={
-        <Box sx={{
-          display: 'flex',
-          justifyContent: 'flex-start',
-          alignItems: 'center',
-          gap: '1rem',
-          padding: '0.5rem',
-        }}>
-          <Button onClick={ () => drawer.setTermId(node.id) }>{ node.id }</Button>
-          <TermActionButtons termId={ node.id } stopEventPropagation hideDrawerButton />
-        </Box>
-      }
-    >
-      {
-        Array.isArray(node.children)
-          ? node.children.map(n => renderTree(n))
-          : null
-      }
-    </TreeItem>
-  )
-}
-
 export const TreeList = ({ rootTerm }) => {
+  const renderTree = node => {
+    const drawer = useDrawer()
+
+    return (
+      <TreeItem
+        key={ node.id }
+        nodeId={ node.id }
+        sx={{
+          borderLeft: rootTerm.id === node.id ? 0 : '2px solid #eee',
+          '&:last-child': { borderBottomLeftRadius: '0.5rem' },
+        }}
+        label={
+          <Box sx={{
+            display: 'flex',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+            gap: '1rem',
+          }}>
+            <Button onClick={ () => drawer.setTermId(node.id) }>{ node.id }</Button>
+            <TermActionButtons termId={ node.id } stopEventPropagation hideDrawerButton />
+          </Box>
+        }
+      >
+        {
+          Array.isArray(node.children)
+            ? node.children.map(n => renderTree(n))
+            : null
+        }
+      </TreeItem>
+    )
+  }
+
   const descendants = [
     // to play nicely with `arrayToTree`, we'll set
     // our root term to have no parent so that it doesn't
@@ -67,14 +70,18 @@ export const TreeList = ({ rootTerm }) => {
   return (
     <Fragment>
       <TreeView
-        sx={{ flexGrow: 1, width: '100%', overflowY: 'auto' }}
         defaultCollapseIcon={ <ExpandIcon /> }
         defaultExpandIcon={ <CollapseIcon /> }
         disabledItemsFocusable
         disableSelection
-      >
-        { renderTree(tree) }
-      </TreeView>
+        sx={{
+          my: 1,
+          flexGrow: 1,
+          width: '100%',
+          overflowY: 'auto',
+          border: `2px solid #eee`,
+        }}
+      >{ renderTree(tree) }</TreeView>
     </Fragment>
   )
 }

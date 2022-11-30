@@ -8,8 +8,10 @@ import {
 import {
   Add as AddIcon,
   Backspace as ClearIcon,
+  OpenInBrowser as InspectTermIcon,
 } from '@mui/icons-material'
 import { useBasket } from '../../basket'
+import { useDrawer } from '../../drawer'
 import { useOntology } from '../../ontology'
 import elasticlunr from 'elasticlunr'
 import { FixedSizeList } from 'react-window'
@@ -24,7 +26,8 @@ let index = elasticlunr(function () {
 
 //
 
-const ConceptSelectDialog = ({ open, onClose, onCancel, ...rest }) => {
+const ConceptSelectDialog = ({ open, closeHandler, cancelHandler, ...rest }) => {
+  const drawer = useDrawer()
   const ontology = useOntology()
   const [searchText, setSearchText] = useState('')
   const [filteredTerms, setFilteredTerms] = useState(ontology.terms)
@@ -67,10 +70,48 @@ const ConceptSelectDialog = ({ open, onClose, onCancel, ...rest }) => {
     setFilteredTerms(newFilteredTerms)
   }
 
+  const handleClickSelectTerm = id => () => {
+    closeHandler(id)
+  }
+
+  const handleClickInspectTerm = id => () => {
+    drawer.setTermId(id)
+    closeHandler()
+  }
+
   const renderRow = useCallback(({ index, style }) => (
-    <ListItem key={ `option-${ index }` } component="div" disablePadding sx={ style }>
-      <ListItemButton onClick={ () => onClose(filteredTerms[index].id) }>
-        <ListItemText primary={ filteredTerms[index].id } />
+    <ListItem
+      key={ `option-${ index }` }
+      disablePadding
+      sx={{
+        ...style,
+        '& svg': {
+          transform: 'rotate(90deg)',
+          filter: 'opacity(0.25)',
+        },
+        '&:hover svg': {
+          filter: 'opacity(1.0)',
+        },
+      }}
+      secondaryAction={
+        <IconButton
+          edge="end"
+          aria-label="view in browser"
+          onClick={ handleClickInspectTerm(filteredTerms[index].id) }
+        ><InspectTermIcon /></IconButton>
+      }
+    >
+      <ListItemButton onClick={ handleClickSelectTerm(filteredTerms[index].id) }>
+        <ListItemText
+          primary={ filteredTerms[index].id }
+          secondary={ filteredTerms[index].labels.join(', ') }
+          secondaryTypographyProps={{ sx: {
+            maxHeight: '1rem',
+            overflow: 'hidden',
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis',
+          } }}
+        />
       </ListItemButton>
     </ListItem>
   ), [filteredTerms])
@@ -82,9 +123,9 @@ const ConceptSelectDialog = ({ open, onClose, onCancel, ...rest }) => {
       TransitionProps={{ onEntering: handleEntering }}
       open={ open }
       { ...rest }
-      onClose={ () => onClose() }
+      onClose={ () => closeHandler() }
     >
-      <DialogTitle>Add term</DialogTitle>
+      <DialogTitle>Add Term</DialogTitle>
       <TextField
         fullWidth
         onChange={ requestSearch }
@@ -92,7 +133,7 @@ const ConceptSelectDialog = ({ open, onClose, onCancel, ...rest }) => {
         inputRef={ queryField }
         InputProps={{ 
           sx: { borderRadius: 0 },
-          endAdornment:
+          endAdornment: (
             <InputAdornment position="end">
               <IconButton
                 aria-label="clear input"
@@ -100,24 +141,23 @@ const ConceptSelectDialog = ({ open, onClose, onCancel, ...rest }) => {
                 edge="end"
               ><ClearIcon /></IconButton>
             </InputAdornment>
+          ),
         }}
       />
       <DialogContent sx={{ p: 0 }}>
         <FixedSizeList
-          height={ 480 }
+          height={ 420 }
           width={ 600 }
-          itemSize={ 48 }
+          itemSize={ 68 }
           itemCount={ filteredTerms.length }
-          overscanCount={ 50 }
-        >
-          { renderRow }
-        </FixedSizeList>
+          overscanCount={ 36 }
+        >{ renderRow }</FixedSizeList>
       </DialogContent>
       <Divider />
       <DialogActions>
         <Button
           autoFocus
-          onClick={ onCancel }
+          onClick={ cancelHandler }
           variant="outlined"
         >Cancel</Button>
       </DialogActions>
@@ -126,8 +166,8 @@ const ConceptSelectDialog = ({ open, onClose, onCancel, ...rest }) => {
 }
 
 ConceptSelectDialog.propTypes = {
-  onCancel: PropTypes.func.isRequired,
-  onClose: PropTypes.func.isRequired,
+  cancelHandler: PropTypes.func.isRequired,
+  closeHandler: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
 }
 
@@ -152,10 +192,7 @@ export const AddTermForm = () => {
       sx={{
         '.add-term-button': {
           borderWidth: '2px !important',
-          '.label': {
-            pt: '4px',
-            margin: 'auto'
-          }
+          '.label': { pt: '4px', margin: 'auto', }
         }
       }}
     >
@@ -164,11 +201,11 @@ export const AddTermForm = () => {
         startIcon={ <AddIcon /> }
         className="add-term-button"
         onClick={ () => setOpen(true) }
-      ><Box component="span" className="label">Add term</Box></Button>
+      ><Box component="span" className="label">Add Term</Box></Button>
       <ConceptSelectDialog
         open={ open }
-        onClose={ handleClose }
-        onCancel={ handleClose }
+        closeHandler={ handleClose }
+        cancelHandler={ handleClose }
       />
     </Stack>
   )
