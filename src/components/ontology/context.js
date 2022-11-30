@@ -51,6 +51,7 @@ export const OntologyProvider = ({ children, owlFile }) => {
       // labels
       if (term['rdfs:label']) {
         termObject.labels = term['rdfs:label']
+          .map(label => label._)
       }
       // check for parent term and add its ID to term object if so.
       // this will help construct a subtree rooted at a given term.
@@ -58,6 +59,8 @@ export const OntologyProvider = ({ children, owlFile }) => {
         termObject.parentId = extractIdFromIri(term['rdfs:subClassOf'][0]['$']['rdf:resource'])
       }
       return termObject
+    }).sort((t, u) => {
+      return t.id.toLowerCase() < u.id.toLowerCase() ? -1 : 1
     })
   }, [owlFile])
 

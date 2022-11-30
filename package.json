@@ -55,6 +55,7 @@
     "react-markdown": "^8.0.3",
     "react-router-dom": "^6.3.0",
     "react-timeago": "^7.1.0",
+    "react-window": "^1.8.8",
     "regenerator-runtime": "^0.13.9",
     "sass": "^1.35.1",
     "sass-loader": "^13.0.0",

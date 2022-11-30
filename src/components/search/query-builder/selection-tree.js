@@ -1,23 +1,34 @@
-import { Fragment, useCallback } from 'react'
+import { useCallback } from 'react'
 import PropTypes from 'prop-types'
-import { Box, Checkbox, FormControlLabel, useTheme } from '@mui/material'
+import {
+  Box, Checkbox, FormControlLabel,
+  MenuList, MenuItem, ListItemIcon, ListItemText,
+  Stack, useTheme,
+} from '@mui/material'
 import { TreeItem, TreeView } from '@mui/lab'
 import {
   ChevronRight as CollapseIcon,
   ExpandMore as ExpandIcon,
+  OpenInBrowser as InspectTermIcon,
+  Delete as RemoveTermIcon,
   AddCircle as TermSelectedIcon,
   RemoveCircle as TermUnselectedIcon,
   Circle as TermNeutralIcon,
 } from '@mui/icons-material'
 import { arrayToTree } from 'performant-array-to-tree'
-import { useOntology } from '../../../ontology'
-import { useInterfaceContext } from './form'
+import { useBasket } from '../../basket'
+import { useDrawer } from '../../drawer'
+import { useOntology } from '../../ontology'
+import { useQueryBuilder } from './query-builder'
+import { SelectionTreeMenu } from './selection-tree-menu'
 
 export const SelectionTree = ({ rootTermId }) => {
   const theme = useTheme()
+  const basket = useBasket()
+  const drawer = useDrawer()
   const ontology = useOntology()
-  const { toggleTermSelection } = useInterfaceContext()
-  const { values } = useInterfaceContext()
+  const { toggleTermSelection } = useQueryBuilder()
+  const { values } = useQueryBuilder()
 
   // to play nicely with `arrayToTree`, we'll set
   // our root term to have no parent so that it doesn't
@@ -58,12 +69,16 @@ export const SelectionTree = ({ rootTermId }) => {
       <TreeItem
         key={ node.id }
         nodeId={ node.id }
+        sx={{
+          borderLeft: rootTermId === node.id ? 0 : '2px solid #eee',
+          '&:last-child': { borderBottomLeftRadius: '0.5rem' },
+        }}
         label={
           <Box sx={{
             display: 'flex',
             justifyContent: 'flex-start',
             alignItems: 'center',
-            gap: '1rem',
+            gap: 2,
           }}>
             <FormControlLabel
               label={ node.id }
@@ -88,10 +103,24 @@ export const SelectionTree = ({ rootTermId }) => {
     )
   })
 
+  const handleClickRemoveTerm = () => basket.remove(rootTermId)
+
+  const handleClickInspectTerm = () => drawer.setTermId(rootTermId)
+
   return (
-    <Fragment>
+    <Stack
+      direction="row"
+      alignItems="flex-start"
+      gap={ 1 }
+      sx={{ width: '100%' }}
+    >
       <TreeView
-        sx={{ flexGrow: 1, width: '100%', overflowY: 'auto', }}
+        sx={{
+          flex: 1,
+          width: '100%',
+          overflowY: 'auto',
+          border: `2px solid #eee`,
+        }}
         defaultCollapseIcon={ <ExpandIcon /> }
         defaultExpandIcon={ <CollapseIcon /> }
         disabledItemsFocusable
@@ -99,13 +128,22 @@ export const SelectionTree = ({ rootTermId }) => {
       >
         { renderSelectionTree(tree) }
       </TreeView>
-    </Fragment>
+      <SelectionTreeMenu>
+        <MenuList>
+          <MenuItem onClick={ handleClickRemoveTerm }>
+            <ListItemIcon><RemoveTermIcon fontSize="small" color="warning" /></ListItemIcon>
+            <ListItemText>Remove</ListItemText>
+          </MenuItem>
+          <MenuItem onClick={ handleClickInspectTerm }>
+            <ListItemIcon><InspectTermIcon fontSize="small" color="primary" sx={{ transform: 'rotate(90deg)' }} /></ListItemIcon>
+            <ListItemText>View in Browser</ListItemText>
+          </MenuItem>
+        </MenuList>
+      </SelectionTreeMenu>
+    </Stack>
   )
 }
 
 SelectionTree.propTypes = {
   rootTermId: PropTypes.string.isRequired,
 }
-
-//
-

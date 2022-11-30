@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import { createContext, useContext, useState } from 'react'
 
@@ -7,29 +7,19 @@ const BasketContext = createContext({})
 export const BasketProvider = ({ children }) => {
   const [contents, setContents] = useState({})
 
-  const toggle = id => {
-    const newContents = { ...contents }
-    if (id in contents) {
-      newContents[id] = (newContents[id] + 1) % 2
-    } else {
-      newContents[id] = 1
-    }
-    setContents(newContents)
-  }
-
-  const add = id => {
+  const add = useCallback(id => {
     const newContents = { ...contents }
     if (!(id in newContents)) {
       newContents[id] = 1
     }
     setContents(newContents)
-  }
+  }, [contents])
 
-  const remove = id => {
+  const remove = useCallback(id => {
     const newContents = { ...contents }
     delete newContents[id]
     setContents(newContents)
-  }
+  }, [contents])
 
   const empty = () => {
     setContents({})
@@ -44,7 +34,6 @@ export const BasketProvider = ({ children }) => {
       contains,
       contents,
       ids,
-      toggle,
       add,
       remove,
       empty,

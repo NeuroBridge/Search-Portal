@@ -61,7 +61,7 @@ export const Drawer = () => {
       ]
     }
     return (
-      <Stack direction="horizontal" sx={{ borderBottom: `1px solid ${ theme.palette.grey[400] }` }}>
+      <Stack direction="row" sx={{ borderBottom: `1px solid ${ theme.palette.grey[400] }` }}>
         <MuiBreadcrumbs
           separator={ <BreadcrumbSeparatorIcon fontSize="small" /> }
           sx={{
@@ -96,7 +96,7 @@ export const Drawer = () => {
             ))
           }
         </MuiBreadcrumbs>
-        <Tooltip placement="left" title="Close drawer">
+        <Tooltip placement="left" title="Close Ontology Browser">
           <IconButton
             size="small"
             onClick={ drawer.close }
@@ -117,15 +117,24 @@ export const Drawer = () => {
   const LabelsList = useCallback(() => {
     return (
       <Fade in={ true } style={{ transitionDelay: '50ms' }}>
-        <Box>
-          <List dense disablePadding sx={{
-            '.MuiListItem-root': {
-              p: 0,
-              whiteSpace: 'nowrap',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
+        <Stack
+          direction="column"
+          sx={{
+            mt: 1,
+            '& .list-title': { textTransform: 'uppercase' },
+            '& .labels-list': {
+              flex: 1,
+              '& .MuiListItem-root': {
+                p: 0,
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }
             }
-          }}>
+          }}
+        >
+          <Typography variant="caption" className="list-title">Labels</Typography>
+          <List dense disablePadding className="labels-list">
             {
               drawer.currentTerm.labels.map(label => (
                 <ListItem key={ `${ drawer.currentTerm.id }-label-${ label }` }>
@@ -134,7 +143,7 @@ export const Drawer = () => {
               ))
             }
           </List>
-        </Box>
+        </Stack>
       </Fade>
     )
   }, [drawer.currentTerm])
@@ -142,31 +151,30 @@ export const Drawer = () => {
   const Parent = useCallback(() => {
     return (
       <Fade in={ true } style={{ transitionDelay: '100ms' }}>
-        <Box>
-          <Typography variant="h6">Parent</Typography>
-          <Box sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            gap: 1,
-            p: 1,
-          }}>
-            <Button
-              variant="text"
-              onClick={ drawer.currentTerm.parentId ? () => drawer.setTermId(drawer.currentTerm.parentId) : () => drawer.setTermId(null) }
-              startIcon={ !drawer.currentTerm.parentId && <HomeIcon /> }
-            >
-              { drawer.currentTerm.parentId || 'ROOT' }
-            </Button>
-            {
-              drawer.currentTerm.parentId && (
-                <TermActionButtons
-                  termId={ drawer.currentTerm.parentId }
-                  tooltipPlacement="top"
-                  hideDrawerButton
-                />
-              )
+        <Box sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          gap: 1,
+          p: 1,
+        }}>
+          <Typography variant="h6">Parent:</Typography>
+          <Button
+            variant="text"
+            onClick={ drawer.currentTerm.parentId
+              ? () => drawer.setTermId(drawer.currentTerm.parentId)
+              : () => drawer.setTermId(null)
             }
-          </Box>
+            startIcon={ !drawer.currentTerm.parentId && <HomeIcon /> }
+          >{ drawer.currentTerm.parentId || 'ROOT' }</Button>
+          {
+            drawer.currentTerm.parentId && (
+              <TermActionButtons
+                termId={ drawer.currentTerm.parentId }
+                tooltipPlacement="top"
+                hideDrawerButton
+              />
+            )
+          }
         </Box>
       </Fade>
     )
@@ -176,7 +184,7 @@ export const Drawer = () => {
     return (
       <Fade in={ true } style={{ transitionDelay: '150ms' }}>
         <Box>
-          <Typography variant="h6">Descendants</Typography>
+          <Typography variant="h6">Children:</Typography>
 
           <List dense disablePadding sx={{ '.MuiListItem-root': { p: 0 } }}>
             {
@@ -205,37 +213,43 @@ export const Drawer = () => {
       open={ drawer.isOpen }
       onClose={ drawer.close }
       PaperProps={{ style: { width: drawerWidth } }}
+      ModalProps={{
+        keepMounted: true,
+      }}
       sx={{
         '.MuiDrawer-paper': {
           '& > .MuiBox-root': { px: 3, py: 2 },
-          '& .handle': { p: 0 }
-        },
+          '& .handle': {
+            backgroundColor: '#789',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            height: '100%',
+            minWidth: '5px',
+            transition: 'min-width 100ms, filter 250ms',
+            p: 0,
+            cursor: 'ew-resize',
+            '&:hover': {
+              minWidth: '10px',
+              filter: 'brightness(1.1)',
+            },
+            zIndex: 10,
+          },
+        }
       }}
     >
       <Box
         className="handle"
         onMouseDown={ handleMouseDown }
-        sx={{
-          backgroundColor: '#789',
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          height: '100%',
-          minWidth: '5px',
-          transition: 'min-width 100ms, filter 250ms',
-          p: 0,
-          cursor: 'ew-resize',
-          '&:hover': {
-            minWidth: '10px',
-            filter: 'brightness(1.1)',
-          },
-          zIndex: 10,
-        }}
       />
       {
         drawer.currentTerm ? (
           <Fragment>
             <Breadcrumbs />
+
+            <Parent />
+
+            <Divider />
 
             <Divider />
 
@@ -250,7 +264,7 @@ export const Drawer = () => {
             }}>
               <Box sx={{ flex: 1 }}>
                 <Typography variant="h5" sx={{ margin: 0 }}>
-                  { drawer.currentTerm.id }
+                  Current Term: { drawer.currentTerm.id }
                 </Typography>
                 <LabelsList />
               </Box>
@@ -262,10 +276,6 @@ export const Drawer = () => {
                 />
               </Box>
             </Box>
-
-            <Divider />
-
-            <Parent />
 
             <Divider />
 
