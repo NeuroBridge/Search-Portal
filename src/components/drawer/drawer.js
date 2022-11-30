@@ -204,6 +204,9 @@ export const Drawer = () => {
       open={ drawer.isOpen }
       onClose={ drawer.close }
       PaperProps={{ style: { width: drawerWidth } }}
+      ModalProps={{
+        keepMounted: true,
+      }}
       sx={{
         '.MuiDrawer-paper': {
           '& > .MuiBox-root': { px: 3, py: 2 },
