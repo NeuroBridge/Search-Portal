@@ -5,7 +5,7 @@ import {
 import {
   Clear as ClearResultsIcon,
 } from '@mui/icons-material'
-import { useWorkspace } from '../workspace'
+import { useSearch } from '../context'
 import {
   GridToolbarContainer,
   GridToolbarColumnsButton,
@@ -13,10 +13,9 @@ import {
   GridToolbarDensitySelector,
   GridToolbarExport,
 } from '@mui/x-data-grid'
-import { interfaceDisplayNames } from '../interfaces'
 
 export const TableHeader = ({ currentTabIndex, handleChangeTab }) => {
-  const { results, clearResults } = useWorkspace()
+  const { results, clearResults } = useSearch()
 
   return (
     <GridToolbarContainer sx={{
@@ -37,18 +36,20 @@ export const TableHeader = ({ currentTabIndex, handleChangeTab }) => {
           variant="scrollable"
           sx={{ flex: 1, height: '100%' }}
         >
-          {
-            Object.keys(results)
-              .sort()
-              .map(interfaceId => (
-                <Tab
-                  key={ `results-tab-${ interfaceId }` }
-                  label={ `${ interfaceDisplayNames[interfaceId] } (${ results[interfaceId].length })` }
-                  id={ `results-tab-${ interfaceId }` }
-                  aria-controls={ `results-tabpanel-${ interfaceId }` }
-                />
-              ))
-          }
+          <Tooltip title="Sorted by number of matching terms" placement="top">
+            <Tab
+              label={ `NeuroBridge (${ results.NeuroBridge.length })` }
+              id={ `results-tab-NeuroBridge` }
+              aria-controls="results-tabpanel-NeuroBridge"
+            />
+          </Tooltip>
+          <Tooltip title="Sorted by relevance" placement="top">
+            <Tab
+              label={ `NeuroQuery (${ results.NeuroQuery.length })` }
+              id={ `results-tab-NeuroQuery` }
+              aria-controls="results-tabpanel-NeuroQuery"
+            />
+          </Tooltip>
         </Tabs>
         <Stack
           direction="row"
@@ -57,7 +58,7 @@ export const TableHeader = ({ currentTabIndex, handleChangeTab }) => {
           className="results-action-buttons"
           sx={{ p: '0 1 0 0'}}
         >
-          <Tooltip title="Clear all results" placement="top">
+          <Tooltip title="Clear all results" placement="left">
             <IconButton
               onClick={ clearResults }
               size="small"

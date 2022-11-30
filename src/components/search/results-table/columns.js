@@ -3,7 +3,7 @@ import {
   renderAbstractCell,
   renderFullTextHeader,
   renderFullTextCell,
-  renderScoreCell,
+  // renderScoreCell,
 } from './renderers'
 
 export const columns = [
@@ -12,6 +12,7 @@ export const columns = [
     description: 'Publication Title',
     headerName: 'Title',
     flex: 1,
+    sortable: false,
   },
   {
     field: 'pmid',
@@ -32,12 +33,12 @@ export const columns = [
     width: 125,
   },
   // { field: 'snippet', headerName: 'Snippet' },
-  {
-    field: 'score',
-    description: 'Score',
-    headerName: 'Score',
-    renderCell: renderScoreCell,
-    width: 110,
-  },
+  // {
+  //   field: 'score',
+  //   description: 'Score',
+  //   headerName: 'Score',
+  //   renderCell: renderScoreCell,
+  //   width: 110,
+  // },
 ]
 

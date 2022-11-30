@@ -38,6 +38,10 @@ const extractIdFromIri = iri => {
 }
 
 export const OntologyProvider = ({ children, owlFile }) => {
+  const version = useMemo(() => {
+    return owlFile['rdf:RDF']['owl:Ontology'][0]['owl:versionInfo'][0]['_']
+  }, [owlFile])
+
   const terms = useMemo(() => {
     return owlFile['rdf:RDF']['owl:Class'].map(term => {
       // every term will have this shape
@@ -51,6 +55,7 @@ export const OntologyProvider = ({ children, owlFile }) => {
       // labels
       if (term['rdfs:label']) {
         termObject.labels = term['rdfs:label']
+          .map(label => label._)
       }
       // check for parent term and add its ID to term object if so.
       // this will help construct a subtree rooted at a given term.
@@ -58,6 +63,8 @@ export const OntologyProvider = ({ children, owlFile }) => {
         termObject.parentId = extractIdFromIri(term['rdfs:subClassOf'][0]['$']['rdf:resource'])
       }
       return termObject
+    }).sort((t, u) => {
+      return t.id.toLowerCase() < u.id.toLowerCase() ? -1 : 1
     })
   }, [owlFile])
 
@@ -118,7 +125,7 @@ export const OntologyProvider = ({ children, owlFile }) => {
   }
 
   return (
-    <OntologyContext.Provider value={{ terms, termFields, trees, find, childrenOf, descendantsOf, pathToRoot, generateGraph }}>
+    <OntologyContext.Provider value={{ terms, termFields, trees, find, childrenOf, descendantsOf, pathToRoot, generateGraph, version }}>
       { children }
     </OntologyContext.Provider>
   )
