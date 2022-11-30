@@ -21,7 +21,7 @@ export const ConfigMenu = ({ children, sx }) => {
 
   return (
     <Box sx={ sx }>
-      <Tooltip placement="left" title="Configuration Options">
+      <Tooltip placement="left" title="Configuration">
         <IconButton
           aria-describedby={ id }
           variant="contained"
