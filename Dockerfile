@@ -12,7 +12,7 @@ ENV PATH /src/node_modules/.bin:$PATH
 # Install and cache app dependencies
 RUN apk add git
 COPY package*.json /src/
-RUN npm install
+RUN npm ci
 # Copy in source files
 COPY . /src
 
