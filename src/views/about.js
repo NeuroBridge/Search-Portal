@@ -65,10 +65,6 @@ export const AboutView = () => {
         for use in the constructed query.
       </Typography>
 
-      <Typography paragraph>
-        Each term in the query builder can have one of the states described below.
-      </Typography>
-    
       <Typography paragraph sx={{
         '& .MuiSvgIcon-root': {
           transform: 'translateY(4px)',
@@ -77,18 +73,19 @@ export const AboutView = () => {
           '&.neutral-icon': { color: '#aaa' },
         },
       }}>
-        The <TermSelectedIcon fontSize="small" className="selected-icon" /> icon
+        Each term in the query builder can have one of the states described below.
+        Clicking a term toggles between its three possible states.
+        The plus <TermSelectedIcon fontSize="small" className="selected-icon" /> icon
         indicates that a term is present in the query.
-        The <TermUnselectedIcon fontSize="small" className="unselected-icon" /> icon
+        The minus <TermUnselectedIcon fontSize="small" className="unselected-icon" /> icon
         indicates that a term is present, but negated, in the query.
         (<em>i.e.</em>, <code>NOT Schizophrenia</code>).
         A term is left out of the query completely when it shows
-        the <TermNeutralIcon fontSize="small" className="neutral-icon" /> icon.
+        the neutral <TermNeutralIcon fontSize="small" className="neutral-icon" /> icon.
       </Typography>
 
       <Typography paragraph>
-        Clicking a term toggles between its three possible states.
-        Holding Control/⌘ while clicking a term will toggle that term&apos;s
+        Holding Ctrl/⌘ while clicking a term will toggle that term&apos;s
         descendants&apos; states to match that of the clicked term.
       </Typography>
     
