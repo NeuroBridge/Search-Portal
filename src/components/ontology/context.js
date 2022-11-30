@@ -38,6 +38,10 @@ const extractIdFromIri = iri => {
 }
 
 export const OntologyProvider = ({ children, owlFile }) => {
+  const version = useMemo(() => {
+    return owlFile['rdf:RDF']['owl:Ontology'][0]['owl:versionInfo'][0]['_']
+  }, [owlFile])
+
   const terms = useMemo(() => {
     return owlFile['rdf:RDF']['owl:Class'].map(term => {
       // every term will have this shape
@@ -121,7 +125,7 @@ export const OntologyProvider = ({ children, owlFile }) => {
   }
 
   return (
-    <OntologyContext.Provider value={{ terms, termFields, trees, find, childrenOf, descendantsOf, pathToRoot, generateGraph }}>
+    <OntologyContext.Provider value={{ terms, termFields, trees, find, childrenOf, descendantsOf, pathToRoot, generateGraph, version }}>
       { children }
     </OntologyContext.Provider>
   )
