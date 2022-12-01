@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import PropTypes from 'prop-types'
 import {
-  Box, IconButton, Popover, Tooltip,
+  Box, Divider, IconButton, Popover, Tooltip,
 } from '@mui/material'
 import {
   Close as CloseIcon,
@@ -23,11 +23,12 @@ export const ConfigMenu = ({ children, sx }) => {
     <Box sx={ sx }>
       <Tooltip placement="left" title="Configuration">
         <IconButton
+          size="large"
           aria-describedby={ id }
           variant="contained"
           onClick={ handleClick }
-          size="small"
-        ><ConfigIcon fontSize="small" /></IconButton>
+          sx={{ borderRadius: 0 }}
+        ><ConfigIcon /></IconButton>
       </Tooltip>
       <Popover
         id={ id }
@@ -37,11 +38,14 @@ export const ConfigMenu = ({ children, sx }) => {
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
-        <IconButton
-          size="small"
-          sx={{ position: 'absolute', top: 0, right: 0 }}
-          onClick={ handleClose }
-        ><CloseIcon fontSize="small" /></IconButton>
+        <Box sx={{ height: '48px' }}>
+          <IconButton
+            size="large"
+            sx={{ position: 'absolute', top: 0, right: 0, borderRadius: 0, }}
+            onClick={ handleClose }
+          ><CloseIcon /></IconButton>
+        </Box>
+        <Divider />
         { children }
       </Popover>
     </Box>
