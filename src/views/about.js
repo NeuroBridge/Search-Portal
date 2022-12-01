@@ -31,14 +31,23 @@ export const AboutView = () => {
   return (
     <Container maxWidth="md">
       <Typography variant="h4" component="h1" align="center">
-        About this Interface
+        About NeuroBridge
       </Typography>
 
       <br />
 
       <Typography variant="h5" component="h2">Purpose</Typography>
       <Typography paragraph>
-        to help user get data
+        to help user get data details to come.
+        Est magna sit nisi labore aute nostrud anim irure consequat fugiat cupidatat do proident aliquip occaecat ex sint dolore.
+        Excepteur excepteur sed minim labore eu tempor ad irure aliqua nostrud.
+        Id irure reprehenderit est dolor officia minim minim amet sint minim laborum ea proident.
+      </Typography>
+
+      <Typography paragraph>
+        Ut ea est sed nulla duis et reprehenderit nostrud enim excepteur adipisicing enim labore voluptate minim.
+        Dolore excepteur minim cupidatat eiusmod dolor nostrud reprehenderit duis do ex exercitation dolor sint amet cillum.
+        Esse in fugiat aliquip veniam eu sit dolore culpa excepteur nulla anim in adipisicing nostrud aute ut cillum in.
       </Typography>
 
       <br />
