@@ -135,11 +135,6 @@ export const QueryBuilder = () => {
     setShowRawQuery(!showRawQuery)
   }
 
-  useEffect(() => {
-    console.table('values', values)
-    console.log('basket.ids', basket.ids)
-  }, [basket.ids, values])
-
   return (
     <Card sx={{ position: 'relative' }}>
       <QueryBuilderContext.Provider value={{ query, removeTerm, toggleTermSelection, values }}>
