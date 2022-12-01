@@ -1,7 +1,7 @@
 import { Fragment, useState } from 'react'
 import PropTypes from 'prop-types'
 import {
-  Box, Button, Dialog, DialogTitle, Divider, IconButton,
+  Button, Dialog, DialogTitle, Divider, IconButton,
 } from '@mui/material'
 import {
   Close as CloseIcon,
