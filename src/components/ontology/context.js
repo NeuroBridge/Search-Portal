@@ -80,7 +80,7 @@ export const OntologyProvider = ({ children, owlFile }) => {
       const index = terms.findIndex(term => term.id === id)
       return terms[index]
     } catch (error) {
-      console.log(error)
+      console.error(error.message)
       return null
     }
   }, [terms])
