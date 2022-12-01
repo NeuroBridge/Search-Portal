@@ -43,7 +43,11 @@ export const TermActionButtons = ({ termId, stopEventPropagation, tooltipPlaceme
     >
       <Tooltip title={ tip } placement={ tooltipPlacement }>
         <IconButton color="default" size="small" onClick={ handleClickTermButton('basket') }>
-          { basket.contains(termId) ? <RemoveIcon fontSize="small" color="primary" /> : <AddIcon fontSize="small" /> }
+          {
+            basket.contains(termId)
+              ? <RemoveIcon fontSize="small" color="primary" />
+              : <AddIcon fontSize="small" color="disabled" />
+          }
         </IconButton>
       </Tooltip>
       {
