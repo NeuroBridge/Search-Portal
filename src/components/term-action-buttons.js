@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types'
-import { Box, IconButton, Tooltip } from '@mui/material'
+import { Box, IconButton, ToggleButton, Tooltip } from '@mui/material'
 import {
-  CheckBoxOutlineBlank as AddIcon,
-  CheckBox as RemoveIcon,
+  CheckBox as CheckedTermIcon,
+  CheckBoxOutlineBlank as UncheckedTermIcon,
   OpenInBrowser as ViewTermIcon,
 } from '@mui/icons-material'
 import { useBasket } from './basket'
@@ -42,13 +42,20 @@ export const TermActionButtons = ({ termId, stopEventPropagation, tooltipPlaceme
       }}
     >
       <Tooltip title={ tip } placement={ tooltipPlacement }>
-        <IconButton color="default" size="small" onClick={ handleClickTermButton('basket') }>
+        <ToggleButton
+          value="check"
+          selected={ basket.contains(termId) }
+          onChange={ handleClickTermButton('basket') }
+          size="small"
+          color={ basket.contains(termId) ? 'primary' : 'standard' }
+          sx={{ transform: 'scale(0.75)', p: 0, border: 0 }}
+        >
           {
             basket.contains(termId)
-              ? <RemoveIcon fontSize="small" color="primary" />
-              : <AddIcon fontSize="small" color="disabled" />
+              ? <CheckedTermIcon />
+              : <UncheckedTermIcon />
           }
-        </IconButton>
+        </ToggleButton>
       </Tooltip>
       {
         !hideDrawerButton && (
