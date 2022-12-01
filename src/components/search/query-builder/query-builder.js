@@ -62,7 +62,8 @@ export const QueryBuilder = () => {
   const removeTerm = idToRemove => {
     // first, remove root from basket
     basket.remove(idToRemove)
-    // now, we'll ensure that term and all its descdants are removed, too.
+    // now, we'll ensure that term and all its descdants are removed
+    // from this component's `values`, too.
     const descendants = [
       idToRemove,
       ...ontology.descendantsOf(idToRemove).map(term => term.id)
