@@ -1,10 +1,8 @@
+import PropTypes from 'prop-types'
 import { Box, Stack, Typography } from '@mui/material'
 import { SelectionTree } from './selection-tree'
-import { useBasket } from '../../basket'
 
-export const Forest = () => {
-  const basket = useBasket()
-
+export const SelectionForest = ({ roots }) => {
   return (
     <Box sx={{ minHeight: '75px', mt: 4, mb: 2 }}>
       <Stack
@@ -13,15 +11,19 @@ export const Forest = () => {
         alignItems="center"
       >
         {
-          basket.ids.length === 0 ? (
+          roots.length === 0 ? (
             <Typography paragraph sx={{ filter: 'opacity(0.8)', fontSize: '150%' }}>
               Add concepts to start building a query!
             </Typography>
-          ) : basket.ids.map(id => (
+          ) : roots.map(id => (
             <SelectionTree key={ `${ id }-forest` } rootTermId={ id } />
           ))
         }
       </Stack>
     </Box>
   )
+}
+
+SelectionForest.propTypes = {
+  roots: PropTypes.array.isRequired,
 }

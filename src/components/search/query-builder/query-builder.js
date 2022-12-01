@@ -12,7 +12,7 @@ import {
 import { useBasket } from '../../basket'
 import { useOntology } from '../../ontology'
 import { useSearch } from '../context'
-import { Forest } from './selection-forest'
+import { SelectionForest } from './selection-forest'
 import { AddTermForm } from './add-term-form'
 import { ConfigMenu } from './config-menu'
 
@@ -29,7 +29,6 @@ export const QueryBuilder = () => {
   const [innerOperator, setInnerOperator] = useState('OR')
   const [showRawQuery, setShowRawQuery] = useState(false)
   const { fetchResults, loading } = useSearch()
-
 
   // this is just a copy of the ids of the basket contents
   const roots = useMemo(() => [...basket.ids], [basket.ids])
@@ -70,7 +69,7 @@ export const QueryBuilder = () => {
     ]
     const newValues = Object.keys(values)
       .reduce((obj, termId) => {
-        return termId in descendants
+        return descendants.includes(termId)
           ? { ... obj }
           : { ...obj, [termId]: values[termId] }
       }, {})
@@ -135,6 +134,11 @@ export const QueryBuilder = () => {
     setShowRawQuery(!showRawQuery)
   }
 
+  useEffect(() => {
+    console.table('values', values)
+    console.log('basket.ids', basket.ids)
+  }, [basket.ids, values])
+
   return (
     <Card sx={{ position: 'relative' }}>
       <QueryBuilderContext.Provider value={{ query, removeTerm, toggleTermSelection, values }}>
@@ -151,7 +155,7 @@ export const QueryBuilder = () => {
           sx={{ m: 3 }}
         >
 
-          <Forest />
+          <SelectionForest roots={ basket.ids } />
 
         </Stack>
 
