@@ -1,11 +1,12 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import {
-  Button, Card, CardContent, CardHeader, Collapse, Divider, IconButton,
-  FormControlLabel, FormControl, FormLabel, FormGroup, LinearProgress,
-  Stack, Switch, ToggleButton, ToggleButtonGroup,
+  Box, Button, Card, CardContent, CardHeader, Collapse, Divider, IconButton,
+  FormControl, FormLabel, LinearProgress,
+  Stack, ToggleButton, ToggleButtonGroup,
 } from '@mui/material'
 import {
   Close as CloseIcon,
+  DataObject as RawQueryIcon,
   Send as SearchIcon,
 } from '@mui/icons-material'
 import { useBasket } from '../../basket'
@@ -140,20 +141,68 @@ export const QueryBuilder = () => {
         <CardHeader
           title="Query Builder"
           subheader="Query terms are part of the NeuroBridge ontology which will be available on BioPortal soon."
-          action={
+        />
+
+        <Divider />
+
+        <Stack
+          justifyContent="center"
+          alignItems="stretch"
+          sx={{ m: 3 }}
+        >
+
+          <Forest />
+
+        </Stack>
+
+        <Collapse
+          in={ showRawQuery }
+          sx={{
+            position: 'relative',
+            '.query': {
+              m: 0, p: 1, pl: 3,
+              backgroundColor: '#eee',
+              color: '#556',
+              fontSize: '85%',
+            },
+          }}>
+            <IconButton
+              onClick={ () => setShowRawQuery(false) }
+              size="small"
+              sx={{
+                position: 'absolute',
+                right: 5, top: 5,
+                '&:hover': { '& svg': { filter: 'opacity(1.0)' } },
+              }}
+            ><CloseIcon fontSize="small" color="danger" sx={{ filter: 'opacity(0.33)' }} /></IconButton>
+            <pre className="query">{ JSON.stringify(query, null, 2) }</pre>
+        </Collapse>
+
+        <Divider />
+
+        <CardContent sx={{
+          p: 0,
+          '.MuiButton-root': {
+            p: 4,
+            boxShadow: 'none',
+          },
+        }}>
+          <Stack
+            direction="row"
+            divider={ <Divider orientation="vertical" flexItem /> }
+            justifyContent="stretch"
+            sx={{
+              'div.MuiBox-root': { flex: 1, backgroundColor: '#f6f6f6' },
+              '.MuiButton-root': {
+                borderRadius: 0,
+              }
+            }}
+          >
+            {/* add term button renders here */}
+            <AddTermForm />
+
+            {/* options button renders here */}
             <ConfigMenu>
-              <FormGroup sx={{ p: 2 }}>
-                <FormControlLabel
-                  label="Show raw query"
-                  labelPlacement="start"
-                  control={
-                    <Switch checked={ showRawQuery } onChange={ toggleShowRawQuery } />
-                  }
-                />
-              </FormGroup>
-
-              <Divider />
-
               <Stack direction="column" gap={ 2 } sx={{ minWidth: '300px', p: 2, whiteSpace: 'nowrap' }}>
                 <FormControl>
                   <FormLabel>Between concept trees</FormLabel>
@@ -189,67 +238,26 @@ export const QueryBuilder = () => {
 
               </Stack>
             </ConfigMenu>
-          }
-        />
 
-        <Divider />
+            {/* raw query button */}
+            <Button
+              onClick={ toggleShowRawQuery }
+              startIcon={ <RawQueryIcon /> }
+              sx={{ backgroundColor: showRawQuery ? '#f6fafd' : '#fff' }}
+            >raw query</Button>
 
-        <Stack
-          justifyContent="center"
-          alignItems="stretch"
-          sx={{ m: 3 }}
-        >
+            <Box />
 
-          <Forest />
-
-          <AddTermForm />
-        </Stack>
-
-        <Collapse
-          in={ showRawQuery }
-          sx={{
-            position: 'relative',
-            '.query': {
-              m: 0, p: 1, pl: 3,
-              backgroundColor: '#eee',
-              color: '#556',
-              fontSize: '85%',
-            },
-          }}>
-            <IconButton
-              onClick={ () => setShowRawQuery(false) }
-              size="small"
-              sx={{
-                position: 'absolute',
-                right: 5, top: 5,
-                '&:hover': { '& svg': { filter: 'opacity(1.0)' } },
-              }}
-            ><CloseIcon fontSize="small" color="danger" sx={{ filter: 'opacity(0.33)' }} /></IconButton>
-            <pre className="query">{ JSON.stringify(query, null, 2) }</pre>
-        </Collapse>
-
-        <Divider />
-        
-        <CardContent sx={{
-          textAlign: 'right',
-          '.button': {
-            borderRadius: '23px',
-          },
-          '.label': {
-            pt: '4px',
-            margin: 'auto',
-          },
-         }}>
-          <Button
-            onClick={ () => fetchResults(query) }
-            variant="contained"
-            size="large"
-            endIcon={ <SearchIcon /> }
-            className="button"
-            disabled={ basket.ids.length === 0 }
-          ><span className="label">Search</span></Button>
+            {/* search button */}
+            <Button
+              variant="contained"
+              disabled={ basket.ids.length === 0 }
+              onClick={ () => fetchResults(query) }
+              endIcon={ <SearchIcon /> }
+            >search</Button>
+          </Stack>
         </CardContent>
-
+        
       </QueryBuilderContext.Provider>
 
       <LinearProgress variant={ loading ? 'indeterminate' : 'determinate' } value={ 0 } />

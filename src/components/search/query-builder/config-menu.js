@@ -1,16 +1,16 @@
-import { useState } from 'react'
+import { Fragment, useState } from 'react'
 import PropTypes from 'prop-types'
 import {
-  Box, Divider, IconButton, Popover, Tooltip,
+  Button, Dialog, DialogTitle, Divider, IconButton,
 } from '@mui/material'
 import {
   Close as CloseIcon,
-  Settings as ConfigIcon,
+  Tune as ConfigIcon,
 } from '@mui/icons-material'
 
 //
 
-export const ConfigMenu = ({ children, sx }) => {
+export const ConfigMenu = ({ children }) => {
   const [anchorEl, setAnchorEl] = useState(null)
 
   const handleClick = event => setAnchorEl(event.currentTarget)
@@ -20,39 +20,30 @@ export const ConfigMenu = ({ children, sx }) => {
   const id = open ? 'config-menu' : undefined;
 
   return (
-    <Box sx={ sx }>
-      <Tooltip placement="left" title="Configuration">
-        <IconButton
-          size="large"
-          aria-describedby={ id }
-          variant="contained"
-          onClick={ handleClick }
-          sx={{ borderRadius: 0 }}
-        ><ConfigIcon /></IconButton>
-      </Tooltip>
-      <Popover
+    <Fragment>
+      <Button
+        aria-describedby={ id }
+        onClick={ handleClick }
+        startIcon={ <ConfigIcon /> }
+      >Options</Button>
+      <Dialog
         id={ id }
         open={ open }
-        anchorEl={ anchorEl }
         onClose={ handleClose }
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
-        <Box sx={{ height: '48px' }}>
+        <DialogTitle>Options</DialogTitle>
           <IconButton
             size="large"
-            sx={{ position: 'absolute', top: 0, right: 0, borderRadius: 0, }}
+            sx={{ position: 'absolute', top: 8, right: 8, }}
             onClick={ handleClose }
           ><CloseIcon /></IconButton>
-        </Box>
         <Divider />
         { children }
-      </Popover>
-    </Box>
+      </Dialog>
+    </Fragment>
   )
 }
 
 ConfigMenu.propTypes = {
   children: PropTypes.node.isRequired,
-  sx: PropTypes.object,
 }

@@ -191,16 +191,16 @@ export const AddTermForm = () => {
       justifyContent="center"
       sx={{
         '.add-term-button': {
-          borderWidth: '2px !important',
           '.label': { pt: '4px', margin: 'auto', }
         }
       }}
     >
       <Button
-        variant="outlined"
         startIcon={ <AddIcon /> }
         className="add-term-button"
         onClick={ () => setOpen(true) }
+        variant={ basket.ids.length === 0 ? 'contained' : 'text' }
+        color="primary"
       ><Box component="span" className="label">Add Term</Box></Button>
       <ConceptSelectDialog
         open={ open }
