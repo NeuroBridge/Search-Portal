@@ -16,7 +16,6 @@ import {
   Circle as TermNeutralIcon,
 } from '@mui/icons-material'
 import { arrayToTree } from 'performant-array-to-tree'
-import { useBasket } from '../../basket'
 import { useDrawer } from '../../drawer'
 import { useOntology } from '../../ontology'
 import { useQueryBuilder } from './query-builder'
@@ -24,11 +23,9 @@ import { SelectionTreeMenu } from './selection-tree-menu'
 
 export const SelectionTree = ({ rootTermId }) => {
   const theme = useTheme()
-  const basket = useBasket()
   const drawer = useDrawer()
   const ontology = useOntology()
-  const { toggleTermSelection } = useQueryBuilder()
-  const { values } = useQueryBuilder()
+  const { removeTerm, toggleTermSelection, values } = useQueryBuilder()
 
   // to play nicely with `arrayToTree`, we'll set
   // our root term to have no parent so that it doesn't
@@ -103,9 +100,13 @@ export const SelectionTree = ({ rootTermId }) => {
     )
   })
 
-  const handleClickRemoveTerm = () => basket.remove(rootTermId)
+  const handleClickRemoveTerm = id => () => {
+    removeTerm(id)
+  }
 
-  const handleClickInspectTerm = () => drawer.setTermId(rootTermId)
+  const handleClickInspectTerm = () => {
+    drawer.setTermId(rootTermId)
+  }
 
   return (
     <Stack
@@ -130,7 +131,7 @@ export const SelectionTree = ({ rootTermId }) => {
       </TreeView>
       <SelectionTreeMenu>
         <MenuList>
-          <MenuItem onClick={ handleClickRemoveTerm }>
+          <MenuItem onClick={ handleClickRemoveTerm(rootTermId) }>
             <ListItemIcon><RemoveTermIcon fontSize="small" color="warning" /></ListItemIcon>
             <ListItemText>Remove</ListItemText>
           </MenuItem>

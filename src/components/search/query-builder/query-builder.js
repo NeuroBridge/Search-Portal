@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useState } from 'react'
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import {
   Box, Button, Card, CardContent, CardHeader, Collapse, Divider, IconButton,
   FormControlLabel, FormControl, FormLabel, FormGroup, LinearProgress,
@@ -57,6 +57,25 @@ export const QueryBuilder = () => {
     setValues({ ...baseValues, ...previousValues })
   }, [basket.ids])
 
+  // this gets triggered when the user removes te term from the query builder.
+  // pass in a term id, it and all its denscendants get removed.
+  const removeTerm = idToRemove => {
+    // first, remove root from basket
+    basket.remove(idToRemove)
+    // now, we'll ensure that term and all its descdants are removed, too.
+    const descendants = [
+      idToRemove,
+      ...ontology.descendantsOf(idToRemove).map(term => term.id)
+    ]
+    const newValues = Object.keys(values)
+      .reduce((obj, termId) => {
+        return termId in descendants
+          ? { ... obj }
+          : { ...obj, [termId]: values[termId] }
+      }, {})
+    setValues({ ...newValues })
+  }
+
   const toggleTermSelection = id => event => {
     const newValue = (values[id] + 1) % 3
     const newValues = { ...values, [id]: newValue }
@@ -70,14 +89,14 @@ export const QueryBuilder = () => {
     setValues(newValues)
   }
 
-  const handleChangeOperator = whichOperator => {
-    if (whichOperator === 'inner') {
+  const handleChangeOperator = useCallback(operator => {
+    if (operator === 'inner') {
       return event => setInnerOperator(event.target.value)
     }
-    if (whichOperator === 'outer') {
+    if (operator === 'outer') {
       return event => setOuterOperator(event.target.value)
-    }``
-  }
+    }
+  }, [])
   
   // here, we construct the query.
   const query = useMemo(() => {
@@ -117,7 +136,7 @@ export const QueryBuilder = () => {
 
   return (
     <Card sx={{ position: 'relative' }}>
-      <QueryBuilderContext.Provider value={{ values, toggleTermSelection, query }}>
+      <QueryBuilderContext.Provider value={{ query, removeTerm, toggleTermSelection, values }}>
         <CardHeader title="Query Builder" />
 
         <Divider />
