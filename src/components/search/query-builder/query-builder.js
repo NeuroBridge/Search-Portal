@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import {
-  Box, Button, Card, CardContent, CardHeader, Collapse, Divider, IconButton,
+  Button, Card, CardContent, CardHeader, Collapse, Divider, IconButton,
   FormControlLabel, FormControl, FormLabel, FormGroup, LinearProgress,
   Stack, Switch, ToggleButton, ToggleButtonGroup,
 } from '@mui/material'
@@ -137,62 +137,62 @@ export const QueryBuilder = () => {
   return (
     <Card sx={{ position: 'relative' }}>
       <QueryBuilderContext.Provider value={{ query, removeTerm, toggleTermSelection, values }}>
-        <CardHeader title="Query Builder" />
+        <CardHeader
+          title="Query Builder"
+          subheader="Query terms are part of the NeuroBridge ontology which will be available on BioPortal soon."
+          action={
+            <ConfigMenu>
+              <FormGroup sx={{ p: 2 }}>
+                <FormControlLabel
+                  label="Show raw query"
+                  labelPlacement="start"
+                  control={
+                    <Switch checked={ showRawQuery } onChange={ toggleShowRawQuery } />
+                  }
+                />
+              </FormGroup>
+
+              <Divider />
+
+              <Stack direction="column" gap={ 2 } sx={{ minWidth: '300px', p: 2, whiteSpace: 'nowrap' }}>
+                <FormControl>
+                  <FormLabel>Between concept trees</FormLabel>
+                  <ToggleButtonGroup
+                    aria-label="Operator between concept trees"
+                    fullWidth
+                    size="small"
+                    color="primary"
+                    value={ outerOperator }
+                    exclusive
+                    onChange={ handleChangeOperator('outer') }
+                    >
+                    <ToggleButton value="AND">AND</ToggleButton>
+                    <ToggleButton value="OR">OR</ToggleButton>
+                  </ToggleButtonGroup>
+                </FormControl>
+
+                <FormControl>
+                  <FormLabel>Within concept trees</FormLabel>
+                  <ToggleButtonGroup
+                    aria-label="Operator within concept trees"
+                    fullWidth
+                    size="small"
+                    color="primary"
+                    value={ innerOperator }
+                    exclusive
+                    onChange={ handleChangeOperator('inner') }
+                  >
+                    <ToggleButton value="AND">AND</ToggleButton>
+                    <ToggleButton value="OR">OR</ToggleButton>
+                  </ToggleButtonGroup>
+                </FormControl>
+
+              </Stack>
+            </ConfigMenu>
+          }
+        />
 
         <Divider />
-
-        <ConfigMenu sx={{ position: 'absolute', right: 8, top: 8, zIndex: 9 }}>
-          <Box sx={{ height: '30px' }} />
-
-          <Divider />
-
-          <FormGroup sx={{ p: 2 }}>
-            <FormControlLabel
-              label="Show raw query"
-              labelPlacement="start"
-              control={
-                <Switch checked={ showRawQuery } onChange={ toggleShowRawQuery } />
-              }
-            />
-          </FormGroup>
-
-          <Divider />
-
-          <Stack direction="column" gap={ 2 } sx={{ minWidth: '300px', p: 2, whiteSpace: 'nowrap' }}>
-            <FormControl>
-              <FormLabel>Between concept trees</FormLabel>
-              <ToggleButtonGroup
-                aria-label="Operator between concept trees"
-                fullWidth
-                size="small"
-                color="primary"
-                value={ outerOperator }
-                exclusive
-                onChange={ handleChangeOperator('outer') }
-                >
-                <ToggleButton value="AND">AND</ToggleButton>
-                <ToggleButton value="OR">OR</ToggleButton>
-              </ToggleButtonGroup>
-            </FormControl>
-
-            <FormControl>
-              <FormLabel>Within concept trees</FormLabel>
-              <ToggleButtonGroup
-                aria-label="Operator within concept trees"
-                fullWidth
-                size="small"
-                color="primary"
-                value={ innerOperator }
-                exclusive
-                onChange={ handleChangeOperator('inner') }
-              >
-                <ToggleButton value="AND">AND</ToggleButton>
-                <ToggleButton value="OR">OR</ToggleButton>
-              </ToggleButtonGroup>
-            </FormControl>
-
-          </Stack>
-        </ConfigMenu>
 
         <Stack
           justifyContent="center"

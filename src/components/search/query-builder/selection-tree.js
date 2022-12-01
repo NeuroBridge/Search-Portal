@@ -137,7 +137,7 @@ export const SelectionTree = ({ rootTermId }) => {
           </MenuItem>
           <MenuItem onClick={ handleClickInspectTerm }>
             <ListItemIcon><InspectTermIcon fontSize="small" color="primary" sx={{ transform: 'rotate(90deg)' }} /></ListItemIcon>
-            <ListItemText>View in Browser</ListItemText>
+            <ListItemText>View Ontology Context</ListItemText>
           </MenuItem>
         </MenuList>
       </SelectionTreeMenu>

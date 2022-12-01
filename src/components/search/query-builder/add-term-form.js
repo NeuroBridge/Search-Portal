@@ -96,7 +96,7 @@ const ConceptSelectDialog = ({ open, closeHandler, cancelHandler, ...rest }) => 
       secondaryAction={
         <IconButton
           edge="end"
-          aria-label="view in browser"
+          aria-label="view ontology context"
           onClick={ handleClickInspectTerm(filteredTerms[index].id) }
         ><InspectTermIcon /></IconButton>
       }
