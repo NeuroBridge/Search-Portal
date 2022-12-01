@@ -137,7 +137,10 @@ export const QueryBuilder = () => {
   return (
     <Card sx={{ position: 'relative' }}>
       <QueryBuilderContext.Provider value={{ query, removeTerm, toggleTermSelection, values }}>
-        <CardHeader title="Query Builder" />
+        <CardHeader
+          title="Query Builder"
+          subheader="Query terms are part of the NeuroBridge ontology which will be available on BioPortal soon."
+        />
 
         <Divider />
 
