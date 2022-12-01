@@ -201,7 +201,7 @@ export const AddTermForm = () => {
         onClick={ () => setOpen(true) }
         variant={ basket.ids.length === 0 ? 'contained' : 'text' }
         color="primary"
-      ><Box component="span" className="label">Add Term</Box></Button>
+      ><Box component="span" className="label">Add Concept</Box></Button>
       <ConceptSelectDialog
         open={ open }
         closeHandler={ handleClose }
