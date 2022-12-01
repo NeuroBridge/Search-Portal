@@ -14,7 +14,7 @@ import {
   GridToolbarExport,
 } from '@mui/x-data-grid'
 
-export const TableHeader = ({ currentTabIndex, handleChangeTab }) => {
+export const TableHeader = ({ currentTabIndex, handleChangeTab, detail }) => {
   const { results, clearResults } = useSearch()
 
   return (
@@ -30,6 +30,7 @@ export const TableHeader = ({ currentTabIndex, handleChangeTab }) => {
         alignItems="stretch"
       >
         <Box sx={{ p: 2 }}>RESULTS</Box>
+
         <Tabs
           value={ currentTabIndex }
           onChange={ handleChangeTab }
@@ -51,6 +52,7 @@ export const TableHeader = ({ currentTabIndex, handleChangeTab }) => {
             />
           </Tooltip>
         </Tabs>
+
         <Stack
           direction="row"
           justifyContent="flex-end"
@@ -70,12 +72,17 @@ export const TableHeader = ({ currentTabIndex, handleChangeTab }) => {
           </Tooltip>
         </Stack>
       </Stack>
+
       <Divider />
+
       <Stack direction="row" gap={ 1 } sx={{ backgroundColor: '#0001', p: 1 }}>
         <GridToolbarColumnsButton />
         <GridToolbarFilterButton />
         <GridToolbarDensitySelector />
         <GridToolbarExport />
+        <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+          { detail }
+        </Box>
       </Stack>
       <Divider />
     </GridToolbarContainer>
@@ -85,4 +92,5 @@ export const TableHeader = ({ currentTabIndex, handleChangeTab }) => {
 TableHeader.propTypes = {
   currentTabIndex: PropTypes.number.isRequired,
   handleChangeTab: PropTypes.func.isRequired,
+  detail: PropTypes.node,
 }

@@ -49,7 +49,11 @@ export const ResultsTable = () => {
             Toolbar: TableHeader,
           }}
           componentsProps={{
-            toolbar: { currentTabIndex, handleChangeTab }
+            toolbar: {
+              currentTabIndex,
+              handleChangeTab,
+              detail: currentTabIndex === 0 ? '' : <a href="http://google.com" rel="noopener noreferrer" target="_blank">view results a NeuroQuery.org</a>,
+            }
           }}
           disableSelectionOnClick
           checkboxSelection
