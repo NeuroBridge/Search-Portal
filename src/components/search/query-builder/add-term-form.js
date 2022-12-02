@@ -91,6 +91,7 @@ const ConceptSelectDialog = ({ open, closeHandler, cancelHandler, ...rest }) => 
       <DialogTitle>Add Concept</DialogTitle>
       <TextField
         fullWidth
+        placeholder="Enter search text.."
         onChange={ requestSearch }
         value={ searchText }
         inputRef={ queryField }
