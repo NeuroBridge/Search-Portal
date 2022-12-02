@@ -88,7 +88,7 @@ const ConceptSelectDialog = ({ open, closeHandler, cancelHandler, ...rest }) => 
       { ...rest }
       onClose={ () => closeHandler() }
     >
-      <DialogTitle>Add Term</DialogTitle>
+      <DialogTitle>Add Concept</DialogTitle>
       <TextField
         fullWidth
         onChange={ requestSearch }
