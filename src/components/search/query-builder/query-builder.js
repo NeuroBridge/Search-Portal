@@ -207,6 +207,13 @@ export const QueryBuilder = () => {
             {/* add term button renders here */}
             <AddTermForm />
 
+            {/* raw query button */}
+            <Button
+              onClick={ toggleShowRawQuery }
+              startIcon={ <RawQueryIcon /> }
+              sx={{ backgroundColor: showRawQuery ? '#f6fafd' : '#fff' }}
+            >raw query</Button>
+
             {/* options button renders here */}
             <ConfigMenu>
               <Stack direction="column" gap={ 2 } sx={{ minWidth: '300px', p: 2, whiteSpace: 'nowrap' }}>
@@ -244,13 +251,6 @@ export const QueryBuilder = () => {
 
               </Stack>
             </ConfigMenu>
-
-            {/* raw query button */}
-            <Button
-              onClick={ toggleShowRawQuery }
-              startIcon={ <RawQueryIcon /> }
-              sx={{ backgroundColor: showRawQuery ? '#f6fafd' : '#fff' }}
-            >raw query</Button>
 
             <Box sx={{ minWidth: '1rem' }} />
 
