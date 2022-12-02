@@ -8,7 +8,7 @@ import {
   Close as CloseIcon,
   DataObject as RawQueryIcon,
   Send as SearchIcon,
-  RestartAlt as StartOverIcon,
+  RestartAlt as ResetIcon,
 } from '@mui/icons-material'
 import { useBasket } from '../../basket'
 import { useOntology } from '../../ontology'
@@ -151,15 +151,9 @@ export const QueryBuilder = () => {
 
         <Divider />
 
-        <Stack
-          justifyContent="center"
-          alignItems="stretch"
-          sx={{ m: 3 }}
-        >
+        <SelectionForest roots={ basket.ids } />
 
-          <SelectionForest roots={ basket.ids } />
-
-        </Stack>
+        <Divider />
 
         <Collapse
           in={ showRawQuery }
@@ -167,7 +161,7 @@ export const QueryBuilder = () => {
             position: 'relative',
             '.query': {
               m: 0, p: 1, pl: 3,
-              backgroundColor: '#eee',
+              backgroundColor: '#f6fafd',
               color: '#556',
               fontSize: '85%',
             },
@@ -252,14 +246,14 @@ export const QueryBuilder = () => {
               </Stack>
             </ConfigMenu>
 
-            <Box sx={{ minWidth: '1rem' }} />
-
-            {/* start over button */}
+            {/* reset button */}
             <Button
               disabled={ basket.ids.length === 0 }
               onClick={ handleClickStartOver }
-              endIcon={ <StartOverIcon /> }
-            >Start Over</Button>
+              startIcon={ <ResetIcon /> }
+            >Reset</Button>
+
+            <Box sx={{ minWidth: '1rem' }} />
 
             {/* search button */}
             <Button
