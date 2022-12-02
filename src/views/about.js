@@ -7,7 +7,7 @@ import {
 } from '@mui/icons-material'
 import { useOntology } from '../components/ontology'
 
-const MediaPlaceholder = ({ width, height, sx }) => {
+const MediaPlaceholder = ({ width = 480, height = 360, sx }) => {
   return (
     <Skeleton
       variant="rectangular" height={ height } width={ width }
@@ -68,10 +68,10 @@ export const AboutView = () => {
 
       <Typography paragraph>
         Because the goal is to search for publications, this purpose of this interface
-        revolves around building a query from terms in the NeuroBridge ontology.
-        Each term defines an induced subtree rooted at that term.
-        Adding a term to the query builder makes terms in its descendant tree available
-        for use in the constructed query.
+        revolves around building a query from concepts in the NeuroBridge ontology.
+        Each concept defines an induced subtree rooted at that concept.
+        Adding a concept to the query builder makes its descendant concepts available
+        for use in the query construction.
       </Typography>
 
       <Typography paragraph sx={{
@@ -82,8 +82,9 @@ export const AboutView = () => {
           '&.neutral-icon': { color: '#aaa' },
         },
       }}>
-        Each term in the query builder can have one of the states described below.
-        Clicking a term toggles between its three possible states.
+        Each concept in the query builder can have one of three states, and
+        clicking a term toggles between the possible states and an icon
+        indicates the concept&apos;s present state.
         The plus <TermSelectedIcon fontSize="small" className="selected-icon" /> icon
         indicates that a term is present in the query.
         The minus <TermUnselectedIcon fontSize="small" className="unselected-icon" /> icon
@@ -98,7 +99,6 @@ export const AboutView = () => {
         descendants&apos; states to match that of the clicked term.
       </Typography>
     
-      <MediaPlaceholder height={ 360 } width={ 480 } />
 
       <Typography paragraph>
         Configuration options and the raw query.
@@ -107,7 +107,7 @@ export const AboutView = () => {
         Excepteur consequat nulla reprehenderit sunt in cillum sunt minim minim qui et non sit enim ullamco velit officia.
       </Typography>
 
-      <MediaPlaceholder height={ 360 } width={ 480 } />
+      <MediaPlaceholder />
 
       <Typography paragraph>
         Elit nostrud in laborum deserunt id ullamco proident elit dolore quis.
@@ -115,8 +115,8 @@ export const AboutView = () => {
       </Typography>
 
       <Stack direction={{ xs: 'column', sm: 'row' }} justifyContent="center" alignItems="center" gap={ 5 } sx={{ my: 5 }}>
-        <MediaPlaceholder height={ 360 } width={ 480 } sx={{ m: 0 }} />
-        <MediaPlaceholder height={ 360 } width={ 480 } sx={{ m: 0 }} />
+        <MediaPlaceholder sx={{ m: 0 }} />
+        <MediaPlaceholder sx={{ m: 0 }} />
       </Stack>
 
       <Typography paragraph>
@@ -130,7 +130,7 @@ export const AboutView = () => {
         Lorem ipsum nulla cillum voluptate enim in dolore ut id pariatur.
       </Typography>
 
-      <MediaPlaceholder height={ 360 } width={ 480 } />
+      <MediaPlaceholder />
 
       <Typography paragraph>
         Laboris tempor pariatur dolore proident ut est nulla dolore id elit ut enim in duis ad ut anim ad.
