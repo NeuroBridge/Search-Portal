@@ -161,9 +161,9 @@ export const QueryBuilder = () => {
             position: 'relative',
             '.query': {
               m: 0, p: 1, pl: 3,
-              backgroundColor: '#f6fafd',
-              color: '#556',
-              fontSize: '85%',
+              backgroundColor: '#345',
+              color: '#eef',
+              fontSize: '90%',
             },
           }}>
             <IconButton
@@ -174,7 +174,7 @@ export const QueryBuilder = () => {
                 right: 5, top: 5,
                 '&:hover': { '& svg': { filter: 'opacity(1.0)' } },
               }}
-            ><CloseIcon fontSize="small" color="danger" sx={{ filter: 'opacity(0.33)' }} /></IconButton>
+            ><CloseIcon fontSize="small" sx={{ color: '#fff', filter: 'opacity(0.75)' }} /></IconButton>
             <pre className="query">{ JSON.stringify(query, null, 2) }</pre>
         </Collapse>
 
