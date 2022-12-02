@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import { Box, Fade, Stack, Typography } from '@mui/material'
 import { SelectionTree } from './selection-tree'
-import ArrowImage from '../../../images/arrow.png'
+import StartHereArrow from '../../../images/start-here.svg'
 
 export const SelectionForest = ({ roots }) => {
   return (
@@ -29,13 +29,14 @@ export const SelectionForest = ({ roots }) => {
                 Add a concept to start building a query!
               </Typography>
               <Box sx={{
-                height: '200px',
-                width: '200px',
-                background: `url(${ ArrowImage })`,
+                height: '150px',
+                width: '150px',
+                background: `url(${ StartHereArrow })`,
+                filter: 'opacity(0.8)',
                 backgroundSize: '100%',
                 position: 'absolute',
-                bottom: '-20px',
-                left: '60px',
+                bottom: '-25px',
+                left: '45px',
               }}
               />
             </Box>

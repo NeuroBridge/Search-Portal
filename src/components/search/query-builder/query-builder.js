@@ -147,6 +147,7 @@ export const QueryBuilder = () => {
         <CardHeader
           title="Query Builder"
           subheader="Query terms are part of the NeuroBridge ontology which will be available on BioPortal soon."
+          sx={{ backgroundColor: '#f3f6f9' }}
         />
 
         <Divider />
@@ -192,7 +193,10 @@ export const QueryBuilder = () => {
             divider={ <Divider orientation="vertical" flexItem /> }
             justifyContent="stretch"
             sx={{
-              'div.MuiBox-root': { flex: 1, backgroundColor: '#f3f6f9' },
+              'div.MuiBox-root': {
+                flex: 1,
+                backgroundColor: '#f3f6f9',
+              },
               '.MuiButton-root': {
                 borderRadius: 0,
               }
