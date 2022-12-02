@@ -79,43 +79,6 @@ const ConceptSelectDialog = ({ open, closeHandler, cancelHandler, ...rest }) => 
     closeHandler()
   }
 
-  const renderRow = useCallback(({ index, style }) => (
-    <ListItem
-      key={ `option-${ index }` }
-      disablePadding
-      sx={{
-        ...style,
-        '& svg': {
-          transform: 'rotate(90deg)',
-          filter: 'opacity(0.25)',
-        },
-        '&:hover svg': {
-          filter: 'opacity(1.0)',
-        },
-      }}
-      secondaryAction={
-        <IconButton
-          edge="end"
-          aria-label="view ontology context"
-          onClick={ handleClickInspectTerm(filteredTerms[index].id) }
-        ><InspectTermIcon /></IconButton>
-      }
-    >
-      <ListItemButton onClick={ handleClickSelectTerm(filteredTerms[index].id) }>
-        <ListItemText
-          primary={ filteredTerms[index].id }
-          secondary={ filteredTerms[index].labels.join(', ') }
-          secondaryTypographyProps={{ sx: {
-            maxHeight: '1rem',
-            overflow: 'hidden',
-            whiteSpace: 'nowrap',
-            textOverflow: 'ellipsis',
-          } }}
-        />
-      </ListItemButton>
-    </ListItem>
-  ), [filteredTerms])
-
   return (
     <Dialog
       sx={{ '& .MuiDialog-paper': { height: '80%', maxHeight: 600 } }}
@@ -151,7 +114,44 @@ const ConceptSelectDialog = ({ open, closeHandler, cancelHandler, ...rest }) => 
           itemSize={ 68 }
           itemCount={ filteredTerms.length }
           overscanCount={ 36 }
-        >{ renderRow }</FixedSizeList>
+        >{
+          ({ index, style }) => (
+            <ListItem
+              key={ `option-${ index }` }
+              disablePadding
+              sx={{
+                ...style,
+                '& svg': {
+                  transform: 'rotate(90deg)',
+                  filter: 'opacity(0.25)',
+                },
+                '&:hover svg': {
+                  filter: 'opacity(1.0)',
+                },
+              }}
+              secondaryAction={
+                <IconButton
+                  edge="end"
+                  aria-label="view ontology context"
+                  onClick={ handleClickInspectTerm(filteredTerms[index].id) }
+                ><InspectTermIcon /></IconButton>
+              }
+            >
+              <ListItemButton onClick={ handleClickSelectTerm(filteredTerms[index].id) }>
+                <ListItemText
+                  primary={ filteredTerms[index].id }
+                  secondary={ filteredTerms[index].labels.join(', ') }
+                  secondaryTypographyProps={{ sx: {
+                    maxHeight: '1rem',
+                    overflow: 'hidden',
+                    whiteSpace: 'nowrap',
+                    textOverflow: 'ellipsis',
+                  } }}
+                />
+              </ListItemButton>
+            </ListItem>
+          )
+        }</FixedSizeList>
       </DialogContent>
       <Divider />
       <DialogActions>
@@ -177,13 +177,13 @@ export const AddTermForm = () => {
   const basket = useBasket()
   const [open, setOpen] = useState(false)
 
-  const handleClose = newValue => {
+  const handleClose = useCallback(newValue => {
     setOpen(false)
 
     if (typeof newValue === 'string') {
       basket.add(newValue)
     }
-  }
+  }, [basket.ids])
 
   return (
     <Stack
