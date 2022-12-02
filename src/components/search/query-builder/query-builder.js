@@ -8,6 +8,7 @@ import {
   Close as CloseIcon,
   DataObject as RawQueryIcon,
   Send as SearchIcon,
+  RestartAlt as StartOverIcon,
 } from '@mui/icons-material'
 import { useBasket } from '../../basket'
 import { useOntology } from '../../ontology'
@@ -135,6 +136,11 @@ export const QueryBuilder = () => {
     setShowRawQuery(!showRawQuery)
   }
 
+  const handleClickStartOver = () => {
+    basket.empty()
+    setValues({ })
+  }
+
   return (
     <Card sx={{ position: 'relative' }}>
       <QueryBuilderContext.Provider value={{ query, removeTerm, toggleTermSelection, values }}>
@@ -192,7 +198,7 @@ export const QueryBuilder = () => {
             divider={ <Divider orientation="vertical" flexItem /> }
             justifyContent="stretch"
             sx={{
-              'div.MuiBox-root': { flex: 1, backgroundColor: '#a7caed33' },
+              'div.MuiBox-root': { flex: 1, backgroundColor: '#f3f6f9' },
               '.MuiButton-root': {
                 borderRadius: 0,
               }
@@ -246,7 +252,14 @@ export const QueryBuilder = () => {
               sx={{ backgroundColor: showRawQuery ? '#f6fafd' : '#fff' }}
             >raw query</Button>
 
-            <Box />
+            <Box sx={{ minWidth: '1rem' }} />
+
+            {/* start over button */}
+            <Button
+              disabled={ basket.ids.length === 0 }
+              onClick={ handleClickStartOver }
+              endIcon={ <StartOverIcon /> }
+            >Start Over</Button>
 
             {/* search button */}
             <Button
