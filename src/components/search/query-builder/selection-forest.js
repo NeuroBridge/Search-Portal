@@ -6,8 +6,12 @@ import ArrowImage from '../../../images/arrow.png'
 export const SelectionForest = ({ roots }) => {
   return (
     <Stack
+      justifyContent="flex-start"
+      alignItems="stretch"
       gap={ 2 }
       sx={{
+        flex: 1,
+        m: 3,
         minHeight: '250px',
         position: 'relative',
       }}
@@ -15,12 +19,12 @@ export const SelectionForest = ({ roots }) => {
       {
         roots.length === 0 ? (
           <Fade in={ true }>
-            <Box sx={{ mt: 4 }}>
+            <Box sx={{ mt: 0 }}>
               <Typography
                 paragraph
-                sx={{ filter: 'opacity(0.8)', fontSize: '200%' }}
-                align="center"
                 color="primary"
+                align="center"
+                sx={{ filter: 'opacity(0.8)', fontSize: '200%', mt: 4 }}
               >
                 Add a concept to start building a query!
               </Typography>

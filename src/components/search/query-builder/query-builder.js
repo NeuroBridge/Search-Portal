@@ -8,6 +8,7 @@ import {
   Close as CloseIcon,
   DataObject as RawQueryIcon,
   Send as SearchIcon,
+  RestartAlt as ResetIcon,
 } from '@mui/icons-material'
 import { useBasket } from '../../basket'
 import { useOntology } from '../../ontology'
@@ -135,6 +136,11 @@ export const QueryBuilder = () => {
     setShowRawQuery(!showRawQuery)
   }
 
+  const handleClickStartOver = () => {
+    basket.empty()
+    setValues({ })
+  }
+
   return (
     <Card sx={{ position: 'relative' }}>
       <QueryBuilderContext.Provider value={{ query, removeTerm, toggleTermSelection, values }}>
@@ -145,15 +151,9 @@ export const QueryBuilder = () => {
 
         <Divider />
 
-        <Stack
-          justifyContent="center"
-          alignItems="stretch"
-          sx={{ m: 3 }}
-        >
+        <SelectionForest roots={ basket.ids } />
 
-          <SelectionForest roots={ basket.ids } />
-
-        </Stack>
+        <Divider />
 
         <Collapse
           in={ showRawQuery }
@@ -161,7 +161,7 @@ export const QueryBuilder = () => {
             position: 'relative',
             '.query': {
               m: 0, p: 1, pl: 3,
-              backgroundColor: '#eee',
+              backgroundColor: '#f6fafd',
               color: '#556',
               fontSize: '85%',
             },
@@ -192,7 +192,7 @@ export const QueryBuilder = () => {
             divider={ <Divider orientation="vertical" flexItem /> }
             justifyContent="stretch"
             sx={{
-              'div.MuiBox-root': { flex: 1, backgroundColor: '#a7caed33' },
+              'div.MuiBox-root': { flex: 1, backgroundColor: '#f3f6f9' },
               '.MuiButton-root': {
                 borderRadius: 0,
               }
@@ -200,6 +200,13 @@ export const QueryBuilder = () => {
           >
             {/* add term button renders here */}
             <AddTermForm />
+
+            {/* raw query button */}
+            <Button
+              onClick={ toggleShowRawQuery }
+              startIcon={ <RawQueryIcon /> }
+              sx={{ backgroundColor: showRawQuery ? '#f6fafd' : '#fff' }}
+            >raw query</Button>
 
             {/* options button renders here */}
             <ConfigMenu>
@@ -239,14 +246,14 @@ export const QueryBuilder = () => {
               </Stack>
             </ConfigMenu>
 
-            {/* raw query button */}
+            {/* reset button */}
             <Button
-              onClick={ toggleShowRawQuery }
-              startIcon={ <RawQueryIcon /> }
-              sx={{ backgroundColor: showRawQuery ? '#f6fafd' : '#fff' }}
-            >raw query</Button>
+              disabled={ basket.ids.length === 0 }
+              onClick={ handleClickStartOver }
+              startIcon={ <ResetIcon /> }
+            >Reset</Button>
 
-            <Box />
+            <Box sx={{ minWidth: '1rem' }} />
 
             {/* search button */}
             <Button

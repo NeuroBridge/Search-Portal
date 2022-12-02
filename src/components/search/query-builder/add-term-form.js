@@ -153,7 +153,9 @@ const ConceptSelectDialog = ({ open, closeHandler, cancelHandler, ...rest }) => 
           )
         }</FixedSizeList>
       </DialogContent>
+      
       <Divider />
+      
       <DialogActions>
         <Button
           autoFocus
@@ -191,6 +193,7 @@ export const AddTermForm = () => {
       justifyContent="center"
       sx={{
         '.add-term-button': {
+          backgroundColor: basket.ids.length === 0 ? '#66b284' : `#a6f28433`,
           '.label': { pt: '4px', margin: 'auto', }
         }
       }}
@@ -200,7 +203,6 @@ export const AddTermForm = () => {
         className="add-term-button"
         onClick={ () => setOpen(true) }
         variant={ basket.ids.length === 0 ? 'contained' : 'text' }
-        color="primary"
       ><Box component="span" className="label">Add Concept</Box></Button>
       <ConceptSelectDialog
         open={ open }
