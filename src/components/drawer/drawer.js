@@ -7,6 +7,9 @@ import {
   NavigateNext as BreadcrumbSeparatorIcon,
   Home as HomeIcon,
   Close as CloseIcon,
+  ArrowUpward as ParentNavIcon,
+  ArrowDownward as ChildrenNavIcon,
+  Circle as CurrentNavIcon,
 } from '@mui/icons-material'
 import { useDrawer } from './context'
 import { useOntology } from '../ontology'
@@ -151,12 +154,8 @@ export const Drawer = () => {
   const Parent = useCallback(() => {
     return (
       <Fade in={ true } style={{ transitionDelay: '100ms' }}>
-        <Box sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          gap: 1,
-          p: 1,
-        }}>
+        <Stack component={ Box } direction="row" gap={ 1 } sx={{ p: 1 }}>
+          <ParentNavIcon fontSize="small" color="disabled" sx={{ transform: 'translateY(3px)' }}/>
           <Typography variant="h6">Parent:</Typography>
           <Button
             variant="text"
@@ -175,7 +174,7 @@ export const Drawer = () => {
               />
             )
           }
-        </Box>
+        </Stack>
       </Fade>
     )
   }, [drawer.currentTerm])
@@ -184,7 +183,10 @@ export const Drawer = () => {
     return (
       <Fade in={ true } style={{ transitionDelay: '150ms' }}>
         <Box>
-          <Typography variant="h6">Children:</Typography>
+          <Stack direction="row" gap={ 1 }>
+            <ChildrenNavIcon fontSize="small" color="disabled" sx={{ transform: 'translateY(3px)' }}/>
+            <Typography variant="h6">Children:</Typography>
+          </Stack>
 
           <List dense disablePadding sx={{ '.MuiListItem-root': { p: 0 } }}>
             {
@@ -263,9 +265,12 @@ export const Drawer = () => {
               zIndex: 9,
             }}>
               <Box sx={{ flex: 1 }}>
-                <Typography variant="h5" sx={{ margin: 0 }}>
-                  Current Concept: { drawer.currentTerm.id }
-                </Typography>
+                <Stack direction="row" gap={ 1 }>
+                  <CurrentNavIcon fontSize="small" color="disabled" sx={{ transform: 'translateY(3px)' }}/>
+                  <Typography variant="h5" sx={{ margin: 0 }}>
+                    Current Concept: { drawer.currentTerm.id }
+                  </Typography>
+                </Stack>
                 <LabelsList />
               </Box>
               <Box sx={{ p: 1 }}>
