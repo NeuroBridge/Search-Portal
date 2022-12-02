@@ -264,7 +264,7 @@ export const Drawer = () => {
             }}>
               <Box sx={{ flex: 1 }}>
                 <Typography variant="h5" sx={{ margin: 0 }}>
-                  Current Term: { drawer.currentTerm.id }
+                  Current Concept: { drawer.currentTerm.id }
                 </Typography>
                 <LabelsList />
               </Box>
