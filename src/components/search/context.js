@@ -26,6 +26,12 @@ export const SearchProvider = ({ children }) => {
   })
   const [lastRequestTime, setLastRequestTime] = useState(null)
   const [loading, setLoading] = useState(false)
+  
+  const nqQuerystring = useMemo(() => {
+    return basket.ids
+      .map(item => ontology.find(item).labels[0])
+      .join('+')
+  }, [basket.ids, ontology])
 
   const totalResultCount = useMemo(() => Object.values(results).reduce((sum, someResults) => {
     return sum + someResults.length
@@ -58,11 +64,7 @@ export const SearchProvider = ({ children }) => {
   }, [basket.ids])
 
   const nqFetchResults = useCallback(() => {
-    const querystring = basket.ids
-      .map(item => ontology.find(item).labels[0])
-      .join('+')
-
-    return axios.get(NQ_API_URL, { params: { searchTerms: querystring } })
+    return axios.get(NQ_API_URL, { params: { searchTerms: nqQuerystring } })
       .then(({ data }) => {
         if (!data?.data) {
           throw new Error('An error occurred while fetching NeuroQuery results.')
@@ -112,6 +114,7 @@ export const SearchProvider = ({ children }) => {
       fetchResults,
       lastRequestTime,
       loading,
+      nqQuerystring,
       results,
       totalResultCount,
     }}>

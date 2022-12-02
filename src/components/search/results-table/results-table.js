@@ -4,11 +4,14 @@ import { DataGrid } from '@mui/x-data-grid'
 import { columns } from './columns'
 import { TableHeader } from './table-header'
 import { useSearch } from '../context'
+import { Link } from '../../link'
 
 //
 
 export const ResultsTable = () => {
-  const { results, lastRequestTime, totalResultCount } = useSearch()
+  const {
+    results, lastRequestTime, totalResultCount, nqQuerystring,
+  } = useSearch()
 
   const [currentTabIndex, setCurrentTabIndex] = useState(0)
 
@@ -52,7 +55,12 @@ export const ResultsTable = () => {
             toolbar: {
               currentTabIndex,
               handleChangeTab,
-              detail: currentTabIndex === 0 ? '' : <a href="http://google.com" rel="noopener noreferrer" target="_blank">view results a NeuroQuery.org</a>,
+              detail: currentTabIndex === 1
+                ? (
+                  <Link
+                    to={ `https://neuroquery.org/query?text=${ nqQuerystring }` }
+                  >View these results at NeuroQuery.org</Link>
+                ) : '',
             }
           }}
           disableSelectionOnClick
