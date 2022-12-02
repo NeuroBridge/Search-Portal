@@ -5,7 +5,10 @@ import ArrowImage from '../../../images/arrow.png'
 
 export const SelectionForest = ({ roots }) => {
   return (
-    <Stack sx={{ minHeight: '100px' }}>
+    <Stack sx={{
+      minHeight: '250px',
+      position: 'relative',
+    }}>
       {
         roots.length === 0 ? (
           <Fade in={ true }>
@@ -19,12 +22,13 @@ export const SelectionForest = ({ roots }) => {
                 Add a concept to start building a query!
               </Typography>
               <Box sx={{
-                bordeR: '1px dashed crimson',
                 height: '200px',
                 width: '200px',
                 background: `url(${ ArrowImage })`,
                 backgroundSize: '100%',
-                transform: 'translateX(60px)',
+                position: 'absolute',
+                bottom: '-20px',
+                left: '60px',
               }}
               />
             </Box>
