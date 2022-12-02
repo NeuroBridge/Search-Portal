@@ -178,10 +178,10 @@ export const QueryBuilder = () => {
             <pre className="query">{ JSON.stringify(query, null, 2) }</pre>
         </Collapse>
 
-        <Divider />
+        <LinearProgress variant={ loading ? 'indeterminate' : 'determinate' } value={ 0 } />
 
         <CardContent sx={{
-          p: 0,
+          padding: '0 !important',
           '.MuiButton-root': {
             p: 4,
             boxShadow: 'none',
@@ -192,7 +192,7 @@ export const QueryBuilder = () => {
             divider={ <Divider orientation="vertical" flexItem /> }
             justifyContent="stretch"
             sx={{
-              'div.MuiBox-root': { flex: 1, backgroundColor: '#f6f6f6' },
+              'div.MuiBox-root': { flex: 1, backgroundColor: '#a7caed33' },
               '.MuiButton-root': {
                 borderRadius: 0,
               }
@@ -259,8 +259,6 @@ export const QueryBuilder = () => {
         </CardContent>
         
       </QueryBuilderContext.Provider>
-
-      <LinearProgress variant={ loading ? 'indeterminate' : 'determinate' } value={ 0 } />
     </Card>
   )
 } 
