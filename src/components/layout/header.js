@@ -1,10 +1,17 @@
 import { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { AppBar, Box, Container, IconButton, Slide, Toolbar, Tooltip, useScrollTrigger } from '@mui/material'
+import {
+  AppBar, Box, Container, IconButton, Slide, Toolbar, Tooltip, useScrollTrigger,
+} from '@mui/material'
+import {
+  LightMode as LightModeIcon,
+  DarkMode as DarkModeIcon,
+} from '@mui/icons-material'
 import { Link } from '../link'
 import { useMatch, useResolvedPath } from 'react-router-dom'
 import { useDrawer } from '../drawer'
 import { OpenInBrowser as DrawerIcon } from '@mui/icons-material'
+import { useAppContext } from '../../context'
 
 const HideOnScroll = ({ children }) => {
   const trigger = useScrollTrigger()
@@ -72,6 +79,7 @@ NavLink.propTypes = {
 //
 
 export const Header = () => {
+  const { settings } = useAppContext()
   const drawer = useDrawer()
 
   return (
@@ -97,6 +105,15 @@ export const Header = () => {
                 <NavLink to="/about">About</NavLink>
                 <NavLink to="/contact">Contact</NavLink>
               </Box>
+              <Tooltip title="Toggle Color Mode" placement="bottom">
+                <IconButton onClick={ settings.color.toggleMode }>
+                  {
+                    settings.color.mode === settings.color.modes.light
+                      ? <LightModeIcon />
+                      : <DarkModeIcon />
+                  }
+                </IconButton>
+              </Tooltip>
               <Tooltip title="Open Ontology Browser" placement="bottom">
                 <IconButton onClick={ () => drawer.open() }><DrawerIcon sx={{ transform: 'rotate(90deg)' }} /></IconButton>
               </Tooltip>
