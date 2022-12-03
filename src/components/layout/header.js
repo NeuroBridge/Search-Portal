@@ -1,7 +1,8 @@
 import { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import {
-  AppBar, Box, Container, IconButton, Slide, Toolbar, Tooltip, useScrollTrigger,
+  AppBar, Box, Container, IconButton, Slide,
+  Toolbar, Tooltip, useScrollTrigger, useTheme,
 } from '@mui/material'
 import {
   LightMode as LightModeIcon,
@@ -80,13 +81,14 @@ NavLink.propTypes = {
 
 export const Header = () => {
   const { settings } = useAppContext()
+  const theme = useTheme()
   const drawer = useDrawer()
 
   return (
     <Fragment>
       <HideOnScroll>
         <AppBar elevation={ 1 } sx={{
-          backgroundColor: 'rgba(255, 255, 255, 0.8)',
+          backgroundColor: theme.palette.background.paper,
           backdropFilter: 'blur(5px)',
         }}>
           <Toolbar>
