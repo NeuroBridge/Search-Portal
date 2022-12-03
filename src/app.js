@@ -1,6 +1,5 @@
-import { Fragment } from 'react'
 import { Route, Routes } from 'react-router-dom'
-import { Box } from '@mui/material'
+import { Paper } from '@mui/material'
 import {
   AboutView, ContactView, NotFoundView, SearchView,
 } from './views'
@@ -20,25 +19,24 @@ const Router = () => {
 
 export const App = () => {
   return (
-    <Fragment>
+    <Paper className="app-container">
       <Header />
 
       <main>
         <Router />
       </main>
       
-      <footer>
-        <Box sx={{
+      <Paper
+        component="footer"
+        sx={{
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
           height: '5rem',
-        }}>
-          &copy; { new Date().getFullYear() }
-        </Box>
-      </footer>
+        }}
+      >&copy; { new Date().getFullYear() }</Paper>
 
       <Drawer />
-    </Fragment>
+    </Paper>
   )
 }
