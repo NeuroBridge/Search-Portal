@@ -30,39 +30,6 @@ HideOnScroll.propTypes = {
 
 //
 
-const navStyle = {
-  display: 'flex',
-  flex: 1,
-  justifyContent: 'flex-end',
-  alignItems: 'stretch',
-  height: '100%',
-  mr: 2,
-  '& a': {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: '0.5rem',
-    textDecoration: 'none',
-    borderBottom: '3px solid transparent',
-    transition: 'border-color 250ms, background-color 250ms',
-    '&:hover': {
-      borderBottom: '3px solid #ccc',
-      backgroundColor: '#eaebec',
-    },
-    '&[aria-current="page"]': {
-      borderBottom: '3px solid #1976d2',
-    }
-  }
-}
-
-const brandStyle = {
-  fontVariant: 'small-caps',
-  textDecoration: 'none',
-  fontSize: '2rem',
-}
-
-//
-
 const NavLink = ({ to, children }) => {
   const resolved = useResolvedPath(to)
   const match = useMatch({ path: resolved.pathname, end: true })
@@ -84,6 +51,37 @@ export const Header = () => {
   const theme = useTheme()
   const drawer = useDrawer()
 
+
+  const navStyle = {
+    display: 'flex',
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'stretch',
+    height: '100%',
+    mr: 2,
+    '& a': {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: '0.5rem',
+      textDecoration: 'none',
+      borderBottom: '3px solid transparent',
+      transition: 'border-color 250ms, background-color 250ms',
+      '&:hover': {
+        borderBottom: `3px solid ${ theme.palette.grey[300] }`,
+      },
+      '&[aria-current="page"]': {
+        borderBottom: `3px solid ${ theme.palette.primary.main }`,
+      }
+    }
+  }
+
+  const brandStyle = {
+    fontVariant: 'small-caps',
+    textDecoration: 'none',
+    fontSize: '2rem',
+  }
+
   return (
     <Fragment>
       <HideOnScroll>
@@ -92,12 +90,13 @@ export const Header = () => {
           backdropFilter: 'blur(5px)',
         }}>
           <Toolbar>
-            <Container maxWidth="xl" sx={{
+            <Container maxWidth="lg" sx={{
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
               height: '5rem',
               padding: '0 1rem',
+              gap: 2,
             }}>
               <Link to="/" style={ brandStyle }>
                 NeuroBridge
@@ -108,7 +107,7 @@ export const Header = () => {
                 <NavLink to="/contact">Contact</NavLink>
               </Box>
               <Tooltip title="Toggle Color Mode" placement="bottom">
-                <IconButton onClick={ settings.color.toggleMode }>
+                <IconButton onClick={ settings.color.toggleMode } color="primary">
                   {
                     settings.color.mode === settings.color.modes.light
                       ? <LightModeIcon />
@@ -117,7 +116,9 @@ export const Header = () => {
                 </IconButton>
               </Tooltip>
               <Tooltip title="Open Ontology Browser" placement="bottom">
-                <IconButton onClick={ () => drawer.open() }><DrawerIcon sx={{ transform: 'rotate(90deg)' }} /></IconButton>
+                <IconButton onClick={ () => drawer.open() } color="primary">
+                  <DrawerIcon sx={{ transform: 'rotate(90deg)' }} />
+                </IconButton>
               </Tooltip>
             </Container>
           </Toolbar>

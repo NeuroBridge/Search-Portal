@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
-import { Paper } from '@mui/material'
+import { Paper, useTheme } from '@mui/material'
 import {
-  AboutView, ContactView, NotFoundView, SearchView,
+  AboutView, ContactView, NotFoundView, SearchView
 } from './views'
 import { Drawer } from './components/drawer'
 import { Header } from './components/layout'
@@ -18,8 +18,15 @@ const Router = () => {
 }
 
 export const App = () => {
+  const theme = useTheme()
+
   return (
-    <Paper className="app-container">
+    <Paper
+      className="app-container"
+      sx={{
+        'a': { color: theme.palette.primary.main }
+      }}
+    >
       <Header />
 
       <main>
