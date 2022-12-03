@@ -2,7 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState } 
 import {
   Box, Button, Card, CardContent, CardHeader, Collapse, Divider, IconButton,
   FormControl, FormLabel, LinearProgress,
-  Stack, ToggleButton, ToggleButtonGroup,
+  Stack, ToggleButton, ToggleButtonGroup, useTheme,
 } from '@mui/material'
 import {
   Close as CloseIcon,
@@ -23,6 +23,7 @@ export const QueryBuilderContext = createContext({})
 export const useQueryBuilder = () => useContext(QueryBuilderContext)
 
 export const QueryBuilder = () => {
+  const theme = useTheme()
   const ontology = useOntology()
   const basket = useBasket()
   const [values, setValues] = useState({ })
@@ -147,7 +148,7 @@ export const QueryBuilder = () => {
         <CardHeader
           title="Query Builder"
           subheader="Query terms are part of the NeuroBridge ontology which will be available on BioPortal soon."
-          sx={{ backgroundColor: '#f3f6f9' }}
+          sx={{ backgroundColor: theme.palette.background.default }}
         />
 
         <Divider />
@@ -173,7 +174,6 @@ export const QueryBuilder = () => {
               sx={{
                 position: 'absolute',
                 right: 5, top: 5,
-                '&:hover': { '& svg': { filter: 'opacity(1.0)' } },
               }}
             ><CloseIcon fontSize="small" sx={{ color: '#fff', filter: 'opacity(0.75)' }} /></IconButton>
             <pre className="query">{ JSON.stringify(query, null, 2) }</pre>
@@ -195,7 +195,7 @@ export const QueryBuilder = () => {
             sx={{
               'div.MuiBox-root': {
                 flex: 1,
-                backgroundColor: '#f3f6f9',
+                backgroundColor: theme.palette.background.default,
               },
               '.MuiButton-root': {
                 borderRadius: 0,
@@ -209,7 +209,6 @@ export const QueryBuilder = () => {
             <Button
               onClick={ toggleShowRawQuery }
               startIcon={ <RawQueryIcon /> }
-              sx={{ backgroundColor: showRawQuery ? '#f6fafd' : '#fff' }}
             >raw query</Button>
 
             {/* options button renders here */}

@@ -192,12 +192,9 @@ export const AddTermForm = () => {
     <Stack
       direction="row"
       justifyContent="center"
-      sx={{
-        '.add-term-button': {
-          backgroundColor: basket.ids.length === 0 ? '#66b284' : `#a6f28433`,
-          '.label': { pt: '4px', margin: 'auto', }
-        }
-      }}
+      sx={{ '.add-term-button': {
+        '.label': { pt: '4px', margin: 'auto', }
+      } }}
     >
       <Button
         startIcon={ <AddIcon /> }
