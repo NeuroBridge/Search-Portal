@@ -79,7 +79,7 @@ export const AboutView = () => {
           transform: 'translateY(4px)',
           '&.selected-icon': { color: theme.palette.primary.light },
           '&.unselected-icon': { color: 'darkred' },
-          '&.neutral-icon': { color: '#aaa' },
+          '&.neutral-icon': { color: theme.palette.grey[400] },
         },
       }}>
         Each concept in the query builder can have one of three states, and

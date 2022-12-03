@@ -24,6 +24,7 @@ export const App = () => {
     <Paper
       className="app-container"
       sx={{
+        backgroundColor: theme.palette.background.default,
         'a': { color: theme.palette.primary.main }
       }}
     >

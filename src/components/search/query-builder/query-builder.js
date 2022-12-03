@@ -2,7 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState } 
 import {
   Box, Button, Card, CardContent, CardHeader, Collapse, Divider, IconButton,
   FormControl, FormLabel, LinearProgress,
-  Stack, ToggleButton, ToggleButtonGroup, useTheme,
+  Stack, ToggleButton, ToggleButtonGroup,
 } from '@mui/material'
 import {
   Close as CloseIcon,
@@ -23,7 +23,6 @@ export const QueryBuilderContext = createContext({})
 export const useQueryBuilder = () => useContext(QueryBuilderContext)
 
 export const QueryBuilder = () => {
-  const theme = useTheme()
   const ontology = useOntology()
   const basket = useBasket()
   const [values, setValues] = useState({ })
@@ -145,7 +144,6 @@ export const QueryBuilder = () => {
   return (
     <Card sx={{
       position: 'relative',
-      backgroundColor: theme.palette.background.default,
     }}>
       <QueryBuilderContext.Provider value={{ query, removeTerm, toggleTermSelection, values }}>
         <CardHeader
@@ -195,13 +193,8 @@ export const QueryBuilder = () => {
             divider={ <Divider orientation="vertical" flexItem /> }
             justifyContent="stretch"
             sx={{
-              'div.MuiBox-root': {
-                flex: 1,
-                backgroundColor: theme.palette.background.default,
-              },
-              '.MuiButton-root': {
-                borderRadius: 0,
-              }
+              'div.MuiBox-root': { flex: 1 },
+              '.MuiButton-root': { borderRadius: 0 }
             }}
           >
             {/* add term button renders here */}
