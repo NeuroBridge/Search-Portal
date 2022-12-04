@@ -81,14 +81,17 @@ const ConceptSelectDialog = ({ open, closeHandler, cancelHandler, ...rest }) => 
 
   return (
     <Dialog
-      sx={{ '& .MuiDialog-paper': { height: '80%', maxHeight: 600 } }}
+      sx={{
+        '& .MuiDialog-paper': { height: '80%', maxHeight: 600 },
+        '& .MuiDialogTitle-root': { color: 'text.primary' },
+      }}
       maxWidth="sm"
       TransitionProps={{ onEntering: handleEntering }}
       open={ open }
       { ...rest }
       onClose={ () => closeHandler() }
     >
-      <DialogTitle color="primary.dark">Add Concept</DialogTitle>
+      <DialogTitle>Add Concept</DialogTitle>
       <TextField
         fullWidth
         placeholder="Enter search text.."

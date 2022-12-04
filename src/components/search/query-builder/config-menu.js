@@ -31,7 +31,7 @@ export const ConfigMenu = ({ children }) => {
         open={ open }
         onClose={ handleClose }
       >
-        <DialogTitle color="primary.dark">Options</DialogTitle>
+        <DialogTitle color="text.primary">Options</DialogTitle>
           <IconButton
             size="large"
             sx={{ position: 'absolute', top: 8, right: 8, }}
