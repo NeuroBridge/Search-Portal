@@ -5,8 +5,8 @@ import {
   Toolbar, Tooltip, useScrollTrigger, useTheme,
 } from '@mui/material'
 import {
-  LightMode as LightModeIcon,
-  DarkMode as DarkModeIcon,
+  LightMode as DarkModeIcon,
+  DarkMode as LightModeIcon,
 } from '@mui/icons-material'
 import { Link } from '../link'
 import { useMatch, useResolvedPath } from 'react-router-dom'
@@ -106,7 +106,7 @@ export const Header = () => {
                 <NavLink to="/about">About</NavLink>
                 <NavLink to="/contact">Contact</NavLink>
               </Box>
-              <Tooltip title="Toggle Color Mode" placement="bottom">
+              <Tooltip title={ `Switch to ${ settings.color.mode === settings.color.modes.light ? 'dark' : 'light' } mode` } placement="bottom">
                 <IconButton onClick={ settings.color.toggleMode } color="primary">
                   {
                     settings.color.mode === settings.color.modes.light
