@@ -2,7 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState } 
 import {
   Box, Button, Card, CardContent, CardHeader,
   CircularProgress, Collapse, Divider, IconButton,
-  FormControl, FormLabel, Stack, ToggleButton, ToggleButtonGroup,
+  FormControl, FormLabel, Stack, ToggleButton, ToggleButtonGroup, useTheme,
 } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 import {
@@ -24,6 +24,7 @@ export const QueryBuilderContext = createContext({})
 export const useQueryBuilder = () => useContext(QueryBuilderContext)
 
 export const QueryBuilder = () => {
+  const theme = useTheme()
   const ontology = useOntology()
   const basket = useBasket()
   const [values, setValues] = useState({ })
@@ -164,7 +165,7 @@ export const QueryBuilder = () => {
             position: 'relative',
             '.query': {
               m: 0, p: 1, pl: 3,
-              backgroundColor: '#345',
+              backgroundColor: theme.palette.mode === 'light' ? theme.palette.grey[600] : theme.palette.grey[900],
               color: '#eef',
               fontSize: '90%',
             },
@@ -203,7 +204,7 @@ export const QueryBuilder = () => {
             <Button
               onClick={ toggleShowRawQuery }
               startIcon={ <RawQueryIcon /> }
-            >raw query</Button>
+            >{ `${ showRawQuery ? 'hide' : 'view' } query` }</Button>
 
             {/* options button renders here */}
             <ConfigMenu>
@@ -254,7 +255,7 @@ export const QueryBuilder = () => {
 
             {/* search button */}
             <LoadingButton
-              variant="contained"
+              variant={ basket.ids.length === 0 ? 'text' : 'contained' }
               disabled={ basket.ids.length === 0 }
               onClick={ () => fetchResults(query) }
               endIcon={ <SearchIcon /> }

@@ -70,7 +70,7 @@ export const SelectionTree = ({ rootTermId }) => {
           borderLeft: rootTermId === node.id
             ? 0
             : `2px solid ${ theme.palette.background.default }`,
-          '&:last-child': { borderBottomLeftRadius: '0.5rem' },
+          '&:last-child': { borderBottomLeftRadius: '0.75rem' },
         }}
         label={
           <Box sx={{

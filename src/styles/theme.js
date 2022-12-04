@@ -30,15 +30,19 @@ const shape = {
 
 const sharedPalette = {
   primary: {
-    main: '#36688b',
+    main: '#5787a8',
   },
   secondary: {
-    main: '#ab7629',
+    main: '#8aa461',
+  },
+  success: {
+    main: '#00bfa5',
   },
 }
 
 export const lightTheme = {
   palette: {
+    mode: 'light',
     ...sharedPalette,
     background: {
       default: '#e7efdd',
@@ -47,9 +51,11 @@ export const lightTheme = {
     text: {
       primary: '#333',
       secondary: '#666',
+      disabled: '#999',
     },
-    success: {
-      main: '#368b77',
+    divider: 'rgba(0, 0, 0, 0.1)',
+    action: {
+      disabled: '#999'
     },
   },
   typography,
@@ -58,6 +64,7 @@ export const lightTheme = {
 
 export const darkTheme = {
   palette: {
+    mode: 'dark',
     ...sharedPalette,
     background: {
       default: '#272f3d',
@@ -66,6 +73,11 @@ export const darkTheme = {
     text: {
       primary: '#fff',
       secondary: '#999',
+      disabled: '#ccc',
+    },
+    divider: 'rgba(255, 255, 255, 0.1)',
+    action: {
+      disabled: '#666'
     },
   },
   typography,
