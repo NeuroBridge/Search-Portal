@@ -28,14 +28,18 @@ const shape = {
   borderRadius: 0,
 }
 
+const sharedPalette = {
+  primary: {
+    main: '#36688b',
+  },
+  secondary: {
+    main: '#ab7629',
+  },
+}
+
 export const lightTheme = {
   palette: {
-    primary: {
-      main: '#36688b',
-    },
-    secondary: {
-      main: '#ab7629',
-    },
+    ...sharedPalette,
     background: {
       default: '#e7efdd',
       paper: '#f7ffed',
@@ -54,12 +58,7 @@ export const lightTheme = {
 
 export const darkTheme = {
   palette: {
-    primary: {
-      main: '#0097a7',
-    },
-    secondary: {
-      main: '#e7efdd',
-    },
+    ...sharedPalette,
     background: {
       default: '#272f3d',
       paper: '#171f2d',
