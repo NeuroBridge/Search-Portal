@@ -77,7 +77,7 @@ export const TreeList = ({ rootTerm }) => {
         disableSelection
         sx={{
           my: 1,
-          flex: 1,
+          flexGrow: 1,
           width: '100%',
           overflowY: 'auto',
           border: `2px solid ${ theme.palette.background.default }`,
