@@ -88,7 +88,7 @@ const ConceptSelectDialog = ({ open, closeHandler, cancelHandler, ...rest }) => 
       { ...rest }
       onClose={ () => closeHandler() }
     >
-      <DialogTitle>Add Concept</DialogTitle>
+      <DialogTitle color="primary.dark">Add Concept</DialogTitle>
       <TextField
         fullWidth
         placeholder="Enter search text.."
