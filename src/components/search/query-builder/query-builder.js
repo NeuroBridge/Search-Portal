@@ -1,9 +1,10 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import {
-  Box, Button, Card, CardContent, CardHeader, Collapse, Divider, IconButton,
-  FormControl, FormLabel, LinearProgress,
-  Stack, ToggleButton, ToggleButtonGroup,
+  Box, Button, Card, CardContent, CardHeader,
+  CircularProgress, Collapse, Divider, IconButton,
+  FormControl, FormLabel, Stack, ToggleButton, ToggleButtonGroup,
 } from '@mui/material'
+import { LoadingButton } from '@mui/lab'
 import {
   Close as CloseIcon,
   DataObject as RawQueryIcon,
@@ -179,8 +180,6 @@ export const QueryBuilder = () => {
             <pre className="query">{ JSON.stringify(query, null, 2) }</pre>
         </Collapse>
 
-        <LinearProgress variant={ loading ? 'indeterminate' : 'determinate' } value={ 0 } />
-
         <CardContent sx={{
           padding: '0 !important',
           '.MuiButton-root': {
@@ -254,12 +253,16 @@ export const QueryBuilder = () => {
             <Box sx={{ minWidth: '1rem' }} />
 
             {/* search button */}
-            <Button
+            <LoadingButton
               variant="contained"
               disabled={ basket.ids.length === 0 }
               onClick={ () => fetchResults(query) }
               endIcon={ <SearchIcon /> }
-            >search</Button>
+              loading={ loading }
+              loadingIndicator={
+                <CircularProgress color="primary" size={16} />
+              }
+            >search</LoadingButton>
           </Stack>
         </CardContent>
         
