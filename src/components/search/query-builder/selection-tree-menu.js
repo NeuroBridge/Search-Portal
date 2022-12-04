@@ -25,6 +25,7 @@ export const SelectionTreeMenu = ({ children, sx }) => {
         <IconButton
           aria-describedby={ id }
           variant="contained"
+          color="secondary"
           onClick={ handleClickMenuButton }
           size="small"
           sx={{ my: 1 }}
@@ -44,6 +45,7 @@ export const SelectionTreeMenu = ({ children, sx }) => {
         <IconButton
           size="small"
           sx={{ position: 'absolute', top: 0, right: 0 }}
+          color="secondary"
           onClick={ handleClose }
         ><CloseIcon fontSize="small" /></IconButton>
         { children }

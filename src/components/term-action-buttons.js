@@ -47,13 +47,12 @@ export const TermActionButtons = ({ termId, stopEventPropagation, tooltipPlaceme
           selected={ basket.contains(termId) }
           onChange={ handleClickTermButton('basket') }
           size="small"
-          color={ basket.contains(termId) ? 'primary' : 'standard' }
           sx={{ transform: 'scale(0.75)', p: 0, border: 0 }}
         >
           {
             basket.contains(termId)
-              ? <CheckedTermIcon />
-              : <UncheckedTermIcon />
+              ? <CheckedTermIcon sx={{ color: 'primary.light' }} />
+              : <UncheckedTermIcon sx={{ color: 'primary.dark' }} />
           }
         </ToggleButton>
       </Tooltip>

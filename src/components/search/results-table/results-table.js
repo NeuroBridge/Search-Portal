@@ -40,6 +40,7 @@ export const ResultsTable = () => {
         <DataGrid
           sx={{
             '.MuiDataGrid-row': { cursor: 'pointer' },
+            borderColor: 'background.paper',
           }}
           autoHeight
           rows={ currentTableData }

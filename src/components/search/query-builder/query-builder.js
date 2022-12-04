@@ -1,9 +1,10 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import {
-  Box, Button, Card, CardContent, CardHeader, Collapse, Divider, IconButton,
-  FormControl, FormLabel, LinearProgress,
-  Stack, ToggleButton, ToggleButtonGroup,
+  Box, Button, Card, CardContent, CardHeader,
+  CircularProgress, Collapse, Divider, IconButton,
+  FormControl, FormLabel, Stack, ToggleButton, ToggleButtonGroup, useTheme,
 } from '@mui/material'
+import { LoadingButton } from '@mui/lab'
 import {
   Close as CloseIcon,
   DataObject as RawQueryIcon,
@@ -23,6 +24,7 @@ export const QueryBuilderContext = createContext({})
 export const useQueryBuilder = () => useContext(QueryBuilderContext)
 
 export const QueryBuilder = () => {
+  const theme = useTheme()
   const ontology = useOntology()
   const basket = useBasket()
   const [values, setValues] = useState({ })
@@ -142,12 +144,13 @@ export const QueryBuilder = () => {
   }
 
   return (
-    <Card sx={{ position: 'relative' }}>
+    <Card sx={{
+      position: 'relative',
+    }}>
       <QueryBuilderContext.Provider value={{ query, removeTerm, toggleTermSelection, values }}>
         <CardHeader
           title="Query Builder"
           subheader="Query terms are part of the NeuroBridge ontology which will be available on BioPortal soon."
-          sx={{ backgroundColor: '#f3f6f9' }}
         />
 
         <Divider />
@@ -162,7 +165,7 @@ export const QueryBuilder = () => {
             position: 'relative',
             '.query': {
               m: 0, p: 1, pl: 3,
-              backgroundColor: '#345',
+              backgroundColor: theme.palette.mode === 'light' ? theme.palette.grey[600] : theme.palette.grey[900],
               color: '#eef',
               fontSize: '90%',
             },
@@ -173,13 +176,10 @@ export const QueryBuilder = () => {
               sx={{
                 position: 'absolute',
                 right: 5, top: 5,
-                '&:hover': { '& svg': { filter: 'opacity(1.0)' } },
               }}
             ><CloseIcon fontSize="small" sx={{ color: '#fff', filter: 'opacity(0.75)' }} /></IconButton>
             <pre className="query">{ JSON.stringify(query, null, 2) }</pre>
         </Collapse>
-
-        <LinearProgress variant={ loading ? 'indeterminate' : 'determinate' } value={ 0 } />
 
         <CardContent sx={{
           padding: '0 !important',
@@ -193,13 +193,8 @@ export const QueryBuilder = () => {
             divider={ <Divider orientation="vertical" flexItem /> }
             justifyContent="stretch"
             sx={{
-              'div.MuiBox-root': {
-                flex: 1,
-                backgroundColor: '#f3f6f9',
-              },
-              '.MuiButton-root': {
-                borderRadius: 0,
-              }
+              'div.MuiBox-root': { flex: 1 },
+              '.MuiButton-root': { borderRadius: 0 }
             }}
           >
             {/* add term button renders here */}
@@ -209,8 +204,7 @@ export const QueryBuilder = () => {
             <Button
               onClick={ toggleShowRawQuery }
               startIcon={ <RawQueryIcon /> }
-              sx={{ backgroundColor: showRawQuery ? '#f6fafd' : '#fff' }}
-            >raw query</Button>
+            >{ `${ showRawQuery ? 'hide' : 'view' } query` }</Button>
 
             {/* options button renders here */}
             <ConfigMenu>
@@ -260,12 +254,16 @@ export const QueryBuilder = () => {
             <Box sx={{ minWidth: '1rem' }} />
 
             {/* search button */}
-            <Button
-              variant="contained"
+            <LoadingButton
+              variant={ basket.ids.length === 0 ? 'text' : 'contained' }
               disabled={ basket.ids.length === 0 }
               onClick={ () => fetchResults(query) }
               endIcon={ <SearchIcon /> }
-            >search</Button>
+              loading={ loading }
+              loadingIndicator={
+                <CircularProgress color="primary" size={16} />
+              }
+            >search</LoadingButton>
           </Stack>
         </CardContent>
         

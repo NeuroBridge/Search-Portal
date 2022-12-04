@@ -54,7 +54,7 @@ export const SelectionTree = ({ rootTermId }) => {
   // this function returns the apropriate icon to render,
   // based on the user's selection.
   const selectionIcon = useCallback(value => [
-    <TermNeutralIcon sx={{ color: '#ccc', }} key={ `icon-0` } />,
+    <TermNeutralIcon sx={{ color: theme.palette.grey[300], }} key={ `icon-0` } />,
     <TermSelectedIcon sx={{ color: theme.palette.primary.light, }} key={ `icon-1` } />,
     <TermUnselectedIcon sx={{ color: 'darkred' }} key={ `icon-2` } />,
   ][value], [])
@@ -67,8 +67,10 @@ export const SelectionTree = ({ rootTermId }) => {
         key={ node.id }
         nodeId={ node.id }
         sx={{
-          borderLeft: rootTermId === node.id ? 0 : '2px solid #eee',
-          '&:last-child': { borderBottomLeftRadius: '0.5rem' },
+          borderLeft: rootTermId === node.id
+            ? 0
+            : `2px solid ${ theme.palette.background.default }`,
+          '&:last-child': { borderBottomLeftRadius: '0.75rem' },
         }}
         label={
           <Box sx={{
@@ -120,9 +122,9 @@ export const SelectionTree = ({ rootTermId }) => {
           flex: 1,
           width: '100%',
           overflowY: 'auto',
-          border: `2px solid #eee`,
+          border: `2px solid ${ theme.palette.background.default }`,
         }}
-        defaultCollapseIcon={ <ExpandIcon /> }
+        defaultCollapseIcon={ <ExpandIcon color="secondary" /> }
         defaultExpandIcon={ <CollapseIcon /> }
         disabledItemsFocusable
         disableSelection

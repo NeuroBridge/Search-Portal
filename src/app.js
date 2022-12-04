@@ -1,8 +1,7 @@
-import { Fragment } from 'react'
 import { Route, Routes } from 'react-router-dom'
-import { Box } from '@mui/material'
+import { Paper, useTheme } from '@mui/material'
 import {
-  AboutView, ContactView, NotFoundView, SearchView,
+  AboutView, ContactView, NotFoundView, SearchView
 } from './views'
 import { Drawer } from './components/drawer'
 import { Header } from './components/layout'
@@ -19,26 +18,33 @@ const Router = () => {
 }
 
 export const App = () => {
+  const theme = useTheme()
+
   return (
-    <Fragment>
+    <Paper
+      className="app-container"
+      sx={{
+        backgroundColor: theme.palette.background.default,
+        'a': { color: theme.palette.primary.main }
+      }}
+    >
       <Header />
 
       <main>
         <Router />
       </main>
       
-      <footer>
-        <Box sx={{
+      <Paper
+        component="footer"
+        sx={{
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
           height: '5rem',
-        }}>
-          &copy; { new Date().getFullYear() }
-        </Box>
-      </footer>
+        }}
+      >&copy; { new Date().getFullYear() }</Paper>
 
       <Drawer />
-    </Fragment>
+    </Paper>
   )
 }

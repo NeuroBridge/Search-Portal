@@ -3,6 +3,7 @@ import "regenerator-runtime/runtime"
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import { App } from './app'
+import { AppContextProvider } from './context'
 import { BasketProvider } from './components/basket'
 import { DrawerProvider } from './components/drawer'
 import { OntologyProvider } from './components/ontology'
@@ -11,15 +12,17 @@ import './styles/index.scss'
 
 const ProvisionedApp = () => {
   return (
-    <BrowserRouter>
-      <OntologyProvider owlFile={ owlFile }>
-        <BasketProvider>
-          <DrawerProvider>
-            <App />
-          </DrawerProvider>
-        </BasketProvider>
-      </OntologyProvider>
-    </BrowserRouter>
+    <AppContextProvider>
+      <BrowserRouter>
+        <OntologyProvider owlFile={ owlFile }>
+          <BasketProvider>
+            <DrawerProvider>
+              <App />
+            </DrawerProvider>
+          </BasketProvider>
+        </OntologyProvider>
+      </BrowserRouter>
+    </AppContextProvider>
   )
 }
 

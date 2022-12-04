@@ -1,7 +1,7 @@
 import { Fragment } from 'react'
 import PropTypes from 'prop-types'
+import { Box, Button, useTheme } from '@mui/material'
 import { TreeView, TreeItem } from '@mui/lab'
-import { Box, Button } from '@mui/material'
 import {
   ChevronRight as CollapseIcon,
   ExpandMore as ExpandIcon,
@@ -11,6 +11,7 @@ import { arrayToTree } from 'performant-array-to-tree'
 import { useDrawer } from './drawer'
 
 export const TreeList = ({ rootTerm }) => {
+  const theme = useTheme()
   const renderTree = node => {
     const drawer = useDrawer()
 
@@ -19,8 +20,8 @@ export const TreeList = ({ rootTerm }) => {
         key={ node.id }
         nodeId={ node.id }
         sx={{
-          borderLeft: rootTerm.id === node.id ? 0 : '2px solid #eee',
-          '&:last-child': { borderBottomLeftRadius: '0.5rem' },
+          borderLeft: rootTerm.id === node.id ? 0 : `2px solid ${ theme.palette.background.default }`,
+          '&:last-child': { borderBottomLeftRadius: '0.75rem' },
         }}
         label={
           <Box sx={{
@@ -76,10 +77,10 @@ export const TreeList = ({ rootTerm }) => {
         disableSelection
         sx={{
           my: 1,
-          flexGrow: 1,
+          flex: 1,
           width: '100%',
           overflowY: 'auto',
-          border: `2px solid #eee`,
+          border: `2px solid ${ theme.palette.background.default }`,
         }}
       >{ renderTree(tree) }</TreeView>
     </Fragment>

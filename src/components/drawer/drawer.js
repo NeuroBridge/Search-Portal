@@ -1,12 +1,15 @@
 import { Fragment, useCallback, useState } from 'react'
 import {
   Box, Breadcrumbs as MuiBreadcrumbs, Button, Divider, Drawer as MuiDrawer,
-  IconButton, Fade, List, ListItem, ListItemText, Stack, Tooltip, Typography, useTheme,
+  IconButton, Fade, List, Stack, Tooltip, Typography, useTheme,
 } from '@mui/material'
 import {
   NavigateNext as BreadcrumbSeparatorIcon,
   Home as HomeIcon,
   Close as CloseIcon,
+  ArrowUpward as ParentNavIcon,
+  ArrowDownward as ChildrenNavIcon,
+  LocationOn as CurrentNavIcon,
 } from '@mui/icons-material'
 import { useDrawer } from './context'
 import { useOntology } from '../ontology'
@@ -61,26 +64,29 @@ export const Drawer = () => {
       ]
     }
     return (
-      <Stack direction="row" sx={{ borderBottom: `1px solid ${ theme.palette.grey[400] }` }}>
+      <Stack
+        direction="row"
+        sx={{
+          borderColor: `background.default`,
+          backgroundColor: 'background.paper',
+          '& svg': { color: 'text.primary' },
+          '& .MuiButtonBase-root': { color: 'text.primary' },
+          '& .MuiBreadcrumbs-separator': { mx: 0 }
+        }}
+      >
         <MuiBreadcrumbs
-          separator={ <BreadcrumbSeparatorIcon fontSize="small" /> }
-          sx={{
-            flex: 1,
-            px: 1,
-            fontSize: '90%',
-            backgroundColor: '#d6d9dc',
-            '& .MuiBreadcrumbs-separator': { mx: 0 }
-          }}
+          separator={ <BreadcrumbSeparatorIcon /> }
+          sx={{ flex: 1, px: 1, fontSize: '90%' }}
         >
           <IconButton
-            sx={{ fontSize: '90%', borderRadius: 0 }}
+            sx={{ borderRadius: 0 }}
             key={ `breadcrumb-root` }
             size="small"
             variant="text"
             onClick={ () => drawer.setTermId() }
             disabled={ !drawer.currentTerm }
             color="primary"
-          ><HomeIcon fontSize="small" /></IconButton>
+          ><HomeIcon /></IconButton>
           {
             path.map((id, index) => id === 'PLACEHOLDER' ? (
               <Typography key={ `breadcrumb-${ index }-ellipsis }` }>...</Typography>
@@ -100,13 +106,7 @@ export const Drawer = () => {
           <IconButton
             size="small"
             onClick={ drawer.close }
-            sx={{
-              position: 'absolute',
-              top: 0,
-              right: 0,
-              borderRadius: 0,
-              borderLeft: `1px solid ${ theme.palette.grey[400] }`,
-            }}
+            sx={{ position: 'absolute', top: 0, right: 0, borderRadius: 0 }}
           >
           <CloseIcon fontSize="small" /></IconButton>
         </Tooltip>
@@ -120,29 +120,15 @@ export const Drawer = () => {
         <Stack
           direction="column"
           sx={{
-            mt: 1,
-            '& .list-title': { textTransform: 'uppercase' },
-            '& .labels-list': {
-              flex: 1,
-              '& .MuiListItem-root': {
-                p: 0,
-                whiteSpace: 'nowrap',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-              }
-            }
+            mt: 1, ml: 3,
+            fontSize: '90%',
+            fontStyle: 'italic',
+            color: 'primary.light',
           }}
         >
-          <Typography variant="caption" className="list-title">Labels</Typography>
-          <List dense disablePadding className="labels-list">
-            {
-              drawer.currentTerm.labels.map(label => (
-                <ListItem key={ `${ drawer.currentTerm.id }-label-${ label }` }>
-                  <ListItemText sx={{ fontStyle: 'italic' }}>&bull;&nbsp;{ label }</ListItemText>
-                </ListItem>
-              ))
-            }
-          </List>
+          <Typography>
+            Labels: { drawer.currentTerm.labels.join('; ')}
+          </Typography>
         </Stack>
       </Fade>
     )
@@ -151,15 +137,11 @@ export const Drawer = () => {
   const Parent = useCallback(() => {
     return (
       <Fade in={ true } style={{ transitionDelay: '100ms' }}>
-        <Box sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          gap: 1,
-          p: 1,
-        }}>
-          <Typography variant="h6">Parent:</Typography>
+        <Stack component={ Box } direction="row" gap={ 1 } alignItems="center" sx={{ p: 1 }}>
+          <ParentNavIcon fontSize="small" color="primary" sx={{ transform: 'translateY(-3px)' }}/>
+          <Typography variant="h6" color="primary">Parent:</Typography>
           <Button
-            variant="text"
+            variant="outlined"
             onClick={ drawer.currentTerm.parentId
               ? () => drawer.setTermId(drawer.currentTerm.parentId)
               : () => drawer.setTermId(null)
@@ -175,7 +157,7 @@ export const Drawer = () => {
               />
             )
           }
-        </Box>
+        </Stack>
       </Fade>
     )
   }, [drawer.currentTerm])
@@ -184,7 +166,10 @@ export const Drawer = () => {
     return (
       <Fade in={ true } style={{ transitionDelay: '150ms' }}>
         <Box>
-          <Typography variant="h6">Children:</Typography>
+          <Stack direction="row" gap={ 1 }>
+            <ChildrenNavIcon fontSize="small" color="primary" sx={{ transform: 'translateY(1px)' }}/>
+            <Typography variant="h6" color="primary">Children:</Typography>
+          </Stack>
 
           <List dense disablePadding sx={{ '.MuiListItem-root': { p: 0 } }}>
             {
@@ -212,15 +197,13 @@ export const Drawer = () => {
       anchor="right"
       open={ drawer.isOpen }
       onClose={ drawer.close }
-      PaperProps={{ style: { width: drawerWidth } }}
-      ModalProps={{
-        keepMounted: true,
-      }}
+      PaperProps={{ sx: { width: drawerWidth } }}
+      ModalProps={{ keepMounted: true }}
       sx={{
         '.MuiDrawer-paper': {
-          '& > .MuiBox-root': { px: 3, py: 2 },
+          '& > .MuiBox-root': { px: 3, py: 2, backgroundColor: 'inherit', },
           '& .handle': {
-            backgroundColor: '#789',
+            backgroundColor: theme.palette.primary.dark,
             position: 'absolute',
             top: 0,
             left: 0,
@@ -247,15 +230,14 @@ export const Drawer = () => {
           <Fragment>
             <Breadcrumbs />
 
-            <Parent />
-
             <Divider />
+
+            <Parent />
 
             <Divider />
 
             <Box sx={{
               width: '100%',
-              backgroundColor: '#e6e9ec',
               display: 'flex',
               alignItems: 'flex-start',
               position: 'sticky',
@@ -263,9 +245,12 @@ export const Drawer = () => {
               zIndex: 9,
             }}>
               <Box sx={{ flex: 1 }}>
-                <Typography variant="h5" sx={{ margin: 0 }}>
-                  Current Concept: { drawer.currentTerm.id }
-                </Typography>
+                <Stack direction="row" gap={ 1 }>
+                  <CurrentNavIcon fontSize="small" color="primary" sx={{ transform: 'translateY(1px)' }}/>
+                  <Typography variant="h5" color="primary" sx={{ margin: 0 }}>
+                    Current Concept: { drawer.currentTerm.id }
+                  </Typography>
+                </Stack>
                 <LabelsList />
               </Box>
               <Box sx={{ p: 1 }}>
@@ -292,7 +277,7 @@ export const Drawer = () => {
             
             <Box sx={{
               width: '100%',
-              backgroundColor: '#e6e9ec',
+              backgroundColor: theme.palette.background.paper,
               display: 'flex',
               alignItems: 'flex-start',
               position: 'sticky',
@@ -306,22 +291,20 @@ export const Drawer = () => {
 
             <Divider />
 
-            <Box>
-              <Stack>
-                {
-                  ontology.trees
-                    .sort((t, s) => t.data.id.toLowerCase() < s.data.id.toLowerCase() ? -1 : 1)
-                    .map(root => <TreeList
-                      key={ `root-${ root.data.id }` }
-                      rootTerm={{
-                        ...ontology.find(root.data.id),
-                        children: ontology.childrenOf(root.data.id),
-                        descendants: ontology.descendantsOf(root.data.id),
-                      }}
-                    />)
-                }
-              </Stack>
-            </Box>
+            <Stack>
+              {
+                ontology.trees
+                  .sort((t, s) => t.data.id.toLowerCase() < s.data.id.toLowerCase() ? -1 : 1)
+                  .map(root => <TreeList
+                    key={ `root-${ root.data.id }` }
+                    rootTerm={{
+                      ...ontology.find(root.data.id),
+                      children: ontology.childrenOf(root.data.id),
+                      descendants: ontology.descendantsOf(root.data.id),
+                    }}
+                  />)
+              }
+            </Stack>
 
             <Divider />
 

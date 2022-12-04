@@ -84,6 +84,7 @@ export const SearchProvider = ({ children }) => {
     }, [basket.ids])
 
   const fetchResults = useCallback(async query => {
+    clearResults()
     setLastRequestTime(Date.now())
     setLoading(true)
     Promise.all([
