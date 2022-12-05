@@ -7,7 +7,7 @@ import {
 } from '@mui/icons-material'
 import { useOntology } from '../components/ontology'
 
-const MediaPlaceholder = ({ width = 480, height = 360, sx }) => {
+const MediaPlaceholder = ({ width, height, sx }) => {
   return (
     <Skeleton
       variant="rectangular" height={ height } width={ width }
@@ -20,6 +20,11 @@ MediaPlaceholder.propTypes = {
   height: PropTypes.number.isRequired,
   width: PropTypes.number.isRequired,
   sx: PropTypes.object,
+}
+
+MediaPlaceholder.defaultProps = {
+  height: 480,
+  width: 360,
 }
 
 //
