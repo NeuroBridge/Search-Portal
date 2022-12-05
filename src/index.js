@@ -8,7 +8,7 @@ import { BasketProvider } from './components/basket'
 import { DrawerProvider } from './components/drawer'
 import { OntologyProvider } from './components/ontology'
 import owlFile from './data/ontology.owl'
-import './styles/index.scss'
+import './styles/index.css'
 
 const ProvisionedApp = () => {
   return (
