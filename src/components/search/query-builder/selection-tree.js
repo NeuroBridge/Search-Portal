@@ -54,9 +54,9 @@ export const SelectionTree = ({ rootTermId }) => {
   // this function returns the apropriate icon to render,
   // based on the user's selection.
   const selectionIcon = useCallback(value => [
-    <TermNeutralIcon sx={{ color: theme.palette.grey[300], }} key={ `icon-0` } />,
-    <TermSelectedIcon sx={{ color: theme.palette.primary.light, }} key={ `icon-1` } />,
-    <TermUnselectedIcon sx={{ color: 'darkred' }} key={ `icon-2` } />,
+    <TermNeutralIcon sx={{ color: 'concept.neutral', }} key={ `icon-0` } />,
+    <TermSelectedIcon sx={{ color: 'concept.positive', }} key={ `icon-1` } />,
+    <TermUnselectedIcon sx={{ color: 'concept.negative' }} key={ `icon-2` } />,
   ][value], [])
 
   // this recursive function handles rendering the nesting of tree list items
