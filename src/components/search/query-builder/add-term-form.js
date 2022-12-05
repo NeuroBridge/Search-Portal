@@ -195,9 +195,6 @@ export const AddTermForm = () => {
     <Stack
       direction="row"
       justifyContent="center"
-      sx={{ '.add-term-button': {
-        '.label': { pt: '4px', margin: 'auto', }
-      } }}
     >
       <Button
         startIcon={ <AddIcon /> }

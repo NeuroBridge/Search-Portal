@@ -193,6 +193,9 @@ export const QueryBuilder = () => {
           '.MuiButton-root': {
             p: 4,
             boxShadow: 'none',
+            '& svg': {
+              transform: 'translateY(-3px)',
+            },
           },
         }}>
           <Stack
