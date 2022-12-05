@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import { Container, Skeleton, Stack, Typography, useTheme } from '@mui/material'
+import { Container, Skeleton, Stack, Typography } from '@mui/material'
 import {
   AddCircle as TermSelectedIcon,
   RemoveCircle as TermUnselectedIcon,
@@ -30,7 +30,6 @@ MediaPlaceholder.defaultProps = {
 //
 
 export const AboutView = () => {
-  const theme = useTheme()
   const ontology = useOntology()
 
   return (
@@ -82,21 +81,18 @@ export const AboutView = () => {
       <Typography paragraph sx={{
         '& .MuiSvgIcon-root': {
           transform: 'translateY(4px)',
-          '&.selected-icon': { color: theme.palette.primary.light },
-          '&.unselected-icon': { color: 'darkred' },
-          '&.neutral-icon': { color: theme.palette.grey[400] },
         },
       }}>
         Each concept in the query builder can have one of three states, and
         clicking a term toggles between the possible states and an icon
         indicates the concept&apos;s present state.
-        The plus <TermSelectedIcon fontSize="small" className="selected-icon" /> icon
+        The plus <TermSelectedIcon fontSize="small" sx={{ color: 'concept.positive' }} /> icon
         indicates that a term is present in the query.
-        The minus <TermUnselectedIcon fontSize="small" className="unselected-icon" /> icon
+        The minus <TermUnselectedIcon fontSize="small" sx={{ color: 'concept.negative' }} /> icon
         indicates that a term is present, but negated, in the query.
         (<em>i.e.</em>, <code>NOT Schizophrenia</code>).
         A term is left out of the query completely when it shows
-        the neutral <TermNeutralIcon fontSize="small" className="neutral-icon" /> icon.
+        the neutral <TermNeutralIcon fontSize="small" sx={{ color: 'concept.neutral' }} /> icon.
       </Typography>
 
       <Typography paragraph>

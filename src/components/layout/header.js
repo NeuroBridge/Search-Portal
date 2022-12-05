@@ -68,10 +68,10 @@ export const Header = () => {
       borderBottom: '3px solid transparent',
       transition: 'border-color 250ms, background-color 250ms',
       '&:hover': {
-        borderBottom: `3px solid ${ theme.palette.grey[300] }`,
+        borderBottom: `3px solid ${ theme.palette.primary.dark }`,
       },
       '&[aria-current="page"]': {
-        borderBottom: `3px solid ${ theme.palette.primary.main }`,
+        borderBottom: `3px solid ${ theme.palette.primary.light }`,
       }
     }
   }

@@ -41,6 +41,11 @@ export const lightTheme = {
     success: {
       main: '#00bfa5',
     },
+    concept: {
+      positive: '#4cc121',
+      negative: '#cb5f5f',
+      neutral: '#d2c8a1',
+    },
     background: {
       default: '#e7efdd',
       paper: '#f7ffed',
@@ -71,6 +76,11 @@ export const darkTheme = {
     },
     success: {
       main: '#00bfa5',
+    },
+    concept: {
+      positive: '#079a3a',
+      negative: '#9b2149',
+      neutral: '#585f7b',
     },
     background: {
       default: '#272f3d',

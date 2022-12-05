@@ -8,7 +8,7 @@ export const ContactView = () => {
   return (
     <Container maxWidth="md">
       <Typography variant="h4" component="h1" align="center">
-        Contact NeuroBridge
+        Contact
       </Typography>
 
       <Typography paragraph sx={{ my: 4 }}>
