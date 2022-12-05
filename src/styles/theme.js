@@ -44,7 +44,7 @@ export const lightTheme = {
     concept: {
       positive: '#4cc121',
       negative: '#cb5f5f',
-      neutral: '#d2c8a1',
+      neutral: '#dfddd6',
     },
     background: {
       default: '#e7efdd',
