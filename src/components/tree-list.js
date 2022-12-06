@@ -1,4 +1,3 @@
-import { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Box, Button, useTheme } from '@mui/material'
 import { TreeView, TreeItem } from '@mui/lab'
@@ -20,7 +19,7 @@ export const TreeList = ({ rootTerm }) => {
         key={ node.id }
         nodeId={ node.id }
         sx={{
-          borderLeft: rootTerm.id === node.id ? 0 : `2px solid ${ theme.palette.background.default }`,
+          borderLeft: rootTerm.id === node.id ? 0 : `2px solid ${ theme.palette.background.paper }`,
           '&:last-child': { borderBottomLeftRadius: '0.75rem' },
         }}
         label={
@@ -69,21 +68,19 @@ export const TreeList = ({ rootTerm }) => {
   const tree = reduceTree(arrayToTree(descendants)[0])
 
   return (
-    <Fragment>
-      <TreeView
-        defaultCollapseIcon={ <ExpandIcon /> }
-        defaultExpandIcon={ <CollapseIcon /> }
-        disabledItemsFocusable
-        disableSelection
-        sx={{
-          my: 1,
-          flexGrow: 1,
-          width: '100%',
-          overflowY: 'auto',
-          border: `2px solid ${ theme.palette.background.default }`,
-        }}
-      >{ renderTree(tree) }</TreeView>
-    </Fragment>
+    <TreeView
+      defaultCollapseIcon={ <ExpandIcon /> }
+      defaultExpandIcon={ <CollapseIcon /> }
+      disabledItemsFocusable
+      disableSelection
+      sx={{
+        my: 1,
+        flexGrow: 1,
+        width: '100%',
+        overflowY: 'auto',
+        border: `2px solid ${ theme.palette.background.default }`,
+      }}
+    >{ renderTree(tree) }</TreeView>
   )
 }
 
