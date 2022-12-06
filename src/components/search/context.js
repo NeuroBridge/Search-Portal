@@ -27,6 +27,16 @@ export const SearchProvider = ({ children }) => {
   })
   const [lastRequestTime, setLastRequestTime] = useState(null)
   const [loading, setLoading] = useState(false)
+  /*
+    the term `search` is overloaded in the code base.
+    there are really _two_ searches:
+    - one searches the ontology for terms
+    - the other hits the nb api, searching for publications.
+    this context provider was started to encompass the latter. however, the
+    fact that these `searchHistory`-related variables ended up here indicates
+    that there is some confusion and we could stand to benefit from drawing
+    some hard lines to keep these two notions separate.
+  */
   const [searchHistory, setSearchHistory] = useLocalStorage('nb-search-history', {})
   
   const addToSearchHistory = id => {
@@ -38,6 +48,7 @@ export const SearchProvider = ({ children }) => {
   const resetSearchHistory = () => {
     setSearchHistory({})
   }
+  
   const nqQuerystring = useMemo(() => {
     return basket.ids
       .map(item => ontology.find(item).labels[0])
