@@ -68,7 +68,7 @@ export const Drawer = () => {
         direction="row"
         sx={{
           borderColor: `background.default`,
-          backgroundColor: 'background.paper',
+          backgroundColor: 'background.default',
           '& svg': { color: 'text.primary' },
           '& .MuiButtonBase-root': { color: 'text.primary' },
           '& .MuiBreadcrumbs-separator': { mx: 0 }
@@ -201,7 +201,9 @@ export const Drawer = () => {
       ModalProps={{ keepMounted: true }}
       sx={{
         '.MuiDrawer-paper': {
-          '& > .MuiBox-root': { px: 3, py: 2, backgroundColor: 'inherit', },
+          '& > .MuiBox-root': { px: 3, py: 2,
+          backgroundColor: 'background.paper',
+        },
           '& .handle': {
             backgroundColor: theme.palette.primary.dark,
             position: 'absolute',
@@ -276,8 +278,6 @@ export const Drawer = () => {
             <Divider />
             
             <Box sx={{
-              width: '100%',
-              backgroundColor: theme.palette.background.paper,
               display: 'flex',
               alignItems: 'flex-start',
               position: 'sticky',
@@ -291,7 +291,7 @@ export const Drawer = () => {
 
             <Divider />
 
-            <Stack>
+            <Stack sx={{ backgroundColor: 'background.paper' }}>
               {
                 ontology.trees
                   .sort((t, s) => t.data.id.toLowerCase() < s.data.id.toLowerCase() ? -1 : 1)
@@ -311,6 +311,7 @@ export const Drawer = () => {
           </Fragment>
         )
       }
+      <Box sx={{ flex: 1 }} />
     </MuiDrawer>
   )
 }

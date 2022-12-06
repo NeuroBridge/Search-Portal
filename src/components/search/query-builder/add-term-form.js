@@ -1,20 +1,23 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import {
   Box, Button, Dialog, DialogActions, DialogContent, DialogTitle,
   Divider, IconButton, InputAdornment, 
-  ListItem, ListItemButton, ListItemText, Stack, TextField,
+  ListItem, ListItemButton, ListItemText, Stack, TextField, Typography, useTheme,
 } from '@mui/material'
 import {
   Add as AddIcon,
   Backspace as ClearIcon,
   OpenInBrowser as InspectTermIcon,
+  AccessTime as HistoryIcon,
 } from '@mui/icons-material'
 import { useBasket } from '../../basket'
 import { useDrawer } from '../../drawer'
 import { useOntology } from '../../ontology'
+import { useSearch } from '../context'
 import elasticlunr from 'elasticlunr'
 import { FixedSizeList } from 'react-window'
+import TimeAgo from 'react-timeago'
 
 //
 
@@ -27,11 +30,13 @@ let index = elasticlunr(function () {
 //
 
 const ConceptSelectDialog = ({ open, closeHandler, cancelHandler, ...rest }) => {
+  const theme = useTheme()
   const drawer = useDrawer()
   const ontology = useOntology()
   const [searchText, setSearchText] = useState('')
   const [filteredTerms, setFilteredTerms] = useState(ontology.terms)
   const queryField = useRef(null)
+  const { addToSearchHistory, resetSearchHistory, searchHistory } = useSearch()
 
   useEffect(() => {
     if (ontology.terms.length === 0) {
@@ -72,6 +77,7 @@ const ConceptSelectDialog = ({ open, closeHandler, cancelHandler, ...rest }) => 
 
   const handleClickSelectTerm = id => () => {
     closeHandler(id)
+    addToSearchHistory(id)
   }
 
   const handleClickInspectTerm = id => () => {
@@ -123,22 +129,14 @@ const ConceptSelectDialog = ({ open, closeHandler, cancelHandler, ...rest }) => 
             <ListItem
               key={ `option-${ index }` }
               disablePadding
-              sx={{
-                ...style,
-                '& svg': {
-                  transform: 'rotate(90deg)',
-                  filter: 'opacity(0.25)',
-                },
-                '&:hover svg': {
-                  filter: 'opacity(1.0)',
-                },
-              }}
+              sx={{ ...style }}
               secondaryAction={
                 <IconButton
                   edge="end"
                   aria-label="view ontology context"
                   onClick={ handleClickInspectTerm(filteredTerms[index].id) }
-                ><InspectTermIcon /></IconButton>
+                  sx={{ '& svg': { transform: 'rotate(90deg)' } }}
+                ><InspectTermIcon color="disabled" /></IconButton>
               }
             >
               <ListItemButton onClick={ handleClickSelectTerm(filteredTerms[index].id) }>
@@ -152,6 +150,19 @@ const ConceptSelectDialog = ({ open, closeHandler, cancelHandler, ...rest }) => 
                     textOverflow: 'ellipsis',
                   } }}
                 />
+                {
+                  filteredTerms[index].id in searchHistory && (
+                    <Fragment>
+                      <Typography
+                        component={ TimeAgo }
+                        date={ searchHistory[filteredTerms[index].id] }
+                        variant="caption"
+                        sx={{ color: theme.palette.grey[500], pt: '4px', pr: 1 }}
+                      />
+                      <HistoryIcon color="disabled" fontSize="small" />
+                    </Fragment>
+                  )
+                }
               </ListItemButton>
             </ListItem>
           )
@@ -160,7 +171,13 @@ const ConceptSelectDialog = ({ open, closeHandler, cancelHandler, ...rest }) => 
       
       <Divider />
       
-      <DialogActions>
+      <DialogActions sx={{
+        display: 'flex', justifyContent: 'space-between'
+      }}>
+        <Button
+          onClick={ resetSearchHistory }
+          variant="outlined"
+        >Clear search history</Button>
         <Button
           autoFocus
           onClick={ cancelHandler }
@@ -195,9 +212,6 @@ export const AddTermForm = () => {
     <Stack
       direction="row"
       justifyContent="center"
-      sx={{ '.add-term-button': {
-        '.label': { pt: '4px', margin: 'auto', }
-      } }}
     >
       <Button
         startIcon={ <AddIcon /> }

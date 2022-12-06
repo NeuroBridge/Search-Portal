@@ -2,7 +2,8 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState } 
 import {
   Box, Button, Card, CardContent, CardHeader,
   CircularProgress, Collapse, Divider, IconButton,
-  FormControl, FormLabel, Stack, ToggleButton, ToggleButtonGroup, useTheme,
+  FormControl, FormLabel, Stack, ToggleButton, ToggleButtonGroup,
+  Typography, useTheme,
 } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 import {
@@ -17,6 +18,7 @@ import { useSearch } from '../context'
 import { SelectionForest } from './selection-forest'
 import { AddTermForm } from './add-term-form'
 import { ConfigMenu } from './config-menu'
+import { Link } from '../../link'
 
 //
 
@@ -150,7 +152,12 @@ export const QueryBuilder = () => {
       <QueryBuilderContext.Provider value={{ query, removeTerm, toggleTermSelection, values }}>
         <CardHeader
           title="Query Builder"
-          subheader="Query terms are part of the NeuroBridge ontology which will be available on BioPortal soon."
+          subheader={
+            <Typography variant="body1">
+              Query terms are part of the NeuroBridge ontology, which will be available
+              on <Link to="https://bioportal.bioontology.org/">BioPortal</Link> soon.
+            </Typography>
+          }
         />
 
         <Divider />
@@ -186,6 +193,9 @@ export const QueryBuilder = () => {
           '.MuiButton-root': {
             p: 4,
             boxShadow: 'none',
+            '& svg': {
+              transform: 'translateY(-3px)',
+            },
           },
         }}>
           <Stack
