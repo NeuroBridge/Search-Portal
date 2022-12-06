@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import axios from 'axios'
 import { useBasket } from '../basket'
 import { useOntology } from '../ontology'
+import { useLocalStorage } from '../../hooks'
 
 //
 
@@ -26,7 +27,17 @@ export const SearchProvider = ({ children }) => {
   })
   const [lastRequestTime, setLastRequestTime] = useState(null)
   const [loading, setLoading] = useState(false)
+  const [searchHistory, setSearchHistory] = useLocalStorage('nb-search-history', {})
   
+  const addToSearchHistory = id => {
+    let newSearchHistory = { ...searchHistory }
+    newSearchHistory[id] = Date.now()
+    setSearchHistory({ ...newSearchHistory })
+  }
+
+  const resetSearchHistory = () => {
+    setSearchHistory({})
+  }
   const nqQuerystring = useMemo(() => {
     return basket.ids
       .map(item => ontology.find(item).labels[0])
@@ -117,6 +128,7 @@ export const SearchProvider = ({ children }) => {
       loading,
       nqQuerystring,
       results,
+      searchHistory, addToSearchHistory, resetSearchHistory,
       totalResultCount,
     }}>
       { children }
