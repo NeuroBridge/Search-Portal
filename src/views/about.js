@@ -23,8 +23,8 @@ MediaPlaceholder.propTypes = {
 }
 
 MediaPlaceholder.defaultProps = {
-  height: 480,
-  width: 360,
+  height: 360,
+  width: 480,
 }
 
 //
