@@ -5,9 +5,9 @@ import {
   ChevronRight as CollapseIcon,
   ExpandMore as ExpandIcon,
 } from '@mui/icons-material'
-import { TermActionButtons } from './term-action-buttons'
 import { arrayToTree } from 'performant-array-to-tree'
-import { useDrawer } from './drawer'
+import { TermActionButtons } from '../term-action-buttons'
+import { useDrawer } from '../drawer'
 
 export const TreeList = ({ rootTerm }) => {
   const theme = useTheme()
