@@ -114,7 +114,9 @@ export const SelectionTree = ({ rootTermId }) => {
       direction="row"
       alignItems="flex-start"
       gap={ 1 }
-      sx={{ width: '100%' }}
+      sx={{
+        width: '100%',
+      }}
     >
       <TreeView
         sx={{
@@ -122,6 +124,7 @@ export const SelectionTree = ({ rootTermId }) => {
           width: '100%',
           overflowY: 'auto',
           border: `2px solid ${ theme.palette.background.default }`,
+          borderBottomLeftRadius: '0.75rem',
         }}
         defaultCollapseIcon={ <ExpandIcon color="secondary" /> }
         defaultExpandIcon={ <CollapseIcon /> }
