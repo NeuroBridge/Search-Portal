@@ -35,8 +35,8 @@ export const SelectionForest = ({ roots }) => {
                 filter: 'opacity(0.8)',
                 backgroundSize: '100%',
                 position: 'absolute',
-                bottom: '-25px',
-                left: '45px',
+                bottom: '-20px',
+                left: '40px',
               }}
               />
             </Box>
