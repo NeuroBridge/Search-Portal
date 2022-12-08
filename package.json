@@ -5,9 +5,10 @@
     "watch": "webpack --watch",
     "build": "NODE_ENV=production webpack",
     "build-dev": "webpack",
+    "clean": "rm -rf dist",
     "lint": "eslint ./src/index.js ./src/components/**/*.js",
     "lint:fix": "eslint --fix ./src/index.js ./src/components/**/*.js",
-    "clean": "rm -rf dist"
+    "owl-update": "node owl-update-script.js"
   },
   "devDependencies": {
     "@babel/core": "^7.14.6",
