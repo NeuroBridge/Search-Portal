@@ -2,14 +2,13 @@ import { useCallback } from 'react'
 import PropTypes from 'prop-types'
 import {
   Box, Checkbox, FormControlLabel,
-  MenuList, MenuItem, ListItemIcon, ListItemText,
   Stack, useTheme,
 } from '@mui/material'
 import { TreeItem, TreeView } from '@mui/lab'
 import {
   ChevronRight as CollapseIcon,
   ExpandMore as ExpandIcon,
-  OpenInBrowser as InspectTermIcon,
+  ArrowDropDownCircle as InspectTermIcon,
   Delete as RemoveTermIcon,
   AddCircle as TermSelectedIcon,
   RemoveCircle as TermUnselectedIcon,
@@ -102,8 +101,8 @@ export const SelectionTree = ({ rootTermId }) => {
     )
   })
 
-  const handleClickRemoveTerm = id => () => {
-    removeTerm(id)
+  const handleClickRemoveTerm = () => {
+    removeTerm(rootTermId)
   }
 
   const handleClickInspectTerm = () => {
@@ -131,18 +130,20 @@ export const SelectionTree = ({ rootTermId }) => {
       >
         { renderSelectionTree(tree) }
       </TreeView>
-      <SelectionTreeMenu>
-        <MenuList>
-          <MenuItem onClick={ handleClickRemoveTerm(rootTermId) }>
-            <ListItemIcon><RemoveTermIcon fontSize="small" color="warning" /></ListItemIcon>
-            <ListItemText>Remove</ListItemText>
-          </MenuItem>
-          <MenuItem onClick={ handleClickInspectTerm }>
-            <ListItemIcon><InspectTermIcon fontSize="small" color="primary" sx={{ transform: 'rotate(90deg)' }} /></ListItemIcon>
-            <ListItemText>View Ontology Context</ListItemText>
-          </MenuItem>
-        </MenuList>
-      </SelectionTreeMenu>
+      <SelectionTreeMenu items={[
+        {
+          key: 'remove',
+          icon: <RemoveTermIcon color="warning" />,
+          action: handleClickRemoveTerm,
+          tooltip: 'Remove Term',
+        },
+        {
+          key: 'inspect',
+          icon: <InspectTermIcon color="info" sx={{ transform: 'rotate(-90deg)' }}/> ,
+          action: handleClickInspectTerm,
+          tooltip: 'View Ontology Context',
+        },
+      ]} />
     </Stack>
   )
 }

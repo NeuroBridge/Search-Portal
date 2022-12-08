@@ -3,7 +3,7 @@ import { Box, IconButton, ToggleButton, Tooltip } from '@mui/material'
 import {
   CheckBox as CheckedTermIcon,
   CheckBoxOutlineBlank as UncheckedTermIcon,
-  OpenInBrowser as ViewTermIcon,
+  ArrowDropDownCircle as ViewTermIcon,
 } from '@mui/icons-material'
 import { useBasket } from './basket'
 import { useDrawer } from './drawer'
@@ -60,7 +60,7 @@ export const TermActionButtons = ({ termId, stopEventPropagation, tooltipPlaceme
         !hideDrawerButton && (
           <Tooltip title="View term details" placement={ tooltipPlacement }>
             <IconButton color="default" size="small" onClick={ handleClickTermButton('drawer') }>
-              <ViewTermIcon fontSize="small" sx={{ transform: 'scale(-1, 1) rotate(90deg)' }} />
+              <ViewTermIcon fontSize="small" sx={{ transform: 'scale(-1, 1)' }} />
             </IconButton>
           </Tooltip>
         )

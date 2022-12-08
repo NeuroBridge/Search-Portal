@@ -12,9 +12,8 @@ import {
   LocationOn as CurrentNavIcon,
 } from '@mui/icons-material'
 import { useDrawer } from './context'
-import { useOntology } from '../ontology'
+import { TreeList, useOntology } from '../ontology'
 import { TermActionButtons } from '../term-action-buttons'
-import { TreeList } from '../tree-list'
 
 //
 

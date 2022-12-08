@@ -7,11 +7,11 @@ import {
 import {
   LightMode as DarkModeIcon,
   DarkMode as LightModeIcon,
+  ArrowDropDownCircle as DrawerIcon
 } from '@mui/icons-material'
 import { Link } from '../link'
 import { useMatch, useResolvedPath } from 'react-router-dom'
 import { useDrawer } from '../drawer'
-import { OpenInBrowser as DrawerIcon } from '@mui/icons-material'
 import { useAppContext } from '../../context'
 
 const HideOnScroll = ({ children }) => {
@@ -117,7 +117,7 @@ export const Header = () => {
               </Tooltip>
               <Tooltip title="Open Ontology Browser" placement="bottom">
                 <IconButton onClick={ () => drawer.open() } color="primary">
-                  <DrawerIcon sx={{ transform: 'rotate(90deg)' }} />
+                  <DrawerIcon sx={{ transform: 'rotate(-90deg)' }} />
                 </IconButton>
               </Tooltip>
             </Container>
