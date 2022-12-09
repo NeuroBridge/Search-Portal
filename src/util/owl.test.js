@@ -17,9 +17,22 @@ test('term extraction from owl file works', () => {
     const terms = extractTerms(obj);
     expect(terms.length).toBeGreaterThan(0);
 
+    /*
+      this test verifies that each term is shaped like the following.
+      {
+        id: 'CatatonicSchizophrenia',
+        labels: [ 'CatatonicSchizophrenia', 'Schizophrenia, catatonic' ],
+        parentId: 'Schizophrenia'
+      },
+    */
     const allShapedRight = terms.every(term => {
-      const termKeys = Object.keys(term).sort((t, u) => t.id < u.id ? -1 : 1)
-      return JSON.stringify(termKeys) === '["id","labels","parentId"]'
+      const termKeys = Object.keys(term)
+      return (
+        JSON.stringify(termKeys.sort()) === '["id","labels","parentId"]'
+        && typeof term.id === 'string'
+        && Array.isArray(term.labels)
+        && typeof term.parentId === 'string'
+      )
     })
     expect(allShapedRight).toBe(true)
   });
