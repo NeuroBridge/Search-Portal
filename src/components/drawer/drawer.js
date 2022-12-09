@@ -11,9 +11,9 @@ import {
   ArrowDownward as ChildrenNavIcon,
   LocationOn as CurrentNavIcon,
 } from '@mui/icons-material'
+import { TermToggler } from '../basket'
 import { useDrawer } from './context'
 import { TreeList, useOntology } from '../ontology'
-import { TermActionButtons } from '../term-action-buttons'
 
 //
 
@@ -149,11 +149,7 @@ export const Drawer = () => {
           >{ drawer.currentTerm.parentId || 'ROOT' }</Button>
           {
             drawer.currentTerm.parentId && (
-              <TermActionButtons
-                termId={ drawer.currentTerm.parentId }
-                tooltipPlacement="top"
-                hideDrawerButton
-              />
+              <TermToggler termId={ drawer.currentTerm.parentId } />
             )
           }
         </Stack>
@@ -255,7 +251,7 @@ export const Drawer = () => {
                 <LabelsList />
               </Box>
               <Box sx={{ p: 1 }}>
-                <TermActionButtons
+                <TermToggler
                   termId={ drawer.currentTerm.id }
                   tooltipPlacement="left"
                   hideDrawerButton

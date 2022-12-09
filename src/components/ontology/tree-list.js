@@ -6,7 +6,7 @@ import {
   ExpandMore as ExpandIcon,
 } from '@mui/icons-material'
 import { arrayToTree } from 'performant-array-to-tree'
-import { TermActionButtons } from '../term-action-buttons'
+import { TermToggler } from '../basket'
 import { useDrawer } from '../drawer'
 
 export const TreeList = ({ rootTerm }) => {
@@ -30,7 +30,7 @@ export const TreeList = ({ rootTerm }) => {
             gap: '1rem',
           }}>
             <Button onClick={ () => drawer.setTermId(node.id) }>{ node.id }</Button>
-            <TermActionButtons termId={ node.id } stopEventPropagation hideDrawerButton />
+            <TermToggler termId={ node.id } />
           </Box>
         }
       >
