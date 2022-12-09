@@ -1,7 +1,7 @@
 import { createContext, useCallback, useContext, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import { arrayToTree } from 'performant-array-to-tree'
-
+import { extractTerms } from '../../util/owl'
 const OntologyContext = createContext({})
 
 // this array describes the fields that comprise a term...
@@ -28,44 +28,13 @@ const termFields = [
 
 //
 
-const extractIdFromIri = iri => {
-  const idPattern = new RegExp(/^.+#(.+)$/)
-  const matches = idPattern.exec(iri)
-  if (!matches[1]) {
-    return iri
-  }
-  return matches[1]
-}
-
 export const OntologyProvider = ({ children, owlFile }) => {
   const version = useMemo(() => {
     return owlFile['rdf:RDF']['owl:Ontology'][0]['owl:versionInfo'][0]['_']
   }, [owlFile])
 
   const terms = useMemo(() => {
-    return owlFile['rdf:RDF']['owl:Class'].map(term => {
-      // every term will have this shape
-      const termObject = {
-        id: '',
-        labels: [],
-        parentId: null,
-      }
-      // we'll pull the id off the end of the IRI
-      termObject.id = extractIdFromIri(term['$']['rdf:about'])
-      // labels
-      if (term['rdfs:label']) {
-        termObject.labels = term['rdfs:label']
-          .map(label => label._)
-      }
-      // check for parent term and add its ID to term object if so.
-      // this will help construct a subtree rooted at a given term.
-      if ('rdfs:subClassOf' in term) {
-        termObject.parentId = extractIdFromIri(term['rdfs:subClassOf'][0]['$']['rdf:resource'])
-      }
-      return termObject
-    }).sort((t, u) => {
-      return t.id.toLowerCase() < u.id.toLowerCase() ? -1 : 1
-    })
+    return extractTerms(owlFile)
   }, [owlFile])
 
   const trees = useMemo(() => {
