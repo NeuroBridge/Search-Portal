@@ -19,3 +19,25 @@ A [Dockerfile](Dockerfile) exists for easy, consistent deployment. Commands to g
 docker build -t neurobridge/search-portal .
 docker run -d --expose=80 neurobridge/search-portal
 ```
+
+### ⚙ Testing
+
+A couple tests have been written around extracting the ontology terms from the OWL file. More need to be written.
+
+Run the tests with `npm test`, with the following output expected.
+
+```bash
+$ npm test
+
+> test
+> jest
+
+ PASS  src/util/owl.test.js
+  ✓ id extraction from iri works (2 ms)
+  ✓ term extraction from owl file works (134 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       2 passed, 2 total
+Snapshots:   0 total
+Time:        0.64 s, estimated 1 s
+``` 
