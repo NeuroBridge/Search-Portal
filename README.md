@@ -46,3 +46,4 @@ Snapshots:   0 total
 Time:        0.64 s, estimated 1 s
 ``` 
 
+A GitHub Action is in place to run the tests on pull requests to the `develop` branch.
