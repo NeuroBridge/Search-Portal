@@ -41,3 +41,7 @@ Tests:       2 passed, 2 total
 Snapshots:   0 total
 Time:        0.64 s, estimated 1 s
 ``` 
+
+### Ontology Data
+
+The NeuroBridge Onotology is defined in an OWL file that sits in this code base (at ./src/data/ontology.owl). A [script](./owl-update-script.js) exists to fetch and update the OWL file with the most recent version from https://purl.org/neurobridges/ontology.owl. Execute this script with `npm run owl-update`.
