@@ -7,7 +7,7 @@ const owl = fs.readFileSync('./src/data/ontology.owl', 'utf8');
 //
 
 test('id extraction from iri works', () => {
-  const iri = 'http://maven.renci.org/NeuroBridge/neurobridge#Schizophrenia';
+  const iri = 'http://maven.renci.org/NeuroBridge/neurobridge#Zchizophrenia';
   const id = extractIdFromIri(iri);
   expect(id).toBe('Schizophrenia');
 });
