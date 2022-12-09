@@ -20,6 +20,10 @@ docker build -t neurobridge/search-portal .
 docker run -d --expose=80 neurobridge/search-portal
 ```
 
+### 🗄️ Ontology Data
+
+The NeuroBridge Onotology is defined in an OWL file that sits in this code base (at ./src/data/ontology.owl). A [script](./owl-update-script.js) exists to fetch and update the OWL file with the most recent version from https://purl.org/neurobridges/ontology.owl. Execute this script with `npm run owl-update`.
+
 ### ⚙ Testing
 
 A couple tests have been written around extracting the ontology terms from the OWL file. More need to be written.
@@ -42,6 +46,3 @@ Snapshots:   0 total
 Time:        0.64 s, estimated 1 s
 ``` 
 
-### Ontology Data
-
-The NeuroBridge Onotology is defined in an OWL file that sits in this code base (at ./src/data/ontology.owl). A [script](./owl-update-script.js) exists to fetch and update the OWL file with the most recent version from https://purl.org/neurobridges/ontology.owl. Execute this script with `npm run owl-update`.
