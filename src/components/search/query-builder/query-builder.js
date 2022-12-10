@@ -194,7 +194,7 @@ export const QueryBuilder = () => {
             p: 4,
             boxShadow: 'none',
             '& svg': {
-              transform: 'translateY(-3px)',
+              transform: 'translateY(-1px)',
             },
           },
         }}>
