@@ -73,7 +73,7 @@ export const Drawer = () => {
       >
         <MuiBreadcrumbs
           separator={ <BreadcrumbSeparatorIcon /> }
-          sx={{ flex: 1, px: 1, fontSize: '90%' }}
+          sx={{ flex: 1, px: 1, fontSize: '90%', borderBottom: `1px solid ${ theme.palette.primary.dark }` }}
         >
           <IconButton
             sx={{ borderRadius: 0 }}
@@ -242,7 +242,6 @@ export const Drawer = () => {
           <Fragment>
             <Breadcrumbs />
 
-            <Divider />
 
             <Parent />
 
