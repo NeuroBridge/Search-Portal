@@ -20,6 +20,7 @@ export const extractTerms = owl => owl['rdf:RDF']['owl:Class'].map(term => {
     id: '',
     labels: [],
     parentId: null,
+    seeAlso: null,
   }
   // we'll pull the id off the end of the IRI
   termObject.id = extractIdFromIri(term['$']['rdf:about'])
@@ -33,6 +34,11 @@ export const extractTerms = owl => owl['rdf:RDF']['owl:Class'].map(term => {
   if ('rdfs:subClassOf' in term) {
     termObject.parentId = extractIdFromIri(term['rdfs:subClassOf'][0]['$']['rdf:resource'])
   }
+  // is see also present?
+  if ('rdfs:seeAlso' in term) {
+    termObject.seeAlso = term['rdfs:seeAlso'][0]._
+  }
+  
   return termObject
 }).sort((t, u) => {
   return t.id.toLowerCase() < u.id.toLowerCase() ? -1 : 1

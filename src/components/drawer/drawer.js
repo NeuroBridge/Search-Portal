@@ -133,6 +133,23 @@ export const Drawer = () => {
     )
   }, [drawer.currentTerm])
 
+  const SeeAlsoText = useCallback(() => {
+    return (
+      <Fade in={ true } style={{ transitionDelay: '50ms' }}>
+        <Typography
+          sx={{
+            mt: 1, ml: 3,
+            fontSize: '90%',
+            fontStyle: 'italic',
+            color: 'primary.light',
+          }}
+        >
+          See also: { drawer.currentTerm.seeAlso || 'N/A' }
+        </Typography>
+      </Fade>
+    )
+  }, [drawer.currentTerm])
+
   const Parent = useCallback(() => {
     return (
       <Fade in={ true } style={{ transitionDelay: '100ms' }}>
@@ -249,6 +266,7 @@ export const Drawer = () => {
                   </Typography>
                 </Stack>
                 <LabelsList />
+                <SeeAlsoText />
               </Box>
               <Box sx={{ p: 1 }}>
                 <TermToggler
