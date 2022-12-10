@@ -1,7 +1,9 @@
 name: pull request test
 on:
   pull_request:
-    branches: [ develop ]
+    branches:
+      - develop
+      - staging
 jobs:
   build:
     runs-on: ubuntu-latest
