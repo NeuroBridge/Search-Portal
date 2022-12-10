@@ -8,7 +8,7 @@ import {
 import {
   Add as AddIcon,
   Backspace as ClearIcon,
-  OpenInBrowser as InspectTermIcon,
+  ArrowDropDownCircle as InspectTermIcon,
   AccessTime as HistoryIcon,
 } from '@mui/icons-material'
 import { useBasket } from '../../basket'
@@ -129,14 +129,21 @@ const ConceptSelectDialog = ({ open, closeHandler, cancelHandler, ...rest }) => 
             <ListItem
               key={ `option-${ index }` }
               disablePadding
-              sx={{ ...style }}
+              sx={{
+                ...style,
+                '&:hover .inspect-term-icon': { color: theme.palette.info.main },
+            }}
               secondaryAction={
                 <IconButton
                   edge="end"
                   aria-label="view ontology context"
                   onClick={ handleClickInspectTerm(filteredTerms[index].id) }
-                  sx={{ '& svg': { transform: 'rotate(90deg)' } }}
-                ><InspectTermIcon color="disabled" /></IconButton>
+                  sx={{ '& svg': {
+                    transform: 'rotate(-90deg)',
+                    color: 'primary.dark',
+                    transition: 'color 250ms',
+                  } }}
+                ><InspectTermIcon className="inspect-term-icon" /></IconButton>
               }
             >
               <ListItemButton onClick={ handleClickSelectTerm(filteredTerms[index].id) }>
