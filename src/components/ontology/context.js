@@ -39,6 +39,8 @@ export const OntologyProvider = ({ children, owlFile }) => {
     return extractTerms(owlFile)
   }, [owlFile])
 
+  console.log(terms)
+
   const trees = useMemo(() => {
     if (!terms) {
       return
