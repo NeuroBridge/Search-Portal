@@ -29,10 +29,12 @@ const termFields = [
 //
 
 export const OntologyProvider = ({ children, owlFile }) => {
-  const version = useMemo(() => {
-    return owlFile['rdf:RDF']['owl:Ontology'][0]['owl:versionInfo'][0]['_']
-  }, [owlFile])
-
+  const meta = useMemo(() => ({
+    version: owlFile['rdf:RDF']['owl:Ontology'][0]['owl:versionInfo'][0]['_'],
+    comment: owlFile['rdf:RDF']['owl:Ontology'][0]['rdfs:comment'][0]['_'],
+    editorialNote: owlFile['rdf:RDF']['owl:Ontology'][0]['prov:editorialNote'][1]['_'],
+  }), [owlFile])
+  
   const terms = useMemo(() => {
     return extractTerms(owlFile)
   }, [owlFile])
@@ -94,7 +96,7 @@ export const OntologyProvider = ({ children, owlFile }) => {
   }
 
   return (
-    <OntologyContext.Provider value={{ terms, termFields, trees, find, childrenOf, descendantsOf, pathToRoot, generateGraph, version }}>
+    <OntologyContext.Provider value={{ terms, termFields, trees, find, childrenOf, descendantsOf, pathToRoot, generateGraph, meta }}>
       { children }
     </OntologyContext.Provider>
   )
