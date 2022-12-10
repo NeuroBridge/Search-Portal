@@ -68,8 +68,6 @@ export const Drawer = () => {
         sx={{
           borderColor: `background.default`,
           backgroundColor: 'background.default',
-          '& svg': { color: 'text.primary' },
-          '& .MuiButtonBase-root': { color: 'text.primary' },
           '& .MuiBreadcrumbs-separator': { mx: 0 }
         }}
       >
