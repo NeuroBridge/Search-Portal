@@ -63,7 +63,15 @@ export const AboutView = () => {
         The available publications are those having imaging data dn dealing with
         to do with schizophrenia and substance abuse that have imaging data.
         They are all written in English and have been published within the last five years.
-        This interface is currently using our ontology version <em>{ ontology.version }</em>.
+        This interface is currently using our ontology version <em>{ ontology.meta.version }</em>.
+      </Typography>
+
+      <Typography paragraph>
+        { ontology.meta.comment }
+      </Typography>
+
+      <Typography paragraph>
+        { ontology.meta.editorialNote }
       </Typography>
 
       <br />

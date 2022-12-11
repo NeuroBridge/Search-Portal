@@ -3,12 +3,13 @@ import PropTypes from 'prop-types'
 import {
   Box, Button, Dialog, DialogActions, DialogContent, DialogTitle,
   Divider, IconButton, InputAdornment, 
-  ListItem, ListItemButton, ListItemText, Stack, TextField, Typography, useTheme,
+  ListItem, ListItemButton, ListItemText, Stack,
+  TextField, Tooltip, Typography, useTheme,
 } from '@mui/material'
 import {
   Add as AddIcon,
   Backspace as ClearIcon,
-  OpenInBrowser as InspectTermIcon,
+  ArrowDropDownCircle as InspectTermIcon,
   AccessTime as HistoryIcon,
 } from '@mui/icons-material'
 import { useBasket } from '../../basket'
@@ -129,14 +130,23 @@ const ConceptSelectDialog = ({ open, closeHandler, cancelHandler, ...rest }) => 
             <ListItem
               key={ `option-${ index }` }
               disablePadding
-              sx={{ ...style }}
+              sx={{
+                ...style,
+                '&:hover .inspect-term-icon': { color: theme.palette.info.main },
+            }}
               secondaryAction={
-                <IconButton
-                  edge="end"
-                  aria-label="view ontology context"
-                  onClick={ handleClickInspectTerm(filteredTerms[index].id) }
-                  sx={{ '& svg': { transform: 'rotate(90deg)' } }}
-                ><InspectTermIcon color="disabled" /></IconButton>
+                <Tooltip placement="top" title="View Ontology Context">
+                  <IconButton
+                    edge="end"
+                    aria-label="view ontology context"
+                    onClick={ handleClickInspectTerm(filteredTerms[index].id) }
+                    sx={{ '& svg': {
+                      transform: 'rotate(-90deg)',
+                      color: theme.palette.grey[400],
+                      transition: 'color 250ms',
+                    } }}
+                  ><InspectTermIcon className="inspect-term-icon" /></IconButton>
+                </Tooltip>
               }
             >
               <ListItemButton onClick={ handleClickSelectTerm(filteredTerms[index].id) }>

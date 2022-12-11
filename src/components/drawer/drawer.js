@@ -11,9 +11,9 @@ import {
   ArrowDownward as ChildrenNavIcon,
   LocationOn as CurrentNavIcon,
 } from '@mui/icons-material'
+import { TermToggler } from '../basket'
 import { useDrawer } from './context'
 import { TreeList, useOntology } from '../ontology'
-import { TermActionButtons } from '../term-action-buttons'
 
 //
 
@@ -68,14 +68,12 @@ export const Drawer = () => {
         sx={{
           borderColor: `background.default`,
           backgroundColor: 'background.default',
-          '& svg': { color: 'text.primary' },
-          '& .MuiButtonBase-root': { color: 'text.primary' },
           '& .MuiBreadcrumbs-separator': { mx: 0 }
         }}
       >
         <MuiBreadcrumbs
           separator={ <BreadcrumbSeparatorIcon /> }
-          sx={{ flex: 1, px: 1, fontSize: '90%' }}
+          sx={{ flex: 1, px: 1, fontSize: '90%', borderBottom: `1px solid ${ theme.palette.primary.dark }` }}
         >
           <IconButton
             sx={{ borderRadius: 0 }}
@@ -133,6 +131,23 @@ export const Drawer = () => {
     )
   }, [drawer.currentTerm])
 
+  const SeeAlsoText = useCallback(() => {
+    return (
+      <Fade in={ true } style={{ transitionDelay: '50ms' }}>
+        <Typography
+          sx={{
+            mt: 1, ml: 3,
+            fontSize: '90%',
+            fontStyle: 'italic',
+            color: 'primary.light',
+          }}
+        >
+          See also: { drawer.currentTerm.seeAlso || 'N/A' }
+        </Typography>
+      </Fade>
+    )
+  }, [drawer.currentTerm])
+
   const Parent = useCallback(() => {
     return (
       <Fade in={ true } style={{ transitionDelay: '100ms' }}>
@@ -149,11 +164,7 @@ export const Drawer = () => {
           >{ drawer.currentTerm.parentId || 'ROOT' }</Button>
           {
             drawer.currentTerm.parentId && (
-              <TermActionButtons
-                termId={ drawer.currentTerm.parentId }
-                tooltipPlacement="top"
-                hideDrawerButton
-              />
+              <TermToggler termId={ drawer.currentTerm.parentId } />
             )
           }
         </Stack>
@@ -231,7 +242,6 @@ export const Drawer = () => {
           <Fragment>
             <Breadcrumbs />
 
-            <Divider />
 
             <Parent />
 
@@ -253,9 +263,10 @@ export const Drawer = () => {
                   </Typography>
                 </Stack>
                 <LabelsList />
+                <SeeAlsoText />
               </Box>
               <Box sx={{ p: 1 }}>
-                <TermActionButtons
+                <TermToggler
                   termId={ drawer.currentTerm.id }
                   tooltipPlacement="left"
                   hideDrawerButton
