@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import {
   Box, Button, Dialog, DialogActions, DialogContent, DialogTitle,
   Divider, IconButton, InputAdornment, 
-  ListItem, ListItemButton, ListItemText, Stack, TextField, Typography, useTheme,
+  ListItem, ListItemButton, ListItemText, Stack,
+  TextField, Tooltip, Typography, useTheme,
 } from '@mui/material'
 import {
   Add as AddIcon,
@@ -134,16 +135,18 @@ const ConceptSelectDialog = ({ open, closeHandler, cancelHandler, ...rest }) => 
                 '&:hover .inspect-term-icon': { color: theme.palette.info.main },
             }}
               secondaryAction={
-                <IconButton
-                  edge="end"
-                  aria-label="view ontology context"
-                  onClick={ handleClickInspectTerm(filteredTerms[index].id) }
-                  sx={{ '& svg': {
-                    transform: 'rotate(-90deg)',
-                    color: 'primary.dark',
-                    transition: 'color 250ms',
-                  } }}
-                ><InspectTermIcon className="inspect-term-icon" /></IconButton>
+                <Tooltip placement="top" title="View Ontology Context">
+                  <IconButton
+                    edge="end"
+                    aria-label="view ontology context"
+                    onClick={ handleClickInspectTerm(filteredTerms[index].id) }
+                    sx={{ '& svg': {
+                      transform: 'rotate(-90deg)',
+                      color: theme.palette.grey[400],
+                      transition: 'color 250ms',
+                    } }}
+                  ><InspectTermIcon className="inspect-term-icon" /></IconButton>
+                </Tooltip>
               }
             >
               <ListItemButton onClick={ handleClickSelectTerm(filteredTerms[index].id) }>
