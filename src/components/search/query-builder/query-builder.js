@@ -214,6 +214,7 @@ export const QueryBuilder = () => {
             <Button
               onClick={ toggleShowRawQuery }
               startIcon={ <RawQueryIcon /> }
+              disabled={ !query }
             >{ `${ showRawQuery ? 'hide' : 'view' } query` }</Button>
 
             {/* options button renders here */}
