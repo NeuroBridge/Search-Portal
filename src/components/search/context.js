@@ -59,6 +59,8 @@ export const SearchProvider = ({ children }) => {
     return sum + someResults.length
   }, 0))
 
+  // the query, which is kept in QueryBuilder state,
+  // is passed into this function.
   const nbFetchResults = useCallback(query => {
     return axios.post(
         NB_API_URL,
