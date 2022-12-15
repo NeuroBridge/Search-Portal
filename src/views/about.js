@@ -1,11 +1,36 @@
 import PropTypes from 'prop-types'
-import { Container, Skeleton, Stack, Typography } from '@mui/material'
+import { Box, Container, Skeleton, Typography, useTheme } from '@mui/material'
 import {
   AddCircle as TermSelectedIcon,
   RemoveCircle as TermUnselectedIcon,
   Circle as TermNeutralIcon,
 } from '@mui/icons-material'
+import { useAppContext } from '../context'
 import { useOntology } from '../components/ontology'
+import { Link } from '../components/link'
+
+// screenshots
+import addConceptImageLight from '../images/screenshots/add-concept-light.png'
+import addConceptImageDark from '../images/screenshots/add-concept-dark.png'
+import rawQueryImageLight from '../images/screenshots/raw-query-light.png'
+import rawQueryImageDark from '../images/screenshots/raw-query-dark.png'
+import resultsImageLight from '../images/screenshots/results-light.png'
+import resultsImageDark from '../images/screenshots/results-dark.png'
+
+const screenshots = {
+  addConcept: {
+    light: addConceptImageLight,
+    dark: addConceptImageDark,
+  },
+  rawQuery: {
+    light: rawQueryImageLight,
+    dark: rawQueryImageDark,
+  },
+  results: {
+    light: resultsImageLight,
+    dark: resultsImageDark,
+  },
+}
 
 const MediaPlaceholder = ({ width, height, sx }) => {
   return (
@@ -29,8 +54,37 @@ MediaPlaceholder.defaultProps = {
 
 //
 
+const Screenshot = ({ imageSrc, height }) => {
+  const theme = useTheme()
+  return (
+    <Box sx={{
+      height: height,
+      my: 4,
+      display: 'flex',
+      justifyContent: "center",
+      alignItems: "center",
+      img: {
+        height: height,
+        border: `2px solid ${ theme.palette.background.default }`,
+      }
+    }}><img src={ imageSrc } /></Box>
+  )
+}
+
+Screenshot.propTypes = {
+  imageSrc: PropTypes.string.isRequired,
+  height: PropTypes.string,
+}
+
+Screenshot.defaultProps = {
+  height: '360px',
+}
+
+//
+
 export const AboutView = () => {
   const ontology = useOntology()
+  const { settings } = useAppContext()
 
   return (
     <Container maxWidth="md">
@@ -81,10 +135,14 @@ export const AboutView = () => {
       <Typography paragraph>
         Because the goal is to search for publications, this purpose of this interface
         revolves around building a query from concepts in the NeuroBridge ontology.
+        The first step to building a query is to add concepts to the query builder with
+        the &ldquo;<span style={{ whiteSpace: 'nowrap' }}>+ Add Concept</span>&rdquo; button.
         Each concept defines an induced subtree rooted at that concept.
         Adding a concept to the query builder makes its descendant concepts available
         for use in the query construction.
       </Typography>
+
+      <Screenshot imageSrc={ screenshots.addConcept[settings.color.mode] } />
 
       <Typography paragraph sx={{
         '& .MuiSvgIcon-root': {
@@ -108,7 +166,6 @@ export const AboutView = () => {
         descendants&apos; states to match that of the clicked term.
       </Typography>
     
-
       <Typography paragraph>
         Configuration options and the raw query.
         Dolor in tempor sed magna nulla tempor aliquip fugiat excepteur cupidatat ullamco do.
@@ -116,36 +173,22 @@ export const AboutView = () => {
         Excepteur consequat nulla reprehenderit sunt in cillum sunt minim minim qui et non sit enim ullamco velit officia.
       </Typography>
 
-      <MediaPlaceholder />
+      <Screenshot imageSrc={ screenshots.rawQuery[settings.color.mode] } />
 
       <Typography paragraph>
         Elit nostrud in laborum deserunt id ullamco proident elit dolore quis.
         Lorem ipsum ut velit irure veniam elit adipisicing exercitation elit esse excepteur fugiat voluptate duis sunt proident.
       </Typography>
 
-      <Stack direction={{ xs: 'column', sm: 'row' }} justifyContent="center" alignItems="center" gap={ 5 } sx={{ my: 5 }}>
-        <MediaPlaceholder sx={{ m: 0 }} />
-        <MediaPlaceholder sx={{ m: 0 }} />
-      </Stack>
-
       <Typography paragraph>
-        Veniam est qui do tempor do laboris irure in sed laborum eiusmod dolor non reprehenderit reprehenderit aute aliqua in.
-        Occaecat exercitation cillum nostrud magna non eu mollit anim cupidatat non ut sit non.
+        Results are retrieved from two sources: the NeuroBridge API
+        and <Link to="https://neuroquery.org/">NeuroQuery</Link>.
+        Results are grouped by their source and contain links to the
+        corresponding articles in PubMed or PubMed Central.
+        Results can be selected for export.
       </Typography>
 
-      <Typography paragraph>
-        Results Ut labore dolor deserunt dolor nulla et officia ullamco anim adipisicing pariatur do exercitation consequat officia qui.
-        Excepteur enim aute tempor sit labore occaecat et culpa labore ex eu.
-        Lorem ipsum nulla cillum voluptate enim in dolore ut id pariatur.
-      </Typography>
-
-      <MediaPlaceholder />
-
-      <Typography paragraph>
-        Laboris tempor pariatur dolore proident ut est nulla dolore id elit ut enim in duis ad ut anim ad.
-        Culpa ut in dolore laborum nulla tempor consectetur in est incididunt.
-        Laboris deserunt proident ullamco sint anim quis incididunt minim aliqua ea.
-      </Typography>
+      <Screenshot imageSrc={ screenshots.results[settings.color.mode] } />
 
     </Container>
   )
