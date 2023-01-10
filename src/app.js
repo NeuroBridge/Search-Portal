@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 import { Paper, useTheme } from '@mui/material'
+import { ToastContainer } from 'react-toastify'
 import {
   AboutView, ContactView, NotFoundView, SearchView
 } from './views'
@@ -25,7 +26,9 @@ export const App = () => {
       className="app-container"
       sx={{
         backgroundColor: theme.palette.background.default,
-        'a': { color: theme.palette.primary.main }
+        'a': { color: theme.palette.primary.main },
+        // modify toast default styling to add space between the notification's icon and message
+        '.Toastify__toast-body': { gap: '1rem' },
       }}
     >
       <Header />
@@ -45,6 +48,16 @@ export const App = () => {
       >&copy; { new Date().getFullYear() }</Paper>
 
       <Drawer />
+      <ToastContainer
+        position="bottom-left"
+        autoClose={ 5000 }
+        newestOnTop={ false }
+        closeOnClick
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </Paper>
   )
 }

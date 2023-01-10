@@ -4,6 +4,7 @@ import axios from 'axios'
 import { useBasket } from '../basket'
 import { useOntology } from '../ontology'
 import { useLocalStorage } from '../../hooks'
+import { useAppContext } from '../../context'
 
 //
 
@@ -19,6 +20,7 @@ export const useSearch = () => useContext(SearchContext)
 //
 
 export const SearchProvider = ({ children }) => {
+  const { notify } = useAppContext()
   const basket = useBasket()
   const ontology = useOntology()
   const [results, setResults] = useState({
@@ -82,7 +84,8 @@ export const SearchProvider = ({ children }) => {
         }))
       })
       .catch(error => {
-        console.error(error.message)
+        notify('error', 'There was an error communicating with the NeuroBridge API.')
+        console.log(error)
         return []
       })
   }, [basket.ids])
@@ -102,10 +105,11 @@ export const SearchProvider = ({ children }) => {
         }))        
       })
       .catch(error => {
-        console.error(error.message)
+        notify('error', 'There was an error communicating with the NeuroQuery API.')
+        console.log(error)
         return []
       })
-    }, [basket.ids])
+  }, [basket.ids])
 
   const fetchResults = useCallback(async query => {
     clearResults()
