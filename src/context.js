@@ -1,6 +1,8 @@
 import { createContext, useCallback, useContext, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { lightTheme, darkTheme } from './styles/theme'
 import { useLocalStorage } from './hooks'
 
@@ -26,8 +28,13 @@ export const AppContextProvider = ({ children }) => {
     setColorMode(MODES.light)
   }, [colorMode])
 
+  const notify = (message, type = 'default') => {
+    toast(message, { type })
+  }
+
   return (
     <AppContext.Provider value={{
+      notify,
       settings: {
         color: {
           modes: MODES,

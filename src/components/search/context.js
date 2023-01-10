@@ -4,6 +4,7 @@ import axios from 'axios'
 import { useBasket } from '../basket'
 import { useOntology } from '../ontology'
 import { useLocalStorage } from '../../hooks'
+import { useAppContext } from '../../context'
 
 //
 
@@ -19,6 +20,7 @@ export const useSearch = () => useContext(SearchContext)
 //
 
 export const SearchProvider = ({ children }) => {
+  const { notify } = useAppContext()
   const basket = useBasket()
   const ontology = useOntology()
   const [results, setResults] = useState({
@@ -31,7 +33,7 @@ export const SearchProvider = ({ children }) => {
     the term `search` is overloaded in the code base.
     there are really _two_ searches:
     - one searches the ontology for terms
-    - the other hits the nb api, searching for publications.
+    - the other hits the NB and NQ APIs, searching for publications.
     this context provider was started to encompass the latter. however, the
     fact that these `searchHistory`-related variables ended up here indicates
     that there is some confusion and we could stand to benefit from drawing
@@ -59,6 +61,8 @@ export const SearchProvider = ({ children }) => {
     return sum + someResults.length
   }, 0))
 
+  // the query, which is kept in QueryBuilder state,
+  // is passed into this function.
   const nbFetchResults = useCallback(query => {
     return axios.post(
         NB_API_URL,
@@ -80,7 +84,8 @@ export const SearchProvider = ({ children }) => {
         }))
       })
       .catch(error => {
-        console.error(error.message)
+        notify('There was an error communicating with the NeuroBridge API.', 'error')
+        console.log(error)
         return []
       })
   }, [basket.ids])
@@ -100,10 +105,11 @@ export const SearchProvider = ({ children }) => {
         }))        
       })
       .catch(error => {
-        console.error(error.message)
+        notify('There was an error communicating with the NeuroQuery API.', 'error')
+        console.log(error)
         return []
       })
-    }, [basket.ids])
+  }, [basket.ids])
 
   const fetchResults = useCallback(async query => {
     clearResults()
