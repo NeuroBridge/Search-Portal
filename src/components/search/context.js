@@ -31,7 +31,7 @@ export const SearchProvider = ({ children }) => {
     the term `search` is overloaded in the code base.
     there are really _two_ searches:
     - one searches the ontology for terms
-    - the other hits the nb api, searching for publications.
+    - the other hits the NB and NQ APIs, searching for publications.
     this context provider was started to encompass the latter. however, the
     fact that these `searchHistory`-related variables ended up here indicates
     that there is some confusion and we could stand to benefit from drawing
