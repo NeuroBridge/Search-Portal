@@ -84,7 +84,7 @@ export const SearchProvider = ({ children }) => {
         }))
       })
       .catch(error => {
-        notify('error', 'There was an error communicating with the NeuroBridge API.')
+        notify('There was an error communicating with the NeuroBridge API.', 'error')
         console.log(error)
         return []
       })
@@ -105,7 +105,7 @@ export const SearchProvider = ({ children }) => {
         }))        
       })
       .catch(error => {
-        notify('error', 'There was an error communicating with the NeuroQuery API.')
+        notify('There was an error communicating with the NeuroQuery API.', 'error')
         console.log(error)
         return []
       })
