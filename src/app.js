@@ -20,7 +20,7 @@ const Router = () => {
 
 export const App = () => {
   const theme = useTheme()
-
+console.log(theme)
   return (
     <Paper
       className="app-container"
@@ -56,7 +56,7 @@ export const App = () => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="light"
+        theme={ theme.palette.mode }
       />
     </Paper>
   )

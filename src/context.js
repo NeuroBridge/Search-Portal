@@ -28,7 +28,7 @@ export const AppContextProvider = ({ children }) => {
     setColorMode(MODES.light)
   }, [colorMode])
 
-  const notify = (type = 'default', message) => {
+  const notify = (message, type = 'default') => {
     toast(message, { type })
   }
 
