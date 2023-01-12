@@ -279,6 +279,10 @@ export const QueryBuilder = () => {
         </Collapse>
 
       </QueryBuilderContext.Provider>
+
+      <Divider />
+
+      <Box sx={{ padding: '8px' }} />
     </Card>
   )
 } 
