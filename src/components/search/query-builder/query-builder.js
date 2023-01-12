@@ -163,30 +163,8 @@ export const QueryBuilder = () => {
         <Divider />
 
         <SelectionForest roots={ basket.ids } />
-
+        
         <Divider />
-
-        <Collapse
-          in={ showRawQuery }
-          sx={{
-            position: 'relative',
-            '.query': {
-              m: 0, p: 1, pl: 3,
-              backgroundColor: theme.palette.mode === 'light' ? theme.palette.grey[600] : theme.palette.grey[900],
-              color: '#eef',
-              fontSize: '90%',
-            },
-          }}>
-            <IconButton
-              onClick={ () => setShowRawQuery(false) }
-              size="small"
-              sx={{
-                position: 'absolute',
-                right: 5, top: 5,
-              }}
-            ><CloseIcon fontSize="small" sx={{ color: '#fff', filter: 'opacity(0.75)' }} /></IconButton>
-            <pre className="query">{ JSON.stringify(query, null, 2) }</pre>
-        </Collapse>
 
         <CardContent sx={{
           padding: '0 !important',
@@ -278,6 +256,28 @@ export const QueryBuilder = () => {
           </Stack>
         </CardContent>
         
+        <Collapse
+          in={ showRawQuery }
+          sx={{
+            position: 'relative',
+            '.query': {
+              m: 0, p: 1, pl: 3,
+              backgroundColor: theme.palette.mode === 'light' ? theme.palette.grey[600] : theme.palette.grey[900],
+              color: '#eef',
+              fontSize: '90%',
+            },
+          }}>
+            <IconButton
+              onClick={ () => setShowRawQuery(false) }
+              size="small"
+              sx={{
+                position: 'absolute',
+                right: 5, top: 5,
+              }}
+            ><CloseIcon fontSize="small" sx={{ color: '#fff', filter: 'opacity(0.75)' }} /></IconButton>
+            <pre className="query">{ JSON.stringify(query, null, 2) }</pre>
+        </Collapse>
+
       </QueryBuilderContext.Provider>
     </Card>
   )
