@@ -21,7 +21,6 @@ RUN npm run build
 
 # Production environment
 ########################
-FROM nginx:latest
-EXPOSE 80
-COPY --from=builder /src/dist /usr/share/nginx/html/
+FROM bitnami/nginx:latest
+COPY --from=builder /src/dist /opt/bitnami/nginx/html/
 CMD ["nginx", "-g", "daemon off;"]
