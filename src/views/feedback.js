@@ -2,13 +2,13 @@ import { Card, CardContent, CardHeader, Container, Divider, Typography } from '@
 import { ContactForm } from '../components/contact-form'
 import { useLocation } from 'react-router-dom'
 
-export const ContactView = () => {
+export const FeedbackView = () => {
   const location = useLocation()
 
   return (
     <Container maxWidth="md">
       <Typography variant="h4" component="h1" align="center">
-        Contact
+        Feedback
       </Typography>
 
       <Typography paragraph sx={{ my: 4 }}>
