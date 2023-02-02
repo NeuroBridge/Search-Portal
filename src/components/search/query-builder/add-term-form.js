@@ -38,6 +38,7 @@ const ConceptSelectDialog = ({ open, closeHandler, cancelHandler, ...rest }) => 
   const [filteredTerms, setFilteredTerms] = useState(ontology.terms)
   const queryField = useRef(null)
   const { addToSearchHistory, resetSearchHistory, searchHistory } = useSearch()
+  const innerListRef = useRef(null);
 
   useEffect(() => {
     if (ontology.terms.length === 0) {
@@ -86,6 +87,57 @@ const ConceptSelectDialog = ({ open, closeHandler, cancelHandler, ...rest }) => 
     closeHandler()
   }
 
+  const handleKeyDown = useCallback((e) => {
+    if (e.isComposing || e.keyCode === 229) return; // Ignore IME (input method editors) events
+    if (e.code !== "ArrowUp" && e.code !== "ArrowDown") return;
+    e.preventDefault();
+
+    const allListItems = innerListRef.current.querySelectorAll('li > div.MuiButtonBase-root');
+    if(allListItems.length === 0) return;
+
+    let focusedListItemIndex = null;
+    for(const [index, li] of allListItems.entries()) {
+      if(li === document.activeElement) {
+        focusedListItemIndex = index;
+        break;
+      }
+    }
+
+    // check if we're actually focused on the 'View Ontology Context' button for a list item
+    if(focusedListItemIndex === null) {
+      const allOntologyContextButtons = innerListRef.current.querySelectorAll('li > div.MuiListItemSecondaryAction-root > button.MuiButtonBase-root');
+
+      for(const [index, button] of allOntologyContextButtons.entries()) {
+        if(button === document.activeElement) {
+          // treat being focused on the view ontology button as being on the list item
+          focusedListItemIndex = index;
+          break;
+        }
+      }
+    }
+    
+    if(e.code === "ArrowUp") {
+      // if on the first element, highlight the search box
+      if(focusedListItemIndex - 1 < 0 && queryField?.current) {
+        queryField.current.focus()
+        queryField.current.select()
+      }
+      else {
+        allListItems[focusedListItemIndex - 1].focus();
+      }
+    }
+    else if(e.code === "ArrowDown") {      
+      // if the list isn't focused, highlight the first element
+      if(focusedListItemIndex === null) {
+        allListItems[0].focus();
+      }
+      else {
+        const nextIndex = focusedListItemIndex + 1 > allListItems.length - 1 ? allListItems.length - 1 : focusedListItemIndex + 1;
+        allListItems[nextIndex].focus();
+      }
+    }
+  }, []);
+
   return (
     <Dialog
       sx={{
@@ -97,6 +149,7 @@ const ConceptSelectDialog = ({ open, closeHandler, cancelHandler, ...rest }) => 
       open={ open }
       { ...rest }
       onClose={ () => closeHandler() }
+      onKeyDown={ handleKeyDown }
     >
       <DialogTitle>Add Concept</DialogTitle>
       <TextField
@@ -125,6 +178,7 @@ const ConceptSelectDialog = ({ open, closeHandler, cancelHandler, ...rest }) => 
           itemSize={ 68 }
           itemCount={ filteredTerms.length }
           overscanCount={ 36 }
+          innerRef={ innerListRef }
         >{
           ({ index, style }) => (
             <ListItem
