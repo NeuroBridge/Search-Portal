@@ -120,7 +120,6 @@ const ConceptSelectDialog = ({ open, closeHandler, cancelHandler, ...rest }) => 
       // if on the first element, highlight the search box
       if(focusedListItemIndex - 1 < 0 && queryField?.current) {
         queryField.current.focus()
-        queryField.current.select()
       }
       else {
         allListItems[focusedListItemIndex - 1].focus();
