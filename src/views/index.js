@@ -1,4 +1,4 @@
 export * from './about'
-export * from './contact'
+export * from './feedback'
 export * from './not-found'
 export * from './search'
