@@ -20,7 +20,7 @@ export const SelectionTreeMenu = ({ items }) => {
   const id = open ? 'term-actions-menu' : undefined
 
   return (
-    <Box>
+    <Box sx={{ position: 'absolute', top: '50%', right: 0, transform: 'translateY(-50%)' }}>
       {/* toggle button */}
       <Tooltip placement="top" title="Term actions menu">
         <IconButton
@@ -28,7 +28,6 @@ export const SelectionTreeMenu = ({ items }) => {
           color="secondary"
           size="small"
           onClick={ handleClickMenuButton }
-          sx={{ my: 1 }}
         ><MenuIcon
           fontSize="small"
           sx={{

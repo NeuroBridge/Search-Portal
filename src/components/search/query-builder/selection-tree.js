@@ -120,6 +120,7 @@ export const SelectionTree = ({ rootTermId }) => {
     >
       <TreeView
         sx={{
+          position: 'relative',
           flex: 1,
           width: '100%',
           overflowY: 'auto',
@@ -132,21 +133,21 @@ export const SelectionTree = ({ rootTermId }) => {
         disableSelection
       >
         { renderSelectionTree(tree) }
+        <SelectionTreeMenu items={[
+          {
+            key: 'remove',
+            icon: <RemoveTermIcon color="warning" />,
+            action: handleClickRemoveTerm,
+            tooltip: 'Remove Term',
+          },
+          {
+            key: 'inspect',
+            icon: <InspectTermIcon color="info" sx={{ transform: 'rotate(-90deg)' }}/> ,
+            action: handleClickInspectTerm,
+            tooltip: 'View Ontology Context',
+          },
+        ]} />
       </TreeView>
-      <SelectionTreeMenu items={[
-        {
-          key: 'remove',
-          icon: <RemoveTermIcon color="warning" />,
-          action: handleClickRemoveTerm,
-          tooltip: 'Remove Term',
-        },
-        {
-          key: 'inspect',
-          icon: <InspectTermIcon color="info" sx={{ transform: 'rotate(-90deg)' }}/> ,
-          action: handleClickInspectTerm,
-          tooltip: 'View Ontology Context',
-        },
-      ]} />
     </Stack>
   )
 }
