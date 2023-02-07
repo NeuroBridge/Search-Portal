@@ -89,6 +89,24 @@ export const SelectionTree = ({ rootTermId }) => {
                 />
               }
             />
+            {
+              rootTermId === node.id && (
+                <SelectionTreeMenu items={[
+                  {
+                    key: 'remove',
+                    icon: <RemoveTermIcon color="warning" />,
+                    action: handleClickRemoveTerm,
+                    tooltip: 'Remove Term',
+                  },
+                  {
+                    key: 'inspect',
+                    icon: <InspectTermIcon color="info" sx={{ transform: 'rotate(-90deg)' }}/> ,
+                    action: handleClickInspectTerm,
+                    tooltip: 'View Ontology Context',
+                  },
+                ]} />
+              )
+            }
           </Box>
         }
       >
@@ -133,20 +151,6 @@ export const SelectionTree = ({ rootTermId }) => {
       >
         { renderSelectionTree(tree) }
       </TreeView>
-      <SelectionTreeMenu items={[
-        {
-          key: 'remove',
-          icon: <RemoveTermIcon color="warning" />,
-          action: handleClickRemoveTerm,
-          tooltip: 'Remove Term',
-        },
-        {
-          key: 'inspect',
-          icon: <InspectTermIcon color="info" sx={{ transform: 'rotate(-90deg)' }}/> ,
-          action: handleClickInspectTerm,
-          tooltip: 'View Ontology Context',
-        },
-      ]} />
     </Stack>
   )
 }
