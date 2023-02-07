@@ -39,13 +39,15 @@ export const TableHeader = ({ currentTabIndex, handleChangeTab, detail }) => {
         >
           <Tooltip title="Sorted by number of matching terms" placement="top">
             <Tab
-              label={ `NeuroBridge (${ results.NeuroBridge.length })` }
+              sx={{ textTransform: 'revert' }}
+              label={ `PubMed Central (${ results.NeuroBridge.length })` }
               id={ `results-tab-NeuroBridge` }
               aria-controls="results-tabpanel-NeuroBridge"
             />
           </Tooltip>
           <Tooltip title="Sorted by relevance" placement="top">
             <Tab
+              sx={{ textTransform: 'revert' }}
               label={ `NeuroQuery (${ results.NeuroQuery.length })` }
               id={ `results-tab-NeuroQuery` }
               aria-controls="results-tabpanel-NeuroQuery"
