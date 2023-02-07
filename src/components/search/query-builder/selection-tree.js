@@ -138,7 +138,6 @@ export const SelectionTree = ({ rootTermId }) => {
     >
       <TreeView
         sx={{
-          position: 'relative',
           flex: 1,
           width: '100%',
           overflowY: 'auto',
