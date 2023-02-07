@@ -7,7 +7,7 @@ import {
 
 export const SelectionTreeMenu = ({ items }) => {
   return (
-    <Box sx={{ position: 'absolute', top: '50%', right: 0, transform: 'translateY(-50%)' }}>
+    <Box ml='auto' sx={{ display: 'flex'}}>
       {
         items.map(({ key, action, icon, tooltip }) => (
           <Tooltip key={`term-action-${key}`} title={tooltip} placement="top">
