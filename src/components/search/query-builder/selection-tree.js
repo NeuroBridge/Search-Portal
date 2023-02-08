@@ -94,13 +94,15 @@ export const SelectionTree = ({ rootTermId }) => {
                 <SelectionTreeMenu items={[
                   {
                     key: 'remove',
-                    icon: <RemoveTermIcon color="warning" />,
+                    icon: <RemoveTermIcon />,
+                    color: theme.palette.warning.main,
                     action: handleClickRemoveTerm,
                     tooltip: 'Remove Term',
                   },
                   {
                     key: 'inspect',
-                    icon: <InspectTermIcon color="info" sx={{ transform: 'rotate(-90deg)' }}/> ,
+                    icon: <InspectTermIcon sx={{ transform: 'rotate(-90deg)' }}/> ,
+                    color: theme.palette.info.main,
                     action: handleClickInspectTerm,
                     tooltip: 'View Ontology Context',
                   },
