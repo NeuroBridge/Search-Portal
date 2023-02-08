@@ -1,0 +1,7 @@
+apiVersion: v2
+name: neurobridges-portal
+description: A Helm chart for Kubernetes
+type: application
+
+# No need to increment this unless you push the chart somewhere for external users
+version: 1.0.0
