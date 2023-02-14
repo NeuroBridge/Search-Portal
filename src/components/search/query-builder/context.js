@@ -55,10 +55,7 @@ export const QueryBuilderProvider = ({ children }) => {
         children: node.children.map(reduceTree),
       };
     };
-    console.log(descendants);
-    const att = arrayToTree(descendants);
-    console.log(att);
-    const tree = reduceTree(att[0]);
+    const tree = reduceTree(arrayToTree(descendants)[0]);
 
     setQuery((query) => [...query, tree]);
   };
