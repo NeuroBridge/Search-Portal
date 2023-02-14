@@ -1,8 +1,6 @@
-import { createContext, useCallback, useContext, useMemo, useState } from 'react'
+import { createContext, useContext, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 import axios from 'axios'
-import { useBasket } from '../basket'
-import { useOntology } from '../ontology'
 import { useLocalStorage } from '../../hooks'
 import { useAppContext } from '../../context'
 
@@ -21,8 +19,6 @@ export const useSearch = () => useContext(SearchContext)
 
 export const SearchProvider = ({ children }) => {
   const { notify } = useAppContext()
-  const basket = useBasket()
-  const ontology = useOntology()
   const [results, setResults] = useState({
     NeuroBridge: [],
     NeuroQuery: [], 
@@ -50,12 +46,6 @@ export const SearchProvider = ({ children }) => {
   const resetSearchHistory = () => {
     setSearchHistory({})
   }
-  
-  const nqQuerystring = useMemo(() => {
-    return basket.ids
-      .map(item => ontology.find(item).labels[0])
-      .join('+')
-  }, [basket.ids, ontology])
 
   const totalResultCount = useMemo(() => Object.values(results).reduce((sum, someResults) => {
     return sum + someResults.length
@@ -63,7 +53,7 @@ export const SearchProvider = ({ children }) => {
 
   // the query, which is kept in QueryBuilder state,
   // is passed into this function.
-  const nbFetchResults = useCallback(query => {
+  const nbFetchResults = query => {
     return axios.post(
         NB_API_URL,
         JSON.stringify({ query: { expression: query }, max_res: 100 }),
@@ -88,10 +78,10 @@ export const SearchProvider = ({ children }) => {
         console.log(error)
         return []
       })
-  }, [basket.ids])
+  };
 
-  const nqFetchResults = useCallback(() => {
-    return axios.get(NQ_API_URL, { params: { searchTerms: nqQuerystring } })
+  const nqFetchResults = (query) => {
+    return axios.get(NQ_API_URL, { params: { searchTerms: query } })
       .then(({ data }) => {
         if (!data?.data) {
           throw new Error('An error occurred while fetching NeuroQuery results.')
@@ -109,15 +99,15 @@ export const SearchProvider = ({ children }) => {
         console.log(error)
         return []
       })
-  }, [basket.ids])
+  };
 
-  const fetchResults = useCallback(async query => {
+  const fetchResults = async (nbQuery, nqQuery) => {
     clearResults()
     setLastRequestTime(Date.now())
     setLoading(true)
     Promise.all([
-      nbFetchResults(query),
-      nqFetchResults(),
+      nbFetchResults(nbQuery),
+      nqFetchResults(nqQuery),
     ])
       .then(([nbResults, nqResults]) => {
         setResults({
@@ -131,7 +121,7 @@ export const SearchProvider = ({ children }) => {
       .finally(() => {
         setLoading(false)
       })
-  }, [basket.ids])
+  };
 
   const clearResults = () => {
     setResults({ NeuroBridge: [], NeuroQuery: [] })
@@ -143,7 +133,6 @@ export const SearchProvider = ({ children }) => {
       fetchResults,
       lastRequestTime,
       loading,
-      nqQuerystring,
       results,
       searchHistory, addToSearchHistory, resetSearchHistory,
       totalResultCount,

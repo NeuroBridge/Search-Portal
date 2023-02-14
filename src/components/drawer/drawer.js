@@ -11,9 +11,9 @@ import {
   ArrowDownward as ChildrenNavIcon,
   LocationOn as CurrentNavIcon,
 } from '@mui/icons-material'
-import { TermToggler } from '../basket'
 import { useDrawer } from './context'
 import { TreeList, useOntology } from '../ontology'
+import { TermToggler } from './term-toggler'
 
 //
 

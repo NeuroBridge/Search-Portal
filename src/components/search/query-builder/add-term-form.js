@@ -12,13 +12,13 @@ import {
   ArrowDropDownCircle as InspectTermIcon,
   AccessTime as HistoryIcon,
 } from '@mui/icons-material'
-import { useBasket } from '../../basket'
 import { useDrawer } from '../../drawer'
 import { useOntology } from '../../ontology'
 import { useSearch } from '../context'
 import elasticlunr from 'elasticlunr'
 import { FixedSizeList } from 'react-window'
 import TimeAgo from 'react-timeago'
+import { useQueryBuilder } from './context'
 
 //
 
@@ -207,16 +207,16 @@ ConceptSelectDialog.propTypes = {
 //
 
 export const AddTermForm = () => {
-  const basket = useBasket()
+  const { addTerm, query } = useQueryBuilder();
   const [open, setOpen] = useState(false)
 
   const handleClose = useCallback(newValue => {
     setOpen(false)
 
     if (typeof newValue === 'string') {
-      basket.add(newValue)
+      addTerm(newValue);
     }
-  }, [basket.ids])
+  }, [query])
 
   return (
     <Stack
@@ -227,7 +227,7 @@ export const AddTermForm = () => {
         startIcon={ <AddIcon /> }
         className="add-term-button"
         onClick={ () => setOpen(true) }
-        variant={ basket.ids.length === 0 ? 'contained' : 'text' }
+        variant={ query.length === 0 ? 'contained' : 'text' }
       ><Box component="span" className="label">Add Concept</Box></Button>
       <ConceptSelectDialog
         open={ open }

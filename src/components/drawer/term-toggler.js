@@ -4,19 +4,19 @@ import {
   CheckBox as CheckedTermIcon,
   CheckBoxOutlineBlank as UncheckedTermIcon,
 } from '@mui/icons-material'
-import { useBasket } from './'
+import { useQueryBuilder } from '../search/query-builder/context'
 
 export const TermToggler = ({ termId, tooltipPlacement }) => {
-  const basket = useBasket()
-  const tip = basket.contains(termId) ? 'Remove term from query builder' : 'Add term to query builder'
+  const { addTerm, removeTerm, containsRoot } = useQueryBuilder();
+  const tip = containsRoot(termId) ? 'Remove term from query builder' : 'Add term to query builder'
 
   const handleClickToggleTerm = event => {
     event.stopPropagation()
-    if (basket.contains(termId)) {
-      basket.remove(termId)
+    if (containsRoot(termId)) {
+      removeTerm(termId)
       return
     }
-    basket.add(termId)
+    addTerm(termId)
   }
 
   return (
@@ -31,13 +31,13 @@ export const TermToggler = ({ termId, tooltipPlacement }) => {
       <Tooltip title={ tip } placement={ tooltipPlacement }>
         <ToggleButton
           value="check"
-          selected={ basket.contains(termId) }
+          selected={ containsRoot(termId) }
           onChange={ handleClickToggleTerm }
           size="small"
           sx={{ transform: 'scale(0.75)', p: 0, border: 0 }}
         >
           {
-            basket.contains(termId)
+            containsRoot(termId)
               ? <CheckedTermIcon sx={{ color: 'primary.light' }} />
               : <UncheckedTermIcon sx={{ color: 'primary.dark' }} />
           }
