@@ -6,8 +6,8 @@ import {
   ExpandMore as ExpandIcon,
 } from '@mui/icons-material'
 import { arrayToTree } from 'performant-array-to-tree'
-import { TermToggler } from '../basket'
 import { useDrawer } from '../drawer'
+import { TermToggler } from '../drawer/term-toggler'
 
 export const TreeList = ({ rootTerm }) => {
   const theme = useTheme()

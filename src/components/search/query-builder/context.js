@@ -7,19 +7,22 @@ import produce from "immer";
 import { useCallback } from "react";
 
 const QueryBuilderContext = createContext({});
+export const useQueryBuilder = () => useContext(QueryBuilderContext);
 
 export const QueryBuilderProvider = ({ children }) => {
   const ontology = useOntology();
   const [query, setQuery] = useState([]);
-  const [outerOperator, setOuterOperator] = useState('AND');
-  const [innerOperator, setInnerOperator] = useState('OR');
+  const [outerOperator, setOuterOperator] = useState("AND");
+  const [innerOperator, setInnerOperator] = useState("OR");
 
   /**
    * An array of all the top level terms in the current query
    */
   const roots = useMemo(() => query.map((roots) => roots.name), [query]);
 
-  const clearQuery = () => setQuery({});
+  const clearQuery = () => setQuery([]);
+
+  const containsRoot = (termId) => query.map((root) => root.name).includes(termId);
 
   /**
    * Adds a term and its entire subtree, setting the root `termId` to a `positive`
@@ -35,7 +38,7 @@ export const QueryBuilderProvider = ({ children }) => {
     // doesn't try to find the parent that doesn't exist
     const descendants = [
       {
-        id: termId,
+        ...ontology.find(termId),
         parentId: null,
       },
       ...ontology.descendantsOf(termId, { strict: true }),
@@ -47,11 +50,15 @@ export const QueryBuilderProvider = ({ children }) => {
       return {
         name: node.id,
         state: node.id === termId ? "positive" : "neutral",
+        labels: node.labels,
         path: node.path,
         children: node.children.map(reduceTree),
       };
     };
-    const tree = reduceTree(arrayToTree(descendants)[0]);
+    console.log(descendants);
+    const att = arrayToTree(descendants);
+    console.log(att);
+    const tree = reduceTree(att[0]);
 
     setQuery((query) => [...query, tree]);
   };
@@ -100,12 +107,12 @@ export const QueryBuilderProvider = ({ children }) => {
    * Event handler which sets the `inner` or `outer` operator to `event.target.value`
    * @param {"inner" | "outer"} operator which operator to target
    */
-  const handleChangeOperator = useCallback(operator => {
-    if (operator === 'inner') {
-      return event => setInnerOperator(event.target.value)
+  const handleChangeOperator = useCallback((operator) => {
+    if (operator === "inner") {
+      return (event) => setInnerOperator(event.target.value);
     }
-    if (operator === 'outer') {
-      return event => setOuterOperator(event.target.value)
+    if (operator === "outer") {
+      return (event) => setOuterOperator(event.target.value);
     }
   }, []);
 
@@ -113,49 +120,59 @@ export const QueryBuilderProvider = ({ children }) => {
    * Query object to be displayed in UI and sent in body of NeuroBridge query
    */
   const nbQueryObject = useMemo(() => {
-    let outerObj = { [outerOperator]: [] }
-    
-    query.forEach(root => {
+    let outerObj = { [outerOperator]: [] };
+
+    query.forEach((root) => {
       // make a list for all of the terms with state !== neutral in this root's subtree
       const subtreeList = [];
-      
+
       // first check if the root itself has a state
-      if(root.state === 'positive') {
+      if (root.state === "positive") {
         subtreeList.push(root.name);
-      }
-      else if(root.state === 'negative') {
-        subtreeList.push({ NOT: [root.name]});
+      } else if (root.state === "negative") {
+        subtreeList.push({ NOT: [root.name] });
       }
 
       // DFS traverse the tree and add any terms with state !== neutral to the subtreeList
       const traverse = (node) => {
-        for(const child of node.children) {
-          if(child.state === 'positive') {
+        for (const child of node.children) {
+          if (child.state === "positive") {
             subtreeList.push(child.name);
-          }
-          else if(child.state === 'negative') {
-            subtreeList.push({ NOT: [child.name]});
+          } else if (child.state === "negative") {
+            subtreeList.push({ NOT: [child.name] });
           }
           traverse(child);
         }
-      }
+      };
       traverse(root);
 
       // spread the objects found in this root's subtree into the innerOperator (OR)
-      outerObj[outerOperator].push({ [innerOperator]: [...subtreeList]});
-    })
+      outerObj[outerOperator].push({ [innerOperator]: [...subtreeList] });
+    }, [query]);
 
     // if there is only one root, remove the outerOperator (AND)
-    if(query.length === 1) {
+    if (query.length === 1) {
       outerObj = outerObj[outerOperator][0];
     }
 
     return outerObj;
-  }, [query])
+  }, [query, innerOperator, outerOperator]);
 
   return (
     <QueryBuilderContext.Provider
-      value={{ query, nbQueryObject, roots, addTerm, removeTerm, toggleTermState, clearQuery, handleChangeOperator }}
+      value={{
+        query,
+        nbQueryObject,
+        roots,
+        containsRoot,
+        addTerm,
+        removeTerm,
+        toggleTermState,
+        clearQuery,
+        handleChangeOperator,
+        innerOperator,
+        outerOperator,
+      }}
     >
       {children}
     </QueryBuilderContext.Provider>
@@ -165,5 +182,3 @@ export const QueryBuilderProvider = ({ children }) => {
 QueryBuilderProvider.propTypes = {
   children: PropTypes.node,
 };
-
-export const useQueryBuilder = () => useContext(QueryBuilderContext);

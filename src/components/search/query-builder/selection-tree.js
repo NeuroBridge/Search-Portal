@@ -14,59 +14,32 @@ import {
   RemoveCircle as TermUnselectedIcon,
   Circle as TermNeutralIcon,
 } from '@mui/icons-material'
-import { arrayToTree } from 'performant-array-to-tree'
 import { useDrawer } from '../../drawer'
-import { useOntology } from '../../ontology'
-import { useQueryBuilder } from './query-builder'
+import { useQueryBuilder } from './context'
 import { SelectionTreeMenu } from './selection-tree-menu'
 
-export const SelectionTree = ({ rootTermId }) => {
+export const SelectionTree = ({ term }) => {
   const theme = useTheme()
   const drawer = useDrawer()
-  const ontology = useOntology()
-  const { removeTerm, toggleTermSelection, values } = useQueryBuilder()
-
-  // to play nicely with `arrayToTree`, we'll set
-  // our root term to have no parent so that it doesn't
-  // expect to find and render the term's parent.
-  const descendants = [
-    {
-      id: rootTermId,
-      parentId: null,
-    },
-    ...ontology.descendantsOf(rootTermId),
-  ]
-
-  // this function aids in generating a tree object
-  // suitable for the MUI TreeView component.
-  const reduceTree = node => {
-    return ({
-      id: node.data.id,
-      parentId: node.data.parentId,
-      children: node.children.map(reduceTree),
-    })
-  }
-
-  // this is the tree, ready for MUI's TreeView.
-  const tree = reduceTree(arrayToTree(descendants)[0])
+  const { removeTerm, toggleTermState, query } = useQueryBuilder()
 
   // this function returns the apropriate icon to render,
   // based on the user's selection.
-  const selectionIcon = useCallback(value => [
-    <TermNeutralIcon sx={{ color: 'concept.neutral', }} key={ `icon-0` } />,
-    <TermSelectedIcon sx={{ color: 'concept.positive', }} key={ `icon-1` } />,
-    <TermUnselectedIcon sx={{ color: 'concept.negative' }} key={ `icon-2` } />,
-  ][value], [])
+  const selectionIcon = useCallback(value => ({
+    'neutral': <TermNeutralIcon sx={{ color: 'concept.neutral', }} key={ `icon-0` } />,
+    'positive': <TermSelectedIcon sx={{ color: 'concept.positive', }} key={ `icon-1` } />,
+    'negative': <TermUnselectedIcon sx={{ color: 'concept.negative' }} key={ `icon-2` } />,
+  }[value]), [])
 
   // this recursive function handles rendering the nesting of tree list items
   // to create the tree of descendants for each term.
   const renderSelectionTree = useCallback(node => {
     return (
       <TreeItem
-        key={ node.id }
-        nodeId={ node.id }
+        key={ node.name }
+        nodeId={ node.name }
         sx={{
-          borderLeft: rootTermId === node.id
+          borderLeft: term.name === node.name
             ? 0
             : `2px solid ${ theme.palette.background.default }`,
           '&:last-child': { borderBottomLeftRadius: '0.75rem' },
@@ -79,18 +52,18 @@ export const SelectionTree = ({ rootTermId }) => {
             gap: 2,
           }}>
             <FormControlLabel
-              label={ node.id }
+              label={ node.name }
               control={
                 <Checkbox
                   checked={ true }
-                  checkedIcon={ selectionIcon(values[node.id]) }
+                  checkedIcon={ selectionIcon(node.state) }
                   onClick={ event => event.stopPropagation() }
-                  onChange={ toggleTermSelection(node.id) }
+                  onChange={ () => toggleTermState(node.path) }
                 />
               }
             />
             {
-              rootTermId === node.id && (
+              term.name === node.name && (
                 <SelectionTreeMenu items={[
                   {
                     key: 'remove',
@@ -119,14 +92,14 @@ export const SelectionTree = ({ rootTermId }) => {
         }
       </TreeItem>
     )
-  })
+  }, [query])
 
   const handleClickRemoveTerm = () => {
-    removeTerm(rootTermId)
+    removeTerm(term.name)
   }
 
   const handleClickInspectTerm = () => {
-    drawer.setTermId(rootTermId)
+    drawer.setTermId(term.name)
   }
 
   return (
@@ -151,12 +124,12 @@ export const SelectionTree = ({ rootTermId }) => {
         disabledItemsFocusable
         disableSelection
       >
-        { renderSelectionTree(tree) }
+        { renderSelectionTree(term) }
       </TreeView>
     </Stack>
   )
 }
 
 SelectionTree.propTypes = {
-  rootTermId: PropTypes.string.isRequired,
+  term: PropTypes.object.isRequired,
 }
