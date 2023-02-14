@@ -144,7 +144,7 @@ export const QueryBuilderProvider = ({ children }) => {
       traverse(root);
 
       // spread the objects found in this root's subtree into the innerOperator (OR)
-      outerObj[outerOperator].push({ [innerOperator]: [...subtreeList] });
+      if(subtreeList.length > 0) outerObj[outerOperator].push({ [innerOperator]: [...subtreeList] });
     }, [query]);
 
     // if there is only one root, remove the outerOperator (AND)
