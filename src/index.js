@@ -7,6 +7,7 @@ import { AppContextProvider } from './context'
 import { BasketProvider } from './components/basket'
 import { DrawerProvider } from './components/drawer'
 import { OntologyProvider } from './components/ontology'
+import { QueryBuilderProvider } from "./components/search/query-builder/context"
 import owlFile from './data/ontology.owl'
 import './styles/index.css'
 
@@ -17,7 +18,9 @@ const ProvisionedApp = () => {
         <OntologyProvider owlFile={ owlFile }>
           <BasketProvider>
             <DrawerProvider>
-              <App />
+              <QueryBuilderProvider>
+                <App />
+              </QueryBuilderProvider>
             </DrawerProvider>
           </BasketProvider>
         </OntologyProvider>
