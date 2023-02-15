@@ -104,7 +104,7 @@ export const Header = () => {
               <Box sx={ navStyle }>
                 <NavLink to="/">Search</NavLink>
                 <NavLink to="/about">About</NavLink>
-                <NavLink to="/contact">Contact</NavLink>
+                <NavLink to="/feedback">Feedback</NavLink>
               </Box>
               <Tooltip title={ `Switch to ${ settings.color.mode === settings.color.modes.light ? 'dark' : 'light' } mode` } placement="bottom">
                 <IconButton onClick={ settings.color.toggleMode } color="primary">

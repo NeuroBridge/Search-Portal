@@ -3,7 +3,7 @@ import { Box, Fade, Stack, Typography } from '@mui/material'
 import { SelectionTree } from './selection-tree'
 import StartHereArrow from '../../../images/start-here.svg'
 
-export const SelectionForest = ({ roots }) => {
+export const SelectionForest = ({ query }) => {
   return (
     <Stack
       justifyContent="flex-start"
@@ -17,7 +17,7 @@ export const SelectionForest = ({ roots }) => {
       }}
     >
       {
-        roots.length === 0 ? (
+        query.length === 0 ? (
           <Fade in={ true }>
             <Box sx={{ mt: 0 }}>
               <Typography
@@ -41,8 +41,8 @@ export const SelectionForest = ({ roots }) => {
               />
             </Box>
           </Fade>
-        ) : roots.map(id => (
-          <SelectionTree key={ `${ id }-forest` } rootTermId={ id } />
+        ) : query.map(root => (
+          <SelectionTree key={ `${ root.name }-forest` } term={ root } />
         ))
       }
     </Stack>
@@ -50,5 +50,5 @@ export const SelectionForest = ({ roots }) => {
 }
 
 SelectionForest.propTypes = {
-  roots: PropTypes.array.isRequired,
+  query: PropTypes.array.isRequired,
 }

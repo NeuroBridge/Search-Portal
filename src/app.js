@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom'
 import { Paper, useTheme } from '@mui/material'
 import { ToastContainer } from 'react-toastify'
 import {
-  AboutView, ContactView, NotFoundView, SearchView
+  AboutView, FeedbackView, NotFoundView, SearchView
 } from './views'
 import { Drawer } from './components/drawer'
 import { Header } from './components/layout'
@@ -10,17 +10,17 @@ import { Header } from './components/layout'
 const Router = () => {
   return (
     <Routes>
-      <Route path="/"       element={ <SearchView /> } />
-      <Route path="/contact" element={ <ContactView /> } />
-      <Route path="/about"  element={ <AboutView /> } />
-      <Route path="*"       element={ <NotFoundView /> } />
+      <Route path="/"         element={ <SearchView /> } />
+      <Route path="/feedback" element={ <FeedbackView /> } />
+      <Route path="/about"    element={ <AboutView /> } />
+      <Route path="*"         element={ <NotFoundView /> } />
     </Routes>
   )
 }
 
 export const App = () => {
   const theme = useTheme()
-console.log(theme)
+  
   return (
     <Paper
       className="app-container"

@@ -5,9 +5,9 @@ import {
   ChevronRight as CollapseIcon,
   ExpandMore as ExpandIcon,
 } from '@mui/icons-material'
-import { arrayToTree } from 'performant-array-to-tree'
-import { TermToggler } from '../basket'
 import { useDrawer } from '../drawer'
+import { TermToggler } from '../drawer/term-toggler'
+import { arrayToTree } from '../../util/array-to-tree'
 
 export const TreeList = ({ rootTerm }) => {
   const theme = useTheme()
@@ -59,8 +59,8 @@ export const TreeList = ({ rootTerm }) => {
   // to make browsing on this view a little simpler.
   const reduceTree = node => {
     return {
-      id: node.data.id,
-      parentId: node.data.parentId,
+      id: node.id,
+      parentId: node.parentId,
       children: node.children.map(reduceTree),
     }
   }
