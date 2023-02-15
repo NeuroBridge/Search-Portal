@@ -55,7 +55,6 @@
     "elasticlunr": "^0.9.5",
     "immer": "^9.0.19",
     "lerp": "^1.0.3",
-    "performant-array-to-tree": "^1.11.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-hook-form": "^7.34.0",
