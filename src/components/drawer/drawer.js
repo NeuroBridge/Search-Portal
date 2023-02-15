@@ -304,13 +304,13 @@ export const Drawer = () => {
             <Stack sx={{ backgroundColor: 'background.paper' }}>
               {
                 ontology.trees
-                  .sort((t, s) => t.data.id.toLowerCase() < s.data.id.toLowerCase() ? -1 : 1)
+                  .sort((t, s) => t.id.toLowerCase() < s.id.toLowerCase() ? -1 : 1)
                   .map(root => <TreeList
-                    key={ `root-${ root.data.id }` }
+                    key={ `root-${ root.id }` }
                     rootTerm={{
-                      ...ontology.find(root.data.id),
-                      children: ontology.childrenOf(root.data.id),
-                      descendants: ontology.descendantsOf(root.data.id),
+                      ...ontology.find(root.id),
+                      children: ontology.childrenOf(root.id),
+                      descendants: ontology.descendantsOf(root.id),
                     }}
                   />)
               }

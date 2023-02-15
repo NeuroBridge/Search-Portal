@@ -1,7 +1,7 @@
 import { createContext, useCallback, useContext, useMemo } from 'react'
 import PropTypes from 'prop-types'
-import { arrayToTree } from 'performant-array-to-tree'
 import { extractTerms } from '../../util/owl'
+import { arrayToTree } from '../../util/array-to-tree'
 const OntologyContext = createContext({})
 
 // this array describes the fields that comprise a term...
