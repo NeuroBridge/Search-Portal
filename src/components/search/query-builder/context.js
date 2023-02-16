@@ -134,8 +134,6 @@ export const QueryBuilderProvider = ({ children }) => {
       // first check if the root itself has a state
       if (root.state === "positive") {
         subtreeList.push(root.name);
-      } else if (root.state === "negative") {
-        subtreeList.push({ NOT: [root.name] });
       }
 
       // DFS traverse the tree and add any terms with state !== neutral to the subtreeList
@@ -143,8 +141,6 @@ export const QueryBuilderProvider = ({ children }) => {
         for (const child of node.children) {
           if (child.state === "positive") {
             subtreeList.push(child.name);
-          } else if (child.state === "negative") {
-            subtreeList.push({ NOT: [child.name] });
           }
           traverse(child);
         }
