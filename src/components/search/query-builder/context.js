@@ -163,11 +163,16 @@ export const QueryBuilderProvider = ({ children }) => {
     return outerObj;
   }, [query, innerOperator, outerOperator]);
 
+  const nqQueryString = useMemo(() => {
+    return query.filter(node => node.state === 'positive').map(node => node.labels[0]).join('+');
+  }, [query, innerOperator, outerOperator]);
+
   return (
     <QueryBuilderContext.Provider
       value={{
         query,
         nbQueryObject,
+        nqQueryString,
         roots,
         containsRoot,
         addTerm,

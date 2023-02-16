@@ -5,13 +5,15 @@ import { columns } from './columns'
 import { TableHeader } from './table-header'
 import { useSearch } from '../context'
 import { Link } from '../../link'
+import { useQueryBuilder } from '../query-builder/context'
 
 //
 
 export const ResultsTable = () => {
   const {
-    results, lastRequestTime, totalResultCount, nqQuerystring,
+    results, lastRequestTime, totalResultCount,
   } = useSearch()
+  const { nqQueryString } = useQueryBuilder();
 
   const [currentTabIndex, setCurrentTabIndex] = useState(0)
 
@@ -59,7 +61,7 @@ export const ResultsTable = () => {
               detail: currentTabIndex === 1
                 ? (
                   <Link
-                    to={ `https://neuroquery.org/query?text=${ nqQuerystring }` }
+                    to={ `https://neuroquery.org/query?text=${ nqQueryString }` }
                   >View these results at NeuroQuery.org</Link>
                 ) : '',
             }
