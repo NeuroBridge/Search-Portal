@@ -49,7 +49,7 @@ export const QueryBuilderProvider = ({ children }) => {
     const reduceTree = (node) => {
       return {
         name: node.id,
-        state: node.id === termId ? "positive" : "neutral",
+        state: "positive",
         labels: node.labels,
         path: node.path,
         children: node.children.map(reduceTree),
