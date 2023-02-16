@@ -74,7 +74,7 @@ export const QueryBuilderProvider = ({ children }) => {
    * the root to the term to be toggled
    */
   const toggleTermState = (path) => {
-    const states = ["neutral", "positive", "negative"];
+    const states = ["neutral", "positive"];
 
     // use Immer to performantly update necessary section of tree
     const nextQuery = produce(query, (draft) => {
@@ -91,10 +91,18 @@ export const QueryBuilderProvider = ({ children }) => {
         currentChildren = currentTerm.children;
       }
 
+      // get the next state string in the list
       const currentTermState = currentTerm.state;
       const currentStateIndex = states.indexOf(currentTermState);
       const nextStateIndex = (currentStateIndex + 1) % states.length;
-      currentTerm.state = states[nextStateIndex];
+      const nextState = states[nextStateIndex];
+
+      // set state on all subtree children (and term that was clicked on)
+      const traverse = (term) => {
+        term.state = nextState;
+        term.children.map(traverse);
+      }
+      traverse(currentTerm);
     });
 
     setQuery(nextQuery);
