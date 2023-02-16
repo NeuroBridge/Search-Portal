@@ -1,3 +1,0 @@
-The Search-Portal-Chart directory contains the helm artifacts for this project.  Use a command like
-
-helm upgrade --install neurobridges-portal Search-Portal-Chart -n neurobridges -f Search-Portal-Chart/Portal-Values.yaml
