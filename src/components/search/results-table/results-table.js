@@ -64,7 +64,7 @@ export const ResultsTable = () => {
             toolbar: {
               currentTabIndex,
               handleChangeTab,
-              detail: currentTabIndex === 1
+              detail: currentTabIndex === 1 && nqQueryString.length > 0
                 ? (
                   nqLink.length - 8 > 4094 ?
                   <Box display='flex' gap='8px' alignItems='center' sx={{ color: theme.palette.error.main }}>
