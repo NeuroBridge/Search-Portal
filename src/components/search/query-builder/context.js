@@ -160,8 +160,16 @@ export const QueryBuilderProvider = ({ children }) => {
   }, [query, innerOperator, outerOperator]);
 
   const nqQueryString = useMemo(() => {
-    return query.filter(node => node.state === 'positive').map(node => node.labels[0]).join('+');
-  }, [query, innerOperator, outerOperator]);
+    const terms = new Set();
+
+    const traverse = (node) => {
+      if (node.state === 'positive') terms.add(node.labels[0]);
+      node.children.map(traverse);
+    }
+    query.map(traverse);
+
+    return Array.from(terms).join('+');
+  }, [query]);
 
   return (
     <QueryBuilderContext.Provider
