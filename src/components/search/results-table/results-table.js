@@ -1,17 +1,23 @@
 import { useMemo, useState } from 'react'
-import { Card, Fade } from '@mui/material'
+import { Card, Fade, Typography } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 import { columns } from './columns'
 import { TableHeader } from './table-header'
 import { useSearch } from '../context'
 import { Link } from '../../link'
+import { useQueryBuilder } from '../query-builder/context'
+import { Error } from '@mui/icons-material'
+import { Box } from '@mui/system'
+import { useTheme } from '@emotion/react'
 
 //
 
 export const ResultsTable = () => {
+  const theme = useTheme();
   const {
-    results, lastRequestTime, totalResultCount, nqQuerystring,
+    results, lastRequestTime, totalResultCount,
   } = useSearch()
+  const { nqQueryString } = useQueryBuilder();
 
   const [currentTabIndex, setCurrentTabIndex] = useState(0)
 
@@ -32,6 +38,8 @@ export const ResultsTable = () => {
   const [pageSize, setPageSize] = useState(20)
 
   //
+
+  const nqLink = `https://neuroquery.org/query?text=${ nqQueryString }`;
 
   return (
     <Fade in={ totalResultCount > 0 }>
@@ -56,11 +64,17 @@ export const ResultsTable = () => {
             toolbar: {
               currentTabIndex,
               handleChangeTab,
-              detail: currentTabIndex === 1
+              detail: currentTabIndex === 1 && nqQueryString.length > 0
                 ? (
+                  nqLink.length - 8 > 4094 ?
+                  <Box display='flex' gap='8px' alignItems='center' sx={{ color: theme.palette.error.main }}>
+                    <Error />
+                    <Typography variant='body2'>Too many terms selected to view on NeuroQuery.org</Typography>
+                  </Box>
+                  :
                   <Link
-                    to={ `https://neuroquery.org/query?text=${ nqQuerystring }` }
-                  >View these results at NeuroQuery.org</Link>
+                    to={ nqLink }
+                  >View selected terms at NeuroQuery.org</Link>
                 ) : '',
             }
           }}
