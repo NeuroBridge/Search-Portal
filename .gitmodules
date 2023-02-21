@@ -1,3 +1,0 @@
-[submodule "kubernetes"] 
-  path = kubernetes/Search-Portal-Chart
-  url = https://github.com/NeuroBridge/Search-Portal-Chart.git

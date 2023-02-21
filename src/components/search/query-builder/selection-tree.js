@@ -11,7 +11,6 @@ import {
   ArrowDropDownCircle as InspectTermIcon,
   Delete as RemoveTermIcon,
   AddCircle as TermSelectedIcon,
-  RemoveCircle as TermUnselectedIcon,
   Circle as TermNeutralIcon,
 } from '@mui/icons-material'
 import { useDrawer } from '../../drawer'
@@ -28,7 +27,6 @@ export const SelectionTree = ({ term }) => {
   const selectionIcon = useCallback(value => ({
     'neutral': <TermNeutralIcon sx={{ color: 'concept.neutral', }} key={ `icon-0` } />,
     'positive': <TermSelectedIcon sx={{ color: 'concept.positive', }} key={ `icon-1` } />,
-    'negative': <TermUnselectedIcon sx={{ color: 'concept.negative' }} key={ `icon-2` } />,
   }[value]), [])
 
   // this recursive function handles rendering the nesting of tree list items

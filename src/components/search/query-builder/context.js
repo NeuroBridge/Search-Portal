@@ -49,7 +49,7 @@ export const QueryBuilderProvider = ({ children }) => {
     const reduceTree = (node) => {
       return {
         name: node.id,
-        state: node.id === termId ? "positive" : "neutral",
+        state: "positive",
         labels: node.labels,
         path: node.path,
         children: node.children.map(reduceTree),
@@ -74,7 +74,7 @@ export const QueryBuilderProvider = ({ children }) => {
    * the root to the term to be toggled
    */
   const toggleTermState = (path) => {
-    const states = ["neutral", "positive", "negative"];
+    const states = ["neutral", "positive"];
 
     // use Immer to performantly update necessary section of tree
     const nextQuery = produce(query, (draft) => {
@@ -91,10 +91,18 @@ export const QueryBuilderProvider = ({ children }) => {
         currentChildren = currentTerm.children;
       }
 
+      // get the next state string in the list
       const currentTermState = currentTerm.state;
       const currentStateIndex = states.indexOf(currentTermState);
       const nextStateIndex = (currentStateIndex + 1) % states.length;
-      currentTerm.state = states[nextStateIndex];
+      const nextState = states[nextStateIndex];
+
+      // set state on all subtree children (and term that was clicked on)
+      const traverse = (term) => {
+        term.state = nextState;
+        term.children.map(traverse);
+      }
+      traverse(currentTerm);
     });
 
     setQuery(nextQuery);
@@ -126,8 +134,6 @@ export const QueryBuilderProvider = ({ children }) => {
       // first check if the root itself has a state
       if (root.state === "positive") {
         subtreeList.push(root.name);
-      } else if (root.state === "negative") {
-        subtreeList.push({ NOT: [root.name] });
       }
 
       // DFS traverse the tree and add any terms with state !== neutral to the subtreeList
@@ -135,8 +141,6 @@ export const QueryBuilderProvider = ({ children }) => {
         for (const child of node.children) {
           if (child.state === "positive") {
             subtreeList.push(child.name);
-          } else if (child.state === "negative") {
-            subtreeList.push({ NOT: [child.name] });
           }
           traverse(child);
         }
@@ -155,11 +159,24 @@ export const QueryBuilderProvider = ({ children }) => {
     return outerObj;
   }, [query, innerOperator, outerOperator]);
 
+  const nqQueryString = useMemo(() => {
+    const terms = new Set();
+
+    const traverse = (node) => {
+      if (node.state === 'positive') terms.add(node.labels[0]);
+      node.children.map(traverse);
+    }
+    query.map(traverse);
+
+    return Array.from(terms).join('+');
+  }, [query]);
+
   return (
     <QueryBuilderContext.Provider
       value={{
         query,
         nbQueryObject,
+        nqQueryString,
         roots,
         containsRoot,
         addTerm,

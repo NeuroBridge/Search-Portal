@@ -3,47 +3,47 @@
 - staging: [https://neurobridges-portal-staging.netlify.app/](https://staging.neurobridges.org)
 - production: N/A
 
-This is a [React](https://reactjs.org/) application that was bootstrapped with [RENCI/create-renci-app](https://github.com/RENCI/create-renci-app).
+This is a [React](https://reactjs.org/) application that was based off of [RENCI/react-starter](https://github.com/RENCI/react-starter).
 
 ### 🚧 Development
 
-You'll need Node v14.16.0 or higher. If you don't have that version installed, use [nvm](https://github.com/nvm-sh/nvm) to specify a Node version with `nvm use 14.16.0`. Install dependencies with `npm ci`. Run development server on port 8080 with `npm start`.
+We're developing with Node v18. Install dependencies with `npm ci`. Run development server on port 8080 with `npm start`.
 
 ### 🎁 Production
 
-Build the application for production with `npm run build`. The `dist` directory will contain the bundled files.
+Build the application for production with `npm run build`. The `dist` directory will contain the files bundled with Webpack. This assets in this bundle are what get copied into the release image, so it's a good idea to ensure that the result of build process is what's expected at this stage, before moving on to build Docker images.
 
-A [Dockerfile](Dockerfile) exists for easy, consistent deployment. Commands to get going would look something like the following.
+#### Deploying to [Sterling](https://wiki.renci.org/index.php?title=Kubernetes_Cloud/Sterling).
 
-```
-docker build -t neurobridge/search-portal .
-docker run -d --expose=80 neurobridge/search-portal
-```
+Before doing anything, determine the next release version. Throughout this section, we'll assume the next version is `1.0.4`.
 
-### 🗄️ Ontology Data
-
-The NeuroBridge Onotology is defined in an OWL file that sits in this code base (at ./src/data/ontology.owl). A [script](./owl-update-script.js) exists to fetch and update the OWL file with the most recent version from https://purl.org/neurobridges/ontology.owl. Execute this script with `npm run owl-update`.
-
-### ⚙ Testing
-
-A couple tests have been written around extracting the ontology terms from the OWL file. More need to be written.
-
-Run the tests with `npm test`, with the following output expected.
-
+1. **Build.** Build a release image with the following command, executed from the project root.
 ```bash
-$ npm test
+docker build -t containers.renci.org/neurobridges/portal:1.0.4 .
+```
+> Note: The version tag here, `1.0.4`, must match its occurrences elsewhere in these commands.
 
-> test
-> jest
+2. **Test.** Ensure a container can be spun up from your new image
+```bash
+docker run --rm -p 80:8080 containers.renci.org/neurobridges/portal:1.0.4
+```
+The container should be running, and we should see the Search Portal in our browser at [http://localhost](http://localhost).
 
- PASS  src/util/owl.test.js
-  ✓ id extraction from iri works (2 ms)
-  ✓ term extraction from owl file works (134 ms)
+3. **Push.** Push the image to RENCI's image registry.
+```bash
+docker push containers.renci.org/neurobridges/portal:1.0.4
+```
+> Note: If not already authenticated, log in with `docker login containers.renci.org`.
 
-Test Suites: 1 passed, 1 total
-Tests:       2 passed, 2 total
-Snapshots:   0 total
-Time:        0.64 s, estimated 1 s
-``` 
+4. **Deploy.** Update the value of `image.tag` in the file `kubernetes/values.yaml` to match the image tag used in the Docker commands above. In our running example, the relevant part of `values.yaml` file would need to look like this.
 
-A GitHub Action is in place to run the tests on pull requests to the `develop` branch.
+```yaml
+image:
+  repository: containers.renci.org/neurobridges/portal
+  tag: "1.0.4"
+```
+
+Deploy the new release with the following command.
+```bash
+helm upgrade --install neurobridges-portal kubernetes -n neurobridges
+```
