@@ -78,6 +78,10 @@ module.exports = {
           loader: 'xml-loader',
         },
       },
+      {
+        test: /\.ya?ml$/,
+        use: 'yaml-loader',
+      }
     ]
   },
 
