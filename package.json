@@ -1,5 +1,4 @@
 {
-  "version": "1.0.5",
   "private": "true",
   "scripts": {
     "start": "SERVE=true webpack serve",
@@ -67,6 +66,7 @@
     "regenerator-runtime": "^0.13.9",
     "sass": "^1.35.1",
     "xml2js": "^0.4.23",
+    "yaml-loader": "^0.8.0",
     "yup": "^0.32.11"
   }
 }

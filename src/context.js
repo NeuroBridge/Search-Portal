@@ -5,9 +5,9 @@ import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { lightTheme, darkTheme } from './styles/theme'
 import { useLocalStorage } from './hooks'
-import packageJson from '../package.json'
+import k8sValues from '../kubernetes/values.yaml'
 
-const { version } = packageJson
+const version = k8sValues?.image?.tag || 'unknown version'
 
 const AppContext = createContext({})
 
