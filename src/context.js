@@ -5,6 +5,9 @@ import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { lightTheme, darkTheme } from './styles/theme'
 import { useLocalStorage } from './hooks'
+import packageJson from '../package.json'
+
+const { version } = packageJson
 
 const AppContext = createContext({})
 
@@ -35,6 +38,7 @@ export const AppContextProvider = ({ children }) => {
   return (
     <AppContext.Provider value={{
       notify,
+      version,
       settings: {
         color: {
           modes: MODES,

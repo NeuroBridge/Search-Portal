@@ -47,8 +47,45 @@ NavLink.propTypes = {
 
 //
 
+
+const Brand = ({ text, version }) => {
+  const theme = useTheme()
+
+  const brandStyle = {
+    position: 'relative',
+    paddingBottom: theme.spacing(1),
+    textDecoration: 'none',
+    '.text': {
+      fontVariant: 'small-caps',
+      fontSize: '2rem',
+    },
+    '.version': {
+      position: 'absolute',
+      bottom: 0,
+      right: 0,
+      color: theme.palette.primary.light,
+    },
+  }
+
+  return (
+    <Box component={ Link } to="/" sx={ brandStyle }>
+      <span className="text">{ text }</span>
+      <span className="version">v{ version }</span>
+    </Box>
+  )
+}
+
+Brand.propTypes = {
+  text: PropTypes.string.isRequired,
+  version: PropTypes.string.isRequired,
+}
+
+
+
+//
+
 export const Header = () => {
-  const { settings } = useAppContext()
+  const { settings, version } = useAppContext()
   const theme = useTheme()
   const drawer = useDrawer()
 
@@ -77,12 +114,6 @@ export const Header = () => {
     }
   }
 
-  const brandStyle = {
-    fontVariant: 'small-caps',
-    textDecoration: 'none',
-    fontSize: '2rem',
-  }
-
   return (
     <Fragment>
       <HideOnScroll>
@@ -99,9 +130,7 @@ export const Header = () => {
               padding: '0 1rem',
               gap: 2,
             }}>
-              <Link to="/" style={ brandStyle }>
-                NeuroBridge
-              </Link>
+              <Brand text="NeuroBridge" version={ version } />
               <Box sx={ navStyle }>
                 <NavLink to="/">Search</NavLink>
                 <NavLink to="/about">About</NavLink>
