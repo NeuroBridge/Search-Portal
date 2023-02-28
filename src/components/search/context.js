@@ -9,6 +9,7 @@ import { useAppContext } from '../../context'
 axios.defaults.timeout = 5000
 const NB_API_URL = `https://neurobridges-ml.renci.org/nb_translator`
 const NQ_API_URL = `https://neurobridges.renci.org:13374/query`
+const NB_NQ_TRANSLATOR_URL = `https://neurobridges.apps.renci.org/neurobridge`
 
 //
 
@@ -80,8 +81,19 @@ export const SearchProvider = ({ children }) => {
       })
   };
 
-  const nqFetchResults = (query) => {
-    return axios.get(NQ_API_URL, { params: { searchTerms: query } })
+  const nqFetchResults = async (query) => {
+    const searchTerms = query.replaceAll(/\+/g, ',');
+
+    const translatedTerms = await axios.get(NB_NQ_TRANSLATOR_URL, { params: { searchTerms } })
+      .then(({ data }) => {return data.data.reduce((acc, current) => [...acc, ...Object.values(current)[0]], [])} )
+      .then((translatedTermsArray) => translatedTermsArray.map(termObject => termObject.term).join('+'))
+      .catch(error => {
+        notify('There was an error communicating with the NeuroBridge to NeuroQuery translator API', 'error')
+        console.error(error)
+        return []
+      })
+    
+    return await axios.get(NQ_API_URL, { params: { searchTerms: translatedTerms } })
       .then(({ data }) => {
         if (!data?.data) {
           throw new Error('An error occurred while fetching NeuroQuery results.')
@@ -96,7 +108,7 @@ export const SearchProvider = ({ children }) => {
       })
       .catch(error => {
         notify('There was an error communicating with the NeuroQuery API.', 'error')
-        console.log(error)
+        console.error(error)
         return []
       })
   };
