@@ -10,6 +10,9 @@ axios.defaults.timeout = 5000
 const NB_API_URL = `https://neurobridges-ml.renci.org/nb_translator`
 const NQ_API_URL = `https://neurobridges.renci.org:13374/query`
 
+const getPubMedCentralLink = (pmcid) => `https://www.ncbi.nlm.nih.gov/pmc/articles/${pmcid}/`;
+const getPubMedLink = (pmid) => `https://pubmed.ncbi.nlm.nih.gov/${pmid}/`;
+
 //
 
 const SearchContext = createContext({ })
@@ -68,9 +71,9 @@ export const SearchProvider = ({ children }) => {
           snippet: result.snippet,
           score: result.score,
           pmid: result.pmid,
-          pubmed_url: result.pmc_link,
+          pubmed_url: getPubMedLink(result.pmid),
           pmcid: result.pmcid,
-          pmc_url: result.pmc_link,
+          pmc_url: getPubMedCentralLink(result.pmcid),
         }))
       })
       .catch(error => {
