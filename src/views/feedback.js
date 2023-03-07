@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, Container, Divider, Typography } from '@mui/material'
-import { ContactForm } from '../components/contact-form'
+import { FeedbackForm } from '../components/feedback-form'
 import { useLocation } from 'react-router-dom'
 
 export const FeedbackView = () => {
@@ -26,7 +26,7 @@ export const FeedbackView = () => {
         <Divider />
 
         <CardContent>
-          <ContactForm presets={{ ...location.state }} />
+          <FeedbackForm presets={{ ...location.state }} />
         </CardContent>
       </Card>
 

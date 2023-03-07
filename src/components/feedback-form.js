@@ -47,7 +47,7 @@ const defaults = {
 
 //
 
-export const ContactForm = ({ presets }) => {
+export const FeedbackForm = ({ presets }) => {
   const {
     control,
     handleSubmit,
@@ -182,6 +182,6 @@ export const ContactForm = ({ presets }) => {
   )
 }
 
-ContactForm.propTypes = {
+FeedbackForm.propTypes = {
   presets: PropTypes.object,
 }
