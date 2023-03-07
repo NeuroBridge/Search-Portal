@@ -5,7 +5,6 @@ import { columns } from './columns'
 import { TableHeader } from './table-header'
 import { useSearch } from '../context'
 import { Link } from '../../link'
-import { useQueryBuilder } from '../query-builder/context'
 import { Error } from '@mui/icons-material'
 import { Box } from '@mui/system'
 import { useTheme } from '@emotion/react'
@@ -15,9 +14,8 @@ import { useTheme } from '@emotion/react'
 export const ResultsTable = () => {
   const theme = useTheme();
   const {
-    results, lastRequestTime, totalResultCount,
+    results, lastRequestTime, totalResultCount, translatedTerms
   } = useSearch()
-  const { nqQueryString } = useQueryBuilder();
 
   const [currentTabIndex, setCurrentTabIndex] = useState(0)
 
@@ -39,7 +37,7 @@ export const ResultsTable = () => {
 
   //
 
-  const nqLink = `https://neuroquery.org/query?text=${ nqQueryString }`;
+  const nqLink = `https://neuroquery.org/query?text=${ translatedTerms.join('+') }`;
 
   return (
     <Fade in={ totalResultCount > 0 }>
@@ -64,7 +62,7 @@ export const ResultsTable = () => {
             toolbar: {
               currentTabIndex,
               handleChangeTab,
-              detail: currentTabIndex === 1 && nqQueryString.length > 0
+              detail: currentTabIndex === 1 && translatedTerms.length > 0
                 ? (
                   nqLink.length - 8 > 4094 ?
                   <Box display='flex' gap='8px' alignItems='center' sx={{ color: theme.palette.error.main }}>

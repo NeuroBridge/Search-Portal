@@ -19,19 +19,19 @@ Before doing anything, determine the next release version. Throughout this secti
 
 1. **Build.** Build a release image with the following command, executed from the project root.
 ```bash
-docker build -t containers.renci.org/neurobridges/portal:1.0.4 .
+docker build -t containers.renci.org/neurobridges/neurobridges-portal:1.0.4 .
 ```
 > Note: The version tag here, `1.0.4`, must match its occurrences elsewhere in these commands.
 
 2. **Test.** Ensure a container can be spun up from your new image
 ```bash
-docker run --rm -p 80:8080 containers.renci.org/neurobridges/portal:1.0.4
+docker run --rm -p 80:8080 containers.renci.org/neurobridges/neurobridges-portal:1.0.4
 ```
 The container should be running, and we should see the Search Portal in our browser at [http://localhost](http://localhost).
 
 3. **Push.** Push the image to RENCI's image registry.
 ```bash
-docker push containers.renci.org/neurobridges/portal:1.0.4
+docker push containers.renci.org/neurobridges/neurobridges-portal:1.0.4
 ```
 > Note: If not already authenticated, log in with `docker login containers.renci.org`.
 
@@ -39,7 +39,7 @@ docker push containers.renci.org/neurobridges/portal:1.0.4
 
 ```yaml
 image:
-  repository: containers.renci.org/neurobridges/portal
+  repository: containers.renci.org/neurobridges/neurobridges-portal
   tag: "1.0.4"
 ```
 

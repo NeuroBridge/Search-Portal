@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "neurobridges.fullname" . }}-webportal
+  name: {{ include "neurobridges.fullname" . }}
   labels:
     {{- include "neurobridges.labels" . | nindent 4 }}
 spec:

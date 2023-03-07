@@ -5,16 +5,16 @@
 replicaCount: 1
 
 image:
-  repository: containers.renci.org/neurobridges/neuroquery_webportal
-  tag: "1.0.3"
+  repository: containers.renci.org/neurobridges/neurobridges-portal
+  tag: "1.0.5"
 
 service:
   port: 8080
 
 ingress:
   enabled: false
-  annotations:
-    nginx.ingress.kubernetes.io/whitelist-source-range: "0.0.0.0/0,::/0"
+#  annotations:
+#    nginx.ingress.kubernetes.io/whitelist-source-range: "0.0.0.0/0,::/0"
 
 # TODO: Tune these based on usage
 resources:
