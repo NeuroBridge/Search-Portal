@@ -9,6 +9,7 @@ import { useAppContext } from '../../context'
 axios.defaults.timeout = 5000
 const NB_API_URL = `https://neurobridges-ml.renci.org/nb_translator`
 const NQ_API_URL = `https://neurobridges.renci.org:13374/query`
+const NB_NQ_TRANSLATOR_URL = `https://neurobridges.apps.renci.org/neurobridge`
 
 const getPubMedCentralLink = (pmcid) => `https://www.ncbi.nlm.nih.gov/pmc/articles/${pmcid}/`;
 const getPubMedLink = (pmid) => `https://pubmed.ncbi.nlm.nih.gov/${pmid}/`;
@@ -26,6 +27,7 @@ export const SearchProvider = ({ children }) => {
     NeuroBridge: [],
     NeuroQuery: [], 
   })
+  const [translatedTerms, setTranslatedTerms] = useState([]);
   const [lastRequestTime, setLastRequestTime] = useState(null)
   const [loading, setLoading] = useState(false)
   /*
@@ -83,8 +85,28 @@ export const SearchProvider = ({ children }) => {
       })
   };
 
-  const nqFetchResults = (query) => {
-    return axios.get(NQ_API_URL, { params: { searchTerms: query } })
+  const nqFetchResults = async (selectedTerms) => {
+    const selectedTermsQueryString = selectedTerms.join(',');
+
+    const translatedTerms = await axios.get(NB_NQ_TRANSLATOR_URL, { params: { searchTerms: selectedTermsQueryString } })
+      .then(({ data }) => data.data.reduce((acc, current) => {
+        const currentTermSynonyms = Object.values(current)[0];
+
+        // include the best match if a NeuroQuery synonym exists
+        return currentTermSynonyms.length < 1 ? acc : [...acc, currentTermSynonyms[0].term];
+      }, []))
+      .then((translatedTermsArray) => { 
+        setTranslatedTerms([...translatedTermsArray]);
+
+        return translatedTermsArray.join('+');
+      })
+      .catch(error => {
+        notify('There was an error communicating with the NeuroBridge to NeuroQuery translator API', 'error')
+        console.error(error)
+        return []
+      })
+    
+    return await axios.get(NQ_API_URL, { params: { searchTerms: translatedTerms } })
       .then(({ data }) => {
         if (!data?.data) {
           throw new Error('An error occurred while fetching NeuroQuery results.')
@@ -99,7 +121,7 @@ export const SearchProvider = ({ children }) => {
       })
       .catch(error => {
         notify('There was an error communicating with the NeuroQuery API.', 'error')
-        console.log(error)
+        console.error(error)
         return []
       })
   };
@@ -139,6 +161,7 @@ export const SearchProvider = ({ children }) => {
       results,
       searchHistory, addToSearchHistory, resetSearchHistory,
       totalResultCount,
+      translatedTerms,
     }}>
       { children }
     </SearchContext.Provider>

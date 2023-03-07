@@ -38,7 +38,7 @@ export const QueryBuilder = () => {
   const {
     query,
     nbQueryObject,
-    nqQueryString,
+    selectedTerms,
     roots,
     clearQuery,
     handleChangeOperator,
@@ -164,7 +164,7 @@ export const QueryBuilder = () => {
           <LoadingButton
             variant={roots.length === 0 ? "text" : "contained"}
             disabled={roots.length === 0}
-            onClick={() => fetchResults(nbQueryObject, nqQueryString)}
+            onClick={() => fetchResults(nbQueryObject, selectedTerms)}
             endIcon={<SearchIcon />}
             loading={loading}
             loadingIndicator={<CircularProgress color="primary" size={16} />}
