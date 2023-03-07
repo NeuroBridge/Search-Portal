@@ -27,6 +27,7 @@ export const SearchProvider = ({ children }) => {
     NeuroBridge: [],
     NeuroQuery: [], 
   })
+  const [translatedTerms, setTranslatedTerms] = useState([]);
   const [lastRequestTime, setLastRequestTime] = useState(null)
   const [loading, setLoading] = useState(false)
   /*
@@ -84,12 +85,21 @@ export const SearchProvider = ({ children }) => {
       })
   };
 
-  const nqFetchResults = async (query) => {
-    const searchTerms = query.replaceAll(/\+/g, ',');
+  const nqFetchResults = async (selectedTerms) => {
+    const selectedTermsQueryString = selectedTerms.join(',');
 
-    const translatedTerms = await axios.get(NB_NQ_TRANSLATOR_URL, { params: { searchTerms } })
-      .then(({ data }) => {return data.data.reduce((acc, current) => [...acc, ...Object.values(current)[0]], [])} )
-      .then((translatedTermsArray) => translatedTermsArray.map(termObject => termObject.term).join('+'))
+    const translatedTerms = await axios.get(NB_NQ_TRANSLATOR_URL, { params: { searchTerms: selectedTermsQueryString } })
+      .then(({ data }) => data.data.reduce((acc, current) => {
+        const currentTermSynonyms = Object.values(current)[0];
+
+        // include the best match if a NeuroQuery synonym exists
+        return currentTermSynonyms.length < 1 ? acc : [...acc, currentTermSynonyms[0].term];
+      }, []))
+      .then((translatedTermsArray) => { 
+        setTranslatedTerms([...translatedTermsArray]);
+
+        return translatedTermsArray.join('+');
+      })
       .catch(error => {
         notify('There was an error communicating with the NeuroBridge to NeuroQuery translator API', 'error')
         console.error(error)
@@ -151,6 +161,7 @@ export const SearchProvider = ({ children }) => {
       results,
       searchHistory, addToSearchHistory, resetSearchHistory,
       totalResultCount,
+      translatedTerms,
     }}>
       { children }
     </SearchContext.Provider>
