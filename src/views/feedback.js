@@ -19,7 +19,7 @@ export const FeedbackView = () => {
 
       <Card>
         <CardHeader
-          title="Get in Touch!"
+          title="Get in Touch"
           titleTypographyProps={{ align: 'center' }}
         />
 
