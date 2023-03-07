@@ -159,7 +159,10 @@ export const QueryBuilderProvider = ({ children }) => {
     return outerObj;
   }, [query, innerOperator, outerOperator]);
 
-  const nqQueryString = useMemo(() => {
+  /**
+   * Array of all currently selected (positive) terms in the query builder
+   */
+  const selectedTerms = useMemo(() => {
     const terms = new Set();
 
     const traverse = (node) => {
@@ -168,7 +171,7 @@ export const QueryBuilderProvider = ({ children }) => {
     }
     query.map(traverse);
 
-    return Array.from(terms).join('+');
+    return Array.from(terms);
   }, [query]);
 
   return (
@@ -176,7 +179,7 @@ export const QueryBuilderProvider = ({ children }) => {
       value={{
         query,
         nbQueryObject,
-        nqQueryString,
+        selectedTerms,
         roots,
         containsRoot,
         addTerm,
