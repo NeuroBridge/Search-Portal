@@ -6,15 +6,16 @@ replicaCount: 1
 
 image:
   repository: containers.renci.org/neurobridges/neurobridges-portal
-  tag: "1.0.5"
+  tag: "1.0.7"
 
 service:
   port: 8080
 
 ingress:
-  enabled: false
-#  annotations:
-#    nginx.ingress.kubernetes.io/whitelist-source-range: "0.0.0.0/0,::/0"
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+    nginx.ingress.kubernetes.io/whitelist-source-range: "0.0.0.0/0,::/0"
 
 # TODO: Tune these based on usage
 resources:
