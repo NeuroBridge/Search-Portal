@@ -2,7 +2,11 @@ import { Route, Routes } from 'react-router-dom'
 import { Paper, useTheme } from '@mui/material'
 import { ToastContainer } from 'react-toastify'
 import {
-  AboutView, FeedbackView, NotFoundView, SearchView
+  AboutView,
+  DocumentationView,
+  FeedbackView,
+  NotFoundView,
+  SearchView,
 } from './views'
 import { Drawer } from './components/drawer'
 import { Header } from './components/layout'
@@ -10,10 +14,11 @@ import { Header } from './components/layout'
 const Router = () => {
   return (
     <Routes>
-      <Route path="/"         element={ <SearchView /> } />
-      <Route path="/feedback" element={ <FeedbackView /> } />
-      <Route path="/about"    element={ <AboutView /> } />
-      <Route path="*"         element={ <NotFoundView /> } />
+      <Route path="/"               element={ <SearchView /> } />
+      <Route path="/about"          element={ <AboutView /> } />
+      <Route path="/documentation"  element={ <DocumentationView /> } />
+      <Route path="/feedback"       element={ <FeedbackView /> } />
+      <Route path="*"               element={ <NotFoundView /> } />
     </Routes>
   )
 }
