@@ -1,4 +1,5 @@
 import { Container, Typography } from '@mui/material'
+import { ResponsiveIframe } from '../components/responsive-iframe'
 
 //
 
@@ -28,11 +29,9 @@ export const DocumentationView = () => {
         revolves around building a query from concepts in the NeuroBridge ontology. 
       </Typography>
 
-      <iframe
-        width="600px"
-        height="400px"
+      <ResponsiveIframe
         src="https://drive.google.com/file/d/1dLBjSspmTjzP9rqXdrNu2ZcoOXwWONvr/preview"
-      ></iframe>
+      />
 
       <Typography paragraph>
         The first step to building a query is to add concepts to the query builder with
@@ -49,11 +48,9 @@ export const DocumentationView = () => {
         Configuration Options & Viewing the Raw Query
       </Typography>
 
-      <iframe
-        width="600px"
-        height="400px"
+      <ResponsiveIframe
         src="https://drive.google.com/file/d/1UxC_PioqeFyWYy5-DznT1hLwpWLZ8Wte/preview"
-      ></iframe>
+      />
   
       <Typography variant="h5" component="h2">
         Results
@@ -63,11 +60,9 @@ export const DocumentationView = () => {
         Additionally, changing the state of a concept also changes the states of its descendant concepts to match.
       </Typography>
   
-      <iframe
-        width="600px"
-        height="400px"
+      <ResponsiveIframe
         src="https://drive.google.com/file/d/1FbZPj1L_NbJ57KsIfkgIDlAB9N-Md1UN/preview"
-      ></iframe>
+      />
 
     </Container>
   )
