@@ -4,9 +4,11 @@ import { styled } from "@mui/system";
 import { useState } from "react";
 
 const PopoverPaper = styled(Paper)(({theme}) => ({
+  '--gradient-overlay': 'linear-gradient(rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.16))',
+  
   padding: theme.spacing(2),
   filter: `drop-shadow(0px 0px 6px rgba(0, 0, 0, 0.3))`,
-  backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.16))',
+  backgroundImage: 'var(--gradient-overlay)',
 
   position: 'relative',
   '&::before': {
@@ -21,7 +23,7 @@ const PopoverPaper = styled(Paper)(({theme}) => ({
     width: '20px',
     height: '15px',
     backgroundColor: theme.palette.background.paper,
-    backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.16))',
+    backgroundImage: 'var(--gradient-overlay)',
   }
 }));
 
