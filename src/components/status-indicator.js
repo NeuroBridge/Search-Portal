@@ -95,7 +95,8 @@ export const StatusIndicator = () => {
         }))
         .then((serviceStatus) =>
           setStatuses((prev) => ({ ...prev, ...serviceStatus }))
-        );
+        )
+        .catch(() => setStatuses((prev) => ({ ...prev, [name]: "error" })));
     });
   };
 
@@ -118,15 +119,17 @@ export const StatusIndicator = () => {
     return "All services are operational";
   };
 
-  const iconButtonColor = numberOfErrors > 0 ? 'error' : 'success';
+  const iconButtonColor = numberOfErrors > 0 ? "error" : "success";
 
   return (
     <>
       <Tooltip placement="bottom" title={tooltipText()}>
         <IconButton color={iconButtonColor} onClick={handleClick}>
-          {Object.values(statuses).some((status) => status === "loading")
-            ? <CircularProgress size='24px'/>
-            : <Circle fontSize="xs" /> }
+          {Object.values(statuses).some((status) => status === "loading") ? (
+            <CircularProgress size="24px" />
+          ) : (
+            <Circle fontSize="xs" />
+          )}
         </IconButton>
       </Tooltip>
 
