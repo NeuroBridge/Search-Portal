@@ -190,8 +190,9 @@ export const StatusIndicator = () => {
                     fontSize: "15px",
                   }}
                 >
-                  {status === "loading" && <CircularProgress size="15px" />}
-                  {status !== "loading" && (
+                  {status === "loading" ? (
+                    <CircularProgress size="15px" />
+                  ) : (
                     <Circle fontSize="inherit" color={status} />
                   )}
                 </Box>
