@@ -15,12 +15,12 @@ import { useEffect, useState } from "react";
 const STATUS_URLS = [
   {
     name: "NeuroQuery",
-    url: "https://neurobridges.renci.org:13374/query?searchTerms=abstinence",
+    url: `${process.env.NQ_API_URL}?searchTerms=abstinence`,
     method: "GET",
   },
   {
     name: "NeuroBridge",
-    url: "https://neurobridges-ml.renci.org/nb_translator",
+    url: process.env.NB_API_URL,
     method: "POST",
     body: {
       query: {
@@ -33,7 +33,7 @@ const STATUS_URLS = [
   },
   {
     name: "NB-NQ Translator",
-    url: "https://neurobridges.apps.renci.org/healthz",
+    url: process.env.NB_NQ_TRANSLATOR_HEALTH_URL,
     method: "GET",
   },
 ];
