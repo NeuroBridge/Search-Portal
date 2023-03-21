@@ -7,12 +7,9 @@ import { useAppContext } from '../../context'
 //
 
 axios.defaults.timeout = 5000
-const NB_API_URL = `https://neurobridges-ml.renci.org/nb_translator`
-const NQ_API_URL = `https://neurobridges.renci.org:13374/query`
-const NB_NQ_TRANSLATOR_URL = `https://neurobridges.apps.renci.org/neurobridge`
 
-const getPubMedCentralLink = (pmcid) => `https://www.ncbi.nlm.nih.gov/pmc/articles/${pmcid}/`;
-const getPubMedLink = (pmid) => `https://pubmed.ncbi.nlm.nih.gov/${pmid}/`;
+const getPubMedCentralLink = (pmcid) => `${process.env.PUBMED_CENTRAL_URL}/${pmcid}/`;
+const getPubMedLink = (pmid) => `${process.env.PUBMED_URL}/${pmid}/`;
 
 //
 
@@ -60,7 +57,7 @@ export const SearchProvider = ({ children }) => {
   // is passed into this function.
   const nbFetchResults = query => {
     return axios.post(
-        NB_API_URL,
+        process.env.NB_API_URL,
         JSON.stringify({ query: { expression: query }, max_res: 100 }),
         { headers: { 'Content-Type': 'text/html;charset=utf-8' } },
       )
@@ -88,7 +85,7 @@ export const SearchProvider = ({ children }) => {
   const nqFetchResults = async (selectedTerms) => {
     const selectedTermsQueryString = selectedTerms.join(',');
 
-    const translatedTerms = await axios.get(NB_NQ_TRANSLATOR_URL, { params: { searchTerms: selectedTermsQueryString } })
+    const translatedTerms = await axios.get(process.env.NB_NQ_TRANSLATOR_URL, { params: { searchTerms: selectedTermsQueryString } })
       .then(({ data }) => data.data.reduce((acc, current) => {
         const currentTermSynonyms = Object.values(current)[0];
 
@@ -106,7 +103,7 @@ export const SearchProvider = ({ children }) => {
         return []
       })
     
-    return await axios.get(NQ_API_URL, { params: { searchTerms: translatedTerms } })
+    return await axios.get(process.env.NQ_API_URL, { params: { searchTerms: translatedTerms } })
       .then(({ data }) => {
         if (!data?.data) {
           throw new Error('An error occurred while fetching NeuroQuery results.')
