@@ -1,0 +1,11 @@
+# Put sterling-specific config in this file, which overrides the defaults in values.yaml
+
+ingress:
+  hosts:
+    - host: portal.neurobridges.org
+      paths:
+        - path: /
+  tls:
+    - secretName: portal.neurobridges.org-tls
+      hosts:
+        - portal.neurobridges.org
