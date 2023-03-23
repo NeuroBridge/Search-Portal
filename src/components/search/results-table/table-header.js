@@ -37,7 +37,7 @@ export const TableHeader = ({ currentTabIndex, handleChangeTab, detail }) => {
           variant="scrollable"
           sx={{ flex: 1, height: '100%' }}
         >
-          <Tooltip title="Sorted by number of matching terms" placement="top">
+          <Tooltip title="Sorted by number of matching concepts" placement="top">
             <Tab
               sx={{ textTransform: 'revert' }}
               label={ `PubMed Central (${ results.NeuroBridge.length })` }
