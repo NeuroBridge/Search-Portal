@@ -8,10 +8,9 @@ export const ResponsiveIframe = props => {
     <Box sx={{
       border: `1px solid ${ theme.palette.primary.main }`,
       overflow: 'hidden',
-      paddingBottom: '56.25%',
+      aspectRatio: '16 / 9',
       marginBottom: '2rem',
       position: 'relative',
-      height: 0,
       '& iframe': {
         left: 0,
         top: 0,
