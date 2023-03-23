@@ -105,6 +105,7 @@ export const Header = () => {
               <Box sx={ navStyle }>
                 <NavLink to="/">Search</NavLink>
                 <NavLink to="/about">About</NavLink>
+                <NavLink to="/documentation">Docs</NavLink>
                 <NavLink to="/feedback">Feedback</NavLink>
               </Box>
               <StatusIndicator />
