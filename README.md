@@ -1,7 +1,7 @@
 # NeuroBridge Search Portal
 
-- staging: [https://neurobridges-portal-staging.netlify.app/](https://staging.neurobridges.org)
-- production: N/A
+- staging: N/A
+- production: [https://portal.neurobridges.org/](https://portal.neurobridges.org/)
 
 This is a [React](https://reactjs.org/) application that was based off of [RENCI/react-starter](https://github.com/RENCI/react-starter).
 
