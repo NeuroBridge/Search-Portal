@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { Card, Fade, Typography } from '@mui/material'
+import { Card, Fade, List, ListItem, Typography } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 import { columns } from './columns'
 import { TableHeader } from './table-header'
@@ -8,6 +8,8 @@ import { Link } from '../../link'
 import { Error } from '@mui/icons-material'
 import { Box } from '@mui/system'
 import { useTheme } from '@emotion/react'
+
+import studyConcepts from '../../../data/study-concepts.json'
 
 //
 
@@ -22,6 +24,8 @@ export const ResultsTable = () => {
   const handleChangeTab = (event, newIndex) => {
     setCurrentTabIndex(newIndex)
   }
+
+  const [selectedRow, setSelectedRow] = useState(null);
   
   // tableData will be a memoized array consisting of just
   // the items from each interface in the results object.
@@ -39,9 +43,19 @@ export const ResultsTable = () => {
 
   const nqLink = `https://neuroquery.org/query?text=${ translatedTerms.join('+') }`;
 
+  const handleRowClick = ({ row }) => {
+    console.log(row)
+    if(row === selectedRow) {
+      setSelectedRow(null);
+    }
+    else {
+      setSelectedRow(row);
+    }
+  };
+
   return (
     <Fade in={ totalResultCount > 0 }>
-      <Card sx={{ height: '100%' }}>
+      <Card sx={{ height: '100%', display: 'flex' }}>
 
         <DataGrid
           sx={{
@@ -54,6 +68,7 @@ export const ResultsTable = () => {
           getRowId={ row => row.pmid }
           pageSize={ pageSize }
           onPageSizeChange={ newSize => setPageSize(newSize) }
+          onRowClick={handleRowClick}
           rowsPerPageOptions={ [10, 20, 50] }
           components={{
             Toolbar: TableHeader,
@@ -79,6 +94,16 @@ export const ResultsTable = () => {
           disableSelectionOnClick
           checkboxSelection
         />
+
+        {selectedRow !== null && selectedRow.pmcid.toLowerCase() in studyConcepts &&
+          <Box sx={{ borderLeft: '3px solid', borderColor: 'divider', padding: 1 }}>
+            <List dense>
+              {studyConcepts[selectedRow.pmcid.toLowerCase()].map((concept, index) => (
+                <ListItem key={index}>{concept}</ListItem>
+              ))}
+            </List>
+          </Box>
+        }
 
       </Card>
     </Fade>
