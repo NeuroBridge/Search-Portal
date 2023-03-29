@@ -16,14 +16,12 @@ export const StudySidebar = ({ selectedRow, setSelectedRow }) => {
 
   const handleMouseDown = (event) => {
     event.preventDefault();
-    console.log('mousedown');
     document.addEventListener("mouseup", handleMouseUp, true)
     document.addEventListener("mousemove", handleMouseMove, true)
   }
   
   const handleMouseUp = (event) => {
     event.preventDefault();
-    console.log('mouseup');
     document.removeEventListener("mouseup", handleMouseUp, true)
     document.removeEventListener("mousemove", handleMouseMove, true)
   }
