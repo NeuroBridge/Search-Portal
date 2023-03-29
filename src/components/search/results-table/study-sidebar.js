@@ -2,16 +2,70 @@ import { Clear } from "@mui/icons-material";
 import { Box, IconButton, List, ListItem, Stack, Tooltip } from "@mui/material";
 import studyConcepts from "../../../data/study-concepts.json";
 import PropTypes from "prop-types";
+import { useCallback, useRef, useState } from "react";
+
+const SIDEBAR_CONFIG = {
+  initialWidth: 350,
+  minWidth: 200,
+  maxWidth: 700,
+}
 
 export const StudySidebar = ({ selectedRow, setSelectedRow }) => {
+  const [sidebarWidth, setSidebarWidth] = useState(SIDEBAR_CONFIG.initialWidth);
+  const containerRef = useRef(null);
+
+  const handleMouseDown = (event) => {
+    event.preventDefault();
+    console.log('mousedown');
+    document.addEventListener("mouseup", handleMouseUp, true)
+    document.addEventListener("mousemove", handleMouseMove, true)
+  }
+  
+  const handleMouseUp = (event) => {
+    event.preventDefault();
+    console.log('mouseup');
+    document.removeEventListener("mouseup", handleMouseUp, true)
+    document.removeEventListener("mousemove", handleMouseMove, true)
+  }
+
+  const handleMouseMove = useCallback(event => {
+    if(!containerRef.current) return;
+    
+    const newWidth = containerRef.current.offsetLeft + containerRef.current.offsetWidth - event.clientX
+    if (SIDEBAR_CONFIG.minWidth < newWidth && newWidth < SIDEBAR_CONFIG.maxWidth) {
+      setSidebarWidth(newWidth)
+    }
+  }, [])
+
   return (
     <Box
+      ref={containerRef}
       sx={{
-        borderLeft: "3px solid",
-        borderColor: "divider",
+        width: sidebarWidth,
+        position: "relative",
       }}
     >
       <Box
+        sx={{
+          width: "4px",
+          backgroundColor: "divider",
+          position: "absolute",
+          top: 0,
+          bottom: 0,
+          left: '-2px',
+          cursor: 'ew-resize',
+          transistion: 'width 2500ms, left 2500ms',
+
+          '&:hover': {
+            transistion: 'width 2500ms, left 2500ms',
+            width: '6px',
+            left: '-3px',
+          }
+        }}
+        onMouseDown={handleMouseDown}
+      ></Box>
+      <Box
+        aria-aria-hidden="true"
         sx={{
           display: "flex",
           flexDirection: "row",
