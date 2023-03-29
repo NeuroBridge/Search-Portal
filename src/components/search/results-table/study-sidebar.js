@@ -61,7 +61,7 @@ export const StudySidebar = ({ selectedRow, setSelectedRow }) => {
         onMouseDown={handleMouseDown}
       ></Box>
       <Box
-        aria-aria-hidden="true"
+        aria-hidden="true"
         sx={{
           display: "flex",
           flexDirection: "row",
