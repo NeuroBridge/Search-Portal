@@ -52,10 +52,8 @@ export const StudySidebar = ({ selectedRow, setSelectedRow }) => {
           bottom: 0,
           left: '-2px',
           cursor: 'ew-resize',
-          transistion: 'width 2500ms, left 2500ms',
 
           '&:hover': {
-            transistion: 'width 2500ms, left 2500ms',
             width: '6px',
             left: '-3px',
           }
