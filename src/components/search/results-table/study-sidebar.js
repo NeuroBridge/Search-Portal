@@ -2,7 +2,7 @@ import { Clear } from "@mui/icons-material";
 import { Box, IconButton, List, ListItem, Stack, Tooltip } from "@mui/material";
 import studyConcepts from "../../../data/study-concepts.json";
 import PropTypes from "prop-types";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 const SIDEBAR_CONFIG = {
   initialWidth: 350,
@@ -12,6 +12,7 @@ const SIDEBAR_CONFIG = {
 
 export const StudySidebar = ({ selectedRow, setSelectedRow }) => {
   const [sidebarWidth, setSidebarWidth] = useState(SIDEBAR_CONFIG.initialWidth);
+  const [pubMedResponse, setPubMedResponse] = useState(null);
   const containerRef = useRef(null);
 
   const handleMouseDown = (event) => {
@@ -34,6 +35,27 @@ export const StudySidebar = ({ selectedRow, setSelectedRow }) => {
       setSidebarWidth(newWidth)
     }
   }, [])
+
+  useEffect(() => {
+    (async () => {
+      const response = await fetch(
+        `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=${selectedRow.pmid}`,
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/xml",
+          },
+        }
+      );
+      const text = await response.text();
+      const studyXML = (new window.DOMParser().parseFromString(text, 'text/xml'));
+      console.log(studyXML);
+
+      setPubMedResponse({
+        title: studyXML.getElementsByTagName('ArticleTitle')[0].textContent
+      })
+    })();
+  }, []);
 
   return (
     <Box
@@ -112,6 +134,9 @@ export const StudySidebar = ({ selectedRow, setSelectedRow }) => {
           )
         )}
       </List>
+      <Box>
+        {!pubMedResponse ? "Loading" : pubMedResponse.title}
+      </Box>
     </Box>
   );
 };
