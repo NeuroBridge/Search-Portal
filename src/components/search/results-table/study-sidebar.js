@@ -79,7 +79,7 @@ export const StudySidebar = ({ selectedRow, setSelectedRow }) => {
           sx={{
             p: 2,
             fontSize: `0.875rem`,
-            lineHeight: "1.43",
+            lineHeight: "1.5",
             borderRight: "1px solid",
             borderColor: "divider",
           }}
