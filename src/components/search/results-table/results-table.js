@@ -130,7 +130,7 @@ export const ResultsTable = () => {
                   className="results-action-buttons"
                   sx={{ p: '0 1 0 0', borderLeft: '1px solid', borderColor: 'divider' }}
                 >
-                  <Tooltip title="Clear all results" placement="left">
+                  <Tooltip title="Close study concepts view" placement="left">
                     <IconButton
                       onClick={ () => setSelectedRow(null) }
                       size="small"
