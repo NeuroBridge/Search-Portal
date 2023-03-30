@@ -4,7 +4,7 @@ import studyConcepts from "../../../data/study-concepts.json";
 import PropTypes from "prop-types";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-const SIDEBAR_CONFIG = {
+export const SIDEBAR_CONFIG = {
   initialWidth: 350,
   minWidth: 200,
   maxWidth: 700,
@@ -25,8 +25,7 @@ const renderAbstract = (abstractElement) => {
   return result;
 };
 
-export const StudySidebar = ({ selectedRow, setSelectedRow }) => {
-  const [sidebarWidth, setSidebarWidth] = useState(SIDEBAR_CONFIG.initialWidth);
+export const StudySidebar = ({ selectedRow, setSelectedRow, sidebarWidth, setSidebarWidth }) => {
   const [pubMedResponse, setPubMedResponse] = useState(null);
   const containerRef = useRef(null);
 
@@ -188,4 +187,6 @@ export const StudySidebar = ({ selectedRow, setSelectedRow }) => {
 StudySidebar.propTypes = {
   selectedRow: PropTypes.any,
   setSelectedRow: PropTypes.any,
+  sidebarWidth: PropTypes.any,
+  setSidebarWidth: PropTypes.any,
 };

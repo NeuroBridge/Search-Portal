@@ -8,7 +8,7 @@ import { Link } from '../../link'
 import { Error } from '@mui/icons-material'
 import { Box } from '@mui/system'
 import { useTheme } from '@emotion/react'
-import { StudySidebar } from './study-sidebar'
+import { SIDEBAR_CONFIG, StudySidebar } from './study-sidebar'
 import studyConcepts from "../../../data/study-concepts.json";
 
 //
@@ -25,6 +25,7 @@ export const ResultsTable = () => {
     setCurrentTabIndex(newIndex)
   }
 
+  const [sidebarWidth, setSidebarWidth] = useState(SIDEBAR_CONFIG.initialWidth);
   const [selectedRow, setSelectedRow] = useState(null);
   
   // tableData will be a memoized array consisting of just
@@ -99,6 +100,8 @@ export const ResultsTable = () => {
             <StudySidebar
               selectedRow={selectedRow}
               setSelectedRow={setSelectedRow}
+              sidebarWidth={sidebarWidth}
+              setSidebarWidth={setSidebarWidth}
             />
           )}
       </Card>
