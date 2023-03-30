@@ -1,54 +1,125 @@
 import { Clear, ExpandMore } from "@mui/icons-material";
-import { Accordion, AccordionDetails, AccordionSummary, Box, IconButton, List, ListItem, Stack, Tooltip, Typography } from "@mui/material";
+import {
+  Accordion as MuiAccordion,
+  AccordionDetails as MuiAccordionDetails,
+  AccordionSummary as MuiAccordionSummary,
+  Box,
+  IconButton,
+  List,
+  ListItem,
+  Stack,
+  styled,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import studyConcepts from "../../../data/study-concepts.json";
 import PropTypes from "prop-types";
 import { useCallback, useEffect, useRef, useState } from "react";
+
+const Accordion = styled((props) => (
+  <MuiAccordion disableGutters elevation={0} square {...props} />
+))(() => ({
+  backgroundColor: "transparent",
+  "&:not(:last-of-type)": {
+    borderBottom: 0,
+  },
+  "&:before": {
+    display: "none",
+  },
+}));
+
+const AccordionSummary = styled((props) => <MuiAccordionSummary {...props} />)(
+  ({ theme }) => ({
+    backgroundColor: "#0001",
+    color: theme.palette.text.secondary,
+    borderBottom: `1px solid ${theme.palette.divider}`,
+
+    "& .MuiTypography-root": {
+      color: "inherit",
+      textTransform: "uppercase",
+      fontSize: `0.875rem`,
+      lineHeight: "1.5",
+    },
+
+    "& .MuiAccordionSummary-expandIconWrapper": {
+      color: "inherit",
+    },
+  })
+);
+
+const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
+  padding: theme.spacing(2),
+}));
 
 export const SIDEBAR_CONFIG = {
   initialWidth: 350,
   minWidth: 200,
   maxWidth: 700,
-}
+};
 
 const renderAbstract = (abstractElement) => {
   const result = [];
 
-  const abstractTextEls = [...abstractElement.getElementsByTagName('AbstractText')];
+  const abstractTextEls = [
+    ...abstractElement.getElementsByTagName("AbstractText"),
+  ];
 
   abstractTextEls.forEach((abstractText, index) => {
     if (abstractText.hasAttribute("Label")) {
-      result.push(<Typography key={`abstract-text-${index}-heading`} sx={{ fontWeight: 'bold' }}>{abstractText.getAttribute("Label")}</Typography>)
+      result.push(
+        <Typography
+          key={`abstract-text-${index}-heading`}
+          sx={{ fontWeight: "bold" }}
+        >
+          {abstractText.getAttribute("Label")}
+        </Typography>
+      );
     }
-    result.push(<Typography key={`abstract-text-${index}-content`}>{abstractText.textContent}</Typography>)
+    result.push(
+      <Typography key={`abstract-text-${index}-content`}>
+        {abstractText.textContent}
+      </Typography>
+    );
   });
 
   return result;
 };
 
-export const StudySidebar = ({ selectedRow, setSelectedRow, sidebarWidth, setSidebarWidth }) => {
+export const StudySidebar = ({
+  selectedRow,
+  setSelectedRow,
+  sidebarWidth,
+  setSidebarWidth,
+}) => {
   const [pubMedResponse, setPubMedResponse] = useState(null);
   const containerRef = useRef(null);
 
   const handleMouseDown = (event) => {
     event.preventDefault();
-    document.addEventListener("mouseup", handleMouseUp, true)
-    document.addEventListener("mousemove", handleMouseMove, true)
-  }
-  
+    document.addEventListener("mouseup", handleMouseUp, true);
+    document.addEventListener("mousemove", handleMouseMove, true);
+  };
+
   const handleMouseUp = (event) => {
     event.preventDefault();
-    document.removeEventListener("mouseup", handleMouseUp, true)
-    document.removeEventListener("mousemove", handleMouseMove, true)
-  }
+    document.removeEventListener("mouseup", handleMouseUp, true);
+    document.removeEventListener("mousemove", handleMouseMove, true);
+  };
 
-  const handleMouseMove = useCallback(event => {
-    if(!containerRef.current) return;
-    
-    const newWidth = containerRef.current.offsetLeft + containerRef.current.offsetWidth - event.clientX
-    if (SIDEBAR_CONFIG.minWidth < newWidth && newWidth < SIDEBAR_CONFIG.maxWidth) {
-      setSidebarWidth(newWidth)
+  const handleMouseMove = useCallback((event) => {
+    if (!containerRef.current) return;
+
+    const newWidth =
+      containerRef.current.offsetLeft +
+      containerRef.current.offsetWidth -
+      event.clientX;
+    if (
+      SIDEBAR_CONFIG.minWidth < newWidth &&
+      newWidth < SIDEBAR_CONFIG.maxWidth
+    ) {
+      setSidebarWidth(newWidth);
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -62,12 +133,12 @@ export const StudySidebar = ({ selectedRow, setSelectedRow, sidebarWidth, setSid
         }
       );
       const text = await response.text();
-      const studyXML = (new window.DOMParser().parseFromString(text, 'text/xml'));
+      const studyXML = new window.DOMParser().parseFromString(text, "text/xml");
 
       setPubMedResponse({
-        title: studyXML.getElementsByTagName('ArticleTitle')[0].textContent,
-        abstract: studyXML.getElementsByTagName('Abstract')[0],
-      })
+        title: studyXML.getElementsByTagName("ArticleTitle")[0].textContent,
+        abstract: studyXML.getElementsByTagName("Abstract")[0],
+      });
     })();
   }, [selectedRow]);
 
@@ -81,7 +152,7 @@ export const StudySidebar = ({ selectedRow, setSelectedRow, sidebarWidth, setSid
       sx={{
         width: sidebarWidth,
         position: "relative",
-        paddingLeft: '3px',
+        paddingLeft: "3px",
       }}
     >
       <Box
@@ -91,12 +162,12 @@ export const StudySidebar = ({ selectedRow, setSelectedRow, sidebarWidth, setSid
           position: "absolute",
           top: 0,
           bottom: 0,
-          left: '-2px',
-          cursor: 'ew-resize',
+          left: "-2px",
+          cursor: "ew-resize",
 
-          '&:hover': {
-            width: '6px',
-            left: '-3px',
+          "&:hover": {
+            width: "6px",
+            left: "-3px",
           },
         }}
         onMouseDown={handleMouseDown}
@@ -146,18 +217,28 @@ export const StudySidebar = ({ selectedRow, setSelectedRow, sidebarWidth, setSid
           </Tooltip>
         </Stack>
       </Box>
-      
+
       <Accordion disableGutters elevation={0} square>
-        <AccordionSummary expandIcon={<ExpandMore />} aria-controls="panel1-content" id="panel1-header">
+        <AccordionSummary
+          expandIcon={<ExpandMore />}
+          aria-controls="panel1-content"
+          id="panel1-header"
+        >
           <Typography>Title</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography>{!pubMedResponse ? "Loading" : pubMedResponse.title}</Typography>
+          <Typography>
+            {!pubMedResponse ? "Loading" : pubMedResponse.title}
+          </Typography>
         </AccordionDetails>
       </Accordion>
 
       <Accordion disableGutters elevation={0} square>
-        <AccordionSummary expandIcon={<ExpandMore />} aria-controls="panel2-content" id="panel2-header">
+        <AccordionSummary
+          expandIcon={<ExpandMore />}
+          aria-controls="panel2-content"
+          id="panel2-header"
+        >
           <Typography>Abstract</Typography>
         </AccordionSummary>
         <AccordionDetails>
@@ -166,10 +247,14 @@ export const StudySidebar = ({ selectedRow, setSelectedRow, sidebarWidth, setSid
       </Accordion>
 
       <Accordion disableGutters elevation={0} square>
-        <AccordionSummary expandIcon={<ExpandMore />} aria-controls="panel3-content" id="panel3-header">
+        <AccordionSummary
+          expandIcon={<ExpandMore />}
+          aria-controls="panel3-content"
+          id="panel3-header"
+        >
           <Typography>Concepts</Typography>
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails sx={{ padding: 0 }}>
           <List>
             {studyConcepts[selectedRow.pmcid.toLowerCase()].map(
               (concept, index) => (
@@ -179,7 +264,6 @@ export const StudySidebar = ({ selectedRow, setSelectedRow, sidebarWidth, setSid
           </List>
         </AccordionDetails>
       </Accordion>
-
     </Box>
   );
 };
