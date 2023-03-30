@@ -28,24 +28,24 @@ const Accordion = styled((props) => (
   },
 }));
 
-const AccordionSummary = styled((props) => <MuiAccordionSummary {...props} />)(
-  ({ theme }) => ({
-    backgroundColor: "#0001",
-    color: theme.palette.text.secondary,
-    borderBottom: `1px solid ${theme.palette.divider}`,
+const AccordionSummary = styled((props) => (
+  <MuiAccordionSummary expandIcon={<ExpandMore />} {...props} />
+))(({ theme }) => ({
+  backgroundColor: "#0001",
+  color: theme.palette.text.secondary,
+  borderBottom: `1px solid ${theme.palette.divider}`,
 
-    "& .MuiTypography-root": {
-      color: "inherit",
-      textTransform: "uppercase",
-      fontSize: `0.875rem`,
-      lineHeight: "1.5",
-    },
+  "& .MuiTypography-root": {
+    color: "inherit",
+    textTransform: "uppercase",
+    fontSize: `0.875rem`,
+    lineHeight: "1.5",
+  },
 
-    "& .MuiAccordionSummary-expandIconWrapper": {
-      color: "inherit",
-    },
-  })
-);
+  "& .MuiAccordionSummary-expandIconWrapper": {
+    color: "inherit",
+  },
+}));
 
 const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   padding: theme.spacing(2),
@@ -90,6 +90,8 @@ export const StudySidebar = ({
   setSelectedRow,
   sidebarWidth,
   setSidebarWidth,
+  expandedAccordions,
+  setExpandedAccordions,
 }) => {
   const [pubMedResponse, setPubMedResponse] = useState(null);
   const containerRef = useRef(null);
@@ -120,6 +122,18 @@ export const StudySidebar = ({
       setSidebarWidth(newWidth);
     }
   }, []);
+
+  const handleAccordionClicked = (panel) => () => {
+    const nextState = new Set(expandedAccordions);
+
+    if (nextState.has(panel)) {
+      nextState.delete(panel);
+    } else {
+      nextState.add(panel);
+    }
+
+    setExpandedAccordions(() => nextState);
+  };
 
   useEffect(() => {
     (async () => {
@@ -190,7 +204,6 @@ export const StudySidebar = ({
             lineHeight: "1.5",
             borderRight: "1px solid",
             borderColor: "divider",
-            
           }}
         >
           PubMed: {selectedRow.pmid}
@@ -219,12 +232,11 @@ export const StudySidebar = ({
         </Stack>
       </Box>
 
-      <Accordion disableGutters elevation={0} square>
-        <AccordionSummary
-          expandIcon={<ExpandMore />}
-          aria-controls="panel1-content"
-          id="panel1-header"
-        >
+      <Accordion
+        expanded={expandedAccordions.has("panel1")}
+        onChange={handleAccordionClicked("panel1")}
+      >
+        <AccordionSummary aria-controls="panel1-content" id="panel1-header">
           <Typography>Title</Typography>
         </AccordionSummary>
         <AccordionDetails>
@@ -234,12 +246,11 @@ export const StudySidebar = ({
         </AccordionDetails>
       </Accordion>
 
-      <Accordion disableGutters elevation={0} square>
-        <AccordionSummary
-          expandIcon={<ExpandMore />}
-          aria-controls="panel2-content"
-          id="panel2-header"
-        >
+      <Accordion
+        expanded={expandedAccordions.has("panel2")}
+        onChange={handleAccordionClicked("panel2")}
+      >
+        <AccordionSummary aria-controls="panel2-content" id="panel2-header">
           <Typography>Abstract</Typography>
         </AccordionSummary>
         <AccordionDetails>
@@ -247,9 +258,16 @@ export const StudySidebar = ({
         </AccordionDetails>
       </Accordion>
 
-      <Accordion disableGutters elevation={0} square>
+      <Accordion
+        expanded={
+          !(
+            !selectedRow.pmcid ||
+            !(selectedRow.pmcid.toLowerCase() in studyConcepts)
+          ) && expandedAccordions.has("panel3")
+        }
+        onChange={handleAccordionClicked("panel3")}
+      >
         <AccordionSummary
-          expandIcon={<ExpandMore />}
           aria-controls="panel3-content"
           id="panel3-header"
           disabled={
@@ -278,4 +296,6 @@ StudySidebar.propTypes = {
   setSelectedRow: PropTypes.any,
   sidebarWidth: PropTypes.any,
   setSidebarWidth: PropTypes.any,
+  expandedAccordions: PropTypes.any,
+  setExpandedAccordions: PropTypes.any,
 };

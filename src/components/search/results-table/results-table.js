@@ -27,6 +27,7 @@ export const ResultsTable = () => {
   const [sidebarWidth, setSidebarWidth] = useState(SIDEBAR_CONFIG.initialWidth);
   const [selectedRow, setSelectedRow] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [expandedAccordions, setExpandedAccordions] = useState(new Set());
   
   // tableData will be a memoized array consisting of just
   // the items from each interface in the results object.
@@ -102,6 +103,8 @@ export const ResultsTable = () => {
               setSelectedRow={setSelectedRow}
               sidebarWidth={sidebarWidth}
               setSidebarWidth={setSidebarWidth}
+              expandedAccordions={expandedAccordions}
+              setExpandedAccordions={setExpandedAccordions}
             />
           )}
       </Card>
