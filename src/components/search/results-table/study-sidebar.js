@@ -1,5 +1,5 @@
-import { Clear } from "@mui/icons-material";
-import { Box, IconButton, List, ListItem, Stack, Tooltip } from "@mui/material";
+import { Clear, ExpandMore } from "@mui/icons-material";
+import { Accordion, AccordionDetails, AccordionSummary, Box, IconButton, List, ListItem, Stack, Tooltip, Typography } from "@mui/material";
 import studyConcepts from "../../../data/study-concepts.json";
 import PropTypes from "prop-types";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -9,6 +9,21 @@ const SIDEBAR_CONFIG = {
   minWidth: 200,
   maxWidth: 700,
 }
+
+const renderAbstract = (abstractElement) => {
+  const result = [];
+
+  const abstractTextEls = [...abstractElement.getElementsByTagName('AbstractText')];
+
+  abstractTextEls.forEach((abstractText, index) => {
+    if (abstractText.hasAttribute("Label")) {
+      result.push(<Typography key={`abstract-text-${index}-heading`} sx={{ fontWeight: 'bold' }}>{abstractText.getAttribute("Label")}</Typography>)
+    }
+    result.push(<Typography key={`abstract-text-${index}-content`}>{abstractText.textContent}</Typography>)
+  });
+
+  return result;
+};
 
 export const StudySidebar = ({ selectedRow, setSelectedRow }) => {
   const [sidebarWidth, setSidebarWidth] = useState(SIDEBAR_CONFIG.initialWidth);
@@ -49,13 +64,17 @@ export const StudySidebar = ({ selectedRow, setSelectedRow }) => {
       );
       const text = await response.text();
       const studyXML = (new window.DOMParser().parseFromString(text, 'text/xml'));
-      console.log(studyXML);
 
       setPubMedResponse({
-        title: studyXML.getElementsByTagName('ArticleTitle')[0].textContent
+        title: studyXML.getElementsByTagName('ArticleTitle')[0].textContent,
+        abstract: studyXML.getElementsByTagName('Abstract')[0],
       })
     })();
-  }, []);
+  }, [selectedRow]);
+
+  useEffect(() => {
+    console.log(pubMedResponse);
+  }, [pubMedResponse]);
 
   return (
     <Box
@@ -63,6 +82,7 @@ export const StudySidebar = ({ selectedRow, setSelectedRow }) => {
       sx={{
         width: sidebarWidth,
         position: "relative",
+        paddingLeft: '3px',
       }}
     >
       <Box
@@ -78,12 +98,12 @@ export const StudySidebar = ({ selectedRow, setSelectedRow }) => {
           '&:hover': {
             width: '6px',
             left: '-3px',
-          }
+          },
         }}
         onMouseDown={handleMouseDown}
+        aria-hidden="true"
       ></Box>
       <Box
-        aria-hidden="true"
         sx={{
           display: "flex",
           flexDirection: "row",
@@ -127,16 +147,40 @@ export const StudySidebar = ({ selectedRow, setSelectedRow }) => {
           </Tooltip>
         </Stack>
       </Box>
-      <List>
-        {studyConcepts[selectedRow.pmcid.toLowerCase()].map(
-          (concept, index) => (
-            <ListItem key={index}>{concept}</ListItem>
-          )
-        )}
-      </List>
-      <Box>
-        {!pubMedResponse ? "Loading" : pubMedResponse.title}
-      </Box>
+      
+      <Accordion disableGutters elevation={0} square>
+        <AccordionSummary expandIcon={<ExpandMore />} aria-controls="panel1-content" id="panel1-header">
+          <Typography>Title</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>{!pubMedResponse ? "Loading" : pubMedResponse.title}</Typography>
+        </AccordionDetails>
+      </Accordion>
+
+      <Accordion disableGutters elevation={0} square>
+        <AccordionSummary expandIcon={<ExpandMore />} aria-controls="panel2-content" id="panel2-header">
+          <Typography>Abstract</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          {pubMedResponse ? renderAbstract(pubMedResponse.abstract) : null}
+        </AccordionDetails>
+      </Accordion>
+
+      <Accordion disableGutters elevation={0} square>
+        <AccordionSummary expandIcon={<ExpandMore />} aria-controls="panel3-content" id="panel3-header">
+          <Typography>Concepts</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <List>
+            {studyConcepts[selectedRow.pmcid.toLowerCase()].map(
+              (concept, index) => (
+                <ListItem key={index}>{concept}</ListItem>
+              )
+            )}
+          </List>
+        </AccordionDetails>
+      </Accordion>
+
     </Box>
   );
 };
