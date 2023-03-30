@@ -190,9 +190,10 @@ export const StudySidebar = ({
             lineHeight: "1.5",
             borderRight: "1px solid",
             borderColor: "divider",
+            
           }}
         >
-          {selectedRow.pmcid}
+          PubMed: {selectedRow.pmid}
         </Box>
         <Stack
           direction="row"
@@ -251,16 +252,20 @@ export const StudySidebar = ({
           expandIcon={<ExpandMore />}
           aria-controls="panel3-content"
           id="panel3-header"
+          disabled={
+            !selectedRow.pmcid ||
+            !(selectedRow.pmcid.toLowerCase() in studyConcepts)
+          }
         >
           <Typography>Concepts</Typography>
         </AccordionSummary>
         <AccordionDetails sx={{ padding: 0 }}>
           <List>
-            {studyConcepts[selectedRow.pmcid.toLowerCase()].map(
-              (concept, index) => (
-                <ListItem key={index}>{concept}</ListItem>
-              )
-            )}
+            {Boolean(selectedRow.pmcid) &&
+              selectedRow.pmcid.toLowerCase() in studyConcepts &&
+              studyConcepts[selectedRow.pmcid.toLowerCase()].map(
+                (concept, index) => <ListItem key={index}>{concept}</ListItem>
+              )}
           </List>
         </AccordionDetails>
       </Accordion>

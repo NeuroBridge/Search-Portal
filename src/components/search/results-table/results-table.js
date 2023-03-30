@@ -9,7 +9,6 @@ import { Error } from '@mui/icons-material'
 import { Box } from '@mui/system'
 import { useTheme } from '@emotion/react'
 import { SIDEBAR_CONFIG, StudySidebar } from './study-sidebar'
-import studyConcepts from "../../../data/study-concepts.json";
 
 //
 
@@ -27,6 +26,7 @@ export const ResultsTable = () => {
 
   const [sidebarWidth, setSidebarWidth] = useState(SIDEBAR_CONFIG.initialWidth);
   const [selectedRow, setSelectedRow] = useState(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   
   // tableData will be a memoized array consisting of just
   // the items from each interface in the results object.
@@ -45,11 +45,12 @@ export const ResultsTable = () => {
   const nqLink = `https://neuroquery.org/query?text=${ translatedTerms.join('+') }`;
 
   const handleRowClick = ({ row }) => {
-    if(selectedRow && row.pmcid === selectedRow.pmcid) {
-      setSelectedRow(null);
+    if(selectedRow && row.pmid === selectedRow.pmid) {
+      setIsSidebarOpen((prev) => !prev);
     }
     else {
       setSelectedRow(row);
+      setIsSidebarOpen(true);
     }
   };
 
@@ -95,8 +96,7 @@ export const ResultsTable = () => {
           checkboxSelection
         />
 
-        {selectedRow !== null &&
-          selectedRow.pmcid.toLowerCase() in studyConcepts && (
+        {isSidebarOpen && selectedRow !== null && (
             <StudySidebar
               selectedRow={selectedRow}
               setSelectedRow={setSelectedRow}
