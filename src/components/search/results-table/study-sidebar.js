@@ -90,6 +90,26 @@ const renderAbstract = (abstractElement) => {
   return result;
 };
 
+const getDate = (pubDateEl) => {
+  if (pubDateEl === undefined) return undefined;
+
+  const month = pubDateEl.getElementsByTagName("Month")?.[0]?.textContent;
+  const day = pubDateEl.getElementsByTagName("Day")?.[0]?.textContent;
+  const year = pubDateEl.getElementsByTagName("Year")?.[0]?.textContent;
+
+  let result = "";
+  if (month) {
+    result += `${month}. `;
+  }
+  if (day) {
+    result += `${day}, `;
+  }
+  if (year) {
+    result += year;
+  }
+  return result;
+};
+
 export const StudySidebar = ({
   selectedRow,
   setSelectedRow,
@@ -155,14 +175,20 @@ export const StudySidebar = ({
       const studyXML = new window.DOMParser().parseFromString(text, "text/xml");
 
       setPubMedResponse({
-        title: studyXML.getElementsByTagName("ArticleTitle")[0].textContent,
-        abstract: studyXML.getElementsByTagName("Abstract")[0],
+        title: studyXML.getElementsByTagName("ArticleTitle")?.[0].textContent,
+        abstract: studyXML.getElementsByTagName("Abstract")?.[0],
         authors: [...studyXML.getElementsByTagName("Author")].map(
           (authorEl) =>
-            `${authorEl.getElementsByTagName("Initials")[0].textContent}. ${
+            `${authorEl
+              .getElementsByTagName("Initials")[0]
+              .textContent.split("")
+              .join(".")}. ${
               authorEl.getElementsByTagName("LastName")[0].textContent
             }`
         ),
+        date: getDate(studyXML.getElementsByTagName("PubDate")?.[0]),
+        journal:
+          studyXML.getElementsByTagName("ISOAbbreviation")?.[0]?.textContent,
       });
     })();
   }, [selectedRow]);
@@ -247,6 +273,11 @@ export const StudySidebar = ({
           {!pubMedResponse ? "Loading" : pubMedResponse.authors.join(", ")}
         </Typography>
         <Divider sx={{ my: 1 }} />
+        <Typography variant="body2">
+          {`${pubMedResponse?.date ? `${pubMedResponse.date} — ` : ""}${
+            pubMedResponse.journal ? pubMedResponse.journal : ""
+          }`}
+        </Typography>
       </Box>
 
       <Accordion
