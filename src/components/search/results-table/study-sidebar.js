@@ -1,4 +1,4 @@
-import { Clear, ExpandMore } from "@mui/icons-material";
+import { ArrowDropDownCircle as InspectTermIcon, Clear, ExpandMore } from "@mui/icons-material";
 import {
   Accordion as MuiAccordion,
   AccordionDetails as MuiAccordionDetails,
@@ -331,7 +331,31 @@ export const StudySidebar = ({
             {Boolean(selectedRow.pmcid) &&
               selectedRow.pmcid.toLowerCase() in studyConcepts &&
               studyConcepts[selectedRow.pmcid.toLowerCase()].map(
-                (concept, index) => <ListItem key={index}>{concept}</ListItem>
+                (concept, index) => {
+                  return (
+                    <ListItem key={index} sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <Typography>{concept}</Typography>
+                      
+                      <Tooltip title="Open term in Ontology Viewer" placement="left">
+                        <IconButton
+                          onClick={() => {}}
+                          size="small"
+                          sx={{
+                            '--delay': '250ms',
+                            color: 'palette.primary',
+                            opacity: 0.4,
+                            transition: 'color var(--delay), opacity var(--delay)',
+                            '&:hover': { 
+                              color: 'info.main', 
+                              opacity: 1,
+                              transition: 'color var(--delay), opacity var(--delay)',
+                            }}}>
+                          <InspectTermIcon sx={{ transform: 'rotate(-90deg)' }} />
+                        </IconButton>
+                    </Tooltip>
+                    </ListItem>
+                  )
+                }
               )}
           </List>
         </AccordionDetails>
