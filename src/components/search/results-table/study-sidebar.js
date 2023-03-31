@@ -327,7 +327,7 @@ export const StudySidebar = ({
           <Typography>Concepts</Typography>
         </AccordionSummary>
         <AccordionDetails sx={{ padding: 0 }}>
-          <List>
+          <List dense>
             {Boolean(selectedRow.pmcid) &&
               selectedRow.pmcid.toLowerCase() in studyConcepts &&
               studyConcepts[selectedRow.pmcid.toLowerCase()].map(
@@ -336,7 +336,7 @@ export const StudySidebar = ({
                     <ListItem key={index} sx={{ display: 'flex', justifyContent: 'space-between' }}>
                       <Typography>{concept}</Typography>
                       
-                      <Tooltip title="Open term in Ontology Viewer" placement="left">
+                      <Tooltip title="Open concept in Ontology Viewer" placement="left">
                         <IconButton
                           onClick={() => {}}
                           size="small"
