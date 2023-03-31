@@ -2,7 +2,7 @@ import * as yup from 'yup'
 
 //
 
-export const formURL = `https://script.google.com/macros/s/AKfycbxoBRfiBVMGH7UjAEGS7Tu8QzSQCWHn9R_bknZNy8Ynu5UO6fSJrhT--nROncLFW3be/exec`
+export const FORM_URL = `https://script.google.com/macros/s/AKfycbxoBRfiBVMGH7UjAEGS7Tu8QzSQCWHn9R_bknZNy8Ynu5UO6fSJrhT--nROncLFW3be/exec`
 
 //
 
