@@ -1,4 +1,8 @@
-import { ArrowDropDownCircle as InspectTermIcon, Clear, ExpandMore } from "@mui/icons-material";
+import {
+  ArrowDropDownCircle as InspectTermIcon,
+  Clear,
+  ExpandMore,
+} from "@mui/icons-material";
 import {
   Accordion as MuiAccordion,
   AccordionDetails as MuiAccordionDetails,
@@ -16,7 +20,7 @@ import {
 import studyConcepts from "../../../data/study-concepts.json";
 import PropTypes from "prop-types";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Link } from '../../link'
+import { Link } from "../../link";
 
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -190,7 +194,7 @@ export const StudySidebar = ({
         date: getDate(studyXML.getElementsByTagName("PubDate")?.[0]),
         journal:
           studyXML.getElementsByTagName("ISOAbbreviation")?.[0]?.textContent,
-        pmid: studyXML.getElementsByTagName('PMID')?.[0].textContent,
+        pmid: studyXML.getElementsByTagName("PMID")?.[0].textContent,
         doi: studyXML.querySelector('ELocationID[EIdType="doi"]')?.textContent,
       });
     })();
@@ -275,20 +279,37 @@ export const StudySidebar = ({
         <Typography variant="body2" sx={{ mt: 1 }}>
           {!pubMedResponse ? "Loading" : pubMedResponse.authors.join(", ")}
         </Typography>
-        <Typography variant="body2" sx={{ mt: 1, fontStyle: 'italic' }}>
+        <Typography variant="body2" sx={{ mt: 1, fontStyle: "italic" }}>
           {`${pubMedResponse?.date ? `${pubMedResponse.date} — ` : ""}${
             pubMedResponse?.journal ? pubMedResponse.journal : ""
           }`}
         </Typography>
         <Divider sx={{ my: 1 }} />
-        <Typography variant="body2" sx={{
-          '& span:not(:last-of-type):after': {
-            content: '"•"',
-            marginX: '1ch',
-          }
-        }}>
-          {pubMedResponse?.pmid ? <span><Link to={`https://pubmed.ncbi.nlm.nih.gov/${pubMedResponse.pmid}/`}>{pubMedResponse.pmid}</Link></span> : null}
-          {pubMedResponse?.doi ? <span><Link to={`https://doi.org/${pubMedResponse.doi}`}>{pubMedResponse.doi}</Link></span> : null}
+        <Typography
+          variant="body2"
+          sx={{
+            "& span:not(:last-of-type):after": {
+              content: '"•"',
+              marginX: "1ch",
+            },
+          }}
+        >
+          {pubMedResponse?.pmid ? (
+            <span>
+              <Link
+                to={`https://pubmed.ncbi.nlm.nih.gov/${pubMedResponse.pmid}/`}
+              >
+                {pubMedResponse.pmid}
+              </Link>
+            </span>
+          ) : null}
+          {pubMedResponse?.doi ? (
+            <span>
+              <Link to={`https://doi.org/${pubMedResponse.doi}`}>
+                {pubMedResponse.doi}
+              </Link>
+            </span>
+          ) : null}
         </Typography>
       </Box>
 
@@ -333,28 +354,41 @@ export const StudySidebar = ({
               studyConcepts[selectedRow.pmcid.toLowerCase()].map(
                 (concept, index) => {
                   return (
-                    <ListItem key={index} sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <ListItem
+                      key={index}
+                      secondaryAction={
+                        <Tooltip
+                          title="Open concept in Ontology Viewer"
+                          placement="left"
+                          edge="end"
+                        >
+                          <IconButton
+                            onClick={() => {}}
+                            size="small"
+                            sx={{
+                              "--delay": "250ms",
+                              color: "palette.primary",
+                              opacity: 0.4,
+                              transition:
+                                "color var(--delay), opacity var(--delay)",
+                              "&:hover": {
+                                color: "info.main",
+                                opacity: 1,
+                                transition:
+                                  "color var(--delay), opacity var(--delay)",
+                              },
+                            }}
+                          >
+                            <InspectTermIcon
+                              sx={{ transform: "rotate(-90deg)" }}
+                            />
+                          </IconButton>
+                        </Tooltip>
+                      }
+                    >
                       <Typography>{concept}</Typography>
-                      
-                      <Tooltip title="Open concept in Ontology Viewer" placement="left">
-                        <IconButton
-                          onClick={() => {}}
-                          size="small"
-                          sx={{
-                            '--delay': '250ms',
-                            color: 'palette.primary',
-                            opacity: 0.4,
-                            transition: 'color var(--delay), opacity var(--delay)',
-                            '&:hover': { 
-                              color: 'info.main', 
-                              opacity: 1,
-                              transition: 'color var(--delay), opacity var(--delay)',
-                            }}}>
-                          <InspectTermIcon sx={{ transform: 'rotate(-90deg)' }} />
-                        </IconButton>
-                    </Tooltip>
                     </ListItem>
-                  )
+                  );
                 }
               )}
           </List>
