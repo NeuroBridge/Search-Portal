@@ -16,6 +16,7 @@ import {
 import studyConcepts from "../../../data/study-concepts.json";
 import PropTypes from "prop-types";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { Link } from '../../link'
 
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -189,6 +190,8 @@ export const StudySidebar = ({
         date: getDate(studyXML.getElementsByTagName("PubDate")?.[0]),
         journal:
           studyXML.getElementsByTagName("ISOAbbreviation")?.[0]?.textContent,
+        pmid: studyXML.getElementsByTagName('PMID')?.[0].textContent,
+        doi: studyXML.querySelector('ELocationID[EIdType="doi"]')?.textContent,
       });
     })();
   }, [selectedRow]);
@@ -272,11 +275,20 @@ export const StudySidebar = ({
         <Typography variant="body2" sx={{ mt: 1 }}>
           {!pubMedResponse ? "Loading" : pubMedResponse.authors.join(", ")}
         </Typography>
-        <Divider sx={{ my: 1 }} />
-        <Typography variant="body2">
+        <Typography variant="body2" sx={{ mt: 1, fontStyle: 'italic' }}>
           {`${pubMedResponse?.date ? `${pubMedResponse.date} — ` : ""}${
-            pubMedResponse.journal ? pubMedResponse.journal : ""
+            pubMedResponse?.journal ? pubMedResponse.journal : ""
           }`}
+        </Typography>
+        <Divider sx={{ my: 1 }} />
+        <Typography variant="body2" sx={{
+          '& span:not(:last-of-type):after': {
+            content: '"•"',
+            marginX: '1ch',
+          }
+        }}>
+          {pubMedResponse?.pmid ? <span><Link to={`https://pubmed.ncbi.nlm.nih.gov/${pubMedResponse.pmid}/`}>{pubMedResponse.pmid}</Link></span> : null}
+          {pubMedResponse?.doi ? <span><Link to={`https://doi.org/${pubMedResponse.doi}`}>{pubMedResponse.doi}</Link></span> : null}
         </Typography>
       </Box>
 
