@@ -87,7 +87,7 @@ const renderAbstract = (abstractElement) => {
         key={`abstract-text-${index}-content`}
         sx={{ "&:not(:last-of-type)": { marginBottom: "1rem" } }}
       >
-        {abstractText.textContent}
+        {abstractText?.textContent}
       </Typography>
     );
   });
@@ -180,21 +180,26 @@ export const StudySidebar = ({
       const studyXML = new window.DOMParser().parseFromString(text, "text/xml");
 
       setPubMedResponse({
-        title: studyXML.getElementsByTagName("ArticleTitle")?.[0].textContent,
+        title: studyXML.getElementsByTagName("ArticleTitle")?.[0]?.textContent,
         abstract: studyXML.getElementsByTagName("Abstract")?.[0],
-        authors: [...studyXML.getElementsByTagName("Author")].map(
-          (authorEl) =>
-            `${authorEl
-              .getElementsByTagName("Initials")[0]
-              .textContent.split("")
-              .join(".")}. ${
-              authorEl.getElementsByTagName("LastName")[0].textContent
-            }`
-        ),
+        authors: [...studyXML.getElementsByTagName("Author")]
+          .map((authorEl) => {
+            const firstInitials = authorEl
+              .getElementsByTagName("Initials")?.[0]
+              ?.textContent.split("")
+              .join(".");
+            const lastName =
+              authorEl.getElementsByTagName("LastName")?.[0]?.textContent;
+
+            if (!firstInitials || !lastName) return "";
+
+            return `${firstInitials} ${lastName}`;
+          })
+          .filter((author) => author !== ""),
         date: getDate(studyXML.getElementsByTagName("PubDate")?.[0]),
         journal:
           studyXML.getElementsByTagName("ISOAbbreviation")?.[0]?.textContent,
-        pmid: studyXML.getElementsByTagName("PMID")?.[0].textContent,
+        pmid: studyXML.getElementsByTagName("PMID")?.[0]?.textContent,
         doi: studyXML.querySelector('ELocationID[EIdType="doi"]')?.textContent,
       });
     })();
