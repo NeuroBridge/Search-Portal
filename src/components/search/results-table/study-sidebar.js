@@ -236,25 +236,19 @@ export const StudySidebar = ({
         </Stack>
       </Box>
 
-      <Accordion
-        expanded={expandedAccordions.has("panel1")}
-        onChange={handleAccordionClicked("panel1")}
-      >
-        <AccordionSummary aria-controls="panel1-content" id="panel1-header">
-          <Typography>Title</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            {!pubMedResponse ? "Loading" : pubMedResponse.title}
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
+
+      <Box p={2}>
+        <Typography variant="body1" component="h3" sx={{ fontWeight: "bold" }}>
+          {!pubMedResponse ? "Loading" : pubMedResponse.title}
+        </Typography>
+      </Box>
+
 
       <Accordion
-        expanded={expandedAccordions.has("panel2")}
-        onChange={handleAccordionClicked("panel2")}
+        expanded={expandedAccordions.has("abstract-panel")}
+        onChange={handleAccordionClicked("abstract-panel")}
       >
-        <AccordionSummary aria-controls="panel2-content" id="panel2-header">
+        <AccordionSummary aria-controls="abstract-panel-content" id="abstract-panel-header">
           <Typography>Abstract</Typography>
         </AccordionSummary>
         <AccordionDetails>
@@ -267,13 +261,13 @@ export const StudySidebar = ({
           !(
             !selectedRow.pmcid ||
             !(selectedRow.pmcid.toLowerCase() in studyConcepts)
-          ) && expandedAccordions.has("panel3")
+          ) && expandedAccordions.has("concepts-panel")
         }
-        onChange={handleAccordionClicked("panel3")}
+        onChange={handleAccordionClicked("concepts-panel")}
       >
         <AccordionSummary
-          aria-controls="panel3-content"
-          id="panel3-header"
+          aria-controls="concepts-panel-content"
+          id="concepts-panel-header"
           disabled={
             !selectedRow.pmcid ||
             !(selectedRow.pmcid.toLowerCase() in studyConcepts)
