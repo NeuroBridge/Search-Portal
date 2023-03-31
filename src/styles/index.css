@@ -24,5 +24,6 @@ main {
 }
 
 .grecaptcha-badge {
-  display: none;
+  visibility: hidden;
+  opacity: 0;
 }
