@@ -69,14 +69,18 @@ const renderAbstract = (abstractElement) => {
       result.push(
         <Typography
           key={`abstract-text-${index}-heading`}
-          sx={{ fontWeight: "bold" }}
+          variant='body2'
+          sx={{ fontWeight: "bold", mb: '0.2rem' }}
         >
           {abstractText.getAttribute("Label")}
         </Typography>
       );
     }
     result.push(
-      <Typography key={`abstract-text-${index}-content`}>
+      <Typography
+        key={`abstract-text-${index}-content`}
+        sx={{ "&:not(:last-of-type)": { marginBottom: "1rem" } }}
+      >
         {abstractText.textContent}
       </Typography>
     );
