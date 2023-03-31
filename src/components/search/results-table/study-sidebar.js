@@ -167,10 +167,6 @@ export const StudySidebar = ({
     })();
   }, [selectedRow]);
 
-  useEffect(() => {
-    console.log(pubMedResponse);
-  }, [pubMedResponse]);
-
   return (
     <Box
       ref={containerRef}
