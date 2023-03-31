@@ -4,6 +4,7 @@ import {
   AccordionDetails as MuiAccordionDetails,
   AccordionSummary as MuiAccordionSummary,
   Box,
+  Divider,
   IconButton,
   List,
   ListItem,
@@ -69,8 +70,8 @@ const renderAbstract = (abstractElement) => {
       result.push(
         <Typography
           key={`abstract-text-${index}-heading`}
-          variant='body2'
-          sx={{ fontWeight: "bold", mb: '0.2rem' }}
+          variant="body2"
+          sx={{ fontWeight: "bold", mb: "0.2rem" }}
         >
           {abstractText.getAttribute("Label")}
         </Typography>
@@ -156,6 +157,12 @@ export const StudySidebar = ({
       setPubMedResponse({
         title: studyXML.getElementsByTagName("ArticleTitle")[0].textContent,
         abstract: studyXML.getElementsByTagName("Abstract")[0],
+        authors: [...studyXML.getElementsByTagName("Author")].map(
+          (authorEl) =>
+            `${authorEl.getElementsByTagName("Initials")[0].textContent}. ${
+              authorEl.getElementsByTagName("LastName")[0].textContent
+            }`
+        ),
       });
     })();
   }, [selectedRow]);
@@ -236,19 +243,24 @@ export const StudySidebar = ({
         </Stack>
       </Box>
 
-
       <Box p={2}>
         <Typography variant="body1" component="h3" sx={{ fontWeight: "bold" }}>
           {!pubMedResponse ? "Loading" : pubMedResponse.title}
         </Typography>
+        <Typography variant="body2" sx={{ mt: 1 }}>
+          {!pubMedResponse ? "Loading" : pubMedResponse.authors.join(", ")}
+        </Typography>
+        <Divider sx={{ my: 1 }} />
       </Box>
-
 
       <Accordion
         expanded={expandedAccordions.has("abstract-panel")}
         onChange={handleAccordionClicked("abstract-panel")}
       >
-        <AccordionSummary aria-controls="abstract-panel-content" id="abstract-panel-header">
+        <AccordionSummary
+          aria-controls="abstract-panel-content"
+          id="abstract-panel-header"
+        >
           <Typography>Abstract</Typography>
         </AccordionSummary>
         <AccordionDetails>
