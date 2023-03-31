@@ -345,7 +345,7 @@ export const StudySidebar = ({
             !(selectedRow.pmcid.toLowerCase() in studyConcepts)
           }
         >
-          <Typography>Concepts</Typography>
+          <Typography>Assessments</Typography>
         </AccordionSummary>
         <AccordionDetails sx={{ padding: 0 }}>
           <List dense>
