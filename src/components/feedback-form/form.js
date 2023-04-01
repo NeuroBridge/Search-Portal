@@ -31,7 +31,7 @@ import { Thanks } from './thanks'
  *   } }),
  *
  * where `navigate` is from react-rotuer-dom.
- * notice how this passed in data overwrite the default object data.
+ * notice how this passed-in data overwrites the default object data.
  */
 export const FeedbackForm = ({ presets }) => {
   const { notify } = useAppContext()
@@ -138,7 +138,7 @@ export const FeedbackForm = ({ presets }) => {
           component="form"
           ref={ formRef }
           spacing={ 4 }
-          sx={{ width: '100%', mt: 1, mb: 3 }}
+          sx={{ width: '100%', mt: 1, mb: 2 }}
         >
           <NameField />
           <EmailField />

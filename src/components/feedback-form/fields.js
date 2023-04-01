@@ -7,22 +7,6 @@ import { subjectOptions } from './config'
 
 //
 
-export const TokenField = ({ value }) => {
-  return (
-    <input
-      type="hidden"
-      name="token"
-      value={ value }
-    />
-  )
-}
-
-TokenField.propTypes = {
-  value: PropTypes.string.isRequired,
-}
-
-//
-
 export const NameField = () => {
   const { formState, register } = useFormContext()
   return (
@@ -117,4 +101,20 @@ export const MessageField = () => {
       }
     </FormControl>
   )
+}
+
+//
+
+export const TokenField = ({ value }) => {
+  return (
+    <input
+      type="hidden"
+      name="token"
+      value={ value }
+    />
+  )
+}
+
+TokenField.propTypes = {
+  value: PropTypes.string.isRequired,
 }
