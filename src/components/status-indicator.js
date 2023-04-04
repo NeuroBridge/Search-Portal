@@ -14,12 +14,7 @@ import { useEffect, useState } from "react";
 
 const STATUS_URLS = [
   {
-    name: "NeuroQuery",
-    url: `${process.env.NQ_API_URL}?searchTerms=abstinence`,
-    method: "GET",
-  },
-  {
-    name: "NeuroBridge",
+    name: "neurobridges-ml.renci.org",
     url: process.env.NB_API_URL,
     method: "POST",
     body: {
@@ -32,7 +27,7 @@ const STATUS_URLS = [
     },
   },
   {
-    name: "NB-NQ Translator",
+    name: "api.neurobridges.org",
     url: process.env.NB_NQ_TRANSLATOR_HEALTH_URL,
     method: "GET",
   },
