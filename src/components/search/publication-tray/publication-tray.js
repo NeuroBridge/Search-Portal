@@ -19,7 +19,7 @@ import {
 } from "@mui/material";
 import studyConcepts from "../../../data/study-concepts.json";
 import PropTypes from "prop-types";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "../../link";
 
 const Accordion = styled((props) => (
@@ -56,12 +56,6 @@ const AccordionSummary = styled((props) => (
 const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   padding: theme.spacing(2),
 }));
-
-export const SIDEBAR_CONFIG = {
-  initialWidth: 350,
-  minWidth: 200,
-  maxWidth: 700,
-};
 
 const renderAbstract = (abstractElement) => {
   const result = [];
@@ -118,41 +112,10 @@ const getDate = (pubDateEl) => {
 export const PublicationTray = ({
   selectedRow,
   setSelectedRow,
-  sidebarWidth,
-  setSidebarWidth,
   expandedAccordions,
   setExpandedAccordions,
 }) => {
   const [pubMedResponse, setPubMedResponse] = useState(null);
-  const containerRef = useRef(null);
-
-  const handleMouseDown = (event) => {
-    event.preventDefault();
-    document.addEventListener("mouseup", handleMouseUp, true);
-    document.addEventListener("mousemove", handleMouseMove, true);
-  };
-
-  const handleMouseUp = (event) => {
-    event.preventDefault();
-    document.removeEventListener("mouseup", handleMouseUp, true);
-    document.removeEventListener("mousemove", handleMouseMove, true);
-  };
-
-  const handleMouseMove = useCallback((event) => {
-    if (!containerRef.current) return;
-
-    const newWidth =
-      containerRef.current.offsetLeft +
-      containerRef.current.offsetWidth -
-      event.clientX;
-    if (
-      SIDEBAR_CONFIG.minWidth < newWidth &&
-      newWidth < SIDEBAR_CONFIG.maxWidth
-    ) {
-      setSidebarWidth(newWidth);
-    }
-  }, []);
-
   const handleAccordionClicked = (panel) => () => {
     const nextState = new Set(expandedAccordions);
 
@@ -206,32 +169,7 @@ export const PublicationTray = ({
   }, [selectedRow]);
 
   return (
-    <Box
-      ref={containerRef}
-      sx={{
-        width: sidebarWidth,
-        position: "relative",
-        paddingLeft: "3px",
-      }}
-    >
-      <Box
-        sx={{
-          width: "4px",
-          backgroundColor: "divider",
-          position: "absolute",
-          top: 0,
-          bottom: 0,
-          left: "-2px",
-          cursor: "ew-resize",
-
-          "&:hover": {
-            width: "6px",
-            left: "-3px",
-          },
-        }}
-        onMouseDown={handleMouseDown}
-        aria-hidden="true"
-      ></Box>
+    <Box>
       <Box
         sx={{
           display: "flex",
@@ -406,8 +344,6 @@ export const PublicationTray = ({
 PublicationTray.propTypes = {
   selectedRow: PropTypes.any,
   setSelectedRow: PropTypes.any,
-  sidebarWidth: PropTypes.any,
-  setSidebarWidth: PropTypes.any,
   expandedAccordions: PropTypes.any,
   setExpandedAccordions: PropTypes.any,
 };

@@ -8,7 +8,8 @@ import { Link } from '../../link'
 import { Error } from '@mui/icons-material'
 import { Box } from '@mui/system'
 import { useTheme } from '@emotion/react'
-import { SIDEBAR_CONFIG, PublicationTray } from '../publication-tray'
+import { PublicationTray } from '../publication-tray'
+import { DraggableTray, TRAY_CONFIG } from '../publication-tray/draggable-tray'
 
 //
 
@@ -24,7 +25,7 @@ export const ResultsTable = () => {
     setCurrentTabIndex(newIndex)
   }
 
-  const [sidebarWidth, setSidebarWidth] = useState(SIDEBAR_CONFIG.initialWidth);
+  const [sideTrayWidth, setSideTrayWidth] = useState(TRAY_CONFIG.initialWidth);
   const [selectedRow, setSelectedRow] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [expandedAccordions, setExpandedAccordions] = useState(new Set());
@@ -98,14 +99,14 @@ export const ResultsTable = () => {
         />
 
         {isSidebarOpen && selectedRow !== null && (
-            <PublicationTray
-              selectedRow={selectedRow}
-              setSelectedRow={setSelectedRow}
-              sidebarWidth={sidebarWidth}
-              setSidebarWidth={setSidebarWidth}
-              expandedAccordions={expandedAccordions}
-              setExpandedAccordions={setExpandedAccordions}
-            />
+            <DraggableTray width={sideTrayWidth} setWidth={setSideTrayWidth}>
+              <PublicationTray
+                selectedRow={selectedRow}
+                setSelectedRow={setSelectedRow}
+                expandedAccordions={expandedAccordions}
+                setExpandedAccordions={setExpandedAccordions}
+              />
+            </DraggableTray>
           )}
       </Card>
     </Fade>
