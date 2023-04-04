@@ -8,7 +8,7 @@ import { Link } from '../../link'
 import { Error } from '@mui/icons-material'
 import { Box } from '@mui/system'
 import { useTheme } from '@emotion/react'
-import { SIDEBAR_CONFIG, StudySidebar } from './study-sidebar'
+import { SIDEBAR_CONFIG, PublicationTray } from '../publication-tray'
 
 //
 
@@ -98,7 +98,7 @@ export const ResultsTable = () => {
         />
 
         {isSidebarOpen && selectedRow !== null && (
-            <StudySidebar
+            <PublicationTray
               selectedRow={selectedRow}
               setSelectedRow={setSelectedRow}
               sidebarWidth={sidebarWidth}

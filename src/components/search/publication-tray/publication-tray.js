@@ -115,7 +115,7 @@ const getDate = (pubDateEl) => {
   return result;
 };
 
-export const StudySidebar = ({
+export const PublicationTray = ({
   selectedRow,
   setSelectedRow,
   sidebarWidth,
@@ -403,7 +403,7 @@ export const StudySidebar = ({
   );
 };
 
-StudySidebar.propTypes = {
+PublicationTray.propTypes = {
   selectedRow: PropTypes.any,
   setSelectedRow: PropTypes.any,
   sidebarWidth: PropTypes.any,
