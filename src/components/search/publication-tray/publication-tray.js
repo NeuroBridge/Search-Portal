@@ -59,10 +59,8 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   padding: theme.spacing(2),
 }));
 
-const Skeleton = styled((props) => (
-  <MuiSkeleton {...props} />
-))(() => ({
-  borderRadius: '6px',
+const Skeleton = styled((props) => <MuiSkeleton {...props} />)(() => ({
+  borderRadius: "6px",
 }));
 
 export const PublicationTray = ({
@@ -71,21 +69,13 @@ export const PublicationTray = ({
   expandedAccordions,
   setExpandedAccordions,
 }) => {
-  
   const {
     error,
     loading,
     fetch,
-    article: {
-      title,
-      abstract,
-      authors,
-      date,
-      journal,
-      articleIds
-    }
+    article: { title, abstract, authors, date, journal, articleIds },
   } = usePubMedAPI(selectedRow.pmid);
-  
+
   const handleAccordionClicked = (panel) => () => {
     const nextState = new Set(expandedAccordions);
 
@@ -147,21 +137,40 @@ export const PublicationTray = ({
 
       <ErrorScreen error={error} onRetry={() => fetch()}>
         <Box p={2}>
-          <Typography variant="body1" component="h3" sx={{ fontWeight: "bold" }}>
-            {loading ? <><Skeleton /><Skeleton /><Skeleton width="50%" /></> : title}
+          <Typography
+            variant="body1"
+            component="h3"
+            sx={{ fontWeight: "bold" }}
+          >
+            {loading ? (
+              <>
+                <Skeleton />
+                <Skeleton />
+                <Skeleton width="50%" />
+              </>
+            ) : (
+              title
+            )}
           </Typography>
           <Typography variant="body2" sx={{ mt: 1 }}>
-            {loading
-              ? <Skeleton width="75%" />
-              : authors.map((a) => `${a.initials} ${a.lastName}`).join(", ")
-            }
+            {loading ? (
+              <Skeleton width="75%" />
+            ) : (
+              authors.map((a) => `${a.initials} ${a.lastName}`).join(", ")
+            )}
           </Typography>
           <Typography variant="body2" sx={{ mt: 1, fontStyle: "italic" }}>
-            {loading
-              ? <>
-                  <Skeleton width="40px" sx={{display: "inline-block", mr: '2ch' }} /><Skeleton width="80px" sx={{display: "inline-block"}} />
-                </>
-              : `${date ? `${date} — ` : ''}${journal}`}
+            {loading ? (
+              <>
+                <Skeleton
+                  width="40px"
+                  sx={{ display: "inline-block", mr: "2ch" }}
+                />
+                <Skeleton width="80px" sx={{ display: "inline-block" }} />
+              </>
+            ) : (
+              `${date ? `${date} — ` : ""}${journal}`
+            )}
           </Typography>
           <Divider sx={{ my: 1 }} />
           <Typography
@@ -172,11 +181,13 @@ export const PublicationTray = ({
                 marginX: "1ch",
               },
               "& .MuiSkeleton-root:not(:last-of-type)": {
-                mr: '2ch'
-              }
+                mr: "2ch",
+              },
             }}
           >
-            {loading ? <Skeleton width="8ch" sx={{ display: 'inline-block' }} /> : articleIds?.pubmed ? (
+            {loading ? (
+              <Skeleton width="8ch" sx={{ display: "inline-block" }} />
+            ) : articleIds?.pubmed ? (
               <span>
                 <Link
                   to={`https://pubmed.ncbi.nlm.nih.gov/${articleIds.pubmed}/`}
@@ -185,7 +196,9 @@ export const PublicationTray = ({
                 </Link>
               </span>
             ) : null}
-            {loading ? <Skeleton width="10ch" sx={{ display: 'inline-block' }} /> :  articleIds?.pmc ? (
+            {loading ? (
+              <Skeleton width="10ch" sx={{ display: "inline-block" }} />
+            ) : articleIds?.pmc ? (
               <span>
                 <Link
                   to={`https://www.ncbi.nlm.nih.gov/pmc/articles/${articleIds.pmc}/`}
@@ -194,7 +207,9 @@ export const PublicationTray = ({
                 </Link>
               </span>
             ) : null}
-            {loading ? <Skeleton width="18ch" sx={{ display: 'inline-block' }} /> :  articleIds?.doi ? (
+            {loading ? (
+              <Skeleton width="18ch" sx={{ display: "inline-block" }} />
+            ) : articleIds?.doi ? (
               <span>
                 <Link to={`https://doi.org/${articleIds.doi}`}>
                   {articleIds.doi}
@@ -218,23 +233,33 @@ export const PublicationTray = ({
             {loading
               ? [...new Array(3)].map((_, i) => (
                   <Box key={i} sx={{ "&:not(:last-of-type)": { mb: "1rem" } }}>
-                    <Typography variant="body2" sx={{ mb: '0.5em' }}><Skeleton width="15ch" /></Typography>
-                    <Skeleton height="8em" sx={{ transform: 'none' }} />
+                    <Typography variant="body2" sx={{ mb: "0.5em" }}>
+                      <Skeleton width="15ch" />
+                    </Typography>
+                    <Skeleton height="8em" sx={{ transform: "none" }} />
                   </Box>
                 ))
               : abstract.map((abstractSection, index) => (
-                  <Box key={index} sx={{ "&:not(:last-of-type)": { mb: "1rem" } }}>
-                    {Boolean(abstractSection.heading) && 
-                      <Typography variant="body2" component='h4' sx={{ fontWeight: "bold", mb: "0.2rem" }}>{abstractSection.heading}</Typography>
-                    }
+                  <Box
+                    key={index}
+                    sx={{ "&:not(:last-of-type)": { mb: "1rem" } }}
+                  >
+                    {Boolean(abstractSection.heading) && (
+                      <Typography
+                        variant="body2"
+                        component="h4"
+                        sx={{ fontWeight: "bold", mb: "0.2rem" }}
+                      >
+                        {abstractSection.heading}
+                      </Typography>
+                    )}
                     <Typography>{abstractSection.text}</Typography>
                   </Box>
-                ))
-            }
+                ))}
           </AccordionDetails>
         </Accordion>
       </ErrorScreen>
-          
+
       <Accordion
         expanded={
           !(
@@ -252,7 +277,12 @@ export const PublicationTray = ({
             !(selectedRow.pmcid.toLowerCase() in studyConcepts)
           }
         >
-          <Typography>Assessments{studyConcepts[selectedRow.pmcid.toLowerCase()] ? ` (${studyConcepts[selectedRow.pmcid.toLowerCase()].length})` : null}</Typography>
+          <Typography>
+            Assessments
+            {studyConcepts[selectedRow.pmcid.toLowerCase()]
+              ? ` (${studyConcepts[selectedRow.pmcid.toLowerCase()].length})`
+              : null}
+          </Typography>
         </AccordionSummary>
         <AccordionDetails sx={{ padding: 0 }}>
           <List dense>
@@ -293,7 +323,15 @@ export const PublicationTray = ({
                         </Tooltip>
                       }
                     >
-                      <Typography sx={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>{concept}</Typography>
+                      <Typography
+                        sx={{
+                          textOverflow: "ellipsis",
+                          overflow: "hidden",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {concept}
+                      </Typography>
                     </ListItem>
                   );
                 }
