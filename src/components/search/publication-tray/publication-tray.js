@@ -12,6 +12,7 @@ import {
   IconButton,
   List,
   ListItem,
+  Skeleton as MuiSkeleton,
   Stack,
   styled,
   Tooltip,
@@ -19,8 +20,8 @@ import {
 } from "@mui/material";
 import studyConcepts from "../../../data/study-concepts.json";
 import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
 import { Link } from "../../link";
+import { usePubMedAPI } from "./pubmed-api";
 
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -57,57 +58,11 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   padding: theme.spacing(2),
 }));
 
-const renderAbstract = (abstractElement) => {
-  const result = [];
-
-  const abstractTextEls = [
-    ...abstractElement.getElementsByTagName("AbstractText"),
-  ];
-
-  abstractTextEls.forEach((abstractText, index) => {
-    if (abstractText.hasAttribute("Label")) {
-      result.push(
-        <Typography
-          key={`abstract-text-${index}-heading`}
-          variant="body2"
-          sx={{ fontWeight: "bold", mb: "0.2rem" }}
-        >
-          {abstractText.getAttribute("Label")}
-        </Typography>
-      );
-    }
-    result.push(
-      <Typography
-        key={`abstract-text-${index}-content`}
-        sx={{ "&:not(:last-of-type)": { marginBottom: "1rem" } }}
-      >
-        {abstractText?.textContent}
-      </Typography>
-    );
-  });
-
-  return result;
-};
-
-const getDate = (pubDateEl) => {
-  if (pubDateEl === undefined) return undefined;
-
-  const month = pubDateEl.getElementsByTagName("Month")?.[0]?.textContent;
-  const day = pubDateEl.getElementsByTagName("Day")?.[0]?.textContent;
-  const year = pubDateEl.getElementsByTagName("Year")?.[0]?.textContent;
-
-  let result = "";
-  if (month) {
-    result += `${month}. `;
-  }
-  if (day) {
-    result += `${day}, `;
-  }
-  if (year) {
-    result += year;
-  }
-  return result;
-};
+const Skeleton = styled((props) => (
+  <MuiSkeleton {...props} />
+))(() => ({
+  borderRadius: '6px',
+}));
 
 export const PublicationTray = ({
   selectedRow,
@@ -115,7 +70,19 @@ export const PublicationTray = ({
   expandedAccordions,
   setExpandedAccordions,
 }) => {
-  const [pubMedResponse, setPubMedResponse] = useState(null);
+  
+  const {
+    loading,
+    article: {
+      title,
+      abstract,
+      authors,
+      date,
+      journal,
+      articleIds
+    }
+  } = usePubMedAPI(selectedRow.pmid);
+  
   const handleAccordionClicked = (panel) => () => {
     const nextState = new Set(expandedAccordions);
 
@@ -125,48 +92,8 @@ export const PublicationTray = ({
       nextState.add(panel);
     }
 
-    setExpandedAccordions(() => nextState);
+    setExpandedAccordions(nextState);
   };
-
-  useEffect(() => {
-    (async () => {
-      const response = await fetch(
-        `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=${selectedRow.pmid}`,
-        {
-          method: "GET",
-          headers: {
-            Accept: "application/xml",
-          },
-        }
-      );
-      const text = await response.text();
-      const studyXML = new window.DOMParser().parseFromString(text, "text/xml");
-
-      setPubMedResponse({
-        title: studyXML.getElementsByTagName("ArticleTitle")?.[0]?.textContent,
-        abstract: studyXML.getElementsByTagName("Abstract")?.[0],
-        authors: [...studyXML.getElementsByTagName("Author")]
-          .map((authorEl) => {
-            const firstInitials = authorEl
-              .getElementsByTagName("Initials")?.[0]
-              ?.textContent.split("")
-              .join(".");
-            const lastName =
-              authorEl.getElementsByTagName("LastName")?.[0]?.textContent;
-
-            if (!firstInitials || !lastName) return "";
-
-            return `${firstInitials} ${lastName}`;
-          })
-          .filter((author) => author !== ""),
-        date: getDate(studyXML.getElementsByTagName("PubDate")?.[0]),
-        journal:
-          studyXML.getElementsByTagName("ISOAbbreviation")?.[0]?.textContent,
-        pmid: studyXML.getElementsByTagName("PMID")?.[0]?.textContent,
-        doi: studyXML.querySelector('ELocationID[EIdType="doi"]')?.textContent,
-      });
-    })();
-  }, [selectedRow]);
 
   return (
     <Box>
@@ -202,7 +129,7 @@ export const PublicationTray = ({
             borderColor: "divider",
           }}
         >
-          <Tooltip title="Close study concepts view" placement="left">
+          <Tooltip title="Close publication view" placement="left">
             <IconButton
               onClick={() => setSelectedRow(null)}
               size="small"
@@ -217,39 +144,56 @@ export const PublicationTray = ({
 
       <Box p={2}>
         <Typography variant="body1" component="h3" sx={{ fontWeight: "bold" }}>
-          {!pubMedResponse ? "Loading" : pubMedResponse.title}
+          {loading ? <><Skeleton /><Skeleton /><Skeleton width="50%" /></> : title}
         </Typography>
         <Typography variant="body2" sx={{ mt: 1 }}>
-          {!pubMedResponse ? "Loading" : pubMedResponse.authors.join(", ")}
+          {loading
+            ? <Skeleton width="75%" />
+            : authors.map((a) => `${a.initials} ${a.lastName}`).join(", ")
+          }
         </Typography>
         <Typography variant="body2" sx={{ mt: 1, fontStyle: "italic" }}>
-          {`${pubMedResponse?.date ? `${pubMedResponse.date} — ` : ""}${
-            pubMedResponse?.journal ? pubMedResponse.journal : ""
-          }`}
+          {loading
+            ? <>
+                <Skeleton width="40px" sx={{display: "inline-block", mr: '2ch' }} /><Skeleton width="80px" sx={{display: "inline-block"}} />
+              </>
+            : `${date ? `${date} — ` : ''}${journal}`}
         </Typography>
         <Divider sx={{ my: 1 }} />
         <Typography
           variant="body2"
           sx={{
-            "& span:not(:last-of-type):after": {
+            "& span:not(:last-of-type):not(.MuiSkeleton-root)::after": {
               content: '"•"',
               marginX: "1ch",
             },
+            "& .MuiSkeleton-root:not(:last-of-type)": {
+              mr: '2ch'
+            }
           }}
         >
-          {pubMedResponse?.pmid ? (
+          {loading ? <Skeleton width="8ch" sx={{ display: 'inline-block' }} /> : articleIds?.pubmed ? (
             <span>
               <Link
-                to={`https://pubmed.ncbi.nlm.nih.gov/${pubMedResponse.pmid}/`}
+                to={`https://pubmed.ncbi.nlm.nih.gov/${articleIds.pubmed}/`}
               >
-                {pubMedResponse.pmid}
+                {articleIds.pubmed}
               </Link>
             </span>
           ) : null}
-          {pubMedResponse?.doi ? (
+          {loading ? <Skeleton width="10ch" sx={{ display: 'inline-block' }} /> :  articleIds?.pmc ? (
             <span>
-              <Link to={`https://doi.org/${pubMedResponse.doi}`}>
-                {pubMedResponse.doi}
+              <Link
+                to={`https://www.ncbi.nlm.nih.gov/pmc/articles/${articleIds.pmc}/`}
+              >
+                {articleIds.pmc}
+              </Link>
+            </span>
+          ) : null}
+          {loading ? <Skeleton width="18ch" sx={{ display: 'inline-block' }} /> :  articleIds?.doi ? (
+            <span>
+              <Link to={`https://doi.org/${articleIds.doi}`}>
+                {articleIds.doi}
               </Link>
             </span>
           ) : null}
@@ -267,7 +211,22 @@ export const PublicationTray = ({
           <Typography>Abstract</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          {pubMedResponse ? renderAbstract(pubMedResponse.abstract) : null}
+          {loading
+            ? [...new Array(3)].map((_, i) => (
+                <Box key={i} sx={{ "&:not(:last-of-type)": { mb: "1rem" } }}>
+                  <Typography variant="body2" sx={{ mb: '0.5em' }}><Skeleton width="15ch" /></Typography>
+                  <Skeleton height="8em" sx={{ transform: 'none' }} />
+                </Box>
+              ))
+            : abstract.map((abstractSection, index) => (
+                <Box key={index} sx={{ "&:not(:last-of-type)": { mb: "1rem" } }}>
+                  {Boolean(abstractSection.heading) && 
+                    <Typography variant="body2" component='h4' sx={{ fontWeight: "bold", mb: "0.2rem" }}>{abstractSection.heading}</Typography>
+                  }
+                  <Typography>{abstractSection.text}</Typography>
+                </Box>
+              ))
+          }
         </AccordionDetails>
       </Accordion>
 
@@ -288,7 +247,7 @@ export const PublicationTray = ({
             !(selectedRow.pmcid.toLowerCase() in studyConcepts)
           }
         >
-          <Typography>Assessments</Typography>
+          <Typography>Assessments{studyConcepts[selectedRow.pmcid.toLowerCase()] ? ` (${studyConcepts[selectedRow.pmcid.toLowerCase()].length})` : null}</Typography>
         </AccordionSummary>
         <AccordionDetails sx={{ padding: 0 }}>
           <List dense>
@@ -329,7 +288,7 @@ export const PublicationTray = ({
                         </Tooltip>
                       }
                     >
-                      <Typography>{concept}</Typography>
+                      <Typography sx={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>{concept}</Typography>
                     </ListItem>
                   );
                 }
