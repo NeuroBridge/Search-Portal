@@ -156,7 +156,7 @@ export const PublicationTray = ({
             {loading ? (
               <Skeleton width="75%" />
             ) : (
-              authors.map((a) => `${a.initials} ${a.lastName}`).join(", ")
+              authors?.map((a) => `${a.initials} ${a.lastName}`)?.join(", ")
             )}
           </Typography>
           <Typography variant="body2" sx={{ mt: 1, fontStyle: "italic" }}>
@@ -169,7 +169,7 @@ export const PublicationTray = ({
                 <Skeleton width="80px" sx={{ display: "inline-block" }} />
               </>
             ) : (
-              `${date ? `${date} — ` : ""}${journal}`
+              `${date ? `${date} — ` : ""}${journal ? journal : ""}`
             )}
           </Typography>
           <Divider sx={{ my: 1 }} />
@@ -220,12 +220,15 @@ export const PublicationTray = ({
         </Box>
 
         <Accordion
-          expanded={expandedAccordions.has("abstract-panel")}
+          expanded={
+            Array.isArray(abstract) && expandedAccordions.has("abstract-panel")
+          }
           onChange={handleAccordionClicked("abstract-panel")}
         >
           <AccordionSummary
             aria-controls="abstract-panel-content"
             id="abstract-panel-header"
+            disabled={!Array.isArray(abstract)}
           >
             <Typography>Abstract</Typography>
           </AccordionSummary>
@@ -239,7 +242,8 @@ export const PublicationTray = ({
                     <Skeleton height="8em" sx={{ transform: "none" }} />
                   </Box>
                 ))
-              : abstract.map((abstractSection, index) => (
+              : Array.isArray(abstract) &&
+                abstract.map((abstractSection, index) => (
                   <Box
                     key={index}
                     sx={{ "&:not(:last-of-type)": { mb: "1rem" } }}
