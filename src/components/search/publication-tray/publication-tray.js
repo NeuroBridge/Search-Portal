@@ -22,6 +22,7 @@ import studyConcepts from "../../../data/study-concepts.json";
 import PropTypes from "prop-types";
 import { Link } from "../../link";
 import { usePubMedAPI } from "./pubmed-api";
+import { ErrorScreen } from "./error-screen";
 
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -72,7 +73,9 @@ export const PublicationTray = ({
 }) => {
   
   const {
+    error,
     loading,
+    fetch,
     article: {
       title,
       abstract,
@@ -142,94 +145,96 @@ export const PublicationTray = ({
         </Stack>
       </Box>
 
-      <Box p={2}>
-        <Typography variant="body1" component="h3" sx={{ fontWeight: "bold" }}>
-          {loading ? <><Skeleton /><Skeleton /><Skeleton width="50%" /></> : title}
-        </Typography>
-        <Typography variant="body2" sx={{ mt: 1 }}>
-          {loading
-            ? <Skeleton width="75%" />
-            : authors.map((a) => `${a.initials} ${a.lastName}`).join(", ")
-          }
-        </Typography>
-        <Typography variant="body2" sx={{ mt: 1, fontStyle: "italic" }}>
-          {loading
-            ? <>
-                <Skeleton width="40px" sx={{display: "inline-block", mr: '2ch' }} /><Skeleton width="80px" sx={{display: "inline-block"}} />
-              </>
-            : `${date ? `${date} — ` : ''}${journal}`}
-        </Typography>
-        <Divider sx={{ my: 1 }} />
-        <Typography
-          variant="body2"
-          sx={{
-            "& span:not(:last-of-type):not(.MuiSkeleton-root)::after": {
-              content: '"•"',
-              marginX: "1ch",
-            },
-            "& .MuiSkeleton-root:not(:last-of-type)": {
-              mr: '2ch'
+      <ErrorScreen error={error} onRetry={() => fetch()}>
+        <Box p={2}>
+          <Typography variant="body1" component="h3" sx={{ fontWeight: "bold" }}>
+            {loading ? <><Skeleton /><Skeleton /><Skeleton width="50%" /></> : title}
+          </Typography>
+          <Typography variant="body2" sx={{ mt: 1 }}>
+            {loading
+              ? <Skeleton width="75%" />
+              : authors.map((a) => `${a.initials} ${a.lastName}`).join(", ")
             }
-          }}
-        >
-          {loading ? <Skeleton width="8ch" sx={{ display: 'inline-block' }} /> : articleIds?.pubmed ? (
-            <span>
-              <Link
-                to={`https://pubmed.ncbi.nlm.nih.gov/${articleIds.pubmed}/`}
-              >
-                {articleIds.pubmed}
-              </Link>
-            </span>
-          ) : null}
-          {loading ? <Skeleton width="10ch" sx={{ display: 'inline-block' }} /> :  articleIds?.pmc ? (
-            <span>
-              <Link
-                to={`https://www.ncbi.nlm.nih.gov/pmc/articles/${articleIds.pmc}/`}
-              >
-                {articleIds.pmc}
-              </Link>
-            </span>
-          ) : null}
-          {loading ? <Skeleton width="18ch" sx={{ display: 'inline-block' }} /> :  articleIds?.doi ? (
-            <span>
-              <Link to={`https://doi.org/${articleIds.doi}`}>
-                {articleIds.doi}
-              </Link>
-            </span>
-          ) : null}
-        </Typography>
-      </Box>
+          </Typography>
+          <Typography variant="body2" sx={{ mt: 1, fontStyle: "italic" }}>
+            {loading
+              ? <>
+                  <Skeleton width="40px" sx={{display: "inline-block", mr: '2ch' }} /><Skeleton width="80px" sx={{display: "inline-block"}} />
+                </>
+              : `${date ? `${date} — ` : ''}${journal}`}
+          </Typography>
+          <Divider sx={{ my: 1 }} />
+          <Typography
+            variant="body2"
+            sx={{
+              "& span:not(:last-of-type):not(.MuiSkeleton-root)::after": {
+                content: '"•"',
+                marginX: "1ch",
+              },
+              "& .MuiSkeleton-root:not(:last-of-type)": {
+                mr: '2ch'
+              }
+            }}
+          >
+            {loading ? <Skeleton width="8ch" sx={{ display: 'inline-block' }} /> : articleIds?.pubmed ? (
+              <span>
+                <Link
+                  to={`https://pubmed.ncbi.nlm.nih.gov/${articleIds.pubmed}/`}
+                >
+                  {articleIds.pubmed}
+                </Link>
+              </span>
+            ) : null}
+            {loading ? <Skeleton width="10ch" sx={{ display: 'inline-block' }} /> :  articleIds?.pmc ? (
+              <span>
+                <Link
+                  to={`https://www.ncbi.nlm.nih.gov/pmc/articles/${articleIds.pmc}/`}
+                >
+                  {articleIds.pmc}
+                </Link>
+              </span>
+            ) : null}
+            {loading ? <Skeleton width="18ch" sx={{ display: 'inline-block' }} /> :  articleIds?.doi ? (
+              <span>
+                <Link to={`https://doi.org/${articleIds.doi}`}>
+                  {articleIds.doi}
+                </Link>
+              </span>
+            ) : null}
+          </Typography>
+        </Box>
 
-      <Accordion
-        expanded={expandedAccordions.has("abstract-panel")}
-        onChange={handleAccordionClicked("abstract-panel")}
-      >
-        <AccordionSummary
-          aria-controls="abstract-panel-content"
-          id="abstract-panel-header"
+        <Accordion
+          expanded={expandedAccordions.has("abstract-panel")}
+          onChange={handleAccordionClicked("abstract-panel")}
         >
-          <Typography>Abstract</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          {loading
-            ? [...new Array(3)].map((_, i) => (
-                <Box key={i} sx={{ "&:not(:last-of-type)": { mb: "1rem" } }}>
-                  <Typography variant="body2" sx={{ mb: '0.5em' }}><Skeleton width="15ch" /></Typography>
-                  <Skeleton height="8em" sx={{ transform: 'none' }} />
-                </Box>
-              ))
-            : abstract.map((abstractSection, index) => (
-                <Box key={index} sx={{ "&:not(:last-of-type)": { mb: "1rem" } }}>
-                  {Boolean(abstractSection.heading) && 
-                    <Typography variant="body2" component='h4' sx={{ fontWeight: "bold", mb: "0.2rem" }}>{abstractSection.heading}</Typography>
-                  }
-                  <Typography>{abstractSection.text}</Typography>
-                </Box>
-              ))
-          }
-        </AccordionDetails>
-      </Accordion>
-
+          <AccordionSummary
+            aria-controls="abstract-panel-content"
+            id="abstract-panel-header"
+          >
+            <Typography>Abstract</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            {loading
+              ? [...new Array(3)].map((_, i) => (
+                  <Box key={i} sx={{ "&:not(:last-of-type)": { mb: "1rem" } }}>
+                    <Typography variant="body2" sx={{ mb: '0.5em' }}><Skeleton width="15ch" /></Typography>
+                    <Skeleton height="8em" sx={{ transform: 'none' }} />
+                  </Box>
+                ))
+              : abstract.map((abstractSection, index) => (
+                  <Box key={index} sx={{ "&:not(:last-of-type)": { mb: "1rem" } }}>
+                    {Boolean(abstractSection.heading) && 
+                      <Typography variant="body2" component='h4' sx={{ fontWeight: "bold", mb: "0.2rem" }}>{abstractSection.heading}</Typography>
+                    }
+                    <Typography>{abstractSection.text}</Typography>
+                  </Box>
+                ))
+            }
+          </AccordionDetails>
+        </Accordion>
+      </ErrorScreen>
+          
       <Accordion
         expanded={
           !(

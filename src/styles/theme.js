@@ -41,6 +41,7 @@ const lightPalette = {
   },
   error: {
     main: '#d32f2f',
+    background: '#ffd9d9',
   },
   concept: {
     positive: '#4cc121',
@@ -73,6 +74,7 @@ const darkPalette = {
   },
   error: {
     main: '#e57373',
+    background: '#38232d',
   },
   success: {
     main: '#00bfa5',

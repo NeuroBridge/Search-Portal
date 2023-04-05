@@ -12,35 +12,40 @@ export const usePubMedAPI = (pmid) => {
     articleIds: null,
   });
 
-  useEffect(() => {
+  const fetch = async () => {
     if(!pmid) return;
     setLoading(true);
+    setError(null);
     
+    try {
+      const api = new PubMedAPI(pmid);
+      await api.fetch();
+      setArticle({
+        title: api.getTitle(),
+        abstract: api.getAbstract(),
+        authors: api.getAuthors(),
+        date: api.getDate(),
+        journal: api.getJournal(),
+        articleIds: api.getArticleIds(),
+      });
+      setLoading(false);
+    }
+    catch (error) {
+      setLoading(false);
+      setError(error);
+    }
+  }
+
+  useEffect(() => {
     (async () => {
-      try {
-        const api = new PubMedAPI(pmid);
-        await api.fetch();
-        setArticle({
-          title: api.getTitle(),
-          abstract: api.getAbstract(),
-          authors: api.getAuthors(),
-          date: api.getDate(),
-          journal: api.getJournal(),
-          articleIds: api.getArticleIds(),
-        });
-        setLoading(false);
-      }
-      catch (error) {
-        setLoading(false);
-        setError(error);
-      }
+      await fetch()
     })()
-    
   }, [pmid]);
 
   return {
-    loading,
     error,
+    loading,
+    fetch,
     article,
   }
 }
