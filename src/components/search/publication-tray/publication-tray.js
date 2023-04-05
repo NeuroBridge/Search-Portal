@@ -279,8 +279,8 @@ export const PublicationTray = ({
         >
           <Typography>
             Assessments
-            {studyConcepts[selectedRow.pmcid.toLowerCase()]
-              ? ` (${studyConcepts[selectedRow.pmcid.toLowerCase()].length})`
+            {studyConcepts[selectedRow.pmcid?.toLowerCase()]
+              ? ` (${studyConcepts[selectedRow.pmcid?.toLowerCase()]?.length})`
               : null}
           </Typography>
         </AccordionSummary>
