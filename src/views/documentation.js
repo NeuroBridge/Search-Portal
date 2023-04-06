@@ -1,6 +1,7 @@
 import { Container, Typography } from '@mui/material'
 import { Link } from '../components/link'
 import { ResponsiveIframe } from '../components/responsive-iframe'
+import { Tutorial } from '../components/tutorial'
 
 //
 
@@ -17,6 +18,10 @@ export const DocumentationView = () => {
         two sources: <Link to="https://www.ncbi.nlm.nih.gov/pmc/">PubMed Central</Link>, via our API,
         and <Link to="https://neuroquery.org/">NeuroQuery</Link>.
       </Typography>
+
+      <Tutorial />
+
+      <br />
 
       <Typography variant="h5" component="h2">
         Building a Query
