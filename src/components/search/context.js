@@ -83,6 +83,8 @@ export const SearchProvider = ({ children }) => {
   };
 
   const nqFetchResults = async (selectedTerms) => {
+    if(selectedTerms?.length === 0) return [];
+    
     const selectedTermsQueryString = selectedTerms.join(',');
 
     const translatedTerms = await axios.get(process.env.NB_NQ_TRANSLATOR_URL, { params: { searchTerms: selectedTermsQueryString } })
@@ -102,7 +104,9 @@ export const SearchProvider = ({ children }) => {
         console.error(error)
         return []
       })
-    
+
+    if(translatedTerms?.length === 0) return [];
+
     return await axios.get(process.env.NQ_API_URL, { params: { searchTerms: translatedTerms } })
       .then(({ data }) => {
         if (!data?.data) {
