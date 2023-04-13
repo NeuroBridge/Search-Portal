@@ -50,5 +50,5 @@ image:
 
 Deploy the new release with the following command.
 ```bash
-helm upgrade --install neurobridges-portal kubernetes -n neurobridges -d kubernetes/values-prod.yaml
+helm upgrade --install neurobridges-portal kubernetes -n neurobridges -f kubernetes/values-prod.yaml
 ```
