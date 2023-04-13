@@ -1,5 +1,4 @@
 import {
-  ArrowDropDownCircle as InspectTermIcon,
   Clear,
   ExpandMore,
 } from "@mui/icons-material";
@@ -297,35 +296,35 @@ export const PublicationTray = ({
                   return (
                     <ListItem
                       key={index}
-                      secondaryAction={
-                        <Tooltip
-                          title="Open concept in Ontology Viewer"
-                          placement="left"
-                          edge="end"
-                        >
-                          <IconButton
-                            onClick={() => {}}
-                            size="small"
-                            sx={{
-                              "--delay": "250ms",
-                              color: "palette.primary",
-                              opacity: 0.4,
-                              transition:
-                                "color var(--delay), opacity var(--delay)",
-                              "&:hover": {
-                                color: "info.main",
-                                opacity: 1,
-                                transition:
-                                  "color var(--delay), opacity var(--delay)",
-                              },
-                            }}
-                          >
-                            <InspectTermIcon
-                              sx={{ transform: "rotate(-90deg)" }}
-                            />
-                          </IconButton>
-                        </Tooltip>
-                      }
+                      // secondaryAction={
+                      //   <Tooltip
+                      //     title="Open concept in Ontology Viewer"
+                      //     placement="left"
+                      //     edge="end"
+                      //   >
+                      //     <IconButton
+                      //       onClick={() => {}}
+                      //       size="small"
+                      //       sx={{
+                      //         "--delay": "250ms",
+                      //         color: "palette.primary",
+                      //         opacity: 0.4,
+                      //         transition:
+                      //           "color var(--delay), opacity var(--delay)",
+                      //         "&:hover": {
+                      //           color: "info.main",
+                      //           opacity: 1,
+                      //           transition:
+                      //             "color var(--delay), opacity var(--delay)",
+                      //         },
+                      //       }}
+                      //     >
+                      //       <InspectTermIcon
+                      //         sx={{ transform: "rotate(-90deg)" }}
+                      //       />
+                      //     </IconButton>
+                      //   </Tooltip>
+                      // }
                     >
                       <Typography
                         sx={{
