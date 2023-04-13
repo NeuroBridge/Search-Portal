@@ -1,7 +1,4 @@
-import {
-  Clear,
-  ExpandMore,
-} from "@mui/icons-material";
+import { Clear, ExpandMore } from "@mui/icons-material";
 import {
   Accordion as MuiAccordion,
   AccordionDetails as MuiAccordionDetails,
@@ -20,8 +17,11 @@ import {
 import studyConcepts from "../../../data/study-concepts.json";
 import PropTypes from "prop-types";
 import { Link } from "../../link";
+import { Link as MuiLink } from "@mui/material";
 import { usePubMedAPI } from "./pubmed-api";
 import { ErrorScreen } from "./error-screen";
+import { useState } from "react";
+import { AuthorModal } from "./author-modal";
 
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -68,6 +68,8 @@ export const PublicationTray = ({
   expandedAccordions,
   setExpandedAccordions,
 }) => {
+  const [selectedAuthor, setSelectedAuthor] = useState(null);
+
   const {
     error,
     loading,
@@ -89,6 +91,12 @@ export const PublicationTray = ({
 
   return (
     <Box>
+      {Boolean(selectedAuthor) && (
+        <AuthorModal
+          author={selectedAuthor}
+          handleClose={() => setSelectedAuthor(null)}
+        />
+      )}
       <Box
         sx={{
           display: "flex",
@@ -155,7 +163,20 @@ export const PublicationTray = ({
             {loading ? (
               <Skeleton width="75%" />
             ) : (
-              authors?.map((a) => `${a.initials} ${a.lastName}`)?.join(", ")
+              authors?.reduce(
+                (acc, cur, i) => [
+                  ...acc,
+                  <MuiLink
+                    key={i}
+                    component="button"
+                    onClick={() => {
+                      setSelectedAuthor(cur);
+                    }}
+                  >{`${cur.initials} ${cur.lastName}`}</MuiLink>,
+                  i !== authors.length - 1 ? ", " : "",
+                ],
+                []
+              )
             )}
           </Typography>
           <Typography variant="body2" sx={{ mt: 1, fontStyle: "italic" }}>
