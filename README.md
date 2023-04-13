@@ -18,6 +18,11 @@ Build the application for production with `npm run build`. The `dist` directory 
 Before doing anything, determine the next release version. Throughout this section, we'll assume the next version is `1.0.4`.
 
 1. **Build.** Build a release image with the following command, executed from the project root.
+
+> To avoid errors on a M1 Mac, build for AMD64 using the following environment variable. [More information](https://stackoverflow.com/questions/65612411/forcing-docker-to-use-linux-amd64-platform-by-default-on-macos/69636473#69636473)
+> 
+> `export DOCKER_DEFAULT_PLATFORM=linux/amd64`
+
 ```bash
 docker build -t containers.renci.org/neurobridges/neurobridges-portal:1.0.4 .
 ```

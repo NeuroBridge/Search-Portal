@@ -2,9 +2,7 @@ import PropTypes from 'prop-types'
 import {
   Box, Divider, IconButton, Stack, Tab, Tabs, Tooltip,
 } from '@mui/material'
-import {
-  Clear as ClearResultsIcon,
-} from '@mui/icons-material'
+import { PlaylistRemove } from '@mui/icons-material'
 import { useSearch } from '../context'
 import {
   GridToolbarContainer,
@@ -69,7 +67,7 @@ export const TableHeader = ({ currentTabIndex, handleChangeTab, detail }) => {
               aria-label="Clear all results"
               sx={{ borderRadius: 0, height: '100%', p: 1 }}
             >
-              <ClearResultsIcon />
+              <PlaylistRemove />
             </IconButton>
           </Tooltip>
         </Stack>

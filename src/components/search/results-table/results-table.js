@@ -8,6 +8,8 @@ import { Link } from '../../link'
 import { Error } from '@mui/icons-material'
 import { Box } from '@mui/system'
 import { useTheme } from '@emotion/react'
+import { PublicationTray } from '../publication-tray'
+import { DraggableTray, TRAY_CONFIG } from '../publication-tray/draggable-tray'
 
 //
 
@@ -22,6 +24,11 @@ export const ResultsTable = () => {
   const handleChangeTab = (event, newIndex) => {
     setCurrentTabIndex(newIndex)
   }
+
+  const [sideTrayWidth, setSideTrayWidth] = useState(TRAY_CONFIG.initialWidth);
+  const [selectedRow, setSelectedRow] = useState(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [expandedAccordions, setExpandedAccordions] = useState(new Set());
   
   // tableData will be a memoized array consisting of just
   // the items from each interface in the results object.
@@ -39,9 +46,19 @@ export const ResultsTable = () => {
 
   const nqLink = `https://neuroquery.org/query?text=${ translatedTerms.join('+') }`;
 
+  const handleRowClick = ({ row }) => {
+    if(selectedRow && row.pmid === selectedRow.pmid) {
+      setIsSidebarOpen((prev) => !prev);
+    }
+    else {
+      setSelectedRow(row);
+      setIsSidebarOpen(true);
+    }
+  };
+
   return (
     <Fade in={ totalResultCount > 0 }>
-      <Card sx={{ height: '100%' }}>
+      <Card sx={{ height: '100%', display: 'flex' }}>
 
         <DataGrid
           sx={{
@@ -54,6 +71,7 @@ export const ResultsTable = () => {
           getRowId={ row => row.pmid }
           pageSize={ pageSize }
           onPageSizeChange={ newSize => setPageSize(newSize) }
+          onRowClick={handleRowClick}
           rowsPerPageOptions={ [10, 20, 50] }
           components={{
             Toolbar: TableHeader,
@@ -80,7 +98,17 @@ export const ResultsTable = () => {
           checkboxSelection
         />
 
+        {isSidebarOpen && selectedRow !== null && (
+            <DraggableTray width={sideTrayWidth} setWidth={setSideTrayWidth}>
+              <PublicationTray
+                selectedRow={selectedRow}
+                setSelectedRow={setSelectedRow}
+                expandedAccordions={expandedAccordions}
+                setExpandedAccordions={setExpandedAccordions}
+              />
+            </DraggableTray>
+          )}
       </Card>
     </Fade>
-  )
+  );
 }
