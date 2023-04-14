@@ -30,8 +30,12 @@ export const App = () => {
     <Paper
       className="app-container"
       sx={{
+        // app-wide background color
         backgroundColor: theme.palette.background.default,
+        // app-wide link color
         'a': { color: theme.palette.primary.main },
+        // add some space between content bottom and footer top
+        '& > main': { mb: theme.spacing(4) },
         // modify toast default styling to add space between the notification's icon and message
         '.Toastify__toast-body': { gap: '1rem' },
       }}
