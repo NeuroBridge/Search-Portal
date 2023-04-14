@@ -212,7 +212,7 @@ export const PublicationTray = ({
                 <Link
                   to={`https://pubmed.ncbi.nlm.nih.gov/${articleIds.pubmed}/`}
                 >
-                  {articleIds.pubmed}
+                  Abstract
                 </Link>
               </span>
             ) : null}
@@ -223,7 +223,7 @@ export const PublicationTray = ({
                 <Link
                   to={`https://www.ncbi.nlm.nih.gov/pmc/articles/${articleIds.pmc}/`}
                 >
-                  {articleIds.pmc}
+                  Full Text
                 </Link>
               </span>
             ) : null}
