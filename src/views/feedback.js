@@ -12,9 +12,9 @@ export const FeedbackView = () => {
       </Typography>
 
       <Typography paragraph sx={{ my: 4 }}>
-        Cillum aute exercitation sit nostrud ea fugiat irure sint ut dolore esse tempor ullamco culpa adipisicing elit.
-        Esse quis aliquip ut adipisicing nulla magna eu excepteur do sunt reprehenderit deserunt ad sed minim.
-        Velit nisi in occaecat in officia in culpa amet sit sint reprehenderit.
+        Your opinion matters to us, and we&apos;d love to hear about your experience using NeuroBridge.
+        Please take a moment to share your questions, suggestions, or report any bugs you&apos;ve encountered.
+        Your feedback will help us improve and provide you with the best possible experience.
       </Typography>
 
       <Card>
