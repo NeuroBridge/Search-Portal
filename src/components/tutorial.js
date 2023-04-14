@@ -2,15 +2,16 @@ import { Fragment, useCallback, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 import {
   Accordion, AccordionDetails, AccordionSummary,
-  Typography, useTheme,
+  Divider, Typography, useTheme,
 } from '@mui/material'
 import { ExpandMore as ExpandIcon } from '@mui/icons-material'
+import { Markdown } from './markdown'
 
 export const Tutorial = ({ title, description, steps }) => {
   const theme = useTheme()
 
   /* this varianle holds id of currently-expanded accordion panel */
-  const [expanded, setExpanded] = useState('adding-concepts')
+  const [expanded, setExpanded] = useState(null)
 
   const accordionStyle = useMemo(() => ({
     '.MuiAccordionSummary-content': {
@@ -72,12 +73,14 @@ export const Tutorial = ({ title, description, steps }) => {
               <span className="index">{ index + 1 }</span>
               <Typography className="title">{ step.title }</Typography>
             </AccordionSummary>
+            <Divider />
             <AccordionDetails className="details">
-              <Typography className="description">{ step.description }</Typography>
+              <Markdown>{ step.description }</Markdown>
             </AccordionDetails>
           </Accordion>
         ))
       }
+      <br />
     </Fragment>
   )
 }
