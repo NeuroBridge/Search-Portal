@@ -22,3 +22,8 @@ body {
 main {
   flex: 1;
 }
+
+.grecaptcha-badge {
+  visibility: hidden;
+  opacity: 0;
+}
