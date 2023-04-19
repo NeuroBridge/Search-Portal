@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import axios from 'axios'
 import { useLocalStorage } from '../../hooks'
 import { useAppContext } from '../../context'
+import translatedTermsList from '../../data/nb-nq-translations.json';
 
 //
 
@@ -83,31 +84,20 @@ export const SearchProvider = ({ children }) => {
   };
 
   const nqFetchResults = async (selectedTerms) => {
-    if(selectedTerms?.length === 0) return [];
+    if(!Array.isArray(selectedTerms) || selectedTerms?.length === 0) return [];
     
-    const selectedTermsQueryString = selectedTerms.join(',');
+    const translated = selectedTerms.reduce((acc, cur) => {
+      const currentTermSynonym = translatedTermsList[cur]?.[0]?.[cur]?.[0]?.term;
+      if(!currentTermSynonym) return acc;
 
-    const translatedTerms = await axios.get(process.env.NB_NQ_TRANSLATOR_URL, { params: { searchTerms: selectedTermsQueryString } })
-      .then(({ data }) => data.data.reduce((acc, current) => {
-        const currentTermSynonyms = Object.values(current)[0];
+      acc.push(currentTermSynonym);
+      return acc;
+    }, []);
+    setTranslatedTerms(translated);
 
-        // include the best match if a NeuroQuery synonym exists
-        return currentTermSynonyms.length < 1 ? acc : [...acc, currentTermSynonyms[0].term];
-      }, []))
-      .then((translatedTermsArray) => { 
-        setTranslatedTerms([...translatedTermsArray]);
+    if(translated?.length === 0) return [];
 
-        return translatedTermsArray.join('+');
-      })
-      .catch(error => {
-        notify('There was an error communicating with the NeuroBridge to NeuroQuery translator API', 'error')
-        console.error(error)
-        return []
-      })
-
-    if(translatedTerms?.length === 0) return [];
-
-    return await axios.get(process.env.NQ_API_URL, { params: { searchTerms: translatedTerms } })
+    return await axios.get(process.env.NQ_API_URL, { params: { searchTerms: translated.join('+') } })
       .then(({ data }) => {
         if (!data?.data) {
           throw new Error('An error occurred while fetching NeuroQuery results.')
