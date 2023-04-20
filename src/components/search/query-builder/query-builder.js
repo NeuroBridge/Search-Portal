@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -19,7 +19,9 @@ import {
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import {
+  Check as CopiedIcon,
   Close as CloseIcon,
+  ContentCopy as CopyIcon,
   DataObject as RawQueryIcon,
   Send as SearchIcon,
   RestartAlt as ResetIcon,
@@ -30,10 +32,12 @@ import { AddTermForm } from "./add-term-form";
 import { ConfigMenu } from "./config-menu";
 import { Link } from "../../link";
 import { useQueryBuilder } from "./context";
+// import { copyToClipboard } from "../../../util/copy-to-clipboard";
 
 export const QueryBuilder = () => {
   const theme = useTheme();
   const [showRawQuery, setShowRawQuery] = useState(false);
+  const [rawQueryIsCopied, setRawQueryIsCopied] = useState(false);
   const { fetchResults, loading } = useSearch();
   const {
     query,
@@ -49,6 +53,31 @@ export const QueryBuilder = () => {
   const toggleShowRawQuery = () => {
     setShowRawQuery(!showRawQuery);
   };
+
+  const handleClickCopyRawQuery = () => {
+    setRawQueryIsCopied(true);
+  }
+
+  /* reset copied state after some time has elapsed */
+  useEffect(() => {
+    let resetCopy;
+
+    if (!rawQueryIsCopied) {
+      return;
+    }
+
+    resetCopy = setTimeout(() => {
+      setRawQueryIsCopied(false);
+    }, 3000)
+
+    return () => {
+      clearTimeout(resetCopy);
+    }
+  }, [rawQueryIsCopied])
+
+  useEffect(() => {
+    setRawQueryIsCopied(false);
+  }, [query])
 
   const handleClickStartOver = () => {
     clearQuery();
@@ -191,20 +220,41 @@ export const QueryBuilder = () => {
           },
         }}
       >
-        <IconButton
-          onClick={() => setShowRawQuery(false)}
-          size="small"
-          sx={{
-            position: "absolute",
-            right: 5,
-            top: 5,
-          }}
+        <Stack
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+          gap={ 1 }
+          sx={{ position: "absolute", right: theme.spacing(1), top: theme.spacing(1) }}
         >
-          <CloseIcon
-            fontSize="small"
-            sx={{ color: "#fff", filter: "opacity(0.75)" }}
-          />
-        </IconButton>
+          <IconButton
+            onClick={handleClickCopyRawQuery}
+            size="small"
+          >
+            {
+              rawQueryIsCopied ? (
+                <CopiedIcon
+                  fontSize="small"
+                  sx={{ color: theme.palette.success.light, filter: "opacity(1.0)" }}
+                />
+              ) : (
+                <CopyIcon
+                  fontSize="small"
+                  sx={{ color: "#fff", filter: "opacity(0.75)" }}
+                />
+            )
+            }
+          </IconButton>
+          <IconButton
+            onClick={() => setShowRawQuery(false)}
+            size="small"
+          >
+            <CloseIcon
+              fontSize="small"
+              sx={{ color: "#fff", filter: "opacity(0.75)" }}
+            />
+          </IconButton>
+        </Stack>
         <pre className="query">{JSON.stringify(nbQueryObject, null, 2)}</pre>
       </Collapse>
 
