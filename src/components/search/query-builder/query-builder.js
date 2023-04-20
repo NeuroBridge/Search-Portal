@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Box,
   Button,
@@ -26,18 +26,18 @@ import {
   Send as SearchIcon,
   RestartAlt as ResetIcon,
 } from "@mui/icons-material";
+import { useAppContext } from "../../../context";
+import { useQueryBuilder } from "./context";
 import { useSearch } from "../context";
 import { SelectionForest } from "./selection-forest";
 import { AddTermForm } from "./add-term-form";
 import { ConfigMenu } from "./config-menu";
 import { Link } from "../../link";
-import { useQueryBuilder } from "./context";
-// import { copyToClipboard } from "../../../util/copy-to-clipboard";
+import copyToClipboard from "../../../util/copy-to-clipboard";
 
 export const QueryBuilder = () => {
   const theme = useTheme();
-  const [showRawQuery, setShowRawQuery] = useState(false);
-  const [rawQueryIsCopied, setRawQueryIsCopied] = useState(false);
+  const { notify } = useAppContext()
   const { fetchResults, loading } = useSearch();
   const {
     query,
@@ -49,31 +49,30 @@ export const QueryBuilder = () => {
     innerOperator,
     outerOperator,
   } = useQueryBuilder();
+  const rawQuery = useMemo(() => JSON.stringify(nbQueryObject, null, 2), [query])
+  const [showRawQuery, setShowRawQuery] = useState(false);
+  const [rawQueryIsCopied, setRawQueryIsCopied] = useState(false);
 
   const toggleShowRawQuery = () => {
     setShowRawQuery(!showRawQuery);
   };
 
   const handleClickCopyRawQuery = () => {
-    setRawQueryIsCopied(true);
+    // Asynchronously call copyToClipboard
+    copyToClipboard(rawQuery)
+      .then(() => {
+        // If successful, update the copied state value
+        setRawQueryIsCopied(true);
+        notify('Successfully copied query to clipboard!', 'success')
+        setTimeout(() => {
+          setRawQueryIsCopied(false);
+        }, 3000);
+      })
+      .catch(error => {
+        notify('An error occurred while copying query to clipboard!', 'error')
+        console.error(error.message);
+      });
   }
-
-  /* reset copied state after some time has elapsed */
-  useEffect(() => {
-    let resetCopy;
-
-    if (!rawQueryIsCopied) {
-      return;
-    }
-
-    resetCopy = setTimeout(() => {
-      setRawQueryIsCopied(false);
-    }, 3000)
-
-    return () => {
-      clearTimeout(resetCopy);
-    }
-  }, [rawQueryIsCopied])
 
   useEffect(() => {
     setRawQueryIsCopied(false);
@@ -84,11 +83,9 @@ export const QueryBuilder = () => {
   };
 
   return (
-    <Card
-      sx={{
-        position: "relative",
-      }}
-    >
+    <Card sx={{
+      position: "relative",
+    }}>
       <CardHeader
         title="Query Builder"
         subheader={
@@ -255,7 +252,7 @@ export const QueryBuilder = () => {
             />
           </IconButton>
         </Stack>
-        <pre className="query">{JSON.stringify(nbQueryObject, null, 2)}</pre>
+        <pre className="query">{rawQuery}</pre>
       </Collapse>
 
       <Divider />
