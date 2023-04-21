@@ -26,7 +26,8 @@ export const ResultsTable = () => {
   }
 
   const [sideTrayWidth, setSideTrayWidth] = useState(TRAY_CONFIG.initialWidth);
-  const [selectedRow, setSelectedRow] = useState(null);
+  const [studyTabs, setStudyTabs] = useState([]);
+  const [activeTab, setActiveTab] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [expandedAccordions, setExpandedAccordions] = useState(new Set());
   
@@ -47,13 +48,13 @@ export const ResultsTable = () => {
   const nqLink = `https://neuroquery.org/query?text=${ translatedTerms.join('+') }`;
 
   const handleRowClick = ({ row }) => {
-    if(selectedRow && row.pmid === selectedRow.pmid) {
-      setIsSidebarOpen((prev) => !prev);
+    setIsSidebarOpen(true);
+
+    if(!studyTabs.find(tab => tab.study.pmid === row.pmid)) {
+      setStudyTabs(prev => [...prev, { study: row }]);
     }
-    else {
-      setSelectedRow(row);
-      setIsSidebarOpen(true);
-    }
+
+    setActiveTab(row.pmid);
   };
 
   return (
@@ -98,11 +99,15 @@ export const ResultsTable = () => {
           checkboxSelection
         />
 
-        {isSidebarOpen && selectedRow !== null && (
+        {isSidebarOpen && activeTab !== null && studyTabs.length > 0 && (
             <DraggableTray width={sideTrayWidth} setWidth={setSideTrayWidth}>
               <PublicationTray
-                selectedRow={selectedRow}
-                setSelectedRow={setSelectedRow}
+                selectedRow={activeTab}
+                setIsSidebarOpen={setIsSidebarOpen}
+                studyTabs={studyTabs}
+                setStudyTabs={setStudyTabs}
+                activeTab={activeTab}
+                setActiveTab={setActiveTab}
                 expandedAccordions={expandedAccordions}
                 setExpandedAccordions={setExpandedAccordions}
               />
