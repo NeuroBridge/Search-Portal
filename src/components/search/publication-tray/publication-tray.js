@@ -41,7 +41,10 @@ export const PublicationTray = ({
   setExpandedAccordions,
 }) => {
   const activeTabIndex = useMemo(
-    () => studyTabs.findIndex((tab) => tab.study?.pmid === activeTab),
+    () => {
+      const index = studyTabs.findIndex((tab) => tab.study?.pmid === activeTab)
+      return index === -1 ? 0 : index;
+    },
     [activeTab, studyTabs]
   );
 
