@@ -23,4 +23,5 @@ RUN npm run build
 ########################
 FROM bitnami/nginx:latest
 COPY --from=builder /src/dist /opt/bitnami/nginx/html/
+COPY ./server.conf /opt/bitnami/nginx/conf/server_blocks/server.conf
 CMD ["nginx", "-g", "daemon off;"]
