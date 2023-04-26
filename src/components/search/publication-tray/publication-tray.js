@@ -40,13 +40,10 @@ export const PublicationTray = ({
   expandedAccordions,
   setExpandedAccordions,
 }) => {
-  const activeTabIndex = useMemo(
-    () => {
-      const index = studyTabs.findIndex((tab) => tab.study?.pmid === activeTab)
-      return index === -1 ? 0 : index;
-    },
-    [activeTab, studyTabs]
-  );
+  const activeTabIndex = useMemo(() => {
+    const index = studyTabs.findIndex((tab) => tab.study?.pmid === activeTab);
+    return index === -1 ? 0 : index;
+  }, [activeTab, studyTabs]);
 
   const handleChange = (event, newValue) => {
     setActiveTab(studyTabs[newValue].study.pmid);
@@ -101,7 +98,7 @@ export const PublicationTray = ({
                   icon={
                     <Close fontSize="small" onClick={handleCloseTab(tab)} />
                   }
-                  sx={{ textTransform: 'revert' }}
+                  sx={{ textTransform: "revert" }}
                   iconPosition="end"
                   label={`${
                     typeof tab.study?.title === "string" &&
