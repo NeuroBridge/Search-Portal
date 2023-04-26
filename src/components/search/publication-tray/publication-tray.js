@@ -108,6 +108,12 @@ export const PublicationTray = ({
                     tab.study?.title?.split("").splice(0, 10).join("")
                   }...`}
                   {...a11yProps(tab.study?.pmid)}
+                  onMouseDown={(e) => {
+                    if (e.button === 1) {
+                      console.log("clicked");
+                      handleCloseTab(tab)(e);
+                    }
+                  }}
                 />
               </Tooltip>
             ))}
