@@ -65,6 +65,13 @@ export const ResultsTable = () => {
           sx={{
             '.MuiDataGrid-row': { cursor: 'pointer' },
             borderColor: 'background.paper',
+
+            '& .row-opened-in-tab': {
+              backgroundColor: 'openRowBackground',
+            },
+            '& .active-tab': {
+              fontWeight: 'bold',
+            },
           }}
           autoHeight
           rows={ currentTableData }
@@ -73,6 +80,10 @@ export const ResultsTable = () => {
           pageSize={ pageSize }
           onPageSizeChange={ newSize => setPageSize(newSize) }
           onRowClick={handleRowClick}
+          getRowClassName={({ row }) => {
+            if (row.pmid === activeTab && studyTabs.length !== 0) return 'active-tab row-opened-in-tab'
+            return studyTabs.find(tab => tab.study.pmid === row.pmid) ?  'row-opened-in-tab' : ''
+          }}
           rowsPerPageOptions={ [10, 20, 50] }
           components={{
             Toolbar: TableHeader,
