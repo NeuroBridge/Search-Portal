@@ -101,6 +101,7 @@ export const PublicationTray = ({
                   icon={
                     <Close fontSize="small" onClick={handleCloseTab(tab)} />
                   }
+                  sx={{ textTransform: 'revert' }}
                   iconPosition="end"
                   label={`${
                     typeof tab.study?.title === "string" &&
