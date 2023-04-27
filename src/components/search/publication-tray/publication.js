@@ -116,20 +116,24 @@ export const Publication = ({
             {loading ? (
               <Skeleton width="75%" />
             ) : (
-              authors?.reduce(
-                (acc, cur, i) => [
-                  ...acc,
-                  <MuiLink
-                    key={i}
-                    component="button"
-                    onClick={() => {
-                      setSelectedAuthor(cur);
-                    }}
-                  >{`${cur.initials} ${cur.lastName}`}</MuiLink>,
-                  i !== authors.length - 1 ? ", " : "",
-                ],
-                []
-              )
+              authors
+                ?.reduce((acc, cur, i) => {
+                  if (!cur.initials || !cur.lastName) return acc;
+
+                  acc.push(
+                    <MuiLink
+                      key={i}
+                      component="button"
+                      onClick={() => {
+                        setSelectedAuthor(cur);
+                      }}
+                    >{`${cur.initials} ${cur.lastName}`}</MuiLink>
+                  );
+                  return acc;
+                }, [])
+                .flatMap((cur, i, reducedAuthors) =>
+                  i < reducedAuthors.length - 1 ? [cur, ", "] : cur
+                )
             )}
           </Typography>
           <Typography variant="body2" sx={{ mt: 1, fontStyle: "italic" }}>
