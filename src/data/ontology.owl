@@ -1073,6 +1073,39 @@ http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#term-Revision 23 April 
     
 
 
+    <!-- http://maven.renci.org/NeuroBridge/neurobridge#AlcoholCravingQuestionnaire -->
+
+    <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#AlcoholCravingQuestionnaire">
+        <rdfs:subClassOf rdf:resource="http://maven.renci.org/NeuroBridge/neurobridge#SubstanceCravingScale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://maven.renci.org/NeuroBridge/neurobridge#AlcoholDependenceScale -->
+
+    <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#AlcoholDependenceScale">
+        <rdfs:subClassOf rdf:resource="http://maven.renci.org/NeuroBridge/neurobridge#SubstanceDependenceScale"/>
+        <rdfs:label>Alcohol Dependence Scale</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://maven.renci.org/NeuroBridge/neurobridge#AlcoholEffectsScale -->
+
+    <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#AlcoholEffectsScale">
+        <rdfs:subClassOf rdf:resource="http://maven.renci.org/NeuroBridge/neurobridge#AlcoholUseScale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://maven.renci.org/NeuroBridge/neurobridge#AlcoholExpectancyQuestionnaire -->
+
+    <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#AlcoholExpectancyQuestionnaire">
+        <rdfs:subClassOf rdf:resource="http://maven.renci.org/NeuroBridge/neurobridge#AlcoholUseScale"/>
+    </owl:Class>
+    
+
+
     <!-- http://maven.renci.org/NeuroBridge/neurobridge#AlcoholRelatedNeurodevelopmentalDisorder -->
 
     <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#AlcoholRelatedNeurodevelopmentalDisorder">
@@ -1080,6 +1113,26 @@ http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#term-Revision 23 April 
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Alcohol Related Neurodevelopmental Disorder</rdfs:label>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">AlcoholRelatedNeurodevelopmentalDisorder</rdfs:label>
         <rdfs:seeAlso rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C92728</rdfs:seeAlso>
+    </owl:Class>
+    
+
+
+    <!-- http://maven.renci.org/NeuroBridge/neurobridge#AlcoholSmokingandSubstanceInvolvementScreeningTest -->
+
+    <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#AlcoholSmokingandSubstanceInvolvementScreeningTest">
+        <rdfs:subClassOf rdf:resource="http://maven.renci.org/NeuroBridge/neurobridge#SubstanceUseScale"/>
+        <rdfs:label>Alcohol, Smoking and Substance Involvement Screening Test</rdfs:label>
+        <rdfs:seeAlso>https://nda.nih.gov/data_structure.html?short_name=assist01</rdfs:seeAlso>
+    </owl:Class>
+    
+
+
+    <!-- http://maven.renci.org/NeuroBridge/neurobridge#AlcoholUrgeQuestionnaire -->
+
+    <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#AlcoholUrgeQuestionnaire">
+        <rdfs:subClassOf rdf:resource="http://maven.renci.org/NeuroBridge/neurobridge#SubstanceCravingScale"/>
+        <rdfs:label>Alcohol Urge Questionnaire</rdfs:label>
+        <rdfs:seeAlso>https://nda.nih.gov/data_structure.html?short_name=auq01</rdfs:seeAlso>
     </owl:Class>
     
 
@@ -1144,6 +1197,15 @@ http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#term-Revision 23 April 
     
 
 
+    <!-- http://maven.renci.org/NeuroBridge/neurobridge#AltmanSelf-RatingManiaScale -->
+
+    <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#AltmanSelf-RatingManiaScale">
+        <rdfs:subClassOf rdf:resource="http://maven.renci.org/NeuroBridge/neurobridge#PsychopathologyScale"/>
+        <rdfs:label>Altman Self-Rating Mania Scale</rdfs:label>
+    </owl:Class>
+    
+
+
     <!-- http://maven.renci.org/NeuroBridge/neurobridge#AmphetamineAbuse -->
 
     <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#AmphetamineAbuse">
@@ -1171,7 +1233,25 @@ http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#term-Revision 23 April 
     <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#AnnettHandPreferenceQuestionnaire">
         <rdfs:subClassOf rdf:resource="http://maven.renci.org/NeuroBridge/neurobridge#HandednessQuestionnaire"/>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">AHPQ</rdfs:label>
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">AnnettHandPreferenceQuestionnaire</rdfs:label>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Annett Hand Preference Questionnaire</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://maven.renci.org/NeuroBridge/neurobridge#AnticipatoryandConsummatoryInterpersonalPleasureScale -->
+
+    <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#AnticipatoryandConsummatoryInterpersonalPleasureScale">
+        <rdfs:subClassOf rdf:resource="http://maven.renci.org/NeuroBridge/neurobridge#SocialFunctionRatingScale"/>
+        <rdfs:label>Anticipatory and Consummatory Interpersonal Pleasure Scale</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://maven.renci.org/NeuroBridge/neurobridge#AntisaccadeTask -->
+
+    <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#AntisaccadeTask">
+        <rdfs:subClassOf rdf:resource="http://maven.renci.org/NeuroBridge/neurobridge#BehavioralTask"/>
+        <rdfs:label>Antisaccade Task</rdfs:label>
     </owl:Class>
     
 
@@ -1183,6 +1263,14 @@ http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#term-Revision 23 April 
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Anxiety disorder</rdfs:label>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">AnxietyDisorder</rdfs:label>
         <rdfs:seeAlso rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://purl.bioontology.org/ontology/SNOMEDCT/197480006</rdfs:seeAlso>
+    </owl:Class>
+    
+
+
+    <!-- http://maven.renci.org/NeuroBridge/neurobridge#AnxietyRatingScale -->
+
+    <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#AnxietyRatingScale">
+        <rdfs:subClassOf rdf:resource="http://maven.renci.org/NeuroBridge/neurobridge#MentalStateAssessmentScale"/>
     </owl:Class>
     
 
@@ -1276,7 +1364,7 @@ http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#term-Revision 23 April 
     <!-- http://maven.renci.org/NeuroBridge/neurobridge#BalloonAnalogueRiskTask -->
 
     <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#BalloonAnalogueRiskTask">
-        <rdfs:subClassOf rdf:resource="http://www.case.edu/ProvCaRe/provcare#NeurocognitiveTest"/>
+        <rdfs:subClassOf rdf:resource="http://maven.renci.org/NeuroBridge/neurobridge#BehavioralTask"/>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">BART</rdfs:label>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Balloon Analogue Risk Task</rdfs:label>
     </owl:Class>
@@ -1314,6 +1402,24 @@ http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#term-Revision 23 April 
     
 
 
+    <!-- http://maven.renci.org/NeuroBridge/neurobridge#BeckAnxietyInventory -->
+
+    <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#BeckAnxietyInventory">
+        <rdfs:subClassOf rdf:resource="http://maven.renci.org/NeuroBridge/neurobridge#AnxietyRatingScale"/>
+        <rdfs:label>Beck Anxiety Inventory</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://maven.renci.org/NeuroBridge/neurobridge#BeckCognitiveInsightScale -->
+
+    <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#BeckCognitiveInsightScale">
+        <rdfs:subClassOf rdf:resource="http://maven.renci.org/NeuroBridge/neurobridge#MentalStateAssessmentScale"/>
+        <rdfs:label>Beck Cognitive Insight Scale</rdfs:label>
+    </owl:Class>
+    
+
+
     <!-- http://maven.renci.org/NeuroBridge/neurobridge#BeckDepressionInventory -->
 
     <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#BeckDepressionInventory">
@@ -1329,6 +1435,24 @@ http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#term-Revision 23 April 
         <rdfs:subClassOf rdf:resource="http://maven.renci.org/NeuroBridge/neurobridge#PersonalityRatingScale"/>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">BAS</rdfs:label>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">BehavioralActivationScale</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://maven.renci.org/NeuroBridge/neurobridge#BehavioralInhibition -->
+
+    <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#BehavioralInhibition">
+        <rdfs:subClassOf rdf:resource="http://maven.renci.org/NeuroBridge/neurobridge#PersonalityRatingScale"/>
+        <rdfs:label>Behavioral Inhibition</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://maven.renci.org/NeuroBridge/neurobridge#BehavioralTask -->
+
+    <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#BehavioralTask">
+        <rdfs:subClassOf rdf:resource="http://www.case.edu/ProvCaRe/provcare#DataCollectionMethod"/>
+        <rdfs:comment>Represents both computerized and paper-pencil task using different modality (EEG, in a scanner, outside the scanner)</rdfs:comment>
     </owl:Class>
     
 
@@ -1415,11 +1539,21 @@ http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#term-Revision 23 April 
     
 
 
+    <!-- http://maven.renci.org/NeuroBridge/neurobridge#BreathalyzerTest -->
+
+    <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#BreathalyzerTest">
+        <rdfs:subClassOf rdf:resource="http://maven.renci.org/NeuroBridge/neurobridge#AlcoholUseScale"/>
+        <rdfs:label>Breathalyzer Test</rdfs:label>
+    </owl:Class>
+    
+
+
     <!-- http://maven.renci.org/NeuroBridge/neurobridge#BriefAssessmentofCognitioninSchizophrenia -->
 
     <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#BriefAssessmentofCognitioninSchizophrenia">
         <rdfs:subClassOf rdf:resource="http://maven.renci.org/NeuroBridge/neurobridge#PsychopathologyScale"/>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">BACS</rdfs:label>
+        <rdfs:label>Brief Assessment of Cognition</rdfs:label>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Brief Assessment of Cognition in Schizophrenia</rdfs:label>
     </owl:Class>
     
@@ -1434,12 +1568,39 @@ http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#term-Revision 23 April 
     
 
 
+    <!-- http://maven.renci.org/NeuroBridge/neurobridge#BriefNegativeSymptomScale -->
+
+    <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#BriefNegativeSymptomScale">
+        <rdfs:subClassOf rdf:resource="http://maven.renci.org/NeuroBridge/neurobridge#PsychopathologyScale"/>
+        <rdfs:label>Brief Negative Symptom Scale</rdfs:label>
+    </owl:Class>
+    
+
+
     <!-- http://maven.renci.org/NeuroBridge/neurobridge#BriefPsychiatricRatingScale -->
 
     <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#BriefPsychiatricRatingScale">
         <rdfs:subClassOf rdf:resource="http://maven.renci.org/NeuroBridge/neurobridge#PsychopathologyScale"/>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">BPRS</rdfs:label>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">BriefPsychiatricRatingScale</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://maven.renci.org/NeuroBridge/neurobridge#BriefSymptomInventory -->
+
+    <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#BriefSymptomInventory">
+        <rdfs:subClassOf rdf:resource="http://maven.renci.org/NeuroBridge/neurobridge#MentalStateAssessmentScale"/>
+        <rdfs:label>Brief Symptom Inventory</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://maven.renci.org/NeuroBridge/neurobridge#BriefVisuospatialMemoryTest-Revised -->
+
+    <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#BriefVisuospatialMemoryTest-Revised">
+        <rdfs:subClassOf rdf:resource="http://www.case.edu/ProvCaRe/provcare#NeurocognitiveTest"/>
+        <rdfs:label>Brief Visuospatial Memory Test-Revised</rdfs:label>
     </owl:Class>
     
 
@@ -1463,13 +1624,21 @@ http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#term-Revision 23 April 
     
 
 
+    <!-- http://maven.renci.org/NeuroBridge/neurobridge#COPEScale -->
+
+    <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#COPEScale">
+        <rdfs:subClassOf rdf:resource="http://maven.renci.org/NeuroBridge/neurobridge#MentalStateAssessmentScale"/>
+        <rdfs:seeAlso>http://www.fortrefuge.com/quiz-COPE.php</rdfs:seeAlso>
+    </owl:Class>
+    
+
+
     <!-- http://maven.renci.org/NeuroBridge/neurobridge#CalgaryDepressionScale -->
 
     <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#CalgaryDepressionScale">
         <rdfs:subClassOf rdf:resource="http://maven.renci.org/NeuroBridge/neurobridge#DepressionRatingScale"/>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CDSS</rdfs:label>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Calgary Depression Scale for Schizophrenia</rdfs:label>
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CalgaryDepressionScale</rdfs:label>
     </owl:Class>
     
 
@@ -1516,6 +1685,15 @@ http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#term-Revision 23 April 
     
 
 
+    <!-- http://maven.renci.org/NeuroBridge/neurobridge#CannabisWithdrawalScale -->
+
+    <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#CannabisWithdrawalScale">
+        <rdfs:subClassOf rdf:resource="http://maven.renci.org/NeuroBridge/neurobridge#SubstanceCravingScale"/>
+        <rdfs:label>Cannabis Withdrawal Scale</rdfs:label>
+    </owl:Class>
+    
+
+
     <!-- http://maven.renci.org/NeuroBridge/neurobridge#CatatonicSchizophrenia -->
 
     <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#CatatonicSchizophrenia">
@@ -1534,6 +1712,15 @@ http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#term-Revision 23 April 
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CatatonicSchizophreniainRemission</rdfs:label>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Schizophrenia, catatonic, in remission</rdfs:label>
         <rdfs:seeAlso rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://purl.bioontology.org/ontology/SNOMEDCT/111483008</rdfs:seeAlso>
+    </owl:Class>
+    
+
+
+    <!-- http://maven.renci.org/NeuroBridge/neurobridge#CategoryFluency -->
+
+    <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#CategoryFluency">
+        <rdfs:subClassOf rdf:resource="http://www.case.edu/ProvCaRe/provcare#NeurocognitiveTest"/>
+        <rdfs:label>Category Fluency</rdfs:label>
     </owl:Class>
     
 
@@ -1752,11 +1939,22 @@ http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#term-Revision 23 April 
     
 
 
+    <!-- http://maven.renci.org/NeuroBridge/neurobridge#ComprehensiveAssessmentofAt-RiskMentalStates -->
+
+    <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#ComprehensiveAssessmentofAt-RiskMentalStates">
+        <rdfs:subClassOf rdf:resource="http://maven.renci.org/NeuroBridge/neurobridge#PsychopathologyScale"/>
+        <rdfs:label>CARMS</rdfs:label>
+        <rdfs:label>Comprehensive Assessment of Symptoms and History</rdfs:label>
+    </owl:Class>
+    
+
+
     <!-- http://maven.renci.org/NeuroBridge/neurobridge#ComprehensiveAssessmentofSymptomsandHistory -->
 
     <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#ComprehensiveAssessmentofSymptomsandHistory">
         <rdfs:subClassOf rdf:resource="http://maven.renci.org/NeuroBridge/neurobridge#PsychopathologyScale"/>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CASH</rdfs:label>
+        <rdfs:label>Comprehensive Assessment of Symptoms and History</rdfs:label>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ComprehensiveAssessmentofSymptomsandHistory</rdfs:label>
     </owl:Class>
     
@@ -1815,6 +2013,16 @@ http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#term-Revision 23 April 
     
 
 
+    <!-- http://maven.renci.org/NeuroBridge/neurobridge#ContinuousPerformanceTest -->
+
+    <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#ContinuousPerformanceTest">
+        <rdfs:subClassOf rdf:resource="http://maven.renci.org/NeuroBridge/neurobridge#BehavioralTask"/>
+        <rdfs:label>CPT</rdfs:label>
+        <rdfs:label>Continuous Performance Test</rdfs:label>
+    </owl:Class>
+    
+
+
     <!-- http://maven.renci.org/NeuroBridge/neurobridge#ContinuousPhencyclidineAbuse -->
 
     <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#ContinuousPhencyclidineAbuse">
@@ -1847,11 +2055,38 @@ http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#term-Revision 23 April 
     
 
 
+    <!-- http://maven.renci.org/NeuroBridge/neurobridge#CumulativeIllnessRatingScale -->
+
+    <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#CumulativeIllnessRatingScale">
+        <rdfs:subClassOf rdf:resource="http://maven.renci.org/NeuroBridge/neurobridge#LifeHistoryScale"/>
+        <rdfs:label>Cumulative Illness Rating Scale</rdfs:label>
+    </owl:Class>
+    
+
+
     <!-- http://maven.renci.org/NeuroBridge/neurobridge#CurrentUse -->
 
     <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#CurrentUse">
         <rdfs:subClassOf rdf:resource="http://maven.renci.org/NeuroBridge/neurobridge#SubstanceDisorderStatus"/>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CurrentUse</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://maven.renci.org/NeuroBridge/neurobridge#CustomaryDrinkingandDrugUseRecord -->
+
+    <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#CustomaryDrinkingandDrugUseRecord">
+        <rdfs:subClassOf rdf:resource="http://maven.renci.org/NeuroBridge/neurobridge#SubstanceUseScale"/>
+        <rdfs:label>Customary Drinking and Drug Use Record</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://maven.renci.org/NeuroBridge/neurobridge#CyberballTask -->
+
+    <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#CyberballTask">
+        <rdfs:subClassOf rdf:resource="http://maven.renci.org/NeuroBridge/neurobridge#BehavioralTask"/>
+        <rdfs:label>Cyberball Task</rdfs:label>
     </owl:Class>
     
 
@@ -2353,7 +2588,8 @@ http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#term-Revision 23 April 
     <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#ExtrapyramidalSymptomRatingScale">
         <rdfs:subClassOf rdf:resource="http://maven.renci.org/NeuroBridge/neurobridge#ExtrapyramidalSymptomRating"/>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ESRS</rdfs:label>
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ExtrapyramidalSymptomRatingScale</rdfs:label>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Extrapyramidal Symptom Rating Scale</rdfs:label>
+        <rdfs:seeAlso>https://pubmed.ncbi.nlm.nih.gov/15949657/</rdfs:seeAlso>
     </owl:Class>
     
 
@@ -2558,7 +2794,7 @@ http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#term-Revision 23 April 
     <!-- http://maven.renci.org/NeuroBridge/neurobridge#HamiltonAnxietyRatingScale -->
 
     <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#HamiltonAnxietyRatingScale">
-        <rdfs:subClassOf rdf:resource="http://maven.renci.org/NeuroBridge/neurobridge#MentalStateAssessmentScale"/>
+        <rdfs:subClassOf rdf:resource="http://maven.renci.org/NeuroBridge/neurobridge#AnxietyRatingScale"/>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">HamiltonAnxietyRatingScale</rdfs:label>
         <rdfs:seeAlso rdf:datatype="http://www.w3.org/2001/XMLSchema#string">HAMA</rdfs:seeAlso>
     </owl:Class>
@@ -2569,7 +2805,7 @@ http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#term-Revision 23 April 
 
     <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#HandednessQuestionnaire">
         <rdfs:subClassOf rdf:resource="http://maven.renci.org/NeuroBridge/neurobridge#RatingScale"/>
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">HandednessQuestionnaire</rdfs:label>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Handedness Questionnaire</rdfs:label>
     </owl:Class>
     
 
@@ -2942,7 +3178,7 @@ http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#term-Revision 23 April 
 
     <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#MotorSkillHistory">
         <rdfs:subClassOf rdf:resource="http://maven.renci.org/NeuroBridge/neurobridge#FunctionalCapacityRatingScale"/>
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MotorSkillHistory</rdfs:label>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Motor Skill History</rdfs:label>
     </owl:Class>
     
 
@@ -3056,7 +3292,7 @@ http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#term-Revision 23 April 
     <!-- http://maven.renci.org/NeuroBridge/neurobridge#NicotineDependenceRatingScale -->
 
     <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#NicotineDependenceRatingScale">
-        <rdfs:subClassOf rdf:resource="http://maven.renci.org/NeuroBridge/neurobridge#RatingScale"/>
+        <rdfs:subClassOf rdf:resource="http://maven.renci.org/NeuroBridge/neurobridge#SubstanceDependenceScale"/>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NicotineDependenceRatingScale</rdfs:label>
     </owl:Class>
     
@@ -3646,8 +3882,7 @@ http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#term-Revision 23 April 
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Psychosis</rdfs:label>
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PsychoticDisorder</rdfs:label>
-        <rdfs:seeAlso rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Psychotic disorder (disorder)</rdfs:seeAlso>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Psychotic disorder (disorder)</rdfs:label>
         <rdfs:seeAlso rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://purl.bioontology.org/ontology/SNOMEDCT/69322001</rdfs:seeAlso>
     </owl:Class>
     
@@ -4236,6 +4471,14 @@ http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#term-Revision 23 April 
     
 
 
+    <!-- http://maven.renci.org/NeuroBridge/neurobridge#SubstanceDependenceScale -->
+
+    <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#SubstanceDependenceScale">
+        <rdfs:subClassOf rdf:resource="http://maven.renci.org/NeuroBridge/neurobridge#RatingScale"/>
+    </owl:Class>
+    
+
+
     <!-- http://maven.renci.org/NeuroBridge/neurobridge#SubstanceDisorder -->
 
     <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#SubstanceDisorder">
@@ -4445,7 +4688,7 @@ http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#term-Revision 23 April 
 
     <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#UCSDPerformancebasedSkillsAssessment">
         <rdfs:subClassOf rdf:resource="http://maven.renci.org/NeuroBridge/neurobridge#FunctionalCapacityRatingScale"/>
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">UCSDPerformancebasedSkillsAssessment</rdfs:label>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">UCSD Performancebased Skills Assessment</rdfs:label>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">UPSA</rdfs:label>
     </owl:Class>
     
@@ -4555,7 +4798,7 @@ http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#term-Revision 23 April 
     <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#Children&apos;sDepressionInventory">
         <rdfs:subClassOf rdf:resource="http://maven.renci.org/NeuroBridge/neurobridge#DepressionRatingScale"/>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CDI</rdfs:label>
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Children&apos;sDepressionInventory</rdfs:label>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Children&apos;s Depression Inventory</rdfs:label>
     </owl:Class>
     
 
@@ -4584,7 +4827,7 @@ http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#term-Revision 23 April 
     <!-- http://maven.renci.org/NeuroBridge/neurobridge#RevisedChildren&apos;sManifestAnxietyScale -->
 
     <owl:Class rdf:about="http://maven.renci.org/NeuroBridge/neurobridge#RevisedChildren&apos;sManifestAnxietyScale">
-        <rdfs:subClassOf rdf:resource="http://maven.renci.org/NeuroBridge/neurobridge#MentalStateAssessmentScale"/>
+        <rdfs:subClassOf rdf:resource="http://maven.renci.org/NeuroBridge/neurobridge#AnxietyRatingScale"/>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">RCMAS</rdfs:label>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">RevisedChildren&apos;sManifestAnxietyScale</rdfs:label>
     </owl:Class>
@@ -4614,7 +4857,7 @@ http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#term-Revision 23 April 
 
     <owl:Class rdf:about="http://www.case.edu/ProvCaRe/provcare#AcousticPharyngometer">
         <rdfs:subClassOf rdf:resource="http://www.case.edu/ProvCaRe/provcare#DataCollectionInstrument"/>
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">AcousticPharyngometer</rdfs:label>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Acoustic Pharyngometer</rdfs:label>
     </owl:Class>
     
 
@@ -5235,7 +5478,7 @@ http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#term-Revision 23 April 
 
     <owl:Class rdf:about="http://www.case.edu/ProvCaRe/provcare#DataAnalysisInstrument">
         <rdfs:subClassOf rdf:resource="http://www.case.edu/ProvCaRe/provcare#StudyInstrument"/>
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">DataAnalysisInstrument</rdfs:label>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Data Analysis Instrument</rdfs:label>
     </owl:Class>
     
 
@@ -5254,7 +5497,7 @@ http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#term-Revision 23 April 
 
     <owl:Class rdf:about="http://www.case.edu/ProvCaRe/provcare#DataCollectionInstrument">
         <rdfs:subClassOf rdf:resource="http://www.case.edu/ProvCaRe/provcare#StudyInstrument"/>
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">DataCollectionInstrument</rdfs:label>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Data Collection Instrument</rdfs:label>
     </owl:Class>
     
 
@@ -6729,7 +6972,9 @@ http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#term-Revision 23 April 
 
     <owl:Class rdf:about="http://www.case.edu/ProvCaRe/provcare#Questionnaire">
         <rdfs:subClassOf rdf:resource="http://www.case.edu/ProvCaRe/provcare#DataCollectionInstrument"/>
+        <rdfs:label>Patient Reported Outcome</rdfs:label>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Questionnaire</rdfs:label>
+        <rdfs:label>Self Report Questionnaire</rdfs:label>
     </owl:Class>
     
 
@@ -7153,7 +7398,7 @@ http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#term-Revision 23 April 
         <provcare:synonym rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Study tool</provcare:synonym>
         <provcare:synonym rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Tool</provcare:synonym>
         <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Instrument used to collect or analyze data in a research study</rdfs:comment>
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">StudyInstrument</rdfs:label>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Study Instrument</rdfs:label>
     </owl:Class>
     
 
@@ -7460,7 +7705,7 @@ http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#term-Revision 23 April 
 
     <owl:Class rdf:about="http://www.case.edu/ProvCaRe/provcare#WristActigraph">
         <rdfs:subClassOf rdf:resource="http://www.case.edu/ProvCaRe/provcare#Actigraph"/>
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">WristActigraph</rdfs:label>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Wrist Actigraph</rdfs:label>
     </owl:Class>
     
 
@@ -7716,9 +7961,9 @@ http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#term-Revision 23 April 
      -->
 
     <rdf:Description rdf:about="http://www.w3.org/ns/prov#specializationOf">
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">specializationOf</rdfs:label>
         <rdfs:seeAlso rdf:resource="http://www.w3.org/ns/prov#alternateOf"/>
         <prov:constraints rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#prov-dm-constraints-fig</prov:constraints>
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">specializationOf</rdfs:label>
         <rdfs:isDefinedBy rdf:resource="http://www.w3.org/ns/prov-o#"/>
         <prov:category rdf:datatype="http://www.w3.org/2001/XMLSchema#string">expanded</prov:category>
         <prov:dm rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-specialization</prov:dm>
@@ -7742,4 +7987,3 @@ http://www.w3.org/TR/2013/REC-prov-constraints-20130430/#term-Revision 23 April 
 
 
 <!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
-

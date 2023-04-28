@@ -166,7 +166,7 @@ export const QueryBuilderProvider = ({ children }) => {
     const terms = new Set();
 
     const traverse = (node) => {
-      if (node.state === 'positive') terms.add(node.labels[0]);
+      if (node.state === 'positive') terms.add(node.name);
       node.children.map(traverse);
     }
     query.map(traverse);

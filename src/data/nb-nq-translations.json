@@ -1,0 +1,7042 @@
+{
+  "AbnormalInvoluntaryMovementScale": [
+    {
+      "AbnormalInvoluntaryMovementScale": [
+        {
+          "term_name": "abnormal",
+          "term": "abnormal",
+          "score": 1.6939759
+        }
+      ]
+    }
+  ],
+  "Abstinent": [
+    {
+      "Abstinent": [
+        {
+          "term_name": "abstinence",
+          "term": "abstinence",
+          "score": 1.8830612
+        }
+      ]
+    }
+  ],
+  "AbstinentDependenceofPolysubstance": [
+    {
+      "AbstinentDependenceofPolysubstance": [
+        {
+          "term_name": "abstinence",
+          "term": "abstinence",
+          "score": 1.7275106
+        }
+      ]
+    }
+  ],
+  "AcuteDepression": [
+    {
+      "AcuteDepression": [
+        {
+          "term_name": "acute",
+          "term": "acute",
+          "score": 1.7554959
+        }
+      ]
+    }
+  ],
+  "AcuteExacerbationofSubchronicCatatonicSchizophrenia": [
+    {
+      "AcuteExacerbationofSubchronicCatatonicSchizophrenia": [
+        {
+          "term_name": "relapsing",
+          "term": "relapsing",
+          "score": 1.5532658
+        }
+      ]
+    }
+  ],
+  "AcutePain": [
+    {
+      "AcutePain": [
+        {
+          "term_name": "acute",
+          "term": "acute",
+          "score": 1.6129475
+        }
+      ]
+    }
+  ],
+  "AcutePostTraumaStressState": [
+    {
+      "AcutePostTraumaStressState": [
+        {
+          "term_name": "acute",
+          "term": "acute",
+          "score": 1.7661815
+        }
+      ]
+    }
+  ],
+  "AcutePostTraumaticStressDisorderAfterMilitaryCombat": [
+    {
+      "AcutePostTraumaticStressDisorderAfterMilitaryCombat": [
+        {
+          "term_name": "acute",
+          "term": "acute",
+          "score": 1.7931137
+        }
+      ]
+    }
+  ],
+  "AcuteSchizophrenicEpisode": [
+    {
+      "AcuteSchizophrenicEpisode": [
+        {
+          "term_name": "corticopontine",
+          "term": "corticopontine",
+          "score": 1.5586302
+        }
+      ]
+    }
+  ],
+  "AcuteStressDisorder": [
+    {
+      "AcuteStressDisorder": [
+        {
+          "term_name": "acute",
+          "term": "acute",
+          "score": 1.7863879
+        }
+      ]
+    }
+  ],
+  "AddictionSeverityIndex": [
+    {
+      "AddictionSeverityIndex": [
+        {
+          "term_name": "addiction",
+          "term": "addiction",
+          "score": 1.8687841
+        }
+      ]
+    }
+  ],
+  "AffectiveProcessingScale": [
+    {
+      "AffectiveProcessingScale": [
+        {
+          "term_name": "affective",
+          "term": "affective",
+          "score": 1.8151941
+        }
+      ]
+    }
+  ],
+  "AgitatedDepression": [
+    {
+      "AgitatedDepression": [
+        {
+          "term_name": "agitated",
+          "term": "agitated",
+          "score": 1.8814374
+        }
+      ]
+    }
+  ],
+  "AlcoholAbuse": [
+    {
+      "AlcoholAbuse": [
+        {
+          "term_name": "drinking alcohol",
+          "term": "drinking alcohol",
+          "score": 1.8677846
+        }
+      ]
+    }
+  ],
+  "AlcoholRelatedNeurodevelopmentalDisorder": [
+    {
+      "AlcoholRelatedNeurodevelopmentalDisorder": [
+        {
+          "term_name": "alcohol use disorders",
+          "term": "alcohol use disorders",
+          "score": 1.6914549
+        }
+      ]
+    }
+  ],
+  "AlcoholUseDisordersIdentificationTest": [
+    {
+      "AlcoholUseDisordersIdentificationTest": [
+        {
+          "term_name": "alcohol",
+          "term": "alcohol",
+          "score": 1.6033467
+        }
+      ]
+    }
+  ],
+  "AlcoholUseDisordersIdentificationTest-Concise": [
+    {
+      "AlcoholUseDisordersIdentificationTest-Concise": [
+        {
+          "term_name": "ethanol",
+          "term": "ethanol",
+          "score": 1.6251043
+        }
+      ]
+    }
+  ],
+  "AlcoholUseDisordersIdentificationTest-Interview": [
+    {
+      "AlcoholUseDisordersIdentificationTest-Interview": [
+        {
+          "term_name": "alcohol drinking",
+          "term": "alcohol drinking",
+          "score": 1.5927427
+        }
+      ]
+    }
+  ],
+  "AlcoholUseDisordersIdentificationTest-SelfReport": [
+    {
+      "AlcoholUseDisordersIdentificationTest-SelfReport": [
+        {
+          "term_name": "alcohol consumption",
+          "term": "alcohol consumption",
+          "score": 1.5293273
+        }
+      ]
+    }
+  ],
+  "AlcoholUseQuestionnaire": [
+    {
+      "AlcoholUseQuestionnaire": [
+        {
+          "term_name": "alcohol",
+          "term": "alcohol",
+          "score": 1.846232
+        }
+      ]
+    }
+  ],
+  "AlcoholUseScale": [
+    {
+      "AlcoholUseScale": [
+        {
+          "term_name": "ethanol",
+          "term": "ethanol",
+          "score": 1.8161987
+        }
+      ]
+    }
+  ],
+  "AmphetamineAbuse": [
+    {
+      "AmphetamineAbuse": [
+        {
+          "term_name": "amphetamine",
+          "term": "amphetamine",
+          "score": 1.8884306
+        }
+      ]
+    }
+  ],
+  "AmphetamineDependence": [
+    {
+      "AmphetamineDependence": [
+        {
+          "term_name": "amphetamine",
+          "term": "amphetamine",
+          "score": 1.8721309
+        }
+      ]
+    }
+  ],
+  "AnnettHandPreferenceQuestionnaire": [
+    {
+      "AnnettHandPreferenceQuestionnaire": [
+        {
+          "term_name": "anniversary",
+          "term": "anniversary",
+          "score": 1.6700673
+        }
+      ]
+    }
+  ],
+  "AnxietyDisorder": [
+    {
+      "AnxietyDisorder": [
+        {
+          "term_name": "anxiety disorder",
+          "term": "anxiety disorder",
+          "score": 1.843646
+        }
+      ]
+    }
+  ],
+  "AttentionDeficitHyperactivityDisorder": [
+    {
+      "AttentionDeficitHyperactivityDisorder": [
+        {
+          "term_name": "attention capacity",
+          "term": "attention capacity",
+          "score": 1.8080525
+        }
+      ]
+    }
+  ],
+  "AttentionDeficitHyperactivityDisorderSelf-reportScale": [
+    {
+      "AttentionDeficitHyperactivityDisorderSelf-reportScale": [
+        {
+          "term_name": "attention capacity",
+          "term": "attention capacity",
+          "score": 1.6835295
+        }
+      ]
+    }
+  ],
+  "AtypicalParkinsonism": [
+    {
+      "AtypicalParkinsonism": [
+        {
+          "term_name": "prader willi syndrome",
+          "term": "prader willi syndrome",
+          "score": 1.5652694
+        }
+      ]
+    }
+  ],
+  "AuditoryHallucinationsSubscaleofPsychoticSymptomsRatingScale": [
+    {
+      "AuditoryHallucinationsSubscaleofPsychoticSymptomsRatingScale": [
+        {
+          "term_name": "auditory sentence comprehension",
+          "term": "auditory sentence comprehension",
+          "score": 1.6758742
+        }
+      ]
+    }
+  ],
+  "AuditoryOddballTask": [
+    {
+      "AuditoryOddballTask": [
+        {
+          "term_name": "auditory learning",
+          "term": "auditory learning",
+          "score": 1.7289088
+        }
+      ]
+    }
+  ],
+  "AutismSpectrumDisorder": [
+    {
+      "AutismSpectrumDisorder": [
+        {
+          "term_name": "autism spectrum disorders",
+          "term": "autism spectrum disorders",
+          "score": 1.8825722
+        }
+      ]
+    }
+  ],
+  "AutisticDisorder": [
+    {
+      "AutisticDisorder": [
+        {
+          "term_name": "autistic",
+          "term": "autistic",
+          "score": 1.8852533
+        }
+      ]
+    }
+  ],
+  "AwarenessofSocialInferenceTestRevised": [
+    {
+      "AwarenessofSocialInferenceTestRevised": [
+        {
+          "term_name": "awareness",
+          "term": "awareness",
+          "score": 1.7722377
+        }
+      ]
+    }
+  ],
+  "BalloonAnalogueRiskTask": [
+    {
+      "BalloonAnalogueRiskTask": [
+        {
+          "term_name": "braak",
+          "term": "braak",
+          "score": 1.5782093
+        }
+      ]
+    }
+  ],
+  "BarbiturateAbuse": [
+    {
+      "BarbiturateAbuse": [
+        {
+          "term_name": "unconscious",
+          "term": "unconscious",
+          "score": 1.523361
+        }
+      ]
+    }
+  ],
+  "BarnesAkathisiaRatingScale": [
+    {
+      "BarnesAkathisiaRatingScale": [
+        {
+          "term_name": "barnes",
+          "term": "barnes",
+          "score": 1.6257606
+        }
+      ]
+    }
+  ],
+  "BarrattImpulsivenessQuestionnaire": [
+    {
+      "BarrattImpulsivenessQuestionnaire": [
+        {
+          "term_name": "bia",
+          "term": "bia",
+          "score": 1.6086066
+        }
+      ]
+    }
+  ],
+  "BeckDepressionInventory": [
+    {
+      "BeckDepressionInventory": [
+        {
+          "term_name": "becker",
+          "term": "becker",
+          "score": 1.7531049
+        }
+      ]
+    }
+  ],
+  "BehavioralActivationScale": [
+    {
+      "BehavioralActivationScale": [
+        {
+          "term_name": "behavioral responses",
+          "term": "behavioral responses",
+          "score": 1.6722152
+        }
+      ]
+    }
+  ],
+  "BeliefsAboutVoicesQuestionnaire": [
+    {
+      "BeliefsAboutVoicesQuestionnaire": [
+        {
+          "term_name": "beliefs",
+          "term": "beliefs",
+          "score": 1.8614658
+        }
+      ]
+    }
+  ],
+  "BiphasicAlcoholEffectsScale": [
+    {
+      "BiphasicAlcoholEffectsScale": [
+        {
+          "term_name": "bicommissural",
+          "term": "bicommissural",
+          "score": 1.5554173
+        }
+      ]
+    }
+  ],
+  "BipolarDisorder": [
+    {
+      "BipolarDisorder": [
+        {
+          "term_name": "bipolar",
+          "term": "bipolar",
+          "score": 1.8545911
+        }
+      ]
+    }
+  ],
+  "BipolarTypeSchizoaffectiveDisorder": [
+    {
+      "BipolarTypeSchizoaffectiveDisorder": [
+        {
+          "term_name": "bipolar",
+          "term": "bipolar",
+          "score": 1.8317305
+        }
+      ]
+    }
+  ],
+  "Bipolar_II_Disorder": [
+    {
+      "Bipolar_II_Disorder": [
+        {
+          "term_name": "bipolar disorder",
+          "term": "bipolar disorder",
+          "score": 1.9282181
+        }
+      ]
+    }
+  ],
+  "Bipolar_I_Disorder": [
+    {
+      "Bipolar_I_Disorder": [
+        {
+          "term_name": "bipolar disorder",
+          "term": "bipolar disorder",
+          "score": 1.9413315
+        }
+      ]
+    }
+  ],
+  "BirchwoodSocialFunctioningScale": [
+    {
+      "BirchwoodSocialFunctioningScale": [
+        {
+          "term_name": "bs",
+          "term": "bs",
+          "score": 1.5507561
+        }
+      ]
+    }
+  ],
+  "BreathHoldTask": [
+    {
+      "BreathHoldTask": [
+        {
+          "term_name": "breath",
+          "term": "breath",
+          "score": 1.748298
+        }
+      ]
+    }
+  ],
+  "BriefAssessmentofCognitioninSchizophrenia": [
+    {
+      "BriefAssessmentofCognitioninSchizophrenia": [
+        {
+          "term_name": "inattentional",
+          "term": "inattentional",
+          "score": 1.6007043
+        }
+      ]
+    }
+  ],
+  "BriefIntermittentPsychoticSyndrome": [
+    {
+      "BriefIntermittentPsychoticSyndrome": [
+        {
+          "term_name": "brief",
+          "term": "brief",
+          "score": 1.7357646
+        }
+      ]
+    }
+  ],
+  "BriefPsychiatricRatingScale": [
+    {
+      "BriefPsychiatricRatingScale": [
+        {
+          "term_name": "brief",
+          "term": "brief",
+          "score": 1.6867085
+        }
+      ]
+    }
+  ],
+  "Bush-FrancisCatatoniaRatingScale": [
+    {
+      "Bush-FrancisCatatoniaRatingScale": [
+        {
+          "term_name": "cuneate",
+          "term": "cuneate",
+          "score": 1.5353804
+        }
+      ]
+    }
+  ],
+  "CAARMSPsychosisThresholdCriteria": [
+    {
+      "CAARMSPsychosisThresholdCriteria": [
+        {
+          "term_name": "carmichael",
+          "term": "carmichael",
+          "score": 1.5183549
+        }
+      ]
+    }
+  ],
+  "CalgaryDepressionScale": [
+    {
+      "CalgaryDepressionScale": [
+        {
+          "term_name": "calbindin",
+          "term": "calbindin",
+          "score": 1.6187965
+        }
+      ]
+    }
+  ],
+  "CaliforniaVerbalLearningTest-II": [
+    {
+      "CaliforniaVerbalLearningTest-II": [
+        {
+          "term_name": "verbal learning",
+          "term": "verbal learning",
+          "score": 1.5473533
+        }
+      ]
+    }
+  ],
+  "CambridgeNeuropsychologicalTestAutomatedBattery": [
+    {
+      "CambridgeNeuropsychologicalTestAutomatedBattery": [
+        {
+          "term_name": "cortex suggest",
+          "term": "cortex suggest",
+          "score": 1.5381174
+        }
+      ]
+    }
+  ],
+  "CannabisAbuse": [
+    {
+      "CannabisAbuse": [
+        {
+          "term_name": "cannabis",
+          "term": "cannabis",
+          "score": 1.8923703
+        }
+      ]
+    }
+  ],
+  "CannabisHyperemesisSyndrome": [
+    {
+      "CannabisHyperemesisSyndrome": [
+        {
+          "term_name": "cannabis",
+          "term": "cannabis",
+          "score": 1.7388093
+        }
+      ]
+    }
+  ],
+  "CatatonicSchizophrenia": [
+    {
+      "CatatonicSchizophrenia": [
+        {
+          "term_name": "catatonia",
+          "term": "catatonia",
+          "score": 1.7225991
+        }
+      ]
+    }
+  ],
+  "CatatonicSchizophreniainRemission": [
+    {
+      "CatatonicSchizophreniainRemission": [
+        {
+          "term_name": "catatonic",
+          "term": "catatonic",
+          "score": 1.6580191
+        }
+      ]
+    }
+  ],
+  "CenesthopathicSchizophrenia": [
+    {
+      "CenesthopathicSchizophrenia": [
+        {
+          "term_name": "autonoetic consciousness",
+          "term": "autonoetic consciousness",
+          "score": 1.6021783
+        }
+      ]
+    }
+  ],
+  "CerebralDegeneration": [
+    {
+      "CerebralDegeneration": [
+        {
+          "term_name": "cerebral",
+          "term": "cerebral",
+          "score": 1.6715903
+        }
+      ]
+    }
+  ],
+  "CerebralDegenerationPresentingPrimarilywithDementia": [
+    {
+      "CerebralDegenerationPresentingPrimarilywithDementia": [
+        {
+          "term_name": "cerebral dominance",
+          "term": "cerebral dominance",
+          "score": 1.6783689
+        }
+      ]
+    }
+  ],
+  "ChapmanPsychosisProneness": [
+    {
+      "ChapmanPsychosisProneness": [
+        {
+          "term_name": "paranoia",
+          "term": "paranoia",
+          "score": 1.595132
+        }
+      ]
+    }
+  ],
+  "ChildhoodExperienceofCareandAbuseQuestionnaire": [
+    {
+      "ChildhoodExperienceofCareandAbuseQuestionnaire": [
+        {
+          "term_name": "childhood",
+          "term": "childhood",
+          "score": 1.720247
+        }
+      ]
+    }
+  ],
+  "ChildhoodTraumaQuestionnaire": [
+    {
+      "ChildhoodTraumaQuestionnaire": [
+        {
+          "term_name": "psychological trauma",
+          "term": "psychological trauma",
+          "score": 1.6859194
+        }
+      ]
+    }
+  ],
+  "ChildrensMemoryScale": [
+    {
+      "ChildrensMemoryScale": [
+        {
+          "term_name": "children",
+          "term": "children",
+          "score": 1.7584208
+        }
+      ]
+    }
+  ],
+  "ChronicCatatonicSchizophrenia": [
+    {
+      "ChronicCatatonicSchizophrenia": [
+        {
+          "term_name": "schizophrenia",
+          "term": "schizophrenia",
+          "score": 1.6165246
+        }
+      ]
+    }
+  ],
+  "ChronicCatatonicSchizophreniawithAcuteExacerbation": [
+    {
+      "ChronicCatatonicSchizophreniawithAcuteExacerbation": [
+        {
+          "term_name": "catatonic",
+          "term": "catatonic",
+          "score": 1.5306594
+        }
+      ]
+    }
+  ],
+  "ChronicPain": [
+    {
+      "ChronicPain": [
+        {
+          "term_name": "cocaine",
+          "term": "cocaine",
+          "score": 1.5900724
+        }
+      ]
+    }
+  ],
+  "ChronicPostTraumaticStressDisorder": [
+    {
+      "ChronicPostTraumaticStressDisorder": [
+        {
+          "term_name": "chronic",
+          "term": "chronic",
+          "score": 1.7643303
+        }
+      ]
+    }
+  ],
+  "ChronicSchizophrenia": [
+    {
+      "ChronicSchizophrenia": [
+        {
+          "term_name": "schizophrenia",
+          "term": "schizophrenia",
+          "score": 1.6081525
+        }
+      ]
+    }
+  ],
+  "ClinicalDecisionSupportforSubstanceAbuse": [
+    {
+      "ClinicalDecisionSupportforSubstanceAbuse": [
+        {
+          "term_name": "clinically",
+          "term": "clinically",
+          "score": 1.6525383
+        }
+      ]
+    }
+  ],
+  "ClinicalGlobalImpressionsScale": [
+    {
+      "ClinicalGlobalImpressionsScale": [
+        {
+          "term_name": "levels",
+          "term": "levels",
+          "score": 1.632089
+        }
+      ]
+    }
+  ],
+  "ClinicalRiskStatus": [
+    {
+      "ClinicalRiskStatus": [
+        {
+          "term_name": "clinically",
+          "term": "clinically",
+          "score": 1.6284399
+        }
+      ]
+    }
+  ],
+  "ClinicalSymptom": [
+    {
+      "ClinicalSymptom": [
+        {
+          "term_name": "clinical",
+          "term": "clinical",
+          "score": 1.6836764
+        }
+      ]
+    }
+  ],
+  "CocaineAbuse": [
+    {
+      "CocaineAbuse": [
+        {
+          "term_name": "cocaine abuse",
+          "term": "cocaine abuse",
+          "score": 1.8769339
+        }
+      ]
+    }
+  ],
+  "CocaineCravingQuestionnaire_BriefVersion": [
+    {
+      "CocaineCravingQuestionnaire_BriefVersion": [
+        {
+          "term_name": "cocaine",
+          "term": "cocaine",
+          "score": 1.6658275
+        }
+      ]
+    }
+  ],
+  "CocaineSelectiveSeverityAssessmentScale": [
+    {
+      "CocaineSelectiveSeverityAssessmentScale": [
+        {
+          "term_name": "cocaine",
+          "term": "cocaine",
+          "score": 1.7259967
+        }
+      ]
+    }
+  ],
+  "CognitiveDisorder": [
+    {
+      "CognitiveDisorder": [
+        {
+          "term_name": "cognitive",
+          "term": "cognitive",
+          "score": 1.8863972
+        }
+      ]
+    }
+  ],
+  "ComplexPostTraumaticStressDisorder": [
+    {
+      "ComplexPostTraumaticStressDisorder": [
+        {
+          "term_name": "complex",
+          "term": "complex",
+          "score": 1.6673495
+        }
+      ]
+    }
+  ],
+  "ComprehensiveAssessmentofSymptomsandHistory": [
+    {
+      "ComprehensiveAssessmentofSymptomsandHistory": [
+        {
+          "term_name": "multisystemic",
+          "term": "multisystemic",
+          "score": 1.6816097
+        }
+      ]
+    }
+  ],
+  "ConductDisorder": [
+    {
+      "ConductDisorder": [
+        {
+          "term_name": "conduct",
+          "term": "conduct",
+          "score": 1.8680023
+        }
+      ]
+    }
+  ],
+  "Continuous": [
+    {
+      "Continuous": [
+        {
+          "term_name": "continuous",
+          "term": "continuous",
+          "score": 2.0
+        }
+      ]
+    }
+  ],
+  "ContinuousNondependentCannabisAbuse": [
+    {
+      "ContinuousNondependentCannabisAbuse": [
+        {
+          "term_name": "cannabis",
+          "term": "cannabis",
+          "score": 1.6372232
+        }
+      ]
+    }
+  ],
+  "ContinuousNondependentCocaineAbuse": [
+    {
+      "ContinuousNondependentCocaineAbuse": [
+        {
+          "term_name": "continua",
+          "term": "continua",
+          "score": 1.6250376
+        }
+      ]
+    }
+  ],
+  "ContinuousNondependentHallucinogenAbuse": [
+    {
+      "ContinuousNondependentHallucinogenAbuse": [
+        {
+          "term_name": "continuous",
+          "term": "continuous",
+          "score": 1.5913551
+        }
+      ]
+    }
+  ],
+  "ContinuousPhencyclidineAbuse": [
+    {
+      "ContinuousPhencyclidineAbuse": [
+        {
+          "term_name": "continuous",
+          "term": "continuous",
+          "score": 1.6825066
+        }
+      ]
+    }
+  ],
+  "ContinuousSedativeAbuse": [
+    {
+      "ContinuousSedativeAbuse": [
+        {
+          "term_name": "continuous",
+          "term": "continuous",
+          "score": 1.877679
+        }
+      ]
+    }
+  ],
+  "ControlSubject": [
+    {
+      "ControlSubject": [
+        {
+          "term_name": "controls",
+          "term": "controls",
+          "score": 1.8856505
+        }
+      ]
+    }
+  ],
+  "CurrentUse": [
+    {
+      "CurrentUse": [
+        {
+          "term_name": "currently",
+          "term": "currently",
+          "score": 1.7312943
+        }
+      ]
+    }
+  ],
+  "DegenerativeBrainDisorder": [
+    {
+      "DegenerativeBrainDisorder": [
+        {
+          "term_name": "neurodegenerative disorders",
+          "term": "neurodegenerative disorders",
+          "score": 1.7929745
+        }
+      ]
+    }
+  ],
+  "DegenerativeDiseaseoftheCentralNervousSystem": [
+    {
+      "DegenerativeDiseaseoftheCentralNervousSystem": [
+        {
+          "term_name": "degenerative",
+          "term": "degenerative",
+          "score": 1.7191235
+        }
+      ]
+    }
+  ],
+  "DelayedOnsetPostTraumaticStressDisorder": [
+    {
+      "DelayedOnsetPostTraumaticStressDisorder": [
+        {
+          "term_name": "delayed",
+          "term": "delayed",
+          "score": 1.8712288
+        }
+      ]
+    }
+  ],
+  "DementiaoftheLewyBodyType": [
+    {
+      "DementiaoftheLewyBodyType": [
+        {
+          "term_name": "dementia",
+          "term": "dementia",
+          "score": 1.8090767
+        }
+      ]
+    }
+  ],
+  "Depression": [
+    {
+      "Depression": [
+        {
+          "term_name": "depression",
+          "term": "depression",
+          "score": 2.0
+        }
+      ]
+    }
+  ],
+  "DepressionRatingScale": [
+    {
+      "DepressionRatingScale": [
+        {
+          "term_name": "depressions",
+          "term": "depressions",
+          "score": 1.5687802
+        }
+      ]
+    }
+  ],
+  "DepressiveDisorder": [
+    {
+      "DepressiveDisorder": [
+        {
+          "term_name": "depressive disorders",
+          "term": "depressive disorders",
+          "score": 1.9442323
+        }
+      ]
+    }
+  ],
+  "DevelopmentalDisorderofMotorFunction": [
+    {
+      "DevelopmentalDisorderofMotorFunction": [
+        {
+          "term_name": "developmental",
+          "term": "developmental",
+          "score": 1.7338134
+        }
+      ]
+    }
+  ],
+  "DevelopmentalMentalDisorder": [
+    {
+      "DevelopmentalMentalDisorder": [
+        {
+          "term_name": "developmental",
+          "term": "developmental",
+          "score": 1.8841552
+        }
+      ]
+    }
+  ],
+  "DiagnosticInterviewforGeneticStudies": [
+    {
+      "DiagnosticInterviewforGeneticStudies": [
+        {
+          "term_name": "inferences",
+          "term": "inferences",
+          "score": 1.6268421
+        }
+      ]
+    }
+  ],
+  "DiagnosticProcedureonBrain": [
+    {
+      "DiagnosticProcedureonBrain": [
+        {
+          "term_name": "cerebral",
+          "term": "cerebral",
+          "score": 1.7094072
+        }
+      ]
+    }
+  ],
+  "DifffusionTensorImaging": [
+    {
+      "DifffusionTensorImaging": [
+        {
+          "term_name": "dissociation",
+          "term": "dissociation",
+          "score": 1.6826168
+        }
+      ]
+    }
+  ],
+  "DiffusePain": [
+    {
+      "DiffusePain": [
+        {
+          "term_name": "dejerine",
+          "term": "dejerine",
+          "score": 1.5747695
+        }
+      ]
+    }
+  ],
+  "DiffusionWeightedImaging": [
+    {
+      "DiffusionWeightedImaging": [
+        {
+          "term_name": "diagonal",
+          "term": "diagonal",
+          "score": 1.5895652
+        }
+      ]
+    }
+  ],
+  "DiffusionWeightedImagingProtocol": [
+    {
+      "DiffusionWeightedImagingProtocol": [
+        {
+          "term_name": "diffuse",
+          "term": "diffuse",
+          "score": 1.6001695
+        }
+      ]
+    }
+  ],
+  "DisorderofPsychologicalDevelopment": [
+    {
+      "DisorderofPsychologicalDevelopment": [
+        {
+          "term_name": "neurodevelopmental disorders",
+          "term": "neurodevelopmental disorders",
+          "score": 1.7584602
+        }
+      ]
+    }
+  ],
+  "DisorganizedSchizophrenia": [
+    {
+      "DisorganizedSchizophrenia": [
+        {
+          "term_name": "disorganized",
+          "term": "disorganized",
+          "score": 1.674011
+        }
+      ]
+    }
+  ],
+  "DisruptiveBehaviorDisorder": [
+    {
+      "DisruptiveBehaviorDisorder": [
+        {
+          "term_name": "disruptive",
+          "term": "disruptive",
+          "score": 1.7685243
+        }
+      ]
+    }
+  ],
+  "DissociativeDrugHarmfulUse": [
+    {
+      "DissociativeDrugHarmfulUse": [
+        {
+          "term_name": "dissociative",
+          "term": "dissociative",
+          "score": 1.8159646
+        }
+      ]
+    }
+  ],
+  "DrinkingBinge": [
+    {
+      "DrinkingBinge": [
+        {
+          "term_name": "drinking",
+          "term": "drinking",
+          "score": 1.7638731
+        }
+      ]
+    }
+  ],
+  "DrinkingBout": [
+    {
+      "DrinkingBout": [
+        {
+          "term_name": "drinking",
+          "term": "drinking",
+          "score": 1.7678534
+        }
+      ]
+    }
+  ],
+  "DrinkingDay": [
+    {
+      "DrinkingDay": [
+        {
+          "term_name": "drinking",
+          "term": "drinking",
+          "score": 1.7405629
+        }
+      ]
+    }
+  ],
+  "DrinkingEpisode": [
+    {
+      "DrinkingEpisode": [
+        {
+          "term_name": "meynert",
+          "term": "meynert",
+          "score": 1.5677665
+        }
+      ]
+    }
+  ],
+  "DrinkingSession": [
+    {
+      "DrinkingSession": [
+        {
+          "term_name": "drinking",
+          "term": "drinking",
+          "score": 1.9191324
+        }
+      ]
+    }
+  ],
+  "DrinkingandDrugHistoryQuestionnaire": [
+    {
+      "DrinkingandDrugHistoryQuestionnaire": [
+        {
+          "term_name": "drinking",
+          "term": "drinking",
+          "score": 1.83739
+        }
+      ]
+    }
+  ],
+  "DrugAbuse": [
+    {
+      "DrugAbuse": [
+        {
+          "term_name": "drug abuse",
+          "term": "drug abuse",
+          "score": 1.8703902
+        }
+      ]
+    }
+  ],
+  "DrugAbuseScreeningTest-10": [
+    {
+      "DrugAbuseScreeningTest-10": [
+        {
+          "term_name": "area 10",
+          "term": "area 10",
+          "score": 1.532396
+        }
+      ]
+    }
+  ],
+  "DrugDependence": [
+    {
+      "DrugDependence": [
+        {
+          "term_name": "drug",
+          "term": "drug",
+          "score": 1.7207581
+        }
+      ]
+    }
+  ],
+  "DrugRelatedDisorder": [
+    {
+      "DrugRelatedDisorder": [
+        {
+          "term_name": "drugs",
+          "term": "drugs",
+          "score": 1.7673848
+        }
+      ]
+    }
+  ],
+  "DynamicContrast-enhancedMagneticResonanceImaging": [
+    {
+      "DynamicContrast-enhancedMagneticResonanceImaging": [
+        {
+          "term_name": "magnetic stimulation",
+          "term": "magnetic stimulation",
+          "score": 1.6623722
+        }
+      ]
+    }
+  ],
+  "EdinburghHandednessInventoryQuestionnaire": [
+    {
+      "EdinburghHandednessInventoryQuestionnaire": [
+        {
+          "term_name": "edinger",
+          "term": "edinger",
+          "score": 1.6905704
+        }
+      ]
+    }
+  ],
+  "Education": [
+    {
+      "Education": [
+        {
+          "term_name": "education",
+          "term": "education",
+          "score": 2.0
+        }
+      ]
+    }
+  ],
+  "Electrocorticogram": [
+    {
+      "Electrocorticogram": [
+        {
+          "term_name": "electroencephalography",
+          "term": "electroencephalography",
+          "score": 1.8006953
+        }
+      ]
+    }
+  ],
+  "Electroencephalogram": [
+    {
+      "Electroencephalogram": [
+        {
+          "term_name": "electroencephalography",
+          "term": "electroencephalography",
+          "score": 1.9822395
+        }
+      ]
+    }
+  ],
+  "Episodic": [
+    {
+      "Episodic": [
+        {
+          "term_name": "episodic",
+          "term": "episodic",
+          "score": 2.0
+        }
+      ]
+    }
+  ],
+  "EpisodicNondependentCannabisAbuse": [
+    {
+      "EpisodicNondependentCannabisAbuse": [
+        {
+          "term_name": "episodic",
+          "term": "episodic",
+          "score": 1.6920363
+        }
+      ]
+    }
+  ],
+  "EpisodicNondependentCocaineAbuse": [
+    {
+      "EpisodicNondependentCocaineAbuse": [
+        {
+          "term_name": "episodic",
+          "term": "episodic",
+          "score": 1.7233768
+        }
+      ]
+    }
+  ],
+  "EpisodicNondependentHallucinogenAbuse": [
+    {
+      "EpisodicNondependentHallucinogenAbuse": [
+        {
+          "term_name": "episodic",
+          "term": "episodic",
+          "score": 1.6261923
+        }
+      ]
+    }
+  ],
+  "EpisodicPhencyclidineAbuse": [
+    {
+      "EpisodicPhencyclidineAbuse": [
+        {
+          "term_name": "episodic",
+          "term": "episodic",
+          "score": 1.6315402
+        }
+      ]
+    }
+  ],
+  "EpisodicPolysubstanceDependence": [
+    {
+      "EpisodicPolysubstanceDependence": [
+        {
+          "term_name": "episodic",
+          "term": "episodic",
+          "score": 1.8566884
+        }
+      ]
+    }
+  ],
+  "EssentialTremor": [
+    {
+      "EssentialTremor": [
+        {
+          "term_name": "essential",
+          "term": "essential",
+          "score": 1.7559772
+        }
+      ]
+    }
+  ],
+  "Ethnicity": [
+    {
+      "Ethnicity": [
+        {
+          "term_name": "racial",
+          "term": "racial",
+          "score": 1.7788138
+        }
+      ]
+    }
+  ],
+  "ExtrapyramidalDisease": [
+    {
+      "ExtrapyramidalDisease": [
+        {
+          "term_name": "extrapyramidal",
+          "term": "extrapyramidal",
+          "score": 1.717883
+        }
+      ]
+    }
+  ],
+  "ExtrapyramidalSymptom": [
+    {
+      "ExtrapyramidalSymptom": [
+        {
+          "term_name": "extrapyramidal",
+          "term": "extrapyramidal",
+          "score": 1.8832632
+        }
+      ]
+    }
+  ],
+  "ExtrapyramidalSymptomRating": [
+    {
+      "ExtrapyramidalSymptomRating": [
+        {
+          "term_name": "extrapyramidal",
+          "term": "extrapyramidal",
+          "score": 1.8364996
+        }
+      ]
+    }
+  ],
+  "ExtrapyramidalSymptomRatingScale": [
+    {
+      "ExtrapyramidalSymptomRatingScale": [
+        {
+          "term_name": "extrapyramidal",
+          "term": "extrapyramidal",
+          "score": 1.8078209
+        }
+      ]
+    }
+  ],
+  "EysenckImpulsivityScale": [
+    {
+      "EysenckImpulsivityScale": [
+        {
+          "term_name": "oculomotor",
+          "term": "oculomotor",
+          "score": 1.621916
+        }
+      ]
+    }
+  ],
+  "FagerstromTestforNicotineDependence": [
+    {
+      "FagerstromTestforNicotineDependence": [
+        {
+          "term_name": "fluency",
+          "term": "fluency",
+          "score": 1.5966247
+        }
+      ]
+    }
+  ],
+  "FamilyHistoryAssessmentModule": [
+    {
+      "FamilyHistoryAssessmentModule": [
+        {
+          "term_name": "family",
+          "term": "family",
+          "score": 1.7587883
+        }
+      ]
+    }
+  ],
+  "FetalAlcoholBehaviorScale": [
+    {
+      "FetalAlcoholBehaviorScale": [
+        {
+          "term_name": "ethanol",
+          "term": "ethanol",
+          "score": 1.5834292
+        }
+      ]
+    }
+  ],
+  "FingerTappingTask": [
+    {
+      "FingerTappingTask": [
+        {
+          "term_name": "finger tapping",
+          "term": "finger tapping",
+          "score": 1.7393237
+        }
+      ]
+    }
+  ],
+  "FirstEpisodePsychosis": [
+    {
+      "FirstEpisodePsychosis": [
+        {
+          "term_name": "developmental prosopagnosia",
+          "term": "developmental prosopagnosia",
+          "score": 1.6052898
+        }
+      ]
+    }
+  ],
+  "FluidAttenuatedInversionRecoveryImaging": [
+    {
+      "FluidAttenuatedInversionRecoveryImaging": [
+        {
+          "term_name": "biofeedback",
+          "term": "biofeedback",
+          "score": 1.6245724
+        }
+      ]
+    }
+  ],
+  "FluidAttenuatedInversionRecoveryImagingProtocol": [
+    {
+      "FluidAttenuatedInversionRecoveryImagingProtocol": [
+        {
+          "term_name": "fluid",
+          "term": "fluid",
+          "score": 1.657933
+        }
+      ]
+    }
+  ],
+  "FrontalAssessmentBattery": [
+    {
+      "FrontalAssessmentBattery": [
+        {
+          "term_name": "frontalis",
+          "term": "frontalis",
+          "score": 1.7574161
+        }
+      ]
+    }
+  ],
+  "FrustrationEmotionTaskforChildren": [
+    {
+      "FrustrationEmotionTaskforChildren": [
+        {
+          "term_name": "frustration",
+          "term": "frustration",
+          "score": 1.6634381
+        }
+      ]
+    }
+  ],
+  "FullScaleIntelligenceQuotient": [
+    {
+      "FullScaleIntelligenceQuotient": [
+        {
+          "term_name": "generic",
+          "term": "generic",
+          "score": 1.6306726
+        }
+      ]
+    }
+  ],
+  "FunctionalCapacityRatingScale": [
+    {
+      "FunctionalCapacityRatingScale": [
+        {
+          "term_name": "functional connectivity",
+          "term": "functional connectivity",
+          "score": 1.5570599
+        }
+      ]
+    }
+  ],
+  "FunctionalImagingProtocol": [
+    {
+      "FunctionalImagingProtocol": [
+        {
+          "term_name": "image",
+          "term": "image",
+          "score": 1.5868742
+        }
+      ]
+    }
+  ],
+  "FunctionalMagneticResonanceImaging": [
+    {
+      "FunctionalMagneticResonanceImaging": [
+        {
+          "term_name": "neurofeedback",
+          "term": "neurofeedback",
+          "score": 1.7554629
+        }
+      ]
+    }
+  ],
+  "FunctionalNearInfraredSpectroscopy": [
+    {
+      "FunctionalNearInfraredSpectroscopy": [
+        {
+          "term_name": "neurofeedback",
+          "term": "neurofeedback",
+          "score": 1.533258
+        }
+      ]
+    }
+  ],
+  "GamingDisorder": [
+    {
+      "GamingDisorder": [
+        {
+          "term_name": "games",
+          "term": "games",
+          "score": 1.5861273
+        }
+      ]
+    }
+  ],
+  "GoNoGoTask": [
+    {
+      "GoNoGoTask": [
+        {
+          "term_name": "jargon",
+          "term": "jargon",
+          "score": 1.5558195
+        }
+      ]
+    }
+  ],
+  "Hallucination": [
+    {
+      "Hallucination": [
+        {
+          "term_name": "hallucination",
+          "term": "hallucination",
+          "score": 2.0
+        }
+      ]
+    }
+  ],
+  "HallucinogenAbuse": [
+    {
+      "HallucinogenAbuse": [
+        {
+          "term_name": "hallucinations",
+          "term": "hallucinations",
+          "score": 1.710148
+        }
+      ]
+    }
+  ],
+  "HamiltonAnxietyRatingScale": [
+    {
+      "HamiltonAnxietyRatingScale": [
+        {
+          "term_name": "galen",
+          "term": "galen",
+          "score": 1.5237912
+        }
+      ]
+    }
+  ],
+  "HandednessQuestionnaire": [
+    {
+      "HandednessQuestionnaire": [
+        {
+          "term_name": "handedness",
+          "term": "handedness",
+          "score": 1.8769143
+        }
+      ]
+    }
+  ],
+  "HarmfulUsePatternofCaffeine": [
+    {
+      "HarmfulUsePatternofCaffeine": [
+        {
+          "term_name": "fulminant",
+          "term": "fulminant",
+          "score": 1.5116198
+        }
+      ]
+    }
+  ],
+  "HarmfulUseofKetamine": [
+    {
+      "HarmfulUseofKetamine": [
+        {
+          "term_name": "putaminal",
+          "term": "putaminal",
+          "score": 1.570686
+        }
+      ]
+    }
+  ],
+  "HighRisk": [
+    {
+      "HighRisk": [
+        {
+          "term_name": "high",
+          "term": "high",
+          "score": 1.5699757
+        }
+      ]
+    }
+  ],
+  "ImagingModality": [
+    {
+      "ImagingModality": [
+        {
+          "term_name": "imageability",
+          "term": "imageability",
+          "score": 1.7450267
+        }
+      ]
+    }
+  ],
+  "ImpulseControlDisorder": [
+    {
+      "ImpulseControlDisorder": [
+        {
+          "term_name": "pacemaker",
+          "term": "pacemaker",
+          "score": 1.6951542
+        }
+      ]
+    }
+  ],
+  "ImpulsiveSensationSeekingScale": [
+    {
+      "ImpulsiveSensationSeekingScale": [
+        {
+          "term_name": "impulsive",
+          "term": "impulsive",
+          "score": 1.8103507
+        }
+      ]
+    }
+  ],
+  "ImpulsivityScale": [
+    {
+      "ImpulsivityScale": [
+        {
+          "term_name": "impulsivity",
+          "term": "impulsivity",
+          "score": 1.8909694
+        }
+      ]
+    }
+  ],
+  "InterSePTScaleforSuicidalThinkingScale": [
+    {
+      "InterSePTScaleforSuicidalThinkingScale": [
+        {
+          "term_name": "inferior frontal sulcus",
+          "term": "inferior frontal sulcus",
+          "score": 1.5977383
+        }
+      ]
+    }
+  ],
+  "IntravaneousNondependentOpioidAbuse": [
+    {
+      "IntravaneousNondependentOpioidAbuse": [
+        {
+          "term_name": "duvernoy",
+          "term": "duvernoy",
+          "score": 1.5586128
+        }
+      ]
+    }
+  ],
+  "IntravenousCocaineAbuse": [
+    {
+      "IntravenousCocaineAbuse": [
+        {
+          "term_name": "iva",
+          "term": "iva",
+          "score": 1.5603585
+        }
+      ]
+    }
+  ],
+  "Kleptomania": [
+    {
+      "Kleptomania": [
+        {
+          "term_name": "hysteria",
+          "term": "hysteria",
+          "score": 1.6747512
+        }
+      ]
+    }
+  ],
+  "LateOnsetSchizophrenia": [
+    {
+      "LateOnsetSchizophrenia": [
+        {
+          "term_name": "melancholia",
+          "term": "melancholia",
+          "score": 1.5451432
+        }
+      ]
+    }
+  ],
+  "LethalCatatonia": [
+    {
+      "LethalCatatonia": [
+        {
+          "term_name": "lethality",
+          "term": "lethality",
+          "score": 1.6836139
+        }
+      ]
+    }
+  ],
+  "LifeHistoryScale": [
+    {
+      "LifeHistoryScale": [
+        {
+          "term_name": "life",
+          "term": "life",
+          "score": 1.729612
+        }
+      ]
+    }
+  ],
+  "LowRisk": [
+    {
+      "LowRisk": [
+        {
+          "term_name": "lowry",
+          "term": "lowry",
+          "score": 1.6502982
+        }
+      ]
+    }
+  ],
+  "MagneticResonanceImaging": [
+    {
+      "MagneticResonanceImaging": [
+        {
+          "term_name": "magnetic stimulation",
+          "term": "magnetic stimulation",
+          "score": 1.841988
+        }
+      ]
+    }
+  ],
+  "Magnetoencephalography": [
+    {
+      "Magnetoencephalography": [
+        {
+          "term_name": "magnetoencephalography",
+          "term": "magnetoencephalography",
+          "score": 2.0
+        }
+      ]
+    }
+  ],
+  "MajorDepressiveDisorder": [
+    {
+      "MajorDepressiveDisorder": [
+        {
+          "term_name": "major",
+          "term": "major",
+          "score": 1.6641874
+        }
+      ]
+    }
+  ],
+  "ManicEpisode": [
+    {
+      "ManicEpisode": [
+        {
+          "term_name": "malone",
+          "term": "malone",
+          "score": 1.5345823
+        }
+      ]
+    }
+  ],
+  "Medicated": [
+    {
+      "Medicated": [
+        {
+          "term_name": "medication",
+          "term": "medication",
+          "score": 1.7581404
+        }
+      ]
+    }
+  ],
+  "MedicationStatus": [
+    {
+      "MedicationStatus": [
+        {
+          "term_name": "medication",
+          "term": "medication",
+          "score": 1.5990967
+        }
+      ]
+    }
+  ],
+  "MentalDisorder": [
+    {
+      "MentalDisorder": [
+        {
+          "term_name": "mental",
+          "term": "mental",
+          "score": 1.769763
+        }
+      ]
+    }
+  ],
+  "MentalHealthDiagnosisScale": [
+    {
+      "MentalHealthDiagnosisScale": [
+        {
+          "term_name": "mental disorders",
+          "term": "mental disorders",
+          "score": 1.6724898
+        }
+      ]
+    }
+  ],
+  "MentalStateAssessmentScale": [
+    {
+      "MentalStateAssessmentScale": [
+        {
+          "term_name": "mental state",
+          "term": "mental state",
+          "score": 1.8128672
+        }
+      ]
+    }
+  ],
+  "MethamphetamineDependence": [
+    {
+      "MethamphetamineDependence": [
+        {
+          "term_name": "amphetamine",
+          "term": "amphetamine",
+          "score": 1.7317731
+        }
+      ]
+    }
+  ],
+  "MethylenedioxymethamphetamineDependence": [
+    {
+      "MethylenedioxymethamphetamineDependence": [
+        {
+          "term_name": "amphetamine",
+          "term": "amphetamine",
+          "score": 1.622564
+        }
+      ]
+    }
+  ],
+  "MildBipolarDisorder": [
+    {
+      "MildBipolarDisorder": [
+        {
+          "term_name": "bipolar",
+          "term": "bipolar",
+          "score": 1.6001997
+        }
+      ]
+    }
+  ],
+  "MildCognitiveDisorder": [
+    {
+      "MildCognitiveDisorder": [
+        {
+          "term_name": "mild cognitive",
+          "term": "mild cognitive",
+          "score": 1.6855136
+        }
+      ]
+    }
+  ],
+  "MismatchNegativityTask": [
+    {
+      "MismatchNegativityTask": [
+        {
+          "term_name": "matching task",
+          "term": "matching task",
+          "score": 1.7202564
+        }
+      ]
+    }
+  ],
+  "MixedBipolarAffectiveDisorder": [
+    {
+      "MixedBipolarAffectiveDisorder": [
+        {
+          "term_name": "bipolar",
+          "term": "bipolar",
+          "score": 1.6800758
+        }
+      ]
+    }
+  ],
+  "MixedDisorderofPsychologicalDevelopment": [
+    {
+      "MixedDisorderofPsychologicalDevelopment": [
+        {
+          "term_name": "developmental prosopagnosia",
+          "term": "developmental prosopagnosia",
+          "score": 1.6958327
+        }
+      ]
+    }
+  ],
+  "ModerateBipolarDisorder": [
+    {
+      "ModerateBipolarDisorder": [
+        {
+          "term_name": "bipolar",
+          "term": "bipolar",
+          "score": 1.6043754
+        }
+      ]
+    }
+  ],
+  "MolecularImaging": [
+    {
+      "MolecularImaging": [
+        {
+          "term_name": "molecular",
+          "term": "molecular",
+          "score": 1.7551531
+        }
+      ]
+    }
+  ],
+  "MoodDisorder": [
+    {
+      "MoodDisorder": [
+        {
+          "term_name": "mood disorders",
+          "term": "mood disorders",
+          "score": 1.8180442
+        }
+      ]
+    }
+  ],
+  "MotorSkillDisorder": [
+    {
+      "MotorSkillDisorder": [
+        {
+          "term_name": "motor system",
+          "term": "motor system",
+          "score": 1.6232425
+        }
+      ]
+    }
+  ],
+  "MotorSkillHistory": [
+    {
+      "MotorSkillHistory": [
+        {
+          "term_name": "motor",
+          "term": "motor",
+          "score": 1.6475714
+        }
+      ]
+    }
+  ],
+  "MovementDisorder": [
+    {
+      "MovementDisorder": [
+        {
+          "term_name": "movement",
+          "term": "movement",
+          "score": 1.8741528
+        }
+      ]
+    }
+  ],
+  "N-BackTaskTest": [
+    {
+      "N-BackTaskTest": [
+        {
+          "term_name": "bnst",
+          "term": "bnst",
+          "score": 1.559642
+        }
+      ]
+    }
+  ],
+  "NEOPersonalityInventoryRevised": [
+    {
+      "NEOPersonalityInventoryRevised": [
+        {
+          "term_name": "nvi",
+          "term": "nvi",
+          "score": 1.627784
+        }
+      ]
+    }
+  ],
+  "NationalAdultReadingTest": [
+    {
+      "NationalAdultReadingTest": [
+        {
+          "term_name": "na",
+          "term": "na",
+          "score": 1.6002349
+        }
+      ]
+    }
+  ],
+  "NegativeSymptomAssessment": [
+    {
+      "NegativeSymptomAssessment": [
+        {
+          "term_name": "negative emotion",
+          "term": "negative emotion",
+          "score": 1.7704055
+        }
+      ]
+    }
+  ],
+  "NegativeSymptomScale": [
+    {
+      "NegativeSymptomScale": [
+        {
+          "term_name": "negativity",
+          "term": "negativity",
+          "score": 1.6845243
+        }
+      ]
+    }
+  ],
+  "NervousSystemMeasurementModality": [
+    {
+      "NervousSystemMeasurementModality": [
+        {
+          "term_name": "nervous system function",
+          "term": "nervous system function",
+          "score": 1.7105439
+        }
+      ]
+    }
+  ],
+  "NeuroImagingProtocol": [
+    {
+      "NeuroImagingProtocol": [
+        {
+          "term_name": "neuroanatomical",
+          "term": "neuroanatomical",
+          "score": 1.686887
+        }
+      ]
+    }
+  ],
+  "NeurodevelopmentalDisorder": [
+    {
+      "NeurodevelopmentalDisorder": [
+        {
+          "term_name": "neurodevelopmental",
+          "term": "neurodevelopmental",
+          "score": 1.9461037
+        }
+      ]
+    }
+  ],
+  "NicotineAbuse": [
+    {
+      "NicotineAbuse": [
+        {
+          "term_name": "nicotine",
+          "term": "nicotine",
+          "score": 1.8236367
+        }
+      ]
+    }
+  ],
+  "NicotineDependenceRatingScale": [
+    {
+      "NicotineDependenceRatingScale": [
+        {
+          "term_name": "nicotine",
+          "term": "nicotine",
+          "score": 1.6772001
+        }
+      ]
+    }
+  ],
+  "NoKnownDisorder": [
+    {
+      "NoKnownDisorder": [
+        {
+          "term_name": "referential",
+          "term": "referential",
+          "score": 1.676542
+        }
+      ]
+    }
+  ],
+  "NondependentAlcoholAbuse": [
+    {
+      "NondependentAlcoholAbuse": [
+        {
+          "term_name": "abstinence alcohol",
+          "term": "abstinence alcohol",
+          "score": 1.6773705
+        }
+      ]
+    }
+  ],
+  "NondependentAmphetamineAbuse": [
+    {
+      "NondependentAmphetamineAbuse": [
+        {
+          "term_name": "amphetamine",
+          "term": "amphetamine",
+          "score": 1.6006749
+        }
+      ]
+    }
+  ],
+  "NondependentCannabisAbuse": [
+    {
+      "NondependentCannabisAbuse": [
+        {
+          "term_name": "non",
+          "term": "non",
+          "score": 1.5855595
+        }
+      ]
+    }
+  ],
+  "NondependentCannabisAbuseinRemission": [
+    {
+      "NondependentCannabisAbuseinRemission": [
+        {
+          "term_name": "nondeclarative",
+          "term": "nondeclarative",
+          "score": 1.6213937
+        }
+      ]
+    }
+  ],
+  "NondependentCocaineAbuse": [
+    {
+      "NondependentCocaineAbuse": [
+        {
+          "term_name": "decerebrate",
+          "term": "decerebrate",
+          "score": 1.541429
+        }
+      ]
+    }
+  ],
+  "NondependentCocaineAbuseinRemission": [
+    {
+      "NondependentCocaineAbuseinRemission": [
+        {
+          "term_name": "nondeclarative",
+          "term": "nondeclarative",
+          "score": 1.6548826
+        }
+      ]
+    }
+  ],
+  "NondependentHallucinogenAbuse": [
+    {
+      "NondependentHallucinogenAbuse": [
+        {
+          "term_name": "nondeclarative",
+          "term": "nondeclarative",
+          "score": 1.6094544
+        }
+      ]
+    }
+  ],
+  "NondependentHallucinogenAbuseinRemission": [
+    {
+      "NondependentHallucinogenAbuseinRemission": [
+        {
+          "term_name": "nondeclarative",
+          "term": "nondeclarative",
+          "score": 1.6070627
+        }
+      ]
+    }
+  ],
+  "NondependentOpioidAbuse": [
+    {
+      "NondependentOpioidAbuse": [
+        {
+          "term_name": "decerebrate",
+          "term": "decerebrate",
+          "score": 1.6227242
+        }
+      ]
+    }
+  ],
+  "NuclearMedicineImaging": [
+    {
+      "NuclearMedicineImaging": [
+        {
+          "term_name": "scanning",
+          "term": "scanning",
+          "score": 1.6262956
+        }
+      ]
+    }
+  ],
+  "ObsessiveCompulsiveDisorder": [
+    {
+      "ObsessiveCompulsiveDisorder": [
+        {
+          "term_name": "obsessive",
+          "term": "obsessive",
+          "score": 1.8449061
+        }
+      ]
+    }
+  ],
+  "OfflineGamingDisorder": [
+    {
+      "OfflineGamingDisorder": [
+        {
+          "term_name": "grouping",
+          "term": "grouping",
+          "score": 1.5775715
+        }
+      ]
+    }
+  ],
+  "OnlineGamingDisorder": [
+    {
+      "OnlineGamingDisorder": [
+        {
+          "term_name": "ontology",
+          "term": "ontology",
+          "score": 1.5982945
+        }
+      ]
+    }
+  ],
+  "OpioidAbuse": [
+    {
+      "OpioidAbuse": [
+        {
+          "term_name": "opioid",
+          "term": "opioid",
+          "score": 1.8268033
+        }
+      ]
+    }
+  ],
+  "OppositionalDefiantDisorder": [
+    {
+      "OppositionalDefiantDisorder": [
+        {
+          "term_name": "oppositional",
+          "term": "oppositional",
+          "score": 1.7721673
+        }
+      ]
+    }
+  ],
+  "OpticalSpectroscopy": [
+    {
+      "OpticalSpectroscopy": [
+        {
+          "term_name": "optical",
+          "term": "optical",
+          "score": 1.7425668
+        }
+      ]
+    }
+  ],
+  "OrganicBipolarDisorder": [
+    {
+      "OrganicBipolarDisorder": [
+        {
+          "term_name": "organic",
+          "term": "organic",
+          "score": 1.6688672
+        }
+      ]
+    }
+  ],
+  "PROMISPainIntensity-ShortForm3a": [
+    {
+      "PROMISPainIntensity-ShortForm3a": [
+        {
+          "term_name": "p3",
+          "term": "p3",
+          "score": 1.5400056
+        }
+      ]
+    }
+  ],
+  "PROMISPainIntensity-ShortForm6b": [
+    {
+      "PROMISPainIntensity-ShortForm6b": [
+        {
+          "term_name": "a6",
+          "term": "a6",
+          "score": 1.543251
+        }
+      ]
+    }
+  ],
+  "PROMISPainIntensity-ShortForm8a": [
+    {
+      "PROMISPainIntensity-ShortForm8a": [
+        {
+          "term_name": "c8",
+          "term": "c8",
+          "score": 1.5403748
+        }
+      ]
+    }
+  ],
+  "PROMISParentProxyPainInterference-ShortForm8a": [
+    {
+      "PROMISParentProxyPainInterference-ShortForm8a": [
+        {
+          "term_name": "prefrontal parietal",
+          "term": "prefrontal parietal",
+          "score": 1.5058334
+        }
+      ]
+    }
+  ],
+  "PROMISPediatricPainInterference-ShortForm8a": [
+    {
+      "PROMISPediatricPainInterference-ShortForm8a": [
+        {
+          "term_name": "ftdp",
+          "term": "ftdp",
+          "score": 1.5230185
+        }
+      ]
+    }
+  ],
+  "Pain": [
+    {
+      "Pain": [
+        {
+          "term_name": "pain",
+          "term": "pain",
+          "score": 2.0
+        }
+      ]
+    }
+  ],
+  "PainFinding": [
+    {
+      "PainFinding": [
+        {
+          "term_name": "pain perception",
+          "term": "pain perception",
+          "score": 1.6561502
+        }
+      ]
+    }
+  ],
+  "PainIntensityInstrument": [
+    {
+      "PainIntensityInstrument": [
+        {
+          "term_name": "pain threshold",
+          "term": "pain threshold",
+          "score": 1.718918
+        }
+      ]
+    }
+  ],
+  "ParanoidSchizophrenia": [
+    {
+      "ParanoidSchizophrenia": [
+        {
+          "term_name": "paranoia",
+          "term": "paranoia",
+          "score": 1.675781
+        }
+      ]
+    }
+  ],
+  "Paraphrenia": [
+    {
+      "Paraphrenia": [
+        {
+          "term_name": "paraphasia",
+          "term": "paraphasia",
+          "score": 1.6674147
+        }
+      ]
+    }
+  ],
+  "Parkinsonism": [
+    {
+      "Parkinsonism": [
+        {
+          "term_name": "parkinsonism",
+          "term": "parkinsonism",
+          "score": 2.0
+        }
+      ]
+    }
+  ],
+  "PathologicalGambling": [
+    {
+      "PathologicalGambling": [
+        {
+          "term_name": "pathological gambling",
+          "term": "pathological gambling",
+          "score": 1.6549054
+        }
+      ]
+    }
+  ],
+  "PatientHealthQuestionnaire-2": [
+    {
+      "PatientHealthQuestionnaire-2": [
+        {
+          "term_name": "patient satisfaction",
+          "term": "patient satisfaction",
+          "score": 1.6097342
+        }
+      ]
+    }
+  ],
+  "PatientHealthQuestionnaire-9": [
+    {
+      "PatientHealthQuestionnaire-9": [
+        {
+          "term_name": "health",
+          "term": "health",
+          "score": 1.5638294
+        }
+      ]
+    }
+  ],
+  "PennEmotionRecognitionTask": [
+    {
+      "PennEmotionRecognitionTask": [
+        {
+          "term_name": "repetition priming",
+          "term": "repetition priming",
+          "score": 1.6872041
+        }
+      ]
+    }
+  ],
+  "PerfusionImagingProtocol": [
+    {
+      "PerfusionImagingProtocol": [
+        {
+          "term_name": "contrastive",
+          "term": "contrastive",
+          "score": 1.5420508
+        }
+      ]
+    }
+  ],
+  "PersistentAlcoholAbuse": [
+    {
+      "PersistentAlcoholAbuse": [
+        {
+          "term_name": "abstinence alcohol",
+          "term": "abstinence alcohol",
+          "score": 1.5983067
+        }
+      ]
+    }
+  ],
+  "PersonalandSocialPerformanceScale": [
+    {
+      "PersonalandSocialPerformanceScale": [
+        {
+          "term_name": "personal",
+          "term": "personal",
+          "score": 1.7400438
+        }
+      ]
+    }
+  ],
+  "PersonalityDisorder": [
+    {
+      "PersonalityDisorder": [
+        {
+          "term_name": "personality",
+          "term": "personality",
+          "score": 1.8932604
+        }
+      ]
+    }
+  ],
+  "PersonalityRatingScale": [
+    {
+      "PersonalityRatingScale": [
+        {
+          "term_name": "personality",
+          "term": "personality",
+          "score": 1.6454062
+        }
+      ]
+    }
+  ],
+  "PhencyclidineAbuse": [
+    {
+      "PhencyclidineAbuse": [
+        {
+          "term_name": "phencyclidine",
+          "term": "phencyclidine",
+          "score": 1.877658
+        }
+      ]
+    }
+  ],
+  "PhysiologicalState": [
+    {
+      "PhysiologicalState": [
+        {
+          "term_name": "physiological",
+          "term": "physiological",
+          "score": 1.7375331
+        }
+      ]
+    }
+  ],
+  "PolysubstanceAbuse": [
+    {
+      "PolysubstanceAbuse": [
+        {
+          "term_name": "substance abuse",
+          "term": "substance abuse",
+          "score": 1.5902784
+        }
+      ]
+    }
+  ],
+  "PolysubstanceDependence": [
+    {
+      "PolysubstanceDependence": [
+        {
+          "term_name": "substance addiction",
+          "term": "substance addiction",
+          "score": 1.6006086
+        }
+      ]
+    }
+  ],
+  "PositiveNegativeSymptomRatingScale": [
+    {
+      "PositiveNegativeSymptomRatingScale": [
+        {
+          "term_name": "posner",
+          "term": "posner",
+          "score": 1.6263765
+        }
+      ]
+    }
+  ],
+  "PositiveSymptomScale": [
+    {
+      "PositiveSymptomScale": [
+        {
+          "term_name": "positive priming",
+          "term": "positive priming",
+          "score": 1.6002218
+        }
+      ]
+    }
+  ],
+  "PositiveandNegativeSyndromeScale": [
+    {
+      "PositiveandNegativeSyndromeScale": [
+        {
+          "term_name": "posner",
+          "term": "posner",
+          "score": 1.5968941
+        }
+      ]
+    }
+  ],
+  "PositronEmissionTomography": [
+    {
+      "PositronEmissionTomography": [
+        {
+          "term_name": "scanning",
+          "term": "scanning",
+          "score": 1.6305819
+        }
+      ]
+    }
+  ],
+  "PostTraumaticStressDisorder": [
+    {
+      "PostTraumaticStressDisorder": [
+        {
+          "term_name": "posttraumatic",
+          "term": "posttraumatic",
+          "score": 1.894774
+        }
+      ]
+    }
+  ],
+  "PosttraumaticStressDisorderSymptomsScale": [
+    {
+      "PosttraumaticStressDisorderSymptomsScale": [
+        {
+          "term_name": "posttraumatic",
+          "term": "posttraumatic",
+          "score": 1.8131348
+        }
+      ]
+    }
+  ],
+  "ProdromalSymptom": [
+    {
+      "ProdromalSymptom": [
+        {
+          "term_name": "presenile",
+          "term": "presenile",
+          "score": 1.6473433
+        }
+      ]
+    }
+  ],
+  "ProdromalSymptomRatingScale": [
+    {
+      "ProdromalSymptomRatingScale": [
+        {
+          "term_name": "premotor",
+          "term": "premotor",
+          "score": 1.6519655
+        }
+      ]
+    }
+  ],
+  "PsychoactiveSubstanceAbuse": [
+    {
+      "PsychoactiveSubstanceAbuse": [
+        {
+          "term_name": "subconscious",
+          "term": "subconscious",
+          "score": 1.5975087
+        }
+      ]
+    }
+  ],
+  "PsychopathologyScale": [
+    {
+      "PsychopathologyScale": [
+        {
+          "term_name": "psychiatric diagnosis",
+          "term": "psychiatric diagnosis",
+          "score": 1.7352101
+        }
+      ]
+    }
+  ],
+  "PsychosisNotOtherwiseSpecified": [
+    {
+      "PsychosisNotOtherwiseSpecified": [
+        {
+          "term_name": "psychotic",
+          "term": "psychotic",
+          "score": 1.6552862
+        }
+      ]
+    }
+  ],
+  "PsychoticDisorder": [
+    {
+      "PsychoticDisorder": [
+        {
+          "term_name": "psychotic disorder",
+          "term": "psychotic disorder",
+          "score": 1.8873333
+        }
+      ]
+    }
+  ],
+  "Pyromania": [
+    {
+      "Pyromania": [
+        {
+          "term_name": "mossy",
+          "term": "mossy",
+          "score": 1.5365975
+        }
+      ]
+    }
+  ],
+  "PyschopathologyNegativeSymptom": [
+    {
+      "PyschopathologyNegativeSymptom": [
+        {
+          "term_name": "phantom pain",
+          "term": "phantom pain",
+          "score": 1.6388137
+        }
+      ]
+    }
+  ],
+  "PyschopathologyPositiveNegativeSymptom": [
+    {
+      "PyschopathologyPositiveNegativeSymptom": [
+        {
+          "term_name": "phantom pain",
+          "term": "phantom pain",
+          "score": 1.6034907
+        }
+      ]
+    }
+  ],
+  "PyschopathologyPositiveSymptom": [
+    {
+      "PyschopathologyPositiveSymptom": [
+        {
+          "term_name": "peterson",
+          "term": "peterson",
+          "score": 1.5446752
+        }
+      ]
+    }
+  ],
+  "QualityofLifeRatingScale": [
+    {
+      "QualityofLifeRatingScale": [
+        {
+          "term_name": "quality",
+          "term": "quality",
+          "score": 1.6920438
+        }
+      ]
+    }
+  ],
+  "QualityofLifeScale": [
+    {
+      "QualityofLifeScale": [
+        {
+          "term_name": "quality",
+          "term": "quality",
+          "score": 1.7485963
+        }
+      ]
+    }
+  ],
+  "QuestionnaireonSmokingUrges": [
+    {
+      "QuestionnaireonSmokingUrges": [
+        {
+          "term_name": "questionnaire",
+          "term": "questionnaire",
+          "score": 1.7340726
+        }
+      ]
+    }
+  ],
+  "Race": [
+    {
+      "Race": [
+        {
+          "term_name": "racial",
+          "term": "racial",
+          "score": 1.9221526
+        }
+      ]
+    }
+  ],
+  "RatingScale": [
+    {
+      "RatingScale": [
+        {
+          "term_name": "ratings",
+          "term": "ratings",
+          "score": 1.8922882
+        }
+      ]
+    }
+  ],
+  "ReadingtheMindintheEyesTest": [
+    {
+      "ReadingtheMindintheEyesTest": [
+        {
+          "term_name": "reading",
+          "term": "reading",
+          "score": 1.8069298
+        }
+      ]
+    }
+  ],
+  "RecruitmentProtocol": [
+    {
+      "RecruitmentProtocol": [
+        {
+          "term_name": "prospective",
+          "term": "prospective",
+          "score": 1.5654889
+        }
+      ]
+    }
+  ],
+  "Remission": [
+    {
+      "Remission": [
+        {
+          "term_name": "remitting",
+          "term": "remitting",
+          "score": 1.7805889
+        }
+      ]
+    }
+  ],
+  "ReportedMeasurement": [
+    {
+      "ReportedMeasurement": [
+        {
+          "term_name": "reported",
+          "term": "reported",
+          "score": 1.6726879
+        }
+      ]
+    }
+  ],
+  "ResidualSchizophrenia": [
+    {
+      "ResidualSchizophrenia": [
+        {
+          "term_name": "inhibition return",
+          "term": "inhibition return",
+          "score": 1.53447
+        }
+      ]
+    }
+  ],
+  "RestingStateImaging": [
+    {
+      "RestingStateImaging": [
+        {
+          "term_name": "resting",
+          "term": "resting",
+          "score": 1.8301039
+        }
+      ]
+    }
+  ],
+  "RestingStateImagingProtocol": [
+    {
+      "RestingStateImagingProtocol": [
+        {
+          "term_name": "resting state",
+          "term": "resting state",
+          "score": 1.763228
+        }
+      ]
+    }
+  ],
+  "RewardSensitivitySubscale": [
+    {
+      "RewardSensitivitySubscale": [
+        {
+          "term_name": "reward valuation",
+          "term": "reward valuation",
+          "score": 1.7078433
+        }
+      ]
+    }
+  ],
+  "ScaleforAssessmentofNegativeSymptoms": [
+    {
+      "ScaleforAssessmentofNegativeSymptoms": [
+        {
+          "term_name": "scale",
+          "term": "scale",
+          "score": 1.5898577
+        }
+      ]
+    }
+  ],
+  "ScaleforAssessmentofPositiveSymptoms": [
+    {
+      "ScaleforAssessmentofPositiveSymptoms": [
+        {
+          "term_name": "scale",
+          "term": "scale",
+          "score": 1.6989197
+        }
+      ]
+    }
+  ],
+  "ScaletoAssessUnawarenessofMentalDisorder": [
+    {
+      "ScaletoAssessUnawarenessofMentalDisorder": [
+        {
+          "term_name": "scale",
+          "term": "scale",
+          "score": 1.7809677
+        }
+      ]
+    }
+  ],
+  "ScheduleforDeficitSyndrome": [
+    {
+      "ScheduleforDeficitSyndrome": [
+        {
+          "term_name": "schedule",
+          "term": "schedule",
+          "score": 1.6004797
+        }
+      ]
+    }
+  ],
+  "SchizoBipolarScale": [
+    {
+      "SchizoBipolarScale": [
+        {
+          "term_name": "schizoid",
+          "term": "schizoid",
+          "score": 1.7200737
+        }
+      ]
+    }
+  ],
+  "SchizoaffectiveDisorder": [
+    {
+      "SchizoaffectiveDisorder": [
+        {
+          "term_name": "schizoaffective disorders",
+          "term": "schizoaffective disorders",
+          "score": 1.9310367
+        }
+      ]
+    }
+  ],
+  "Schizophrenia": [
+    {
+      "Schizophrenia": [
+        {
+          "term_name": "schizophrenia",
+          "term": "schizophrenia",
+          "score": 2.0
+        }
+      ]
+    }
+  ],
+  "SchizophreniainRemission": [
+    {
+      "SchizophreniainRemission": [
+        {
+          "term_name": "schizophrenia",
+          "term": "schizophrenia",
+          "score": 1.8767028
+        }
+      ]
+    }
+  ],
+  "SchizophrenicDisorders": [
+    {
+      "SchizophrenicDisorders": [
+        {
+          "term_name": "schizophrenic disorders",
+          "term": "schizophrenic disorders",
+          "score": 1.9748029
+        }
+      ]
+    }
+  ],
+  "SchizophrenicProdrome": [
+    {
+      "SchizophrenicProdrome": [
+        {
+          "term_name": "schizophrenic",
+          "term": "schizophrenic",
+          "score": 1.9071622
+        }
+      ]
+    }
+  ],
+  "SchizophreniformDisorder": [
+    {
+      "SchizophreniformDisorder": [
+        {
+          "term_name": "schizophreniform disorder",
+          "term": "schizophreniform disorder",
+          "score": 1.9188783
+        }
+      ]
+    }
+  ],
+  "SchizotypalPersonalityQuestionnaire": [
+    {
+      "SchizotypalPersonalityQuestionnaire": [
+        {
+          "term_name": "schizotypal",
+          "term": "schizotypal",
+          "score": 1.8221563
+        }
+      ]
+    }
+  ],
+  "Schizotypy": [
+    {
+      "Schizotypy": [
+        {
+          "term_name": "schizotypal",
+          "term": "schizotypal",
+          "score": 1.949102
+        }
+      ]
+    }
+  ],
+  "SecondaryParkinsonism": [
+    {
+      "SecondaryParkinsonism": [
+        {
+          "term_name": "primary secondary",
+          "term": "primary secondary",
+          "score": 1.5653286
+        }
+      ]
+    }
+  ],
+  "Sedative-hypnotic-anxiolyticUseDisorderScale": [
+    {
+      "Sedative-hypnotic-anxiolyticUseDisorderScale": [
+        {
+          "term_name": "intervals",
+          "term": "intervals",
+          "score": 1.5952709
+        }
+      ]
+    }
+  ],
+  "SedativeAbuse": [
+    {
+      "SedativeAbuse": [
+        {
+          "term_name": "hypnagogic",
+          "term": "hypnagogic",
+          "score": 1.6849142
+        }
+      ]
+    }
+  ],
+  "Self-orderedPointingTest": [
+    {
+      "Self-orderedPointingTest": [
+        {
+          "term_name": "order",
+          "term": "order",
+          "score": 1.5714753
+        }
+      ]
+    }
+  ],
+  "Semi-StructuredAssessmentfortheGeneticsofAlcoholism": [
+    {
+      "Semi-StructuredAssessmentfortheGeneticsofAlcoholism": [
+        {
+          "term_name": "alcohol addiction",
+          "term": "alcohol addiction",
+          "score": 1.6425183
+        }
+      ]
+    }
+  ],
+  "SensoryMotorTask": [
+    {
+      "SensoryMotorTask": [
+        {
+          "term_name": "sensory",
+          "term": "sensory",
+          "score": 1.8056905
+        }
+      ]
+    }
+  ],
+  "SevereBipolarDisorder": [
+    {
+      "SevereBipolarDisorder": [
+        {
+          "term_name": "bipolar",
+          "term": "bipolar",
+          "score": 1.6047807
+        }
+      ]
+    }
+  ],
+  "SimpleSchizophrenia": [
+    {
+      "SimpleSchizophrenia": [
+        {
+          "term_name": "polymicrogyria",
+          "term": "polymicrogyria",
+          "score": 1.598438
+        }
+      ]
+    }
+  ],
+  "SimpsonAngusScale": [
+    {
+      "SimpsonAngusScale": [
+        {
+          "term_name": "scale",
+          "term": "scale",
+          "score": 1.5709794
+        }
+      ]
+    }
+  ],
+  "Single-QuestionScreeningTest-HealthProfessionalAdministered": [
+    {
+      "Single-QuestionScreeningTest-HealthProfessionalAdministered": [
+        {
+          "term_name": "pros",
+          "term": "pros",
+          "score": 1.553557
+        }
+      ]
+    }
+  ],
+  "Single-QuestionScreeningTest-Self-Administered": [
+    {
+      "Single-QuestionScreeningTest-Self-Administered": [
+        {
+          "term_name": "survey",
+          "term": "survey",
+          "score": 1.5766308
+        }
+      ]
+    }
+  ],
+  "SinglePhotonImaging": [
+    {
+      "SinglePhotonImaging": [
+        {
+          "term_name": "single",
+          "term": "single",
+          "score": 1.6924595
+        }
+      ]
+    }
+  ],
+  "SocialFunctionRatingScale": [
+    {
+      "SocialFunctionRatingScale": [
+        {
+          "term_name": "socially",
+          "term": "socially",
+          "score": 1.6627427
+        }
+      ]
+    }
+  ],
+  "SocialResponsivenessScale": [
+    {
+      "SocialResponsivenessScale": [
+        {
+          "term_name": "social desirability",
+          "term": "social desirability",
+          "score": 1.6863009
+        }
+      ]
+    }
+  ],
+  "SocioEconomicStatus": [
+    {
+      "SocioEconomicStatus": [
+        {
+          "term_name": "economic",
+          "term": "economic",
+          "score": 1.7091682
+        }
+      ]
+    }
+  ],
+  "SpatialWorkingMemory": [
+    {
+      "SpatialWorkingMemory": [
+        {
+          "term_name": "spatial",
+          "term": "spatial",
+          "score": 1.8324877
+        }
+      ]
+    }
+  ],
+  "Spectroscopy": [
+    {
+      "Spectroscopy": [
+        {
+          "term_name": "spectrum",
+          "term": "spectrum",
+          "score": 1.653159
+        }
+      ]
+    }
+  ],
+  "SternbergItemRecognitionParadigmTask": [
+    {
+      "SternbergItemRecognitionParadigmTask": [
+        {
+          "term_name": "sternberg",
+          "term": "sternberg",
+          "score": 1.6388376
+        }
+      ]
+    }
+  ],
+  "StimulantDependence": [
+    {
+      "StimulantDependence": [
+        {
+          "term_name": "stimulus",
+          "term": "stimulus",
+          "score": 1.6123028
+        }
+      ]
+    }
+  ],
+  "StockholmSyndrome": [
+    {
+      "StockholmSyndrome": [
+        {
+          "term_name": "lipofuscin",
+          "term": "lipofuscin",
+          "score": 1.5258882
+        }
+      ]
+    }
+  ],
+  "StructuralImaging": [
+    {
+      "StructuralImaging": [
+        {
+          "term_name": "structural",
+          "term": "structural",
+          "score": 1.7039874
+        }
+      ]
+    }
+  ],
+  "StructuralImagingProtocol": [
+    {
+      "StructuralImagingProtocol": [
+        {
+          "term_name": "structural",
+          "term": "structural",
+          "score": 1.6977556
+        }
+      ]
+    }
+  ],
+  "StructuredClinicalInterviewfortheDiagnosticStatisticalManualofMentalDisorder": [
+    {
+      "StructuredClinicalInterviewfortheDiagnosticStatisticalManualofMentalDisorder": [
+        {
+          "term_name": "schema",
+          "term": "schema",
+          "score": 1.6908146
+        }
+      ]
+    }
+  ],
+  "StructuredClinicalInterviewfortheDiagnosticStatisticalManualofMentalDisorder-5": [
+    {
+      "StructuredClinicalInterviewfortheDiagnosticStatisticalManualofMentalDisorder-5": [
+        {
+          "term_name": "sentences",
+          "term": "sentences",
+          "score": 1.5842665
+        }
+      ]
+    }
+  ],
+  "StructuredInterviewforProdromalSyndromesRatingScale": [
+    {
+      "StructuredInterviewforProdromalSyndromesRatingScale": [
+        {
+          "term_name": "domain specificity",
+          "term": "domain specificity",
+          "score": 1.6251191
+        }
+      ]
+    }
+  ],
+  "SubchronicCatatonicSchizophrenia": [
+    {
+      "SubchronicCatatonicSchizophrenia": [
+        {
+          "term_name": "bielschowsky",
+          "term": "bielschowsky",
+          "score": 1.5790694
+        }
+      ]
+    }
+  ],
+  "SubjectwithoutDisorder": [
+    {
+      "SubjectwithoutDisorder": [
+        {
+          "term_name": "subject",
+          "term": "subject",
+          "score": 1.7913433
+        }
+      ]
+    }
+  ],
+  "SubstanceCravingScale": [
+    {
+      "SubstanceCravingScale": [
+        {
+          "term_name": "substance",
+          "term": "substance",
+          "score": 1.6043394
+        }
+      ]
+    }
+  ],
+  "SubstanceDisorder": [
+    {
+      "SubstanceDisorder": [
+        {
+          "term_name": "substance",
+          "term": "substance",
+          "score": 1.829089
+        }
+      ]
+    }
+  ],
+  "SubstanceDisorderStatus": [
+    {
+      "SubstanceDisorderStatus": [
+        {
+          "term_name": "ds",
+          "term": "ds",
+          "score": 1.6274042
+        }
+      ]
+    }
+  ],
+  "SubstanceUseScale": [
+    {
+      "SubstanceUseScale": [
+        {
+          "term_name": "substance",
+          "term": "substance",
+          "score": 1.7255706
+        }
+      ]
+    }
+  ],
+  "SuicidalIdeationRatingScale": [
+    {
+      "SuicidalIdeationRatingScale": [
+        {
+          "term_name": "suicidal",
+          "term": "suicidal",
+          "score": 1.726686
+        }
+      ]
+    }
+  ],
+  "SuicideIdeation": [
+    {
+      "SuicideIdeation": [
+        {
+          "term_name": "suicide",
+          "term": "suicide",
+          "score": 1.9468948
+        }
+      ]
+    }
+  ],
+  "T1WeightedImaging": [
+    {
+      "T1WeightedImaging": [
+        {
+          "term_name": "t1",
+          "term": "t1",
+          "score": 1.5803049
+        }
+      ]
+    }
+  ],
+  "T1WeightedImagingProtocol": [
+    {
+      "T1WeightedImagingProtocol": [
+        {
+          "term_name": "t1",
+          "term": "t1",
+          "score": 1.5810598
+        }
+      ]
+    }
+  ],
+  "T2WeightedImaging": [
+    {
+      "T2WeightedImaging": [
+        {
+          "term_name": "t2",
+          "term": "t2",
+          "score": 1.6338183
+        }
+      ]
+    }
+  ],
+  "T2WeightedImagingProtocol": [
+    {
+      "T2WeightedImagingProtocol": [
+        {
+          "term_name": "t2",
+          "term": "t2",
+          "score": 1.5946338
+        }
+      ]
+    }
+  ],
+  "TaskParadigmImaging": [
+    {
+      "TaskParadigmImaging": [
+        {
+          "term_name": "signal task",
+          "term": "signal task",
+          "score": 1.749382
+        }
+      ]
+    }
+  ],
+  "TaskParadigmImagingProtocol": [
+    {
+      "TaskParadigmImagingProtocol": [
+        {
+          "term_name": "task set",
+          "term": "task set",
+          "score": 1.7089118
+        }
+      ]
+    }
+  ],
+  "TemperamentandCharacterInventoryScale": [
+    {
+      "TemperamentandCharacterInventoryScale": [
+        {
+          "term_name": "temperament",
+          "term": "temperament",
+          "score": 1.6677152
+        }
+      ]
+    }
+  ],
+  "TestofNonverbalIntelligence": [
+    {
+      "TestofNonverbalIntelligence": [
+        {
+          "term_name": "fluid intelligence",
+          "term": "fluid intelligence",
+          "score": 1.6727022
+        }
+      ]
+    }
+  ],
+  "TheMontrealCognitiveAssessment": [
+    {
+      "TheMontrealCognitiveAssessment": [
+        {
+          "term_name": "cognitive state",
+          "term": "cognitive state",
+          "score": 1.6748925
+        }
+      ]
+    }
+  ],
+  "TheSocialFunctionQuestionnaire": [
+    {
+      "TheSocialFunctionQuestionnaire": [
+        {
+          "term_name": "function",
+          "term": "function",
+          "score": 1.7647119
+        }
+      ]
+    }
+  ],
+  "TimelineFollowbackMethodAssessment": [
+    {
+      "TimelineFollowbackMethodAssessment": [
+        {
+          "term_name": "timing",
+          "term": "timing",
+          "score": 1.6740506
+        }
+      ]
+    }
+  ],
+  "TobaccoAlcoholPrescriptionMedicationsOtherSubstance": [
+    {
+      "TobaccoAlcoholPrescriptionMedicationsOtherSubstance": [
+        {
+          "term_name": "tobacco consumption",
+          "term": "tobacco consumption",
+          "score": 1.6677902
+        }
+      ]
+    }
+  ],
+  "TopographyofVoicesRatingScale": [
+    {
+      "TopographyofVoicesRatingScale": [
+        {
+          "term_name": "topographic",
+          "term": "topographic",
+          "score": 1.7666266
+        }
+      ]
+    }
+  ],
+  "TreatmentResponseProgressScale": [
+    {
+      "TreatmentResponseProgressScale": [
+        {
+          "term_name": "response time",
+          "term": "response time",
+          "score": 1.6661292
+        }
+      ]
+    }
+  ],
+  "UCSDPerformancebasedSkillsAssessment": [
+    {
+      "UCSDPerformancebasedSkillsAssessment": [
+        {
+          "term_name": "standard",
+          "term": "standard",
+          "score": 1.5928161
+        }
+      ]
+    }
+  ],
+  "UndifferentiatedSchizophrenia": [
+    {
+      "UndifferentiatedSchizophrenia": [
+        {
+          "term_name": "lissencephaly",
+          "term": "lissencephaly",
+          "score": 1.582076
+        }
+      ]
+    }
+  ],
+  "Unmedicated": [
+    {
+      "Unmedicated": [
+        {
+          "term_name": "unattached",
+          "term": "unattached",
+          "score": 1.7133218
+        }
+      ]
+    }
+  ],
+  "VerbalFluencyTask": [
+    {
+      "VerbalFluencyTask": [
+        {
+          "term_name": "verbal fluency",
+          "term": "verbal fluency",
+          "score": 1.8020403
+        }
+      ]
+    }
+  ],
+  "WechslerMemoryScale-Revised": [
+    {
+      "WechslerMemoryScale-Revised": [
+        {
+          "term_name": "wm task",
+          "term": "wm task",
+          "score": 1.6577759
+        }
+      ]
+    }
+  ],
+  "WideRangeAchievementTest": [
+    {
+      "WideRangeAchievementTest": [
+        {
+          "term_name": "wider",
+          "term": "wider",
+          "score": 1.7119927
+        }
+      ]
+    }
+  ],
+  "WisconsinSmokingWithdrawalScale": [
+    {
+      "WisconsinSmokingWithdrawalScale": [
+        {
+          "term_name": "wisconsin",
+          "term": "wisconsin",
+          "score": 1.7654315
+        }
+      ]
+    }
+  ],
+  "WorkingMemoryTask": [
+    {
+      "WorkingMemoryTask": [
+        {
+          "term_name": "working",
+          "term": "working",
+          "score": 1.7163079
+        }
+      ]
+    }
+  ],
+  "YoungManiaRatingScale": [
+    {
+      "YoungManiaRatingScale": [
+        {
+          "term_name": "midcingulate",
+          "term": "midcingulate",
+          "score": 1.5268188
+        }
+      ]
+    }
+  ],
+  "Alzheimer'sDisease": [
+    {
+      "Alzheimer'sDisease": [
+        {
+          "term_name": "alzheimer",
+          "term": "alzheimer",
+          "score": 1.7754806
+        }
+      ]
+    }
+  ],
+  "Asperger'sDisorder": [
+    {
+      "Asperger'sDisorder": [
+        {
+          "term_name": "asperger",
+          "term": "asperger",
+          "score": 1.872729
+        }
+      ]
+    }
+  ],
+  "Children'sDepressionInventory": [
+    {
+      "Children'sDepressionInventory": [
+        {
+          "term_name": "developmental stuttering",
+          "term": "developmental stuttering",
+          "score": 1.5919914
+        }
+      ]
+    }
+  ],
+  "Montgomery\u2013AsbergDepressionRatingScale": [
+    {
+      "Montgomery\u2013AsbergDepressionRatingScale": [
+        {
+          "term_name": "mtl",
+          "term": "mtl",
+          "score": 1.58428
+        }
+      ]
+    }
+  ],
+  "Parkinson'sDisease": [
+    {
+      "Parkinson'sDisease": [
+        {
+          "term_name": "parkinson",
+          "term": "parkinson",
+          "score": 1.8426772
+        }
+      ]
+    }
+  ],
+  "RevisedChildren'sManifestAnxietyScale": [
+    {
+      "RevisedChildren'sManifestAnxietyScale": [
+        {
+          "term_name": "sma",
+          "term": "sma",
+          "score": 1.5599941
+        }
+      ]
+    }
+  ],
+  "Yale\u2013BrownObsessive\u2013CompulsiveScale": [
+    {
+      "Yale\u2013BrownObsessive\u2013CompulsiveScale": [
+        {
+          "term_name": "obsessive compulsive disorder",
+          "term": "obsessive compulsive disorder",
+          "score": 1.7180412
+        }
+      ]
+    }
+  ],
+  "AbdominalInductanceRespiratoryPlethysmography": [
+    {
+      "AbdominalInductanceRespiratoryPlethysmography": [
+        {
+          "term_name": "echoic",
+          "term": "echoic",
+          "score": 1.5377939
+        }
+      ]
+    }
+  ],
+  "AcousticPharyngometer": [
+    {
+      "AcousticPharyngometer": [
+        {
+          "term_name": "acoustic",
+          "term": "acoustic",
+          "score": 1.656137
+        }
+      ]
+    }
+  ],
+  "Acromegaly": [
+    {
+      "Acromegaly": [
+        {
+          "term_name": "gh",
+          "term": "gh",
+          "score": 1.6357151
+        }
+      ]
+    }
+  ],
+  "Actigraph": [
+    {
+      "Actigraph": [
+        {
+          "term_name": "act",
+          "term": "act",
+          "score": 1.5992571
+        }
+      ]
+    }
+  ],
+  "AdrenalCushingsSyndrome": [
+    {
+      "AdrenalCushingsSyndrome": [
+        {
+          "term_name": "adrenal",
+          "term": "adrenal",
+          "score": 1.7478086
+        }
+      ]
+    }
+  ],
+  "AdrenalDisease": [
+    {
+      "AdrenalDisease": [
+        {
+          "term_name": "adrenal",
+          "term": "adrenal",
+          "score": 1.8463504
+        }
+      ]
+    }
+  ],
+  "AdrenalInsufficiency": [
+    {
+      "AdrenalInsufficiency": [
+        {
+          "term_name": "adrenal",
+          "term": "adrenal",
+          "score": 1.6382967
+        }
+      ]
+    }
+  ],
+  "Age": [
+    {
+      "Age": [
+        {
+          "term_name": "age",
+          "term": "age",
+          "score": 2.0
+        }
+      ]
+    }
+  ],
+  "AirAudiometer": [
+    {
+      "AirAudiometer": [
+        {
+          "term_name": "musicians",
+          "term": "musicians",
+          "score": 1.5152668
+        }
+      ]
+    }
+  ],
+  "AlternativeHealthyEatingIndex2010": [
+    {
+      "AlternativeHealthyEatingIndex2010": [
+        {
+          "term_name": "hour",
+          "term": "hour",
+          "score": 1.5147904
+        }
+      ]
+    }
+  ],
+  "AmbulatoryAutomatedOscillometricSphygmomanometer": [
+    {
+      "AmbulatoryAutomatedOscillometricSphygmomanometer": [
+        {
+          "term_name": "skeletomotor",
+          "term": "skeletomotor",
+          "score": 1.5116519
+        }
+      ]
+    }
+  ],
+  "Analyzer": [
+    {
+      "Analyzer": [
+        {
+          "term_name": "analysis",
+          "term": "analysis",
+          "score": 1.6749505
+        }
+      ]
+    }
+  ],
+  "ApgarScore": [
+    {
+      "ApgarScore": [
+        {
+          "term_name": "newborn",
+          "term": "newborn",
+          "score": 1.5478972
+        }
+      ]
+    }
+  ],
+  "AssociationAnalysis": [
+    {
+      "AssociationAnalysis": [
+        {
+          "term_name": "association",
+          "term": "association",
+          "score": 1.8230432
+        }
+      ]
+    }
+  ],
+  "Audiometer": [
+    {
+      "Audiometer": [
+        {
+          "term_name": "auditory thresholds",
+          "term": "auditory thresholds",
+          "score": 1.7137815
+        }
+      ]
+    }
+  ],
+  "AutomatedOscillometricSphygmomanometer": [
+    {
+      "AutomatedOscillometricSphygmomanometer": [
+        {
+          "term_name": "electromyography",
+          "term": "electromyography",
+          "score": 1.5087061
+        }
+      ]
+    }
+  ],
+  "BalanceBeamScale": [
+    {
+      "BalanceBeamScale": [
+        {
+          "term_name": "balance",
+          "term": "balance",
+          "score": 1.6953373
+        }
+      ]
+    }
+  ],
+  "BaselineDataCollection": [
+    {
+      "BaselineDataCollection": [
+        {
+          "term_name": "baseline",
+          "term": "baseline",
+          "score": 1.9006065
+        }
+      ]
+    }
+  ],
+  "BehaviorRatingInventoryOfExecutiveFunction": [
+    {
+      "BehaviorRatingInventoryOfExecutiveFunction": [
+        {
+          "term_name": "executive control",
+          "term": "executive control",
+          "score": 1.7141048
+        }
+      ]
+    }
+  ],
+  "BerlinQuestionnaire": [
+    {
+      "BerlinQuestionnaire": [
+        {
+          "term_name": "ba",
+          "term": "ba",
+          "score": 1.6309928
+        }
+      ]
+    }
+  ],
+  "BiochemicalAssay": [
+    {
+      "BiochemicalAssay": [
+        {
+          "term_name": "analysis",
+          "term": "analysis",
+          "score": 1.6136703
+        }
+      ]
+    }
+  ],
+  "BipolarElectrocardiograph": [
+    {
+      "BipolarElectrocardiograph": [
+        {
+          "term_name": "electrodermal",
+          "term": "electrodermal",
+          "score": 1.6922371
+        }
+      ]
+    }
+  ],
+  "BipolarSubmentalElectromyograph": [
+    {
+      "BipolarSubmentalElectromyograph": [
+        {
+          "term_name": "electrodermal",
+          "term": "electrodermal",
+          "score": 1.7016522
+        }
+      ]
+    }
+  ],
+  "BivariateAnalysis": [
+    {
+      "BivariateAnalysis": [
+        {
+          "term_name": "bilateral",
+          "term": "bilateral",
+          "score": 1.6163074
+        }
+      ]
+    }
+  ],
+  "BloodOxygenLevel": [
+    {
+      "BloodOxygenLevel": [
+        {
+          "term_name": "blood",
+          "term": "blood",
+          "score": 1.6263288
+        }
+      ]
+    }
+  ],
+  "BloodSubstanceMeasurement": [
+    {
+      "BloodSubstanceMeasurement": [
+        {
+          "term_name": "blood",
+          "term": "blood",
+          "score": 1.6049162
+        }
+      ]
+    }
+  ],
+  "BodyHeight": [
+    {
+      "BodyHeight": [
+        {
+          "term_name": "bodily",
+          "term": "bodily",
+          "score": 1.724608
+        }
+      ]
+    }
+  ],
+  "BodyMass": [
+    {
+      "BodyMass": [
+        {
+          "term_name": "body",
+          "term": "body",
+          "score": 1.7719219
+        }
+      ]
+    }
+  ],
+  "BodyPartCircumference": [
+    {
+      "BodyPartCircumference": [
+        {
+          "term_name": "representation body",
+          "term": "representation body",
+          "score": 1.6635295
+        }
+      ]
+    }
+  ],
+  "BoneConductionAudiometer": [
+    {
+      "BoneConductionAudiometer": [
+        {
+          "term_name": "skeletomotor",
+          "term": "skeletomotor",
+          "score": 1.5778621
+        }
+      ]
+    }
+  ],
+  "BoneMeasurement": [
+    {
+      "BoneMeasurement": [
+        {
+          "term_name": "skeletal",
+          "term": "skeletal",
+          "score": 1.5665032
+        }
+      ]
+    }
+  ],
+  "BoneMineralDensity": [
+    {
+      "BoneMineralDensity": [
+        {
+          "term_name": "bone",
+          "term": "bone",
+          "score": 1.683644
+        }
+      ]
+    }
+  ],
+  "CReactiveProtein": [
+    {
+      "CReactiveProtein": [
+        {
+          "term_name": "calbindin",
+          "term": "calbindin",
+          "score": 1.6019092
+        }
+      ]
+    }
+  ],
+  "Caliper": [
+    {
+      "Caliper": [
+        {
+          "term_name": "scale",
+          "term": "scale",
+          "score": 1.6754051
+        }
+      ]
+    }
+  ],
+  "Capnograph": [
+    {
+      "Capnograph": [
+        {
+          "term_name": "electroencephalography",
+          "term": "electroencephalography",
+          "score": 1.5451732
+        }
+      ]
+    }
+  ],
+  "CaseControlStudy": [
+    {
+      "CaseControlStudy": [
+        {
+          "term_name": "case",
+          "term": "case",
+          "score": 1.7813016
+        }
+      ]
+    }
+  ],
+  "CenterForEpidemiologicStudiesDepressionScale": [
+    {
+      "CenterForEpidemiologicStudiesDepressionScale": [
+        {
+          "term_name": "center",
+          "term": "center",
+          "score": 1.6443843
+        }
+      ]
+    }
+  ],
+  "CentralTendencyAnalysis": [
+    {
+      "CentralTendencyAnalysis": [
+        {
+          "term_name": "central",
+          "term": "central",
+          "score": 1.676214
+        }
+      ]
+    }
+  ],
+  "CentralTendencyMeasure": [
+    {
+      "CentralTendencyMeasure": [
+        {
+          "term_name": "central",
+          "term": "central",
+          "score": 1.6508126
+        }
+      ]
+    }
+  ],
+  "ChestWallImpedanceRespiratoryPlethysmography": [
+    {
+      "ChestWallImpedanceRespiratoryPlethysmography": [
+        {
+          "term_name": "lie detection",
+          "term": "lie detection",
+          "score": 1.4997606
+        }
+      ]
+    }
+  ],
+  "Cholesterol": [
+    {
+      "Cholesterol": [
+        {
+          "term_name": "cholesterol",
+          "term": "cholesterol",
+          "score": 2.0
+        }
+      ]
+    }
+  ],
+  "ClinicalDocument": [
+    {
+      "ClinicalDocument": [
+        {
+          "term_name": "clinical",
+          "term": "clinical",
+          "score": 1.7913369
+        }
+      ]
+    }
+  ],
+  "ClinicalFinding": [
+    {
+      "ClinicalFinding": [
+        {
+          "term_name": "conceptual",
+          "term": "conceptual",
+          "score": 1.609541
+        }
+      ]
+    }
+  ],
+  "ClinicalIntervention": [
+    {
+      "ClinicalIntervention": [
+        {
+          "term_name": "clinical",
+          "term": "clinical",
+          "score": 1.6948959
+        }
+      ]
+    }
+  ],
+  "ClusterTrial": [
+    {
+      "ClusterTrial": [
+        {
+          "term_name": "cluster",
+          "term": "cluster",
+          "score": 1.7472304
+        }
+      ]
+    }
+  ],
+  "CoagulationFactorAssay": [
+    {
+      "CoagulationFactorAssay": [
+        {
+          "term_name": "tf",
+          "term": "tf",
+          "score": 1.6144824
+        }
+      ]
+    }
+  ],
+  "CognitiveAbilitiesScreeningInstrument": [
+    {
+      "CognitiveAbilitiesScreeningInstrument": [
+        {
+          "term_name": "cognitively",
+          "term": "cognitively",
+          "score": 1.7431905
+        }
+      ]
+    }
+  ],
+  "CohortStudy": [
+    {
+      "CohortStudy": [
+        {
+          "term_name": "prospective",
+          "term": "prospective",
+          "score": 1.703549
+        }
+      ]
+    }
+  ],
+  "Comparison": [
+    {
+      "Comparison": [
+        {
+          "term_name": "comparison",
+          "term": "comparison",
+          "score": 2.0
+        }
+      ]
+    }
+  ],
+  "ComparisonData": [
+    {
+      "ComparisonData": [
+        {
+          "term_name": "comparison",
+          "term": "comparison",
+          "score": 1.8828962
+        }
+      ]
+    }
+  ],
+  "ComputedTomographyScan": [
+    {
+      "ComputedTomographyScan": [
+        {
+          "term_name": "scanning",
+          "term": "scanning",
+          "score": 1.6219401
+        }
+      ]
+    }
+  ],
+  "CongenitalAdrenalHyperplasia": [
+    {
+      "CongenitalAdrenalHyperplasia": [
+        {
+          "term_name": "turner",
+          "term": "turner",
+          "score": 1.5801021
+        }
+      ]
+    }
+  ],
+  "ConnersRatingScaleRevised": [
+    {
+      "ConnersRatingScaleRevised": [
+        {
+          "term_name": "connotation",
+          "term": "connotation",
+          "score": 1.6873434
+        }
+      ]
+    }
+  ],
+  "ControlledOralWordAssociationTestOfTheMultilingualAphasiaExamination": [
+    {
+      "ControlledOralWordAssociationTestOfTheMultilingualAphasiaExamination": [
+        {
+          "term_name": "controlled",
+          "term": "controlled",
+          "score": 1.705819
+        }
+      ]
+    }
+  ],
+  "CoronaryComputedTomographyScan": [
+    {
+      "CoronaryComputedTomographyScan": [
+        {
+          "term_name": "coronary",
+          "term": "coronary",
+          "score": 1.5673733
+        }
+      ]
+    }
+  ],
+  "CorrelationAnalysis": [
+    {
+      "CorrelationAnalysis": [
+        {
+          "term_name": "comparison",
+          "term": "comparison",
+          "score": 1.6113758
+        }
+      ]
+    }
+  ],
+  "CorrelationMeasure": [
+    {
+      "CorrelationMeasure": [
+        {
+          "term_name": "relationship",
+          "term": "relationship",
+          "score": 1.6622521
+        }
+      ]
+    }
+  ],
+  "CovarianceAnalysis": [
+    {
+      "CovarianceAnalysis": [
+        {
+          "term_name": "analysis",
+          "term": "analysis",
+          "score": 1.6004063
+        }
+      ]
+    }
+  ],
+  "CrossSectionalStudy": [
+    {
+      "CrossSectionalStudy": [
+        {
+          "term_name": "comparison",
+          "term": "comparison",
+          "score": 1.7193931
+        }
+      ]
+    }
+  ],
+  "CrossoverTrial": [
+    {
+      "CrossoverTrial": [
+        {
+          "term_name": "trial",
+          "term": "trial",
+          "score": 1.629056
+        }
+      ]
+    }
+  ],
+  "CytokineLevel": [
+    {
+      "CytokineLevel": [
+        {
+          "term_name": "concentrations",
+          "term": "concentrations",
+          "score": 1.5419811
+        }
+      ]
+    }
+  ],
+  "D-dimerAssay": [
+    {
+      "D-dimerAssay": [
+        {
+          "term_name": "diagonal band broca",
+          "term": "diagonal band broca",
+          "score": 1.5324132
+        }
+      ]
+    }
+  ],
+  "D-dimerMeasurement": [
+    {
+      "D-dimerMeasurement": [
+        {
+          "term_name": "diagonal band broca",
+          "term": "diagonal band broca",
+          "score": 1.5011331
+        }
+      ]
+    }
+  ],
+  "DataAnalysisInstrument": [
+    {
+      "DataAnalysisInstrument": [
+        {
+          "term_name": "interpretive",
+          "term": "interpretive",
+          "score": 1.6490214
+        }
+      ]
+    }
+  ],
+  "DataAnalysisMethod": [
+    {
+      "DataAnalysisMethod": [
+        {
+          "term_name": "difference",
+          "term": "difference",
+          "score": 1.6070634
+        }
+      ]
+    }
+  ],
+  "DataCollectionInstrument": [
+    {
+      "DataCollectionInstrument": [
+        {
+          "term_name": "id",
+          "term": "id",
+          "score": 1.6362565
+        }
+      ]
+    }
+  ],
+  "DataCollectionMethod": [
+    {
+      "DataCollectionMethod": [
+        {
+          "term_name": "md",
+          "term": "md",
+          "score": 1.6030991
+        }
+      ]
+    }
+  ],
+  "DataSharingDeclaration": [
+    {
+      "DataSharingDeclaration": [
+        {
+          "term_name": "disclosures",
+          "term": "disclosures",
+          "score": 1.6515632
+        }
+      ]
+    }
+  ],
+  "DateTimeUnit": [
+    {
+      "DateTimeUnit": [
+        {
+          "term_name": "times",
+          "term": "times",
+          "score": 1.6782134
+        }
+      ]
+    }
+  ],
+  "DeathCertificate": [
+    {
+      "DeathCertificate": [
+        {
+          "term_name": "death",
+          "term": "death",
+          "score": 1.5712405
+        }
+      ]
+    }
+  ],
+  "DescriptiveStatisticalAnalysis": [
+    {
+      "DescriptiveStatisticalAnalysis": [
+        {
+          "term_name": "analyses",
+          "term": "analyses",
+          "score": 1.6658741
+        }
+      ]
+    }
+  ],
+  "DevelopmentalNeuropsychologicalAssessment": [
+    {
+      "DevelopmentalNeuropsychologicalAssessment": [
+        {
+          "term_name": "neurodevelopmental",
+          "term": "neurodevelopmental",
+          "score": 1.8155376
+        }
+      ]
+    }
+  ],
+  "DiabetesInsipidus": [
+    {
+      "DiabetesInsipidus": [
+        {
+          "term_name": "insipidus",
+          "term": "insipidus",
+          "score": 1.9015157
+        }
+      ]
+    }
+  ],
+  "DiabeticNephropathy": [
+    {
+      "DiabeticNephropathy": [
+        {
+          "term_name": "diabetic neuropathy",
+          "term": "diabetic neuropathy",
+          "score": 1.8715391
+        }
+      ]
+    }
+  ],
+  "DiabeticNeuropathy": [
+    {
+      "DiabeticNeuropathy": [
+        {
+          "term_name": "diabetic neuropathy",
+          "term": "diabetic neuropathy",
+          "score": 1.9198787
+        }
+      ]
+    }
+  ],
+  "DiabeticRetinopathy": [
+    {
+      "DiabeticRetinopathy": [
+        {
+          "term_name": "retinal disease",
+          "term": "retinal disease",
+          "score": 1.6494536
+        }
+      ]
+    }
+  ],
+  "DigitSymbolSubstitutionOfTheWechslerAdultIntelligenceScaleRevised": [
+    {
+      "DigitSymbolSubstitutionOfTheWechslerAdultIntelligenceScaleRevised": [
+        {
+          "term_name": "digit",
+          "term": "digit",
+          "score": 1.7119247
+        }
+      ]
+    }
+  ],
+  "DigitalScale": [
+    {
+      "DigitalScale": [
+        {
+          "term_name": "digital",
+          "term": "digital",
+          "score": 1.7620158
+        }
+      ]
+    }
+  ],
+  "DiseaseDiagnosis": [
+    {
+      "DiseaseDiagnosis": [
+        {
+          "term_name": "diagnosis",
+          "term": "diagnosis",
+          "score": 1.7532475
+        }
+      ]
+    }
+  ],
+  "DispersionAnalysis": [
+    {
+      "DispersionAnalysis": [
+        {
+          "term_name": "dispersal",
+          "term": "dispersal",
+          "score": 1.6929082
+        }
+      ]
+    }
+  ],
+  "DispersionMeasure": [
+    {
+      "DispersionMeasure": [
+        {
+          "term_name": "dispersal",
+          "term": "dispersal",
+          "score": 1.7459587
+        }
+      ]
+    }
+  ],
+  "DrugMeasurementData": [
+    {
+      "DrugMeasurementData": [
+        {
+          "term_name": "drugs",
+          "term": "drugs",
+          "score": 1.7706347
+        }
+      ]
+    }
+  ],
+  "DrugMeasurementProcess": [
+    {
+      "DrugMeasurementProcess": [
+        {
+          "term_name": "drug",
+          "term": "drug",
+          "score": 1.7496899
+        }
+      ]
+    }
+  ],
+  "DualEnergyXRayAbsorptiometry": [
+    {
+      "DualEnergyXRayAbsorptiometry": [
+        {
+          "term_name": "dual",
+          "term": "dual",
+          "score": 1.6186281
+        }
+      ]
+    }
+  ],
+  "EcologicalStudy": [
+    {
+      "EcologicalStudy": [
+        {
+          "term_name": "environmental",
+          "term": "environmental",
+          "score": 1.662844
+        }
+      ]
+    }
+  ],
+  "ElectrocardiogramInstrument": [
+    {
+      "ElectrocardiogramInstrument": [
+        {
+          "term_name": "eg",
+          "term": "eg",
+          "score": 1.7203264
+        }
+      ]
+    }
+  ],
+  "Electrocardiograph": [
+    {
+      "Electrocardiograph": [
+        {
+          "term_name": "electroencephalography",
+          "term": "electroencephalography",
+          "score": 1.6530439
+        }
+      ]
+    }
+  ],
+  "ElectroecephalographyProcedure": [
+    {
+      "ElectroecephalographyProcedure": [
+        {
+          "term_name": "electroencephalography",
+          "term": "electroencephalography",
+          "score": 1.6853378
+        }
+      ]
+    }
+  ],
+  "ElectroencephalogramInstrument": [
+    {
+      "ElectroencephalogramInstrument": [
+        {
+          "term_name": "electroencephalography",
+          "term": "electroencephalography",
+          "score": 1.8807026
+        }
+      ]
+    }
+  ],
+  "Electroencephalograph": [
+    {
+      "Electroencephalograph": [
+        {
+          "term_name": "electroencephalography",
+          "term": "electroencephalography",
+          "score": 1.9353093
+        }
+      ]
+    }
+  ],
+  "ElectromyogramInstrument": [
+    {
+      "ElectromyogramInstrument": [
+        {
+          "term_name": "electromyography",
+          "term": "electromyography",
+          "score": 1.8922571
+        }
+      ]
+    }
+  ],
+  "Electromyograph": [
+    {
+      "Electromyograph": [
+        {
+          "term_name": "electromyography",
+          "term": "electromyography",
+          "score": 1.9328625
+        }
+      ]
+    }
+  ],
+  "Electrooculogram": [
+    {
+      "Electrooculogram": [
+        {
+          "term_name": "electroencephalography",
+          "term": "electroencephalography",
+          "score": 1.7703985
+        }
+      ]
+    }
+  ],
+  "ElectrooculogramInstrument": [
+    {
+      "ElectrooculogramInstrument": [
+        {
+          "term_name": "electroencephalography",
+          "term": "electroencephalography",
+          "score": 1.7287984
+        }
+      ]
+    }
+  ],
+  "ElectrophysiologySignalMeasurementInstrument": [
+    {
+      "ElectrophysiologySignalMeasurementInstrument": [
+        {
+          "term_name": "erp",
+          "term": "erp",
+          "score": 1.6841856
+        }
+      ]
+    }
+  ],
+  "EndocrineDisease": [
+    {
+      "EndocrineDisease": [
+        {
+          "term_name": "hormone",
+          "term": "hormone",
+          "score": 1.6937357
+        }
+      ]
+    }
+  ],
+  "EnzymaticReactionAssay": [
+    {
+      "EnzymaticReactionAssay": [
+        {
+          "term_name": "epimerase",
+          "term": "epimerase",
+          "score": 1.5368072
+        }
+      ]
+    }
+  ],
+  "Enzyme-linkedImmunosorbentAssay": [
+    {
+      "Enzyme-linkedImmunosorbentAssay": [
+        {
+          "term_name": "ia",
+          "term": "ia",
+          "score": 1.5220238
+        }
+      ]
+    }
+  ],
+  "EpworthSleepinessScale": [
+    {
+      "EpworthSleepinessScale": [
+        {
+          "term_name": "extreme",
+          "term": "extreme",
+          "score": 1.5810633
+        }
+      ]
+    }
+  ],
+  "EquilibriumDialysisSeparation": [
+    {
+      "EquilibriumDialysisSeparation": [
+        {
+          "term_name": "equilibrium",
+          "term": "equilibrium",
+          "score": 1.8441116
+        }
+      ]
+    }
+  ],
+  "EstimationAnalysis": [
+    {
+      "EstimationAnalysis": [
+        {
+          "term_name": "estimation",
+          "term": "estimation",
+          "score": 1.910431
+        }
+      ]
+    }
+  ],
+  "FactorialStudy": [
+    {
+      "FactorialStudy": [
+        {
+          "term_name": "framing",
+          "term": "framing",
+          "score": 1.6174542
+        }
+      ]
+    }
+  ],
+  "FactorialTrial": [
+    {
+      "FactorialTrial": [
+        {
+          "term_name": "crossmodal",
+          "term": "crossmodal",
+          "score": 1.6173328
+        }
+      ]
+    }
+  ],
+  "FastingGlucose": [
+    {
+      "FastingGlucose": [
+        {
+          "term_name": "fasting",
+          "term": "fasting",
+          "score": 1.6710443
+        }
+      ]
+    }
+  ],
+  "FastingInsulin": [
+    {
+      "FastingInsulin": [
+        {
+          "term_name": "insulin",
+          "term": "insulin",
+          "score": 1.7465765
+        }
+      ]
+    }
+  ],
+  "FibrinogenAssay": [
+    {
+      "FibrinogenAssay": [
+        {
+          "term_name": "fix",
+          "term": "fix",
+          "score": 1.5655638
+        }
+      ]
+    }
+  ],
+  "FibrinogenMeasurementData": [
+    {
+      "FibrinogenMeasurementData": [
+        {
+          "term_name": "fix",
+          "term": "fix",
+          "score": 1.6526854
+        }
+      ]
+    }
+  ],
+  "FingertipPulseOximetry": [
+    {
+      "FingertipPulseOximetry": [
+        {
+          "term_name": "finger tapping",
+          "term": "finger tapping",
+          "score": 1.6812984
+        }
+      ]
+    }
+  ],
+  "FollowupDataCollection": [
+    {
+      "FollowupDataCollection": [
+        {
+          "term_name": "follow",
+          "term": "follow",
+          "score": 1.7280887
+        }
+      ]
+    }
+  ],
+  "GasLevel": [
+    {
+      "GasLevel": [
+        {
+          "term_name": "gas",
+          "term": "gas",
+          "score": 1.8142309
+        }
+      ]
+    }
+  ],
+  "GelElectrophoresis": [
+    {
+      "GelElectrophoresis": [
+        {
+          "term_name": "eg",
+          "term": "eg",
+          "score": 1.6088666
+        }
+      ]
+    }
+  ],
+  "Gender": [
+    {
+      "Gender": [
+        {
+          "term_name": "gender",
+          "term": "gender",
+          "score": 2.0
+        }
+      ]
+    }
+  ],
+  "GenotypingPlatform": [
+    {
+      "GenotypingPlatform": [
+        {
+          "term_name": "genetic",
+          "term": "genetic",
+          "score": 1.6892108
+        }
+      ]
+    }
+  ],
+  "GeriatricDepressionScale": [
+    {
+      "GeriatricDepressionScale": [
+        {
+          "term_name": "elderly",
+          "term": "elderly",
+          "score": 1.7506387
+        }
+      ]
+    }
+  ],
+  "GlobalPhysicalActivityQuestionnaire": [
+    {
+      "GlobalPhysicalActivityQuestionnaire": [
+        {
+          "term_name": "global",
+          "term": "global",
+          "score": 1.7217518
+        }
+      ]
+    }
+  ],
+  "Glucose": [
+    {
+      "Glucose": [
+        {
+          "term_name": "hexose",
+          "term": "hexose",
+          "score": 1.7053729
+        }
+      ]
+    }
+  ],
+  "GlucoseToleranceTest": [
+    {
+      "GlucoseToleranceTest": [
+        {
+          "term_name": "sweet",
+          "term": "sweet",
+          "score": 1.5457522
+        }
+      ]
+    }
+  ],
+  "GlycosylatedHemoglobin": [
+    {
+      "GlycosylatedHemoglobin": [
+        {
+          "term_name": "heschl gyri",
+          "term": "heschl gyri",
+          "score": 1.5044688
+        }
+      ]
+    }
+  ],
+  "GravesDisease": [
+    {
+      "GravesDisease": [
+        {
+          "term_name": "ptosis",
+          "term": "ptosis",
+          "score": 1.5818912
+        }
+      ]
+    }
+  ],
+  "HarpendenStadiometer": [
+    {
+      "HarpendenStadiometer": [
+        {
+          "term_name": "pencils",
+          "term": "pencils",
+          "score": 1.5124266
+        }
+      ]
+    }
+  ],
+  "HealthStatusQuestionnaire": [
+    {
+      "HealthStatusQuestionnaire": [
+        {
+          "term_name": "health",
+          "term": "health",
+          "score": 1.6403829
+        }
+      ]
+    }
+  ],
+  "HighDensityLipoprotein": [
+    {
+      "HighDensityLipoprotein": [
+        {
+          "term_name": "lipoprotein",
+          "term": "lipoprotein",
+          "score": 1.6769493
+        }
+      ]
+    }
+  ],
+  "HispanicCommunityHealthStudySleepQuestionnaire": [
+    {
+      "HispanicCommunityHealthStudySleepQuestionnaire": [
+        {
+          "term_name": "hx",
+          "term": "hx",
+          "score": 1.5845879
+        }
+      ]
+    }
+  ],
+  "HomeostaticModelAssessmentIndex": [
+    {
+      "HomeostaticModelAssessmentIndex": [
+        {
+          "term_name": "equilibrium",
+          "term": "equilibrium",
+          "score": 1.6520449
+        }
+      ]
+    }
+  ],
+  "Hyperaldosteronism": [
+    {
+      "Hyperaldosteronism": [
+        {
+          "term_name": "ald",
+          "term": "ald",
+          "score": 1.5871193
+        }
+      ]
+    }
+  ],
+  "Hyperprolactinemia": [
+    {
+      "Hyperprolactinemia": [
+        {
+          "term_name": "hypersecretion",
+          "term": "hypersecretion",
+          "score": 1.5736101
+        }
+      ]
+    }
+  ],
+  "Hyperthyroidism": [
+    {
+      "Hyperthyroidism": [
+        {
+          "term_name": "tsh",
+          "term": "tsh",
+          "score": 1.6162162
+        }
+      ]
+    }
+  ],
+  "Hypoglycemia": [
+    {
+      "Hypoglycemia": [
+        {
+          "term_name": "diabetes",
+          "term": "diabetes",
+          "score": 1.5644606
+        }
+      ]
+    }
+  ],
+  "Hypogonadism": [
+    {
+      "Hypogonadism": [
+        {
+          "term_name": "hypogonadism",
+          "term": "hypogonadism",
+          "score": 2.0
+        }
+      ]
+    }
+  ],
+  "Hypopituitarism": [
+    {
+      "Hypopituitarism": [
+        {
+          "term_name": "hypogonadism",
+          "term": "hypogonadism",
+          "score": 1.6621275
+        }
+      ]
+    }
+  ],
+  "Hypothyroidism": [
+    {
+      "Hypothyroidism": [
+        {
+          "term_name": "tsh",
+          "term": "tsh",
+          "score": 1.6060582
+        }
+      ]
+    }
+  ],
+  "ImagingInstrument": [
+    {
+      "ImagingInstrument": [
+        {
+          "term_name": "image",
+          "term": "image",
+          "score": 1.771024
+        }
+      ]
+    }
+  ],
+  "ImmunochemiluminometricAssay": [
+    {
+      "ImmunochemiluminometricAssay": [
+        {
+          "term_name": "interference resolution",
+          "term": "interference resolution",
+          "score": 1.5546304
+        }
+      ]
+    }
+  ],
+  "Immunoelectrophoresis": [
+    {
+      "Immunoelectrophoresis": [
+        {
+          "term_name": "erp",
+          "term": "erp",
+          "score": 1.6132754
+        }
+      ]
+    }
+  ],
+  "ImmunologicSubstanceLevel": [
+    {
+      "ImmunologicSubstanceLevel": [
+        {
+          "term_name": "immune",
+          "term": "immune",
+          "score": 1.6740588
+        }
+      ]
+    }
+  ],
+  "ImmunoturbidimetricAssay": [
+    {
+      "ImmunoturbidimetricAssay": [
+        {
+          "term_name": "iam",
+          "term": "iam",
+          "score": 1.5345575
+        }
+      ]
+    }
+  ],
+  "Impedance": [
+    {
+      "Impedance": [
+        {
+          "term_name": "conductance",
+          "term": "conductance",
+          "score": 1.6914531
+        }
+      ]
+    }
+  ],
+  "Inductance": [
+    {
+      "Inductance": [
+        {
+          "term_name": "induced",
+          "term": "induced",
+          "score": 1.7614094
+        }
+      ]
+    }
+  ],
+  "InferentialStatisticalAnalysis": [
+    {
+      "InferentialStatisticalAnalysis": [
+        {
+          "term_name": "inference",
+          "term": "inference",
+          "score": 1.7082151
+        }
+      ]
+    }
+  ],
+  "InsomniaSeverityIndex": [
+    {
+      "InsomniaSeverityIndex": [
+        {
+          "term_name": "insomnia",
+          "term": "insomnia",
+          "score": 1.7832758
+        }
+      ]
+    }
+  ],
+  "Insulin": [
+    {
+      "Insulin": [
+        {
+          "term_name": "insulin",
+          "term": "insulin",
+          "score": 2.0
+        }
+      ]
+    }
+  ],
+  "Interleukin-1Level": [
+    {
+      "Interleukin-1Level": [
+        {
+          "term_name": "l1",
+          "term": "l1",
+          "score": 1.5044168
+        }
+      ]
+    }
+  ],
+  "Interleukin-2Level": [
+    {
+      "Interleukin-2Level": [
+        {
+          "term_name": "l2",
+          "term": "l2",
+          "score": 1.542475
+        }
+      ]
+    }
+  ],
+  "Interleukin1": [
+    {
+      "Interleukin1": [
+        {
+          "term_name": "csf",
+          "term": "csf",
+          "score": 1.5361656
+        }
+      ]
+    }
+  ],
+  "Interleukin10": [
+    {
+      "Interleukin10": [
+        {
+          "term_name": "area 10",
+          "term": "area 10",
+          "score": 1.5122651
+        }
+      ]
+    }
+  ],
+  "Interleukin6": [
+    {
+      "Interleukin6": [
+        {
+          "term_name": "csf",
+          "term": "csf",
+          "score": 1.5797912
+        }
+      ]
+    }
+  ],
+  "InterleukinLevel": [
+    {
+      "InterleukinLevel": [
+        {
+          "term_name": "level",
+          "term": "level",
+          "score": 1.5666004
+        }
+      ]
+    }
+  ],
+  "Intervention": [
+    {
+      "Intervention": [
+        {
+          "term_name": "manipulations",
+          "term": "manipulations",
+          "score": 1.7279428
+        }
+      ]
+    }
+  ],
+  "InterventionalStudy": [
+    {
+      "InterventionalStudy": [
+        {
+          "term_name": "experimental",
+          "term": "experimental",
+          "score": 1.668711
+        }
+      ]
+    }
+  ],
+  "IntracranialElectrode": [
+    {
+      "IntracranialElectrode": [
+        {
+          "term_name": "electrodermal",
+          "term": "electrodermal",
+          "score": 1.7406342
+        }
+      ]
+    }
+  ],
+  "LaboratoryTestData": [
+    {
+      "LaboratoryTestData": [
+        {
+          "term_name": "test",
+          "term": "test",
+          "score": 1.6523474
+        }
+      ]
+    }
+  ],
+  "LateralLumbarSpineXRay": [
+    {
+      "LateralLumbarSpineXRay": [
+        {
+          "term_name": "lateralis",
+          "term": "lateralis",
+          "score": 1.5658379
+        }
+      ]
+    }
+  ],
+  "LateralThoracicSpineXRay": [
+    {
+      "LateralThoracicSpineXRay": [
+        {
+          "term_name": "lateral",
+          "term": "lateral",
+          "score": 1.6072987
+        }
+      ]
+    }
+  ],
+  "LeptinMeasurement": [
+    {
+      "LeptinMeasurement": [
+        {
+          "term_name": "ob",
+          "term": "ob",
+          "score": 1.6682471
+        }
+      ]
+    }
+  ],
+  "LeptinMeasurementData": [
+    {
+      "LeptinMeasurementData": [
+        {
+          "term_name": "ob",
+          "term": "ob",
+          "score": 1.6744564
+        }
+      ]
+    }
+  ],
+  "LiquidChromatography": [
+    {
+      "LiquidChromatography": [
+        {
+          "term_name": "contrast",
+          "term": "contrast",
+          "score": 1.5944926
+        }
+      ]
+    }
+  ],
+  "LongitudinalStudy": [
+    {
+      "LongitudinalStudy": [
+        {
+          "term_name": "longitudinal",
+          "term": "longitudinal",
+          "score": 1.916874
+        }
+      ]
+    }
+  ],
+  "LowDensityLipoprotein": [
+    {
+      "LowDensityLipoprotein": [
+        {
+          "term_name": "lipoprotein",
+          "term": "lipoprotein",
+          "score": 1.713257
+        }
+      ]
+    }
+  ],
+  "MacarthurSubjectiveStatusScale": [
+    {
+      "MacarthurSubjectiveStatusScale": [
+        {
+          "term_name": "macaque",
+          "term": "macaque",
+          "score": 1.652449
+        }
+      ]
+    }
+  ],
+  "MagneticResonanceImagingInstrument": [
+    {
+      "MagneticResonanceImagingInstrument": [
+        {
+          "term_name": "magnetic",
+          "term": "magnetic",
+          "score": 1.7305114
+        }
+      ]
+    }
+  ],
+  "MassSpectrometry": [
+    {
+      "MassSpectrometry": [
+        {
+          "term_name": "ms",
+          "term": "ms",
+          "score": 1.6869518
+        }
+      ]
+    }
+  ],
+  "Mean": [
+    {
+      "Mean": [
+        {
+          "term_name": "average",
+          "term": "average",
+          "score": 1.7037219
+        }
+      ]
+    }
+  ],
+  "MeasurementData": [
+    {
+      "MeasurementData": [
+        {
+          "term_name": "measures",
+          "term": "measures",
+          "score": 1.7332253
+        }
+      ]
+    }
+  ],
+  "Median": [
+    {
+      "Median": [
+        {
+          "term_name": "median",
+          "term": "median",
+          "score": 2.0
+        }
+      ]
+    }
+  ],
+  "MedicalRecord": [
+    {
+      "MedicalRecord": [
+        {
+          "term_name": "medical",
+          "term": "medical",
+          "score": 1.7026863
+        }
+      ]
+    }
+  ],
+  "Menopause": [
+    {
+      "Menopause": [
+        {
+          "term_name": "premenstrual",
+          "term": "premenstrual",
+          "score": 1.6664861
+        }
+      ]
+    }
+  ],
+  "MentalHealthQuestionnaire": [
+    {
+      "MentalHealthQuestionnaire": [
+        {
+          "term_name": "mental",
+          "term": "mental",
+          "score": 1.6370708
+        }
+      ]
+    }
+  ],
+  "MercurySphygmomanometer": [
+    {
+      "MercurySphygmomanometer": [
+        {
+          "term_name": "mercury",
+          "term": "mercury",
+          "score": 1.5534796
+        }
+      ]
+    }
+  ],
+  "Middle-ChildhoodHomeObservationforMeasurementoftheEnvironment": [
+    {
+      "Middle-ChildhoodHomeObservationforMeasurementoftheEnvironment": [
+        {
+          "term_name": "middle",
+          "term": "middle",
+          "score": 1.694089
+        }
+      ]
+    }
+  ],
+  "MissingDataProtocol": [
+    {
+      "MissingDataProtocol": [
+        {
+          "term_name": "absent",
+          "term": "absent",
+          "score": 1.5985453
+        }
+      ]
+    }
+  ],
+  "Mode": [
+    {
+      "Mode": [
+        {
+          "term_name": "mode",
+          "term": "mode",
+          "score": 2.0
+        }
+      ]
+    }
+  ],
+  "ModifiedMiniMentalState": [
+    {
+      "ModifiedMiniMentalState": [
+        {
+          "term_name": "modified",
+          "term": "modified",
+          "score": 1.6671262
+        }
+      ]
+    }
+  ],
+  "MultivariateAnalysis": [
+    {
+      "MultivariateAnalysis": [
+        {
+          "term_name": "analyses",
+          "term": "analyses",
+          "score": 1.6521909
+        }
+      ]
+    }
+  ],
+  "NasalCannulaPressureTransducer": [
+    {
+      "NasalCannulaPressureTransducer": [
+        {
+          "term_name": "nasal",
+          "term": "nasal",
+          "score": 1.6042138
+        }
+      ]
+    }
+  ],
+  "NeurocognitiveFunctionQuestionnaire": [
+    {
+      "NeurocognitiveFunctionQuestionnaire": [
+        {
+          "term_name": "neurocognitive",
+          "term": "neurocognitive",
+          "score": 1.8834351
+        }
+      ]
+    }
+  ],
+  "NeurocognitiveTest": [
+    {
+      "NeurocognitiveTest": [
+        {
+          "term_name": "neurocognitive",
+          "term": "neurocognitive",
+          "score": 1.8767822
+        }
+      ]
+    }
+  ],
+  "NeuroendocrineTumors": [
+    {
+      "NeuroendocrineTumors": [
+        {
+          "term_name": "neuroendocrine",
+          "term": "neuroendocrine",
+          "score": 1.8063539
+        }
+      ]
+    }
+  ],
+  "NutritionDataSystemForResearch24HourDietaryRecall": [
+    {
+      "NutritionDataSystemForResearch24HourDietaryRecall": [
+        {
+          "term_name": "dietary",
+          "term": "dietary",
+          "score": 1.6775831
+        }
+      ]
+    }
+  ],
+  "NutritionQuestionnaire": [
+    {
+      "NutritionQuestionnaire": [
+        {
+          "term_name": "nutrition",
+          "term": "nutrition",
+          "score": 1.7945461
+        }
+      ]
+    }
+  ],
+  "ObservableMeasurement": [
+    {
+      "ObservableMeasurement": [
+        {
+          "term_name": "observation",
+          "term": "observation",
+          "score": 1.7687209
+        }
+      ]
+    }
+  ],
+  "ObservationalStudy": [
+    {
+      "ObservationalStudy": [
+        {
+          "term_name": "observation",
+          "term": "observation",
+          "score": 1.7392992
+        }
+      ]
+    }
+  ],
+  "ObstructiveSleepApnea18": [
+    {
+      "ObstructiveSleepApnea18": [
+        {
+          "term_name": "obstructive sleep apnea",
+          "term": "obstructive sleep apnea",
+          "score": 1.7264129
+        }
+      ]
+    }
+  ],
+  "OneLeadElectrocardiograph": [
+    {
+      "OneLeadElectrocardiograph": [
+        {
+          "term_name": "echoic",
+          "term": "echoic",
+          "score": 1.5419322
+        }
+      ]
+    }
+  ],
+  "OralGlucoseToleranceTest": [
+    {
+      "OralGlucoseToleranceTest": [
+        {
+          "term_name": "eg",
+          "term": "eg",
+          "score": 1.5617595
+        }
+      ]
+    }
+  ],
+  "OronasalThermistor": [
+    {
+      "OronasalThermistor": [
+        {
+          "term_name": "oralis",
+          "term": "oralis",
+          "score": 1.5908928
+        }
+      ]
+    }
+  ],
+  "OscillometricSphygmomanometer": [
+    {
+      "OscillometricSphygmomanometer": [
+        {
+          "term_name": "vibratory",
+          "term": "vibratory",
+          "score": 1.5519215
+        }
+      ]
+    }
+  ],
+  "PancreaticDisease": [
+    {
+      "PancreaticDisease": [
+        {
+          "term_name": "pancreatic",
+          "term": "pancreatic",
+          "score": 1.805456
+        }
+      ]
+    }
+  ],
+  "ParallelGroupTrial": [
+    {
+      "ParallelGroupTrial": [
+        {
+          "term_name": "parallel",
+          "term": "parallel",
+          "score": 1.7706124
+        }
+      ]
+    }
+  ],
+  "PediatricQualityOfLifeInventory": [
+    {
+      "PediatricQualityOfLifeInventory": [
+        {
+          "term_name": "childhood",
+          "term": "childhood",
+          "score": 1.6689502
+        }
+      ]
+    }
+  ],
+  "PediatricSleepQuestionnaire": [
+    {
+      "PediatricSleepQuestionnaire": [
+        {
+          "term_name": "childhood",
+          "term": "childhood",
+          "score": 1.707918
+        }
+      ]
+    }
+  ],
+  "Pheochromocytoma": [
+    {
+      "Pheochromocytoma": [
+        {
+          "term_name": "catecholaminergic",
+          "term": "catecholaminergic",
+          "score": 1.5869216
+        }
+      ]
+    }
+  ],
+  "PhysicalActivityQuestionnaire": [
+    {
+      "PhysicalActivityQuestionnaire": [
+        {
+          "term_name": "physical",
+          "term": "physical",
+          "score": 1.793395
+        }
+      ]
+    }
+  ],
+  "PhysicalActivityScaleForTheElderly": [
+    {
+      "PhysicalActivityScaleForTheElderly": [
+        {
+          "term_name": "physical",
+          "term": "physical",
+          "score": 1.7481383
+        }
+      ]
+    }
+  ],
+  "PhysicalMeasurement": [
+    {
+      "PhysicalMeasurement": [
+        {
+          "term_name": "physical",
+          "term": "physical",
+          "score": 1.7341207
+        }
+      ]
+    }
+  ],
+  "PittsburghSleepQualityIndex": [
+    {
+      "PittsburghSleepQualityIndex": [
+        {
+          "term_name": "pia",
+          "term": "pia",
+          "score": 1.6079006
+        }
+      ]
+    }
+  ],
+  "PituitaryAdenoma": [
+    {
+      "PituitaryAdenoma": [
+        {
+          "term_name": "pituitary adenoma",
+          "term": "pituitary adenoma",
+          "score": 1.8883239
+        }
+      ]
+    }
+  ],
+  "PituitaryDisease": [
+    {
+      "PituitaryDisease": [
+        {
+          "term_name": "pituitary",
+          "term": "pituitary",
+          "score": 1.7346542
+        }
+      ]
+    }
+  ],
+  "PlasminAssay": [
+    {
+      "PlasminAssay": [
+        {
+          "term_name": "pai",
+          "term": "pai",
+          "score": 1.5589081
+        }
+      ]
+    }
+  ],
+  "PlasminogenActivatorInhibitorAssay": [
+    {
+      "PlasminogenActivatorInhibitorAssay": [
+        {
+          "term_name": "pai",
+          "term": "pai",
+          "score": 1.7372804
+        }
+      ]
+    }
+  ],
+  "PlasminogenActivatorInhibitorType1Assay": [
+    {
+      "PlasminogenActivatorInhibitorType1Assay": [
+        {
+          "term_name": "pai",
+          "term": "pai",
+          "score": 1.6614494
+        }
+      ]
+    }
+  ],
+  "PolycysticOvarySyndrome": [
+    {
+      "PolycysticOvarySyndrome": [
+        {
+          "term_name": "cysts",
+          "term": "cysts",
+          "score": 1.5682024
+        }
+      ]
+    }
+  ],
+  "PolymeraseChainReaction": [
+    {
+      "PolymeraseChainReaction": [
+        {
+          "term_name": "pole",
+          "term": "pole",
+          "score": 1.6184416
+        }
+      ]
+    }
+  ],
+  "Polysomnograph": [
+    {
+      "Polysomnograph": [
+        {
+          "term_name": "sleep disordered breathing",
+          "term": "sleep disordered breathing",
+          "score": 1.6101996
+        }
+      ]
+    }
+  ],
+  "PositronEmissionTomographyInstrument": [
+    {
+      "PositronEmissionTomographyInstrument": [
+        {
+          "term_name": "electroencephalography",
+          "term": "electroencephalography",
+          "score": 1.6038233
+        }
+      ]
+    }
+  ],
+  "PrematureOvarianFailure": [
+    {
+      "PrematureOvarianFailure": [
+        {
+          "term_name": "premature",
+          "term": "premature",
+          "score": 1.6557952
+        }
+      ]
+    }
+  ],
+  "PressureTransducer": [
+    {
+      "PressureTransducer": [
+        {
+          "term_name": "pressor",
+          "term": "pressor",
+          "score": 1.662473
+        }
+      ]
+    }
+  ],
+  "PrimaryOutcome": [
+    {
+      "PrimaryOutcome": [
+        {
+          "term_name": "primary",
+          "term": "primary",
+          "score": 1.8027464
+        }
+      ]
+    }
+  ],
+  "ProspectiveCohortStudy": [
+    {
+      "ProspectiveCohortStudy": [
+        {
+          "term_name": "prospective",
+          "term": "prospective",
+          "score": 1.790633
+        }
+      ]
+    }
+  ],
+  "PulseOximetry": [
+    {
+      "PulseOximetry": [
+        {
+          "term_name": "echoic",
+          "term": "echoic",
+          "score": 1.6018113
+        }
+      ]
+    }
+  ],
+  "QualityOfLifeQuestionnaire": [
+    {
+      "QualityOfLifeQuestionnaire": [
+        {
+          "term_name": "quality",
+          "term": "quality",
+          "score": 1.7979224
+        }
+      ]
+    }
+  ],
+  "Questionnaire": [
+    {
+      "Questionnaire": [
+        {
+          "term_name": "questionnaire",
+          "term": "questionnaire",
+          "score": 2.0
+        }
+      ]
+    }
+  ],
+  "RSoftwareTool": [
+    {
+      "RSoftwareTool": [
+        {
+          "term_name": "reserve",
+          "term": "reserve",
+          "score": 1.5467554
+        }
+      ]
+    }
+  ],
+  "Radiograph": [
+    {
+      "Radiograph": [
+        {
+          "term_name": "ray",
+          "term": "ray",
+          "score": 1.7202785
+        }
+      ]
+    }
+  ],
+  "RadiographyInstrument": [
+    {
+      "RadiographyInstrument": [
+        {
+          "term_name": "ray",
+          "term": "ray",
+          "score": 1.6895429
+        }
+      ]
+    }
+  ],
+  "RandomizedControlTrial": [
+    {
+      "RandomizedControlTrial": [
+        {
+          "term_name": "trial",
+          "term": "trial",
+          "score": 1.7018695
+        }
+      ]
+    }
+  ],
+  "Reference": [
+    {
+      "Reference": [
+        {
+          "term_name": "reference",
+          "term": "reference",
+          "score": 2.0
+        }
+      ]
+    }
+  ],
+  "ReproductiveDisease": [
+    {
+      "ReproductiveDisease": [
+        {
+          "term_name": "reproductive",
+          "term": "reproductive",
+          "score": 1.8465432
+        }
+      ]
+    }
+  ],
+  "ResearchStudy": [
+    {
+      "ResearchStudy": [
+        {
+          "term_name": "research",
+          "term": "research",
+          "score": 1.8474354
+        }
+      ]
+    }
+  ],
+  "RespiratoryPlethysmography": [
+    {
+      "RespiratoryPlethysmography": [
+        {
+          "term_name": "breath",
+          "term": "breath",
+          "score": 1.6077814
+        }
+      ]
+    }
+  ],
+  "SF36Questionnaire": [
+    {
+      "SF36Questionnaire": [
+        {
+          "term_name": "ff",
+          "term": "ff",
+          "score": 1.5332487
+        }
+      ]
+    }
+  ],
+  "Scale": [
+    {
+      "Scale": [
+        {
+          "term_name": "scale",
+          "term": "scale",
+          "score": 2.0
+        }
+      ]
+    }
+  ],
+  "ScalpElectrode": [
+    {
+      "ScalpElectrode": [
+        {
+          "term_name": "electrodermal",
+          "term": "electrodermal",
+          "score": 1.764852
+        }
+      ]
+    }
+  ],
+  "SecondaryOutcome": [
+    {
+      "SecondaryOutcome": [
+        {
+          "term_name": "secondary",
+          "term": "secondary",
+          "score": 1.7866365
+        }
+      ]
+    }
+  ],
+  "SkinfoldCaliper": [
+    {
+      "SkinfoldCaliper": [
+        {
+          "term_name": "scales",
+          "term": "scales",
+          "score": 1.6572725
+        }
+      ]
+    }
+  ],
+  "SleepAndHealthModifiedScoreQuestionnaire": [
+    {
+      "SleepAndHealthModifiedScoreQuestionnaire": [
+        {
+          "term_name": "sleep stage",
+          "term": "sleep stage",
+          "score": 1.6928316
+        }
+      ]
+    }
+  ],
+  "SleepDiary": [
+    {
+      "SleepDiary": [
+        {
+          "term_name": "sleep",
+          "term": "sleep",
+          "score": 1.8104233
+        }
+      ]
+    }
+  ],
+  "SleepHeartHealthStudySleepHabitsQuestionnaire": [
+    {
+      "SleepHeartHealthStudySleepHabitsQuestionnaire": [
+        {
+          "term_name": "sleep",
+          "term": "sleep",
+          "score": 1.6611177
+        }
+      ]
+    }
+  ],
+  "SleepHeartHealthStudySleepQuestionnaire": [
+    {
+      "SleepHeartHealthStudySleepQuestionnaire": [
+        {
+          "term_name": "sleep stage",
+          "term": "sleep stage",
+          "score": 1.6775458
+        }
+      ]
+    }
+  ],
+  "SleepQuestionnaire": [
+    {
+      "SleepQuestionnaire": [
+        {
+          "term_name": "sleep",
+          "term": "sleep",
+          "score": 1.7855369
+        }
+      ]
+    }
+  ],
+  "SocialStatusQuestionnaire": [
+    {
+      "SocialStatusQuestionnaire": [
+        {
+          "term_name": "social",
+          "term": "social",
+          "score": 1.654158
+        }
+      ]
+    }
+  ],
+  "SpanishEnglishVerbalLearningTest": [
+    {
+      "SpanishEnglishVerbalLearningTest": [
+        {
+          "term_name": "reality testing",
+          "term": "reality testing",
+          "score": 1.5392337
+        }
+      ]
+    }
+  ],
+  "SpectrophotometricMeasurement": [
+    {
+      "SpectrophotometricMeasurement": [
+        {
+          "term_name": "photo",
+          "term": "photo",
+          "score": 1.5992186
+        }
+      ]
+    }
+  ],
+  "Sphygmomanometer": [
+    {
+      "Sphygmomanometer": [
+        {
+          "term_name": "pressor",
+          "term": "pressor",
+          "score": 1.5261402
+        }
+      ]
+    }
+  ],
+  "SpielbergerState-TraitAnxietyInventory": [
+    {
+      "SpielbergerState-TraitAnxietyInventory": [
+        {
+          "term_name": "spin",
+          "term": "spin",
+          "score": 1.5996108
+        }
+      ]
+    }
+  ],
+  "Spirometer": [
+    {
+      "Spirometer": [
+        {
+          "term_name": "breath",
+          "term": "breath",
+          "score": 1.5711037
+        }
+      ]
+    }
+  ],
+  "Stadiometer": [
+    {
+      "Stadiometer": [
+        {
+          "term_name": "scale",
+          "term": "scale",
+          "score": 1.5710472
+        }
+      ]
+    }
+  ],
+  "StandardDeviationMeasure": [
+    {
+      "StandardDeviationMeasure": [
+        {
+          "term_name": "standard",
+          "term": "standard",
+          "score": 1.846458
+        }
+      ]
+    }
+  ],
+  "StatisticalAnalysisSystem": [
+    {
+      "StatisticalAnalysisSystem": [
+        {
+          "term_name": "analyses",
+          "term": "analyses",
+          "score": 1.6166654
+        }
+      ]
+    }
+  ],
+  "StatisticalMeasure": [
+    {
+      "StatisticalMeasure": [
+        {
+          "term_name": "numerical comparison",
+          "term": "numerical comparison",
+          "score": 1.6276146
+        }
+      ]
+    }
+  ],
+  "StatisticalMethod": [
+    {
+      "StatisticalMethod": [
+        {
+          "term_name": "mathematical",
+          "term": "mathematical",
+          "score": 1.6457202
+        }
+      ]
+    }
+  ],
+  "StatisticalSoftware": [
+    {
+      "StatisticalSoftware": [
+        {
+          "term_name": "computer",
+          "term": "computer",
+          "score": 1.6094142
+        }
+      ]
+    }
+  ],
+  "StudyConstraint": [
+    {
+      "StudyConstraint": [
+        {
+          "term_name": "subject",
+          "term": "subject",
+          "score": 1.6586764
+        }
+      ]
+    }
+  ],
+  "StudyData": [
+    {
+      "StudyData": [
+        {
+          "term_name": "subject",
+          "term": "subject",
+          "score": 1.6831273
+        }
+      ]
+    }
+  ],
+  "StudyDesign": [
+    {
+      "StudyDesign": [
+        {
+          "term_name": "subject",
+          "term": "subject",
+          "score": 1.6751072
+        }
+      ]
+    }
+  ],
+  "StudyExclusionCriterion": [
+    {
+      "StudyExclusionCriterion": [
+        {
+          "term_name": "subject",
+          "term": "subject",
+          "score": 1.7132697
+        }
+      ]
+    }
+  ],
+  "StudyInclusionCriterion": [
+    {
+      "StudyInclusionCriterion": [
+        {
+          "term_name": "subject",
+          "term": "subject",
+          "score": 1.6550173
+        }
+      ]
+    }
+  ],
+  "StudyInstrument": [
+    {
+      "StudyInstrument": [
+        {
+          "term_name": "subject",
+          "term": "subject",
+          "score": 1.7063882
+        }
+      ]
+    }
+  ],
+  "StudyLocation": [
+    {
+      "StudyLocation": [
+        {
+          "term_name": "subject",
+          "term": "subject",
+          "score": 1.7005461
+        }
+      ]
+    }
+  ],
+  "StudyMethod": [
+    {
+      "StudyMethod": [
+        {
+          "term_name": "trial",
+          "term": "trial",
+          "score": 1.608098
+        }
+      ]
+    }
+  ],
+  "StudyObjective": [
+    {
+      "StudyObjective": [
+        {
+          "term_name": "subject",
+          "term": "subject",
+          "score": 1.7798548
+        }
+      ]
+    }
+  ],
+  "StudyOutcome": [
+    {
+      "StudyOutcome": [
+        {
+          "term_name": "subject",
+          "term": "subject",
+          "score": 1.683195
+        }
+      ]
+    }
+  ],
+  "StudySubject": [
+    {
+      "StudySubject": [
+        {
+          "term_name": "subject",
+          "term": "subject",
+          "score": 1.7823293
+        }
+      ]
+    }
+  ],
+  "TemporalEntity": [
+    {
+      "TemporalEntity": [
+        {
+          "term_name": "temporal",
+          "term": "temporal",
+          "score": 1.7916238
+        }
+      ]
+    }
+  ],
+  "Thermistor": [
+    {
+      "Thermistor": [
+        {
+          "term_name": "thermal",
+          "term": "thermal",
+          "score": 1.6669316
+        }
+      ]
+    }
+  ],
+  "ThoracicInductanceRespiratoryPlethysmography": [
+    {
+      "ThoracicInductanceRespiratoryPlethysmography": [
+        {
+          "term_name": "echoic",
+          "term": "echoic",
+          "score": 1.5358582
+        }
+      ]
+    }
+  ],
+  "ThreeLeadElectrocardiograph": [
+    {
+      "ThreeLeadElectrocardiograph": [
+        {
+          "term_name": "echoic",
+          "term": "echoic",
+          "score": 1.5436107
+        }
+      ]
+    }
+  ],
+  "ThyroidCancer": [
+    {
+      "ThyroidCancer": [
+        {
+          "term_name": "thyroid",
+          "term": "thyroid",
+          "score": 1.6539174
+        }
+      ]
+    }
+  ],
+  "ThyroidDisease": [
+    {
+      "ThyroidDisease": [
+        {
+          "term_name": "thyroid",
+          "term": "thyroid",
+          "score": 1.7670836
+        }
+      ]
+    }
+  ],
+  "ThyroidNodule": [
+    {
+      "ThyroidNodule": [
+        {
+          "term_name": "thyroid",
+          "term": "thyroid",
+          "score": 1.8203928
+        }
+      ]
+    }
+  ],
+  "Thyroiditis": [
+    {
+      "Thyroiditis": [
+        {
+          "term_name": "thyroid",
+          "term": "thyroid",
+          "score": 1.6051581
+        }
+      ]
+    }
+  ],
+  "TimeIntervalUnit": [
+    {
+      "TimeIntervalUnit": [
+        {
+          "term_name": "time",
+          "term": "time",
+          "score": 1.7780979
+        }
+      ]
+    }
+  ],
+  "TimePointUnit": [
+    {
+      "TimePointUnit": [
+        {
+          "term_name": "times",
+          "term": "times",
+          "score": 1.7757981
+        }
+      ]
+    }
+  ],
+  "ToxicAdenoma": [
+    {
+      "ToxicAdenoma": [
+        {
+          "term_name": "adenoma",
+          "term": "adenoma",
+          "score": 1.5488656
+        }
+      ]
+    }
+  ],
+  "ToxicMultinodularGoiter": [
+    {
+      "ToxicMultinodularGoiter": [
+        {
+          "term_name": "neuromyelitis",
+          "term": "neuromyelitis",
+          "score": 1.5429456
+        }
+      ]
+    }
+  ],
+  "Triglycerides": [
+    {
+      "Triglycerides": [
+        {
+          "term_name": "tg",
+          "term": "tg",
+          "score": 1.7656717
+        }
+      ]
+    }
+  ],
+  "TumorNecrosisFactorAlpha": [
+    {
+      "TumorNecrosisFactorAlpha": [
+        {
+          "term_name": "alpha",
+          "term": "alpha",
+          "score": 1.5399442
+        }
+      ]
+    }
+  ],
+  "TwelveLeadElectrocardiograph": [
+    {
+      "TwelveLeadElectrocardiograph": [
+        {
+          "term_name": "echoic",
+          "term": "echoic",
+          "score": 1.5298104
+        }
+      ]
+    }
+  ],
+  "Type1DiabetesMellitus": [
+    {
+      "Type1DiabetesMellitus": [
+        {
+          "term_name": "mellitus",
+          "term": "mellitus",
+          "score": 1.5977337
+        }
+      ]
+    }
+  ],
+  "Type2DiabetesMellitus": [
+    {
+      "Type2DiabetesMellitus": [
+        {
+          "term_name": "diabetes",
+          "term": "diabetes",
+          "score": 1.6776606
+        }
+      ]
+    }
+  ],
+  "UnivariateAnalysis": [
+    {
+      "UnivariateAnalysis": [
+        {
+          "term_name": "analyses",
+          "term": "analyses",
+          "score": 1.648331
+        }
+      ]
+    }
+  ],
+  "VarianceMeasure": [
+    {
+      "VarianceMeasure": [
+        {
+          "term_name": "variability",
+          "term": "variability",
+          "score": 1.725724
+        }
+      ]
+    }
+  ],
+  "VisfatinMeasurementData": [
+    {
+      "VisfatinMeasurementData": [
+        {
+          "term_name": "aftereffect",
+          "term": "aftereffect",
+          "score": 1.5690866
+        }
+      ]
+    }
+  ],
+  "WomensHealthInitiativeInsomniaRatingScale": [
+    {
+      "WomensHealthInitiativeInsomniaRatingScale": [
+        {
+          "term_name": "women",
+          "term": "women",
+          "score": 1.6418225
+        }
+      ]
+    }
+  ],
+  "WristActigraph": [
+    {
+      "WristActigraph": [
+        {
+          "term_name": "wrist",
+          "term": "wrist",
+          "score": 1.6167896
+        }
+      ]
+    }
+  ],
+  "XRay": [
+    {
+      "XRay": [
+        {
+          "term_name": "ray",
+          "term": "ray",
+          "score": 1.6830995
+        }
+      ]
+    }
+  ],
+  "25HydroxyVitaminD": [
+    {
+      "25HydroxyVitaminD": [
+        {
+          "term_name": "calcarine",
+          "term": "calcarine",
+          "score": 1.6472265
+        }
+      ]
+    }
+  ],
+  "Thing": [
+    {
+      "Thing": [
+        {
+          "term_name": "matter",
+          "term": "matter",
+          "score": 1.7286894
+        }
+      ]
+    }
+  ],
+  "Activity": [
+    {
+      "Activity": [
+        {
+          "term_name": "activity",
+          "term": "activity",
+          "score": 2.0
+        }
+      ]
+    }
+  ],
+  "Agent": [
+    {
+      "Agent": [
+        {
+          "term_name": "agent",
+          "term": "agent",
+          "score": 2.0
+        }
+      ]
+    }
+  ],
+  "Bundle": [
+    {
+      "Bundle": [
+        {
+          "term_name": "bundle",
+          "term": "bundle",
+          "score": 2.0
+        }
+      ]
+    }
+  ],
+  "Collection": [
+    {
+      "Collection": [
+        {
+          "term_name": "collection",
+          "term": "collection",
+          "score": 2.0
+        }
+      ]
+    }
+  ],
+  "Entity": [
+    {
+      "Entity": [
+        {
+          "term_name": "substance",
+          "term": "substance",
+          "score": 1.8044933
+        }
+      ]
+    }
+  ],
+  "InstantaneousEvent": [
+    {
+      "InstantaneousEvent": [
+        {
+          "term_name": "immediate",
+          "term": "immediate",
+          "score": 1.6990216
+        }
+      ]
+    }
+  ],
+  "Location": [
+    {
+      "Location": [
+        {
+          "term_name": "location",
+          "term": "location",
+          "score": 2.0
+        }
+      ]
+    }
+  ],
+  "Organization": [
+    {
+      "Organization": [
+        {
+          "term_name": "organization",
+          "term": "organization",
+          "score": 2.0
+        }
+      ]
+    }
+  ],
+  "Person": [
+    {
+      "Person": [
+        {
+          "term_name": "person",
+          "term": "person",
+          "score": 2.0
+        }
+      ]
+    }
+  ],
+  "Plan": [
+    {
+      "Plan": [
+        {
+          "term_name": "planned",
+          "term": "planned",
+          "score": 1.8669423
+        }
+      ]
+    }
+  ],
+  "Role": [
+    {
+      "Role": [
+        {
+          "term_name": "role",
+          "term": "role",
+          "score": 2.0
+        }
+      ]
+    }
+  ],
+  "SoftwareAgent": [
+    {
+      "SoftwareAgent": [
+        {
+          "term_name": "computer",
+          "term": "computer",
+          "score": 1.6982622
+        }
+      ]
+    }
+  ]
+}
