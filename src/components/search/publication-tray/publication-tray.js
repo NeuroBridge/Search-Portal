@@ -45,7 +45,7 @@ export const PublicationTray = ({
     return index === -1 ? 0 : index;
   }, [activeTab, studyTabs]);
 
-  const handleChange = (event, newValue) => {
+  const handleChange = (_, newValue) => {
     setActiveTab(studyTabs[newValue].study.pmid);
   };
 
@@ -61,6 +61,20 @@ export const PublicationTray = ({
       }
     }
   };
+
+  const handleDoubleClickTab = (clickedTab) => (e) => {
+    e.stopPropagation();
+
+    // if the tab is double clicked, we want to pin it so it is in the list 
+    // until explicitly closed
+    setStudyTabs((prev) => {
+      const clickedTabIndex = prev.findIndex(tab => tab === clickedTab);
+      if(clickedTabIndex === -1) return;
+      const next = prev.slice();
+      next[clickedTabIndex].pinned = true;
+      return next;
+    })
+  }
 
   return (
     <Box>
@@ -98,7 +112,7 @@ export const PublicationTray = ({
                   icon={
                     <Close fontSize="small" onClick={handleCloseTab(tab)} />
                   }
-                  sx={{ textTransform: "revert" }}
+                  sx={{ textTransform: "revert", fontStyle: tab.pinned ? 'initial' : 'italic' }}
                   iconPosition="end"
                   label={`${
                     typeof tab.study?.title === "string" &&
@@ -109,6 +123,9 @@ export const PublicationTray = ({
                     if (e.button === 1) {
                       handleCloseTab(tab)(e);
                     }
+                  }}
+                  onDoubleClick={(e) => {
+                    handleDoubleClickTab(tab)(e);
                   }}
                 />
               </Tooltip>
