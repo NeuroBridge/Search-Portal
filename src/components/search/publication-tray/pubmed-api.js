@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 export const usePubMedAPI = (pmid) => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [article, setArticle] = useState({
     title: null,
@@ -12,23 +12,43 @@ export const usePubMedAPI = (pmid) => {
     articleIds: null,
   });
 
-  const fetch = async () => {
-    if (!pmid) return;
-    setLoading(true);
-    setError(null);
+  const getFromCache = (key) => {
+    const cachedString = window.localStorage.getItem("cached-publications");
+    if (cachedString === null) return null;
+    const cached = JSON.parse(cachedString);
+    return cached[key] ?? null;
+  };
 
+  const setCache = (key, value) => {
+    const currentCache = window.localStorage.getItem("cached-publications");
+    const currentCacheJSON = JSON.parse(currentCache);
+    window.localStorage.setItem(
+      "cached-publications",
+      JSON.stringify({
+        ...currentCacheJSON,
+        [key]: value,
+      })
+    );
+  };
+
+  const fetch = async () => {
+    setError(null);
+    setLoading(true);
     try {
       const api = new PubMedAPI(pmid);
       await api.fetch();
-      setArticle({
+
+      const article = {
         title: api.getTitle(),
         abstract: api.getAbstract(),
         authors: api.getAuthors(),
         date: api.getDate(),
         journal: api.getJournal(),
         articleIds: api.getArticleIds(),
-      });
+      };
+      setArticle(article);
       setLoading(false);
+      setCache(pmid, article);
     } catch (error) {
       setLoading(false);
       setError(error);
@@ -37,6 +57,15 @@ export const usePubMedAPI = (pmid) => {
 
   useEffect(() => {
     (async () => {
+      if (!pmid) return;
+      setLoading(false);
+
+      const cachedPublication = getFromCache(pmid);
+      if (cachedPublication !== null) {
+        setArticle(cachedPublication);
+        return;
+      }
+
       await fetch();
     })();
   }, [pmid]);
