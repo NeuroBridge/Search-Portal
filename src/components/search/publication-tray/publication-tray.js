@@ -100,7 +100,7 @@ export const PublicationTray = ({
             onChange={handleChange}
             aria-label="publication tabs"
             variant="scrollable"
-            scrollButtons="auto"
+            scrollButtons={false}
           >
             {studyTabs.map((tab) => (
               <Tooltip
