@@ -16,19 +16,59 @@ export const usePubMedAPI = (pmid) => {
     const cachedString = window.localStorage.getItem("cached-publications");
     if (cachedString === null) return null;
     const cached = JSON.parse(cachedString);
-    return cached[key] ?? null;
+
+    // if the localStorage value isn't an array (using old json object), return null
+    if(!Array.isArray(cached)) return null;
+    
+    return cached.find(publication => publication.pmid === key)?.publication ?? null;
   };
 
   const setCache = (key, value) => {
     const currentCache = window.localStorage.getItem("cached-publications");
-    const currentCacheJSON = JSON.parse(currentCache);
-    window.localStorage.setItem(
-      "cached-publications",
-      JSON.stringify({
-        ...currentCacheJSON,
-        [key]: value,
-      })
-    );
+    let currentCacheJSON = JSON.parse(currentCache) ?? [];
+
+    // if there was any other type of value (including old json object), clear the cache
+    if (!Array.isArray(currentCacheJSON)) currentCacheJSON = [];
+
+    // if the publication already exists in the cache, return so as to not add a dup
+    if (currentCacheJSON.find((publication) => publication.pmid === key))
+      return;
+
+    const MAX_ATTEMPTS = 25;
+    const attemptAppend = (attempt = 1) => {
+      // if we've tried an deque MAX_ATTEMPT times and are still getting
+      // a QuotaExceededError, return to avoid infinite recursion 
+      if(attempt > MAX_ATTEMPTS) return;
+      
+      // try to append the key/val pair to the cache
+      try {
+        currentCacheJSON.push({
+          pmid: key,
+          publication: value,
+        });
+        window.localStorage.setItem(
+          "cached-publications",
+          JSON.stringify(currentCacheJSON)
+        );
+      } catch (err) {
+        // https://mmazzarolo.com/blog/2022-06-25-local-storage-status/
+        // if we're out of storage, remove the first item and try again
+        if (
+          err instanceof DOMException &&
+          (err.code === 22 ||
+            err.code === 1014 ||
+            err.name === "QuotaExceededError" ||
+            err.name === "NS_ERROR_DOM_QUOTA_REACHED")
+        ) {
+          console.warn(`Out of localStorage, dequeing old publications. Attempt ${attempt}`);
+          // deque the first item. We also have to remove the last item because it will be 
+          // added back by the next attemptAppend call
+          currentCacheJSON = currentCacheJSON.slice(1, currentCacheJSON.length - 1);
+          attemptAppend(attempt + 1);
+        }
+      }
+    }
+    attemptAppend()
   };
 
   const fetch = async () => {
