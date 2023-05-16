@@ -34,11 +34,11 @@ export const usePubMedAPI = (pmid) => {
     if (currentCacheJSON.find((publication) => publication.pmid === key))
       return;
 
-    const MAX_ATTEMPTS = 25;
-    const attemptAppend = (attempt = 1) => {
-      // if we've tried an deque MAX_ATTEMPT times and are still getting
+    const maxAttempts = currentCacheJSON.length;
+    const attemptAppend = (attempt = 0) => {
+      // if we've tried an deque `maxAttempts` times and are still getting
       // a QuotaExceededError, return to avoid infinite recursion 
-      if(attempt > MAX_ATTEMPTS) return;
+      if(attempt > maxAttempts) return;
       
       // try to append the key/val pair to the cache
       try {
@@ -60,7 +60,7 @@ export const usePubMedAPI = (pmid) => {
             err.name === "QuotaExceededError" ||
             err.name === "NS_ERROR_DOM_QUOTA_REACHED")
         ) {
-          console.warn(`Out of localStorage, dequeing old publications. Attempt ${attempt}`);
+          console.warn(`Out of localStorage, removing old publications. Attempt ${attempt}`);
           // deque the first item. We also have to remove the last item because it will be 
           // added back by the next attemptAppend call
           currentCacheJSON = currentCacheJSON.slice(1, currentCacheJSON.length - 1);
