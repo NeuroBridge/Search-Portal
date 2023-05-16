@@ -198,7 +198,7 @@ export const Publication = ({
 
         <Accordion
           expanded={
-            Array.isArray(abstract) && expandedAccordions.has("abstract-panel")
+            expandedAccordions.has("abstract-panel")
           }
           onChange={handleAccordionClicked("abstract-panel")}
         >
