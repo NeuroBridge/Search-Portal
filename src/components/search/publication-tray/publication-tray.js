@@ -1,375 +1,201 @@
-import { Clear, ExpandMore } from "@mui/icons-material";
-import {
-  Accordion as MuiAccordion,
-  AccordionDetails as MuiAccordionDetails,
-  AccordionSummary as MuiAccordionSummary,
-  Box,
-  Divider,
-  IconButton,
-  List,
-  ListItem,
-  Skeleton as MuiSkeleton,
-  Stack,
-  styled,
-  Tooltip,
-  Typography,
-} from "@mui/material";
-import studyConcepts from "../../../data/study-concepts.json";
+import { Clear, ClearAll, Close } from "@mui/icons-material";
+import { Box, IconButton, Stack, Tooltip, Tabs, Tab } from "@mui/material";
 import PropTypes from "prop-types";
-import { Link } from "../../link";
-import { Link as MuiLink } from "@mui/material";
-import { usePubMedAPI } from "./pubmed-api";
-import { ErrorScreen } from "./error-screen";
-import { useState } from "react";
-import { AuthorModal } from "./author-modal";
+import { Publication } from "./publication";
+import { useMemo } from "react";
 
-const Accordion = styled((props) => (
-  <MuiAccordion disableGutters elevation={0} square {...props} />
-))(() => ({
-  backgroundColor: "transparent",
-  "&:not(:last-of-type)": {
-    borderBottom: 0,
-  },
-  "&:before": {
-    display: "none",
-  },
-}));
+const TabPanel = (props) => {
+  const { children, value, index, ...other } = props;
 
-const AccordionSummary = styled((props) => (
-  <MuiAccordionSummary expandIcon={<ExpandMore />} {...props} />
-))(({ theme }) => ({
-  backgroundColor: "#0001",
-  color: theme.palette.text.secondary,
-  borderBottom: `1px solid ${theme.palette.divider}`,
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && <>{children}</>}
+    </div>
+  );
+};
 
-  "& .MuiTypography-root": {
-    color: "inherit",
-    textTransform: "uppercase",
-    fontSize: `0.875rem`,
-    lineHeight: "1.5",
-  },
+TabPanel.propTypes = {
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+  children: PropTypes.node,
+};
 
-  "& .MuiAccordionSummary-expandIconWrapper": {
-    color: "inherit",
-  },
-}));
-
-const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
-  padding: theme.spacing(2),
-}));
-
-const Skeleton = styled((props) => <MuiSkeleton {...props} />)(() => ({
-  borderRadius: "6px",
-}));
+const a11yProps = (index) => ({
+  id: `simple-tab-${index}`,
+  "aria-controls": `simple-tabpanel-${index}`,
+});
 
 export const PublicationTray = ({
-  selectedRow,
-  setSelectedRow,
+  setIsSidebarOpen,
+  studyTabs,
+  setStudyTabs,
+  activeTab,
+  setActiveTab,
   expandedAccordions,
   setExpandedAccordions,
 }) => {
-  const [selectedAuthor, setSelectedAuthor] = useState(null);
+  const activeTabIndex = useMemo(() => {
+    const index = studyTabs.findIndex((tab) => tab.study?.pmid === activeTab);
+    return index === -1 ? 0 : index;
+  }, [activeTab, studyTabs]);
 
-  const {
-    error,
-    loading,
-    fetch,
-    article: { title, abstract, authors, date, journal, articleIds },
-  } = usePubMedAPI(selectedRow.pmid);
-
-  const handleAccordionClicked = (panel) => () => {
-    const nextState = new Set(expandedAccordions);
-
-    if (nextState.has(panel)) {
-      nextState.delete(panel);
-    } else {
-      nextState.add(panel);
-    }
-
-    setExpandedAccordions(nextState);
+  const handleChange = (_, newValue) => {
+    setActiveTab(studyTabs[newValue].study.pmid);
   };
+
+  const handleCloseTab = (closedTab) => (e) => {
+    e.stopPropagation();
+    setStudyTabs((prev) => prev.filter((tab) => tab !== closedTab));
+
+    if (closedTab.study.pmid === activeTab) {
+      if (studyTabs.length <= 1) {
+        setActiveTab(null);
+      } else {
+        setActiveTab(studyTabs[0].study.pmid);
+      }
+    }
+  };
+
+  const handleDoubleClickTab = (clickedTab) => (e) => {
+    e.stopPropagation();
+
+    // if the tab is double clicked, we want to pin it so it is in the list 
+    // until explicitly closed
+    setStudyTabs((prev) => {
+      const clickedTabIndex = prev.findIndex(tab => tab === clickedTab);
+      if(clickedTabIndex === -1) return;
+      const next = prev.slice();
+      next[clickedTabIndex].pinned = true;
+      return next;
+    })
+  }
 
   return (
     <Box>
-      {Boolean(selectedAuthor) && (
-        <AuthorModal
-          author={selectedAuthor}
-          handleClose={() => setSelectedAuthor(null)}
-        />
-      )}
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "stretch",
-          justifyContent: "space-between",
-          borderBottom: "1px solid",
-          borderColor: "divider",
-        }}
-      >
+      <Box sx={{ width: "100%" }}>
         <Box
           sx={{
-            p: 2,
-            fontSize: `0.875rem`,
-            lineHeight: "1.5",
-            borderRight: "1px solid",
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "stretch",
+            justifyContent: "space-between",
+            borderBottom: 1,
             borderColor: "divider",
           }}
         >
-          PubMed: {selectedRow.pmid}
-        </Box>
-        <Stack
-          direction="row"
-          justifyContent="flex-end"
-          alignItems="center"
-          className="results-action-buttons"
-          sx={{
-            p: "0 1 0 0",
-            borderLeft: "1px solid",
-            borderColor: "divider",
-          }}
-        >
-          <Tooltip title="Close publication view" placement="left">
-            <IconButton
-              onClick={() => setSelectedRow(null)}
-              size="small"
-              aria-label="Clear all results"
-              sx={{ borderRadius: 0, height: "100%", p: 1 }}
-            >
-              <Clear />
-            </IconButton>
-          </Tooltip>
-        </Stack>
-      </Box>
-
-      <ErrorScreen error={error} onRetry={() => fetch()}>
-        <Box p={2}>
-          <Typography
-            variant="body1"
-            component="h3"
-            sx={{ fontWeight: "bold" }}
-          >
-            {loading ? (
-              <>
-                <Skeleton />
-                <Skeleton />
-                <Skeleton width="50%" />
-              </>
-            ) : (
-              title
-            )}
-          </Typography>
-          <Typography variant="body2" sx={{ mt: 1 }}>
-            {loading ? (
-              <Skeleton width="75%" />
-            ) : (
-              authors?.reduce(
-                (acc, cur, i) => [
-                  ...acc,
-                  <MuiLink
-                    key={i}
-                    component="button"
-                    onClick={() => {
-                      setSelectedAuthor(cur);
-                    }}
-                  >{`${cur.initials} ${cur.lastName}`}</MuiLink>,
-                  i !== authors.length - 1 ? ", " : "",
-                ],
-                []
-              )
-            )}
-          </Typography>
-          <Typography variant="body2" sx={{ mt: 1, fontStyle: "italic" }}>
-            {loading ? (
-              <>
-                <Skeleton
-                  width="40px"
-                  sx={{ display: "inline-block", mr: "2ch" }}
-                />
-                <Skeleton width="80px" sx={{ display: "inline-block" }} />
-              </>
-            ) : (
-              `${date ? `${date} — ` : ""}${journal ? journal : ""}`
-            )}
-          </Typography>
-          <Divider sx={{ my: 1 }} />
-          <Typography
-            variant="body2"
+          <Tabs
             sx={{
-              "& span:not(:last-of-type):not(.MuiSkeleton-root)::after": {
-                content: '"•"',
-                marginX: "1ch",
-              },
-              "& .MuiSkeleton-root:not(:last-of-type)": {
-                mr: "2ch",
+              pt: "1px",
+              "& .MuiButtonBase-root": {
+                minHeight: "3rem",
               },
             }}
+            value={activeTabIndex}
+            onChange={handleChange}
+            aria-label="publication tabs"
+            variant="scrollable"
+            scrollButtons={false}
           >
-            {loading ? (
-              <Skeleton width="8ch" sx={{ display: "inline-block" }} />
-            ) : articleIds?.pubmed ? (
-              <span>
-                <Link
-                  to={`https://pubmed.ncbi.nlm.nih.gov/${articleIds.pubmed}/`}
-                >
-                  Abstract
-                </Link>
-              </span>
-            ) : null}
-            {loading ? (
-              <Skeleton width="10ch" sx={{ display: "inline-block" }} />
-            ) : articleIds?.pmc ? (
-              <span>
-                <Link
-                  to={`https://www.ncbi.nlm.nih.gov/pmc/articles/${articleIds.pmc}/`}
-                >
-                  Full Text
-                </Link>
-              </span>
-            ) : null}
-            {loading ? (
-              <Skeleton width="18ch" sx={{ display: "inline-block" }} />
-            ) : articleIds?.doi ? (
-              <span>
-                <Link to={`https://doi.org/${articleIds.doi}`}>
-                  {articleIds.doi}
-                </Link>
-              </span>
-            ) : null}
-          </Typography>
+            {studyTabs.map((tab) => (
+              <Tooltip
+                key={`pmid-${tab.study?.pmid}`}
+                title={tab.study?.title}
+                placement="top"
+              >
+                <Tab
+                  icon={
+                    <Close fontSize="small" onClick={handleCloseTab(tab)} />
+                  }
+                  sx={{ textTransform: "revert", fontStyle: tab.pinned ? 'initial' : 'italic' }}
+                  iconPosition="end"
+                  label={`${
+                    typeof tab.study?.title === "string" &&
+                    tab.study?.title?.split("").splice(0, 10).join("")
+                  }...`}
+                  {...a11yProps(tab.study?.pmid)}
+                  onMouseDown={(e) => {
+                    if (e.button === 1) {
+                      handleCloseTab(tab)(e);
+                    }
+                  }}
+                  onDoubleClick={(e) => {
+                    handleDoubleClickTab(tab)(e);
+                  }}
+                />
+              </Tooltip>
+            ))}
+          </Tabs>
+          <Stack
+            direction="row"
+            justifyContent="flex-end"
+            alignItems="center"
+            className="results-action-buttons"
+            sx={{
+              p: "0 1 0 0",
+              borderLeft: "1px solid",
+              borderColor: "divider",
+            }}
+          >
+            <Tooltip title="Close all tabs" placement="top">
+              <IconButton
+                onClick={() => setStudyTabs([])}
+                size="small"
+                aria-label="Close all tabs"
+                sx={{ borderRadius: 0, height: "100%", p: 1 }}
+              >
+                <ClearAll />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Close publication view" placement="top">
+              <IconButton
+                onClick={() => setIsSidebarOpen(false)}
+                size="small"
+                aria-label="Close publication view"
+                sx={{
+                  borderRadius: 0,
+                  height: "100%",
+                  p: 1,
+                  borderLeft: "1px solid",
+                  borderColor: "divider",
+                }}
+              >
+                <Clear />
+              </IconButton>
+            </Tooltip>
+          </Stack>
         </Box>
 
-        <Accordion
-          expanded={
-            Array.isArray(abstract) && expandedAccordions.has("abstract-panel")
-          }
-          onChange={handleAccordionClicked("abstract-panel")}
-        >
-          <AccordionSummary
-            aria-controls="abstract-panel-content"
-            id="abstract-panel-header"
-            disabled={!Array.isArray(abstract)}
+        {studyTabs.map((tab, i) => (
+          <TabPanel
+            key={`tab-panel-${tab?.study?.pmid}`}
+            value={activeTabIndex}
+            index={i}
           >
-            <Typography>Abstract</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            {loading
-              ? [...new Array(3)].map((_, i) => (
-                  <Box key={i} sx={{ "&:not(:last-of-type)": { mb: "1rem" } }}>
-                    <Typography variant="body2" sx={{ mb: "0.5em" }}>
-                      <Skeleton width="15ch" />
-                    </Typography>
-                    <Skeleton height="8em" sx={{ transform: "none" }} />
-                  </Box>
-                ))
-              : Array.isArray(abstract) &&
-                abstract.map((abstractSection, index) => (
-                  <Box
-                    key={index}
-                    sx={{ "&:not(:last-of-type)": { mb: "1rem" } }}
-                  >
-                    {Boolean(abstractSection.heading) && (
-                      <Typography
-                        variant="body2"
-                        component="h4"
-                        sx={{ fontWeight: "bold", mb: "0.2rem" }}
-                      >
-                        {abstractSection.heading}
-                      </Typography>
-                    )}
-                    <Typography>{abstractSection.text}</Typography>
-                  </Box>
-                ))}
-          </AccordionDetails>
-        </Accordion>
-      </ErrorScreen>
-
-      <Accordion
-        expanded={
-          !(
-            !selectedRow.pmcid ||
-            !(selectedRow.pmcid.toLowerCase() in studyConcepts)
-          ) && expandedAccordions.has("concepts-panel")
-        }
-        onChange={handleAccordionClicked("concepts-panel")}
-      >
-        <AccordionSummary
-          aria-controls="concepts-panel-content"
-          id="concepts-panel-header"
-          disabled={
-            !selectedRow.pmcid ||
-            !(selectedRow.pmcid.toLowerCase() in studyConcepts)
-          }
-        >
-          <Typography>
-            Assessments
-            {studyConcepts[selectedRow.pmcid?.toLowerCase()]
-              ? ` (${studyConcepts[selectedRow.pmcid?.toLowerCase()]?.length})`
-              : null}
-          </Typography>
-        </AccordionSummary>
-        <AccordionDetails sx={{ padding: 0 }}>
-          <List dense>
-            {Boolean(selectedRow.pmcid) &&
-              selectedRow.pmcid.toLowerCase() in studyConcepts &&
-              studyConcepts[selectedRow.pmcid.toLowerCase()].map(
-                (concept, index) => {
-                  return (
-                    <ListItem
-                      key={index}
-                      // secondaryAction={
-                      //   <Tooltip
-                      //     title="Open concept in Ontology Viewer"
-                      //     placement="left"
-                      //     edge="end"
-                      //   >
-                      //     <IconButton
-                      //       onClick={() => {}}
-                      //       size="small"
-                      //       sx={{
-                      //         "--delay": "250ms",
-                      //         color: "palette.primary",
-                      //         opacity: 0.4,
-                      //         transition:
-                      //           "color var(--delay), opacity var(--delay)",
-                      //         "&:hover": {
-                      //           color: "info.main",
-                      //           opacity: 1,
-                      //           transition:
-                      //             "color var(--delay), opacity var(--delay)",
-                      //         },
-                      //       }}
-                      //     >
-                      //       <InspectTermIcon
-                      //         sx={{ transform: "rotate(-90deg)" }}
-                      //       />
-                      //     </IconButton>
-                      //   </Tooltip>
-                      // }
-                    >
-                      <Typography
-                        sx={{
-                          textOverflow: "ellipsis",
-                          overflow: "hidden",
-                          whiteSpace: "nowrap",
-                        }}
-                      >
-                        {concept}
-                      </Typography>
-                    </ListItem>
-                  );
-                }
-              )}
-          </List>
-        </AccordionDetails>
-      </Accordion>
+            <Publication
+              selectedRow={tab.study}
+              expandedAccordions={expandedAccordions}
+              setExpandedAccordions={setExpandedAccordions}
+            />
+          </TabPanel>
+        ))}
+      </Box>
     </Box>
   );
 };
 
 PublicationTray.propTypes = {
   selectedRow: PropTypes.any,
-  setSelectedRow: PropTypes.any,
+  setIsSidebarOpen: PropTypes.any,
+  studyTabs: PropTypes.any,
+  setStudyTabs: PropTypes.any,
+  activeTab: PropTypes.any,
+  setActiveTab: PropTypes.any,
   expandedAccordions: PropTypes.any,
   setExpandedAccordions: PropTypes.any,
 };

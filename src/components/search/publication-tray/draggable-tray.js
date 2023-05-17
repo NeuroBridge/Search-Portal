@@ -5,7 +5,7 @@ import { useCallback, useRef, useState } from 'react';
 export const TRAY_CONFIG = {
   initialWidth: 350,
   minWidth: 200,
-  maxWidth: 700,
+  maxWidth: 600,
 };
 
 export const DraggableTray = ({ children, width, setWidth }) => {

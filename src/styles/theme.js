@@ -60,7 +60,8 @@ const lightPalette = {
   divider: 'rgba(0, 0, 0, 0.1)',
   action: {
     disabled: '#999'
-  }
+  },
+  openRowBackground: 'rgba(136, 206, 255, 0.17)',
 }
 
 // dark theme color palette
@@ -97,6 +98,7 @@ const darkPalette = {
   action: {
     disabled: '#666'
   },
+  openRowBackground: 'rgba(136, 206, 255, 0.1)',
 }
 
 // stitch everything together here,

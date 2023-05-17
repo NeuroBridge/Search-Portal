@@ -27,7 +27,12 @@ export const TableHeader = ({ currentTabIndex, handleChangeTab, detail }) => {
         divider={ <Divider orientation="vertical" flexItem /> }
         alignItems="stretch"
       >
-        <Box sx={{ p: 2 }}>RESULTS</Box>
+        <Box sx={{
+          px: 2,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center'
+        }}>RESULTS</Box>
 
         <Tabs
           value={ currentTabIndex }
