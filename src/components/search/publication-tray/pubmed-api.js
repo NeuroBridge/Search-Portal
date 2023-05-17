@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+import { localStorageCache } from "../../../util/localstorage-cache";
+
+const cache = localStorageCache("cached-publications");
 
 export const usePubMedAPI = (pmid) => {
   const [loading, setLoading] = useState(true);
@@ -13,22 +16,23 @@ export const usePubMedAPI = (pmid) => {
   });
 
   const fetch = async () => {
-    if (!pmid) return;
-    setLoading(true);
     setError(null);
-
+    setLoading(true);
     try {
       const api = new PubMedAPI(pmid);
       await api.fetch();
-      setArticle({
+
+      const article = {
         title: api.getTitle(),
         abstract: api.getAbstract(),
         authors: api.getAuthors(),
         date: api.getDate(),
         journal: api.getJournal(),
         articleIds: api.getArticleIds(),
-      });
+      };
+      setArticle(article);
       setLoading(false);
+      cache.set(pmid, article);
     } catch (error) {
       setLoading(false);
       setError(error);
@@ -37,6 +41,15 @@ export const usePubMedAPI = (pmid) => {
 
   useEffect(() => {
     (async () => {
+      if (!pmid) return;
+      setLoading(false);
+
+      const cachedPublication = cache.get(pmid);
+      if (cachedPublication !== null) {
+        setArticle(cachedPublication);
+        return;
+      }
+
       await fetch();
     })();
   }, [pmid]);

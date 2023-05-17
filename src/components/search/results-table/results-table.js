@@ -26,7 +26,8 @@ export const ResultsTable = () => {
   }
 
   const [sideTrayWidth, setSideTrayWidth] = useState(TRAY_CONFIG.initialWidth);
-  const [selectedRow, setSelectedRow] = useState(null);
+  const [studyTabs, setStudyTabs] = useState([]);
+  const [activeTab, setActiveTab] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [expandedAccordions, setExpandedAccordions] = useState(new Set());
   
@@ -47,14 +48,45 @@ export const ResultsTable = () => {
   const nqLink = `https://neuroquery.org/query?text=${ translatedTerms.join('+') }`;
 
   const handleRowClick = ({ row }) => {
-    if(selectedRow && row.pmid === selectedRow.pmid) {
-      setIsSidebarOpen((prev) => !prev);
+    setIsSidebarOpen(true);
+
+    // if this row is already open in the tabs, set the active tab to it and do nothing
+    if(studyTabs.find((tab) => tab.study.pmid === row.pmid)) {
+      setActiveTab(row.pmid);
+      return;
     }
-    else {
-      setSelectedRow(row);
-      setIsSidebarOpen(true);
+
+    // if there is a tab which is not pinned, use that tab for the new study
+    const unpinnedIndex = studyTabs.findIndex(tab => !tab.pinned);
+    if(unpinnedIndex !== -1) {
+      setStudyTabs(prev => {
+        const next = prev.slice();
+        next[unpinnedIndex] = {
+          study: row,
+          pinned: false,
+        }
+        return next;
+      })
     }
+    // if the clicked row is not in the tab list, add it
+    else if(!studyTabs.find(tab => tab.study.pmid === row.pmid)) {
+      setStudyTabs(prev => [...prev, { study: row, pinned: false }]);
+    }
+
+    setActiveTab(row.pmid);
   };
+
+  const handleRowDoubleClick = ({ row }) => {
+    // if the tab is double clicked, we want to pin it so it is in the list 
+    // until explicitly closed
+    setStudyTabs((prev) => {
+      const clickedTabIndex = prev.findIndex(tab => tab.study.pmid === row.pmid);
+      if(clickedTabIndex === -1) return;
+      const next = prev.slice();
+      next[clickedTabIndex].pinned = true;
+      return next;
+    })
+  }
 
   return (
     <Fade in={ totalResultCount > 0 }>
@@ -64,6 +96,16 @@ export const ResultsTable = () => {
           sx={{
             '.MuiDataGrid-row': { cursor: 'pointer' },
             borderColor: 'background.paper',
+
+            '& .row-opened-in-tab': {
+              backgroundColor: 'openRowBackground',
+            },
+            '& .active-tab': {
+              fontWeight: 'bold',
+            },
+            '& .unpinned-tab': {
+              fontStyle: 'italic',
+            }
           }}
           autoHeight
           rows={ currentTableData }
@@ -72,6 +114,20 @@ export const ResultsTable = () => {
           pageSize={ pageSize }
           onPageSizeChange={ newSize => setPageSize(newSize) }
           onRowClick={handleRowClick}
+          onRowDoubleClick={handleRowDoubleClick}
+          getRowClassName={({ row }) => {
+            if(studyTabs.length === 0) return '';
+            let classes = [];
+            if (row.pmid === activeTab)
+              classes.push('active-tab');
+            const studyListTabItem = studyTabs.find(tab => tab.study.pmid === row.pmid);
+            if (studyListTabItem !== undefined) {
+              classes.push('row-opened-in-tab');
+              if (studyListTabItem?.pinned === false) 
+                classes.push('unpinned-tab');
+            }
+            return classes.join(' ');
+          }}
           rowsPerPageOptions={ [10, 20, 50] }
           components={{
             Toolbar: TableHeader,
@@ -98,11 +154,15 @@ export const ResultsTable = () => {
           checkboxSelection
         />
 
-        {isSidebarOpen && selectedRow !== null && (
+        {isSidebarOpen && activeTab !== null && studyTabs.length > 0 && (
             <DraggableTray width={sideTrayWidth} setWidth={setSideTrayWidth}>
               <PublicationTray
-                selectedRow={selectedRow}
-                setSelectedRow={setSelectedRow}
+                selectedRow={activeTab}
+                setIsSidebarOpen={setIsSidebarOpen}
+                studyTabs={studyTabs}
+                setStudyTabs={setStudyTabs}
+                activeTab={activeTab}
+                setActiveTab={setActiveTab}
                 expandedAccordions={expandedAccordions}
                 setExpandedAccordions={setExpandedAccordions}
               />
