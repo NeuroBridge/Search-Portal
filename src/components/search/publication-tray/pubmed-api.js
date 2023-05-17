@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
+import { localStorageCache } from "../../../util/localstorage-cache";
+
+const cache = localStorageCache("cached-publications");
 
 export const usePubMedAPI = (pmid) => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [article, setArticle] = useState({
     title: null,
@@ -11,65 +14,6 @@ export const usePubMedAPI = (pmid) => {
     journal: null,
     articleIds: null,
   });
-
-  const getFromCache = (key) => {
-    const cachedString = window.localStorage.getItem("cached-publications");
-    if (cachedString === null) return null;
-    const cached = JSON.parse(cachedString);
-
-    // if the localStorage value isn't an array (using old json object), return null
-    if(!Array.isArray(cached)) return null;
-    
-    return cached.find(publication => publication.pmid === key)?.publication ?? null;
-  };
-
-  const setCache = (key, value) => {
-    const currentCache = window.localStorage.getItem("cached-publications");
-    let currentCacheJSON = JSON.parse(currentCache) ?? [];
-
-    // if there was any other type of value (including old json object), clear the cache
-    if (!Array.isArray(currentCacheJSON)) currentCacheJSON = [];
-
-    // if the publication already exists in the cache, return so as to not add a dup
-    if (currentCacheJSON.find((publication) => publication.pmid === key))
-      return;
-
-    const maxAttempts = currentCacheJSON.length;
-    const attemptAppend = (attempt = 0) => {
-      // if we've tried an deque `maxAttempts` times and are still getting
-      // a QuotaExceededError, return to avoid infinite recursion 
-      if(attempt > maxAttempts) return;
-      
-      // try to append the key/val pair to the cache
-      try {
-        currentCacheJSON.push({
-          pmid: key,
-          publication: value,
-        });
-        window.localStorage.setItem(
-          "cached-publications",
-          JSON.stringify(currentCacheJSON)
-        );
-      } catch (err) {
-        // https://mmazzarolo.com/blog/2022-06-25-local-storage-status/
-        // if we're out of storage, remove the first item and try again
-        if (
-          err instanceof DOMException &&
-          (err.code === 22 ||
-            err.code === 1014 ||
-            err.name === "QuotaExceededError" ||
-            err.name === "NS_ERROR_DOM_QUOTA_REACHED")
-        ) {
-          console.warn(`Out of localStorage, removing old publications. Attempt ${attempt}`);
-          // deque the first item. We also have to remove the last item because it will be 
-          // added back by the next attemptAppend call
-          currentCacheJSON = currentCacheJSON.slice(1, currentCacheJSON.length - 1);
-          attemptAppend(attempt + 1);
-        }
-      }
-    }
-    attemptAppend()
-  };
 
   const fetch = async () => {
     setError(null);
@@ -88,7 +32,7 @@ export const usePubMedAPI = (pmid) => {
       };
       setArticle(article);
       setLoading(false);
-      setCache(pmid, article);
+      cache.set(pmid, article);
     } catch (error) {
       setLoading(false);
       setError(error);
@@ -100,7 +44,7 @@ export const usePubMedAPI = (pmid) => {
       if (!pmid) return;
       setLoading(false);
 
-      const cachedPublication = getFromCache(pmid);
+      const cachedPublication = cache.get(pmid);
       if (cachedPublication !== null) {
         setArticle(cachedPublication);
         return;

@@ -197,9 +197,7 @@ export const Publication = ({
         </Box>
 
         <Accordion
-          expanded={
-            expandedAccordions.has("abstract-panel")
-          }
+          expanded={expandedAccordions.has("abstract-panel")}
           onChange={handleAccordionClicked("abstract-panel")}
         >
           <AccordionSummary
@@ -216,7 +214,7 @@ export const Publication = ({
                     <Typography variant="body2" sx={{ mb: "0.5em" }}>
                       <Skeleton width="15ch" />
                     </Typography>
-                    <Skeleton height="8em" sx={{ transform: "none" }} />
+                    <Skeleton height="16em" sx={{ transform: "none" }} />
                   </Box>
                 ))
               : Array.isArray(abstract) &&
