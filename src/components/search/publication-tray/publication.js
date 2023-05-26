@@ -10,6 +10,9 @@ import {
   Link as MuiLink,
   ListItem,
   Divider,
+  Card,
+  CardContent,
+  CardActionArea,
 } from "@mui/material";
 import { ErrorScreen } from "./error-screen";
 import { Link } from "../../link";
@@ -19,7 +22,8 @@ import { AuthorModal } from "./author-modal";
 import PropTypes from "prop-types";
 
 import studyConcepts from "../../../data/study-concepts.json";
-import { ExpandMore } from "@mui/icons-material";
+import { Download, ExpandMore } from "@mui/icons-material";
+import { usePubMedCentralAPI } from "./pubmed-central-api";
 
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -73,6 +77,11 @@ export const Publication = ({
     fetch,
     article: { title, abstract, authors, date, journal, articleIds },
   } = usePubMedAPI(selectedRow.pmid);
+
+  const {
+    error: pmcError,
+    article: { dataAvailability, supplementaryMaterials },
+  } = usePubMedCentralAPI(articleIds?.pmc);
 
   const handleAccordionClicked = (panel) => () => {
     const nextState = new Set(expandedAccordions);
@@ -235,6 +244,114 @@ export const Publication = ({
                     <Typography>{abstractSection.text}</Typography>
                   </Box>
                 ))}
+          </AccordionDetails>
+        </Accordion>
+
+        <Accordion
+          expanded={
+            !pmcError &&
+            ((Array.isArray(supplementaryMaterials?.materials) &&
+              supplementaryMaterials.materials.length > 0) ||
+              dataAvailability) &&
+            expandedAccordions.has("associated-data-panel")
+          }
+          onChange={handleAccordionClicked("associated-data-panel")}
+        >
+          <AccordionSummary
+            aria-controls="associated-data-content"
+            id="associated-data-header"
+            disabled={
+              Boolean(pmcError) ||
+              supplementaryMaterials === null ||
+              (Array.isArray(supplementaryMaterials?.materials) &&
+                supplementaryMaterials.materials.length === 0 &&
+                !dataAvailability)
+            }
+          >
+            <Typography>Associated Data</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            {dataAvailability && (
+              <Box mb="1rem">
+                <Typography
+                  variant="body2"
+                  component="h4"
+                  sx={{
+                    fontWeight: "bold",
+                    mb: "0.2rem",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  Data Availability
+                </Typography>
+                <Typography>{dataAvailability}</Typography>
+              </Box>
+            )}
+            {supplementaryMaterials &&
+              supplementaryMaterials.materials.length > 0 && (
+                <>
+                  <Typography
+                    variant="body2"
+                    component="h4"
+                    sx={{
+                      fontWeight: "bold",
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    {supplementaryMaterials.title ?? "Supplementary Material"}
+                  </Typography>
+                  {supplementaryMaterials.materials.map(
+                    ({ intro, label, caption, href }, i) => (
+                      <Card
+                        key={i}
+                        sx={{
+                          display: "flex",
+                          mt: "1rem",
+                          "&:first-of-type": { mt: "0.5rem" },
+                          borderRadius: "0.5rem",
+                        }}
+                        elevation={3}
+                        p={0}
+                      >
+                        <CardActionArea
+                          component={"a"}
+                          href={`https://www.ncbi.nlm.nih.gov/pmc/articles/${articleIds.pmc}/bin/${href}`}
+                        >
+                          <CardContent
+                            sx={{
+                              display: "flex",
+                              flexDirection: "column",
+                              gap: "0.1rem",
+                              color: "text.primary",
+                            }}
+                          >
+                            <Typography
+                              variant="body2"
+                              sx={{
+                                fontWeight: "bold",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "space-between",
+                              }}
+                            >
+                              {href}
+                              <Download fontSize="small" />
+                            </Typography>
+                            <Typography
+                              variant="body2"
+                              sx={{ fontStyle: "italic" }}
+                            >
+                              {label}
+                            </Typography>
+                            <Typography variant="body2">{intro}</Typography>
+                            <Typography variant="body2">{caption}</Typography>
+                          </CardContent>
+                        </CardActionArea>
+                      </Card>
+                    )
+                  )}
+                </>
+              )}
           </AccordionDetails>
         </Accordion>
       </ErrorScreen>
