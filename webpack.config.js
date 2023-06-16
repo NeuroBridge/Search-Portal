@@ -5,6 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const DotenvPlugin = require('dotenv-webpack')
 const ESLintPlugin = require('eslint-webpack-plugin')
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 
 let mode = 'development'
 let target = 'web'
@@ -22,6 +23,7 @@ const plugins = [
   new ESLintPlugin({
     extensions: ['./src', 'js'],
   }),
+  new BundleAnalyzerPlugin(),
 ]
 
 if (process.env.NODE_ENV === 'production') {
