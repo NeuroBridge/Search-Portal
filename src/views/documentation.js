@@ -130,7 +130,7 @@ The abstract and relevant ontology concepts are also presented for convenience.
   /* ONTOLOGY BROWSER */
   ontologyBrowser: {
     title: 'Ontology Browser',
-    description: 'Reprehenderit veniam sed elit officia irure ut deserunt reprehenderit.',
+    description: 'The Ontology Browser allows the user to interactively explore the NeuroBridge ontology and provides a visual representation of the concept hierarchy.',
     steps: [
       {
         id: 'overview',
