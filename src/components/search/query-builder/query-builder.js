@@ -207,10 +207,6 @@ export const QueryBuilder = () => {
         </IconButton>
         <pre className="query">{JSON.stringify(nbQueryObject, null, 2)}</pre>
       </Collapse>
-
-      <Divider />
-
-      <Box sx={{ padding: "8px" }} />
     </Card>
   );
 };
