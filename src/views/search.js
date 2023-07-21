@@ -1,27 +1,26 @@
-import { Box, Container } from '@mui/material'
-import { QueryBuilder, ResultsTable } from '../components/search'
+import { Box, Container, Paper, Stack } from '@mui/material'
+import { QueryBuilder, ResultsTable} from '../components/search'
 import { SearchProvider } from '../components/search'
 
-//
-
 export const SearchView = () => {
-  
   return (
-    <Container maxWidth="lg">
-      <Box sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 2,
-        mb: 6,
-      }}>      
-        <SearchProvider>
+    <Container maxWidth="xl">
+      <SearchProvider>
+        <Stack direction='row' spacing={2}>
+          <Stack spacing={2} flex={1}>
+            <Box flex={1}>
+              <QueryBuilder />
+            </Box>
+            <Box flex={1}>
+              <ResultsTable />
+            </Box>
+          </Stack>
 
-          <QueryBuilder />
-
-          <ResultsTable />
-          
-        </SearchProvider>
-      </Box>
+          <Paper sx={{ p: 2, flex: 1 }}>
+            Publication Viewer
+          </Paper>
+        </Stack>
+      </SearchProvider>
     </Container>
   )
 }
