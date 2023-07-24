@@ -10,10 +10,10 @@ export const SearchView = () => {
         <PublicationTrayProvider>
           <Stack direction='row' spacing={2}>
             <Stack spacing={2} flex={1} justifyContent='flex-start'>
-              <Box flex={1}>
+              <Box>
                 <QueryBuilder />
               </Box>
-              <Box flex={1}>
+              <Box>
                 <ResultsTable />
               </Box>
             </Stack>
