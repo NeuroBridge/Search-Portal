@@ -1,8 +1,9 @@
-import { Clear, ClearAll, Close } from "@mui/icons-material";
+import { ClearAll, Close } from "@mui/icons-material";
 import { Box, IconButton, Stack, Tooltip, Tabs, Tab } from "@mui/material";
 import PropTypes from "prop-types";
 import { Publication } from "./publication";
 import { useMemo } from "react";
+import { usePublicationTray } from "./context";
 
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
@@ -31,15 +32,16 @@ const a11yProps = (index) => ({
   "aria-controls": `simple-tabpanel-${index}`,
 });
 
-export const PublicationTray = ({
-  setIsSidebarOpen,
-  studyTabs,
-  setStudyTabs,
-  activeTab,
-  setActiveTab,
-  expandedAccordions,
-  setExpandedAccordions,
-}) => {
+export const PublicationTray = () => {
+  const {
+    studyTabs,
+    setStudyTabs,
+    activeTab,
+    setActiveTab,
+    expandedAccordions,
+    setExpandedAccordions,
+  } = usePublicationTray();
+  
   const activeTabIndex = useMemo(() => {
     const index = studyTabs.findIndex((tab) => tab.study?.pmid === activeTab);
     return index === -1 ? 0 : index;
@@ -142,7 +144,7 @@ export const PublicationTray = ({
               borderColor: "divider",
             }}
           >
-            <Tooltip title="Close all tabs" placement="top">
+            <Tooltip title="Close all tabs" placement="bottom">
               <IconButton
                 onClick={() => setStudyTabs([])}
                 size="small"
@@ -150,22 +152,6 @@ export const PublicationTray = ({
                 sx={{ borderRadius: 0, height: "100%", p: 1 }}
               >
                 <ClearAll />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Close publication view" placement="top">
-              <IconButton
-                onClick={() => setIsSidebarOpen(false)}
-                size="small"
-                aria-label="Close publication view"
-                sx={{
-                  borderRadius: 0,
-                  height: "100%",
-                  p: 1,
-                  borderLeft: "1px solid",
-                  borderColor: "divider",
-                }}
-              >
-                <Clear />
               </IconButton>
             </Tooltip>
           </Stack>
@@ -187,15 +173,4 @@ export const PublicationTray = ({
       </Box>
     </Box>
   );
-};
-
-PublicationTray.propTypes = {
-  selectedRow: PropTypes.any,
-  setIsSidebarOpen: PropTypes.any,
-  studyTabs: PropTypes.any,
-  setStudyTabs: PropTypes.any,
-  activeTab: PropTypes.any,
-  setActiveTab: PropTypes.any,
-  expandedAccordions: PropTypes.any,
-  setExpandedAccordions: PropTypes.any,
 };

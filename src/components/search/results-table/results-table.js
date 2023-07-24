@@ -8,8 +8,7 @@ import { Link } from '../../link'
 import { Error } from '@mui/icons-material'
 import { Box } from '@mui/system'
 import { useTheme } from '@emotion/react'
-import { PublicationTray } from '../publication-tray'
-import { DraggableTray, TRAY_CONFIG } from '../publication-tray/draggable-tray'
+import { usePublicationTray } from '../publication-tray/context'
 
 //
 
@@ -17,19 +16,20 @@ export const ResultsTable = () => {
   const theme = useTheme();
   const {
     results, lastRequestTime, totalResultCount, translatedTerms
-  } = useSearch()
+  } = useSearch();
+
+  const {
+    studyTabs,
+    activeTab,
+    handleRowClick,
+    handleRowDoubleClick,
+  } = usePublicationTray();
 
   const [currentTabIndex, setCurrentTabIndex] = useState(0)
 
-  const handleChangeTab = (event, newIndex) => {
+  const handleChangeTab = (_, newIndex) => {
     setCurrentTabIndex(newIndex)
   }
-
-  const [sideTrayWidth, setSideTrayWidth] = useState(TRAY_CONFIG.initialWidth);
-  const [studyTabs, setStudyTabs] = useState([]);
-  const [activeTab, setActiveTab] = useState(null);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [expandedAccordions, setExpandedAccordions] = useState(new Set());
   
   // tableData will be a memoized array consisting of just
   // the items from each interface in the results object.
@@ -47,46 +47,7 @@ export const ResultsTable = () => {
 
   const nqLink = `https://neuroquery.org/query?text=${ translatedTerms.join('+') }`;
 
-  const handleRowClick = ({ row }) => {
-    setIsSidebarOpen(true);
-
-    // if this row is already open in the tabs, set the active tab to it and do nothing
-    if(studyTabs.find((tab) => tab.study.pmid === row.pmid)) {
-      setActiveTab(row.pmid);
-      return;
-    }
-
-    // if there is a tab which is not pinned, use that tab for the new study
-    const unpinnedIndex = studyTabs.findIndex(tab => !tab.pinned);
-    if(unpinnedIndex !== -1) {
-      setStudyTabs(prev => {
-        const next = prev.slice();
-        next[unpinnedIndex] = {
-          study: row,
-          pinned: false,
-        }
-        return next;
-      })
-    }
-    // if the clicked row is not in the tab list, add it
-    else if(!studyTabs.find(tab => tab.study.pmid === row.pmid)) {
-      setStudyTabs(prev => [...prev, { study: row, pinned: false }]);
-    }
-
-    setActiveTab(row.pmid);
-  };
-
-  const handleRowDoubleClick = ({ row }) => {
-    // if the tab is double clicked, we want to pin it so it is in the list 
-    // until explicitly closed
-    setStudyTabs((prev) => {
-      const clickedTabIndex = prev.findIndex(tab => tab.study.pmid === row.pmid);
-      if(clickedTabIndex === -1) return;
-      const next = prev.slice();
-      next[clickedTabIndex].pinned = true;
-      return next;
-    })
-  }
+  
 
   return (
     <Fade in={ totalResultCount > 0 }>
@@ -153,21 +114,6 @@ export const ResultsTable = () => {
           disableSelectionOnClick
           checkboxSelection
         />
-
-        {isSidebarOpen && activeTab !== null && studyTabs.length > 0 && (
-            <DraggableTray width={sideTrayWidth} setWidth={setSideTrayWidth}>
-              <PublicationTray
-                selectedRow={activeTab}
-                setIsSidebarOpen={setIsSidebarOpen}
-                studyTabs={studyTabs}
-                setStudyTabs={setStudyTabs}
-                activeTab={activeTab}
-                setActiveTab={setActiveTab}
-                expandedAccordions={expandedAccordions}
-                setExpandedAccordions={setExpandedAccordions}
-              />
-            </DraggableTray>
-          )}
       </Card>
     </Fade>
   );
