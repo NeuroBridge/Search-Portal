@@ -1,12 +1,13 @@
 import { createContext, useContext, useState } from "react"
 import PropTypes from 'prop-types'
+import { useLocalStorage } from "../../../hooks";
 
 const PublicationTrayContext = createContext({});
 export const usePublicationTray = () => useContext(PublicationTrayContext);
 
 export const PublicationTrayProvider = ({ children }) => {
-  const [studyTabs, setStudyTabs] = useState([]);
-  const [activeTab, setActiveTab] = useState(null);
+  const [studyTabs, setStudyTabs] = useLocalStorage('studyTabs', []);
+  const [activeTab, setActiveTab] = useLocalStorage('activeTab', null);
   const [expandedAccordions, setExpandedAccordions] = useState(new Set());
 
   const handleRowClick = ({ row }) => {
