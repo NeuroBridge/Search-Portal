@@ -1,4 +1,4 @@
-import { Box, Container, Paper, Stack } from '@mui/material'
+import { Box, Container, Stack } from '@mui/material'
 import { PublicationTray, QueryBuilder, ResultsTable} from '../components/search'
 import { SearchProvider } from '../components/search'
 import { PublicationTrayProvider } from '../components/search/publication-tray/context'
@@ -17,10 +17,8 @@ export const SearchView = () => {
                 <ResultsTable />
               </Box>
             </Stack>
-
-            <Paper sx={{ flex: 1 }}>
-              <PublicationTray />
-            </Paper>
+            
+            <PublicationTray />
           </Stack>
         </PublicationTrayProvider>
       </SearchProvider>
