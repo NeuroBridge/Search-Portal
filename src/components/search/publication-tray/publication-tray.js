@@ -79,98 +79,96 @@ export const PublicationTray = () => {
   }
 
   return (
-    <Box>
-      <Box sx={{ width: "100%" }}>
-        <Box
+    <Box sx={{ width: "100%" }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "stretch",
+          justifyContent: "space-between",
+          borderBottom: 1,
+          borderColor: "divider",
+        }}
+      >
+        <Tabs
           sx={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "stretch",
-            justifyContent: "space-between",
-            borderBottom: 1,
+            pt: "1px",
+            "& .MuiButtonBase-root": {
+              minHeight: "3rem",
+            },
+          }}
+          value={activeTabIndex}
+          onChange={handleChange}
+          aria-label="publication tabs"
+          variant="scrollable"
+          scrollButtons={false}
+        >
+          {studyTabs.map((tab) => (
+            <Tooltip
+              key={`pmid-${tab.study?.pmid}`}
+              title={tab.study?.title}
+              placement="top"
+            >
+              <Tab
+                icon={
+                  <Close fontSize="small" onClick={handleCloseTab(tab)} />
+                }
+                sx={{ textTransform: "revert", fontStyle: tab.pinned ? 'initial' : 'italic' }}
+                iconPosition="end"
+                label={`${
+                  typeof tab.study?.title === "string" &&
+                  tab.study?.title?.split("").splice(0, 10).join("")
+                }...`}
+                {...a11yProps(tab.study?.pmid)}
+                onMouseDown={(e) => {
+                  if (e.button === 1) {
+                    handleCloseTab(tab)(e);
+                  }
+                }}
+                onDoubleClick={(e) => {
+                  handleDoubleClickTab(tab)(e);
+                }}
+              />
+            </Tooltip>
+          ))}
+        </Tabs>
+        <Stack
+          direction="row"
+          justifyContent="flex-end"
+          alignItems="center"
+          className="results-action-buttons"
+          sx={{
+            p: "0 1 0 0",
+            borderLeft: "1px solid",
             borderColor: "divider",
           }}
         >
-          <Tabs
-            sx={{
-              pt: "1px",
-              "& .MuiButtonBase-root": {
-                minHeight: "3rem",
-              },
-            }}
-            value={activeTabIndex}
-            onChange={handleChange}
-            aria-label="publication tabs"
-            variant="scrollable"
-            scrollButtons={false}
-          >
-            {studyTabs.map((tab) => (
-              <Tooltip
-                key={`pmid-${tab.study?.pmid}`}
-                title={tab.study?.title}
-                placement="top"
-              >
-                <Tab
-                  icon={
-                    <Close fontSize="small" onClick={handleCloseTab(tab)} />
-                  }
-                  sx={{ textTransform: "revert", fontStyle: tab.pinned ? 'initial' : 'italic' }}
-                  iconPosition="end"
-                  label={`${
-                    typeof tab.study?.title === "string" &&
-                    tab.study?.title?.split("").splice(0, 10).join("")
-                  }...`}
-                  {...a11yProps(tab.study?.pmid)}
-                  onMouseDown={(e) => {
-                    if (e.button === 1) {
-                      handleCloseTab(tab)(e);
-                    }
-                  }}
-                  onDoubleClick={(e) => {
-                    handleDoubleClickTab(tab)(e);
-                  }}
-                />
-              </Tooltip>
-            ))}
-          </Tabs>
-          <Stack
-            direction="row"
-            justifyContent="flex-end"
-            alignItems="center"
-            className="results-action-buttons"
-            sx={{
-              p: "0 1 0 0",
-              borderLeft: "1px solid",
-              borderColor: "divider",
-            }}
-          >
-            <Tooltip title="Close all tabs" placement="bottom">
-              <IconButton
-                onClick={() => setStudyTabs([])}
-                size="small"
-                aria-label="Close all tabs"
-                sx={{ borderRadius: 0, height: "100%", p: 1 }}
-              >
-                <ClearAll />
-              </IconButton>
-            </Tooltip>
-          </Stack>
-        </Box>
-
-        {studyTabs.map((tab, i) => (
-          <TabPanel
-            key={`tab-panel-${tab?.study?.pmid}`}
-            value={activeTabIndex}
-            index={i}
-          >
-            <Publication
-              selectedRow={tab.study}
-              expandedAccordions={expandedAccordions}
-              setExpandedAccordions={setExpandedAccordions}
-            />
-          </TabPanel>
-        ))}
+          <Tooltip title="Close all tabs" placement="bottom">
+            <IconButton
+              onClick={() => setStudyTabs([])}
+              size="small"
+              aria-label="Close all tabs"
+              sx={{ borderRadius: 0, height: "100%", p: 1 }}
+            >
+              <ClearAll />
+            </IconButton>
+          </Tooltip>
+        </Stack>
       </Box>
+
+      {studyTabs.map((tab, i) => (
+        <TabPanel
+          key={`tab-panel-${tab?.study?.pmid}`}
+          value={activeTabIndex}
+          index={i}
+        >
+          <Publication
+            selectedRow={tab.study}
+            expandedAccordions={expandedAccordions}
+            setExpandedAccordions={setExpandedAccordions}
+          />
+        </TabPanel>
+      ))}
     </Box>
   );
 };
