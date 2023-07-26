@@ -117,6 +117,59 @@ export const SearchProvider = ({ children }) => {
       })
   };
 
+  // convert the NQ pmids into PMCIDs using the Pubmed API, if they exist
+  const translatePMIDs = async (nqResults) => {
+    if (!Array.isArray(nqResults)) return;
+    
+    const ids = nqResults
+      .map(({ pmid }) => pmid)
+      .filter(pmid => typeof pmid === 'number')
+      .join(',');
+
+    let res;
+    try {
+      res = await axios.get('https://www.ncbi.nlm.nih.gov/pmc/utils/idconv/v1.0/', {
+        params: {
+          tool: 'neurobridge',
+          email: 'comms@renci.org',
+          idtype: 'pmid',
+          format: 'json',
+          versions: 'no',
+          ids
+        }
+      });
+    }
+    catch (error) {
+      console.error(error);
+      return;
+    }
+
+    if(res.status !== 200) {
+      const errorText = `Error translating NeuroQuery PMIDs: ${res.statusText}`;
+      notify(errorText)
+      console.error(errorText);
+      return;
+    }
+
+    // create pmid => pmcid map, since the PubMed API response isn't ordered
+    const translationList = res?.data?.records;
+    if(!Array.isArray(translationList)) return;
+    const translationMap = new Map();
+
+    translationList.forEach(({pmid, pmcid}) => {
+      translationMap.set(pmid, pmcid);
+    });
+
+    // now update the results object with the translationMap:
+    setResults((prev) => ({
+      NeuroBridge: prev.NeuroBridge,
+      NeuroQuery: nqResults.map((article) => ({
+        ...article,
+        pmcid: translationMap.get(`${article.pmid}`),
+      }))
+    }))
+  }
+
   const fetchResults = async (nbQuery, nqQuery) => {
     clearResults()
     setLastRequestTime(Date.now())
@@ -130,12 +183,14 @@ export const SearchProvider = ({ children }) => {
           NeuroBridge: nbResults,
           NeuroQuery: nqResults,
         })
+        setLoading(false);
+        return nqResults;
+      })
+      .then((nqResults) => {
+        translatePMIDs(nqResults);
       })
       .catch(error => {
         console.error(error.message)
-      })
-      .finally(() => {
-        setLoading(false)
       })
   };
 
