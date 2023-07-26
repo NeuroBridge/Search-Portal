@@ -166,6 +166,7 @@ export const SearchProvider = ({ children }) => {
       NeuroQuery: nqResults.map((article) => ({
         ...article,
         pmcid: translationMap.get(`${article.pmid}`),
+        pmc_url: getPubMedCentralLink(translationMap.get(`${article.pmid}`))
       }))
     }))
   }
