@@ -10,6 +10,7 @@ import {
 } from './views'
 import { Drawer } from './components/drawer'
 import { Header } from './components/layout'
+import { useAnalytics } from './components/analytics'
 
 const Router = () => {
   return (
@@ -25,6 +26,7 @@ const Router = () => {
 
 export const App = () => {
   const theme = useTheme()
+  useAnalytics()
   
   return (
     <Paper
