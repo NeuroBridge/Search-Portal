@@ -8,6 +8,7 @@ import {
   NotFoundView,
   SearchView,
 } from './views'
+import { useAnalytics } from './components/analytics'
 import { Drawer } from './components/drawer'
 import { Header } from './components/layout'
 
@@ -25,6 +26,7 @@ const Router = () => {
 
 export const App = () => {
   const theme = useTheme()
+  useAnalytics()
   
   return (
     <Paper
