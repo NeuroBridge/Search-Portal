@@ -4,6 +4,7 @@ import axios from 'axios'
 import { useLocalStorage } from '../../hooks'
 import { useAppContext } from '../../context'
 import translatedTermsList from '../../data/nb-nq-translations.json';
+import { PubMedAPIError } from './publication-tray/pubmed-api'
 
 //
 
@@ -121,9 +122,18 @@ export const SearchProvider = ({ children }) => {
   const translatePMIDs = async (nqResults) => {
     if (!Array.isArray(nqResults)) return;
     
+    // the PubMed API only allows 200 ids to be translated at a time. For now,
+    // since we only every have 100 ids maximum, we can trim the request to the
+    // first 200 and throw an warning just to be safe.
+    const MAX_IDS = 200;
+    if(nqResults.length > 200) {
+      throw new PubMedAPIError(`You requested that ${nqResults.length} NeuroQuery IDs be translated, but the API only supports ${MAX_IDS}`)
+    }
+    
     const ids = nqResults
       .map(({ pmid }) => pmid)
       .filter(pmid => typeof pmid === 'number')
+      .slice(0, MAX_IDS)
       .join(',');
 
     let res;
@@ -140,15 +150,10 @@ export const SearchProvider = ({ children }) => {
       });
     }
     catch (error) {
-      console.error(error);
-      return;
+      throw new PubMedAPIError(`Error contacting the PubMed ID translation API`);
     }
-
     if(res.status !== 200) {
-      const errorText = `Error translating NeuroQuery PMIDs: ${res.statusText}`;
-      notify(errorText)
-      console.error(errorText);
-      return;
+      throw new PubMedAPIError(`Error translating NeuroQuery PMIDs: ${res.statusText}`);
     }
 
     // create pmid => pmcid map, since the PubMed API response isn't ordered
@@ -188,7 +193,10 @@ export const SearchProvider = ({ children }) => {
         return nqResults;
       })
       .then((nqResults) => {
-        translatePMIDs(nqResults);
+        translatePMIDs(nqResults).catch((error) => {
+          console.error(error);
+          notify(error.message);
+        });
       })
       .catch(error => {
         console.error(error.message)
