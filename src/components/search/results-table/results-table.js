@@ -39,7 +39,7 @@ export const ResultsTable = () => {
     }
     const serviceId = Object.keys(results).sort()[currentTabIndex]
     return results[serviceId] || []
-  }, [currentTabIndex, totalResultCount, lastRequestTime])
+  }, [currentTabIndex, totalResultCount, lastRequestTime, results])
 
   const [pageSize, setPageSize] = useState(20)
 
