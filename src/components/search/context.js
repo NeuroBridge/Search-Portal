@@ -4,6 +4,7 @@ import axios from 'axios'
 import { useLocalStorage } from '../../hooks'
 import { useAppContext } from '../../context'
 import translatedTermsList from '../../data/nb-nq-translations.json';
+import { PubMedAPIError } from './publication-tray/pubmed-api'
 
 //
 
@@ -117,6 +118,64 @@ export const SearchProvider = ({ children }) => {
       })
   };
 
+  // convert the NQ pmids into PMCIDs using the Pubmed API, if they exist
+  const translatePMIDs = async (nqResults) => {
+    if (!Array.isArray(nqResults)) return;
+    
+    // the PubMed API only allows 200 ids to be translated at a time. For now,
+    // since we only every have 100 ids maximum, we can trim the request to the
+    // first 200 and throw an warning just to be safe.
+    const MAX_IDS = 200;
+    if(nqResults.length > 200) {
+      throw new PubMedAPIError(`You requested that ${nqResults.length} NeuroQuery IDs be translated, but the API only supports ${MAX_IDS}`)
+    }
+    
+    const ids = nqResults
+      .map(({ pmid }) => pmid)
+      .filter(pmid => typeof pmid === 'number')
+      .slice(0, MAX_IDS)
+      .join(',');
+
+    let res;
+    try {
+      res = await axios.get('https://www.ncbi.nlm.nih.gov/pmc/utils/idconv/v1.0/', {
+        params: {
+          tool: 'neurobridge',
+          email: 'comms@renci.org',
+          idtype: 'pmid',
+          format: 'json',
+          versions: 'no',
+          ids
+        }
+      });
+    }
+    catch (error) {
+      throw new PubMedAPIError(`Error contacting the PubMed ID translation API`);
+    }
+    if(res.status !== 200) {
+      throw new PubMedAPIError(`Error translating NeuroQuery PMIDs: ${res.statusText}`);
+    }
+
+    // create pmid => pmcid map, since the PubMed API response isn't ordered
+    const translationList = res?.data?.records;
+    if(!Array.isArray(translationList)) return;
+    const translationMap = new Map();
+
+    translationList.forEach(({pmid, pmcid}) => {
+      translationMap.set(pmid, pmcid);
+    });
+
+    // now update the results object with the translationMap:
+    setResults((prev) => ({
+      NeuroBridge: prev.NeuroBridge,
+      NeuroQuery: nqResults.map((article) => ({
+        ...article,
+        pmcid: translationMap.get(`${article.pmid}`),
+        pmc_url: getPubMedCentralLink(translationMap.get(`${article.pmid}`))
+      }))
+    }))
+  }
+
   const fetchResults = async (nbQuery, nqQuery) => {
     clearResults()
     setLastRequestTime(Date.now())
@@ -130,12 +189,17 @@ export const SearchProvider = ({ children }) => {
           NeuroBridge: nbResults,
           NeuroQuery: nqResults,
         })
+        setLoading(false);
+        return nqResults;
+      })
+      .then((nqResults) => {
+        translatePMIDs(nqResults).catch((error) => {
+          console.error(error);
+          notify(error.message);
+        });
       })
       .catch(error => {
         console.error(error.message)
-      })
-      .finally(() => {
-        setLoading(false)
       })
   };
 
