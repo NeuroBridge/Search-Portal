@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 
 const STATUS_URLS = [
   {
-    name: "neurobridges-ml.renci.org",
+    name: process.env.NB_API_URL,
     url: process.env.NB_API_URL,
     method: "POST",
     body: {
@@ -27,7 +27,7 @@ const STATUS_URLS = [
     },
   },
   {
-    name: "api.neurobridges.org",
+    name: process.env.NB_NQ_TRANSLATOR_HEALTH_URL,
     url: process.env.NB_NQ_TRANSLATOR_HEALTH_URL,
     method: "GET",
   },
