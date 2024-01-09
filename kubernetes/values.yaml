@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: containers.renci.org/neurobridges/neurobridges-portal
-  tag: "1.2.6"
+  tag: "1.2.7"
 
 service:
   port: 8080
