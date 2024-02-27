@@ -25,6 +25,7 @@ export const SearchProvider = ({ children }) => {
   const [results, setResults] = useState({
     NeuroBridge: [],
     NeuroQuery: [], 
+    Flywheel: [], 
   })
   const [translatedTerms, setTranslatedTerms] = useState([]);
   const [lastRequestTime, setLastRequestTime] = useState(null)
@@ -79,6 +80,28 @@ export const SearchProvider = ({ children }) => {
       })
       .catch(error => {
         notify('There was an error communicating with the NeuroBridge API.', 'error')
+        console.log(error)
+        return []
+      })
+  };
+
+  const fwFetchResults = query => {
+    return axios.post(
+        process.env.FW_API_URL,
+        JSON.stringify({ query: { expression: query }, max_res: 100 }),
+        { headers: { 'Content-Type': 'text/html;charset=utf-8' } },
+      )
+      .then(({ data }) => {
+        if (!data?.docs) {
+          throw new Error('An error occurred while fetching Flywheel results.')
+        }
+        return data.docs.map((res) => ({
+          ...res,
+          pmid: res.id,
+        }));
+      })
+      .catch(error => {
+        notify('There was an error communicating with the Flywheel API.', 'error')
         console.log(error)
         return []
       })
@@ -167,7 +190,7 @@ export const SearchProvider = ({ children }) => {
 
     // now update the results object with the translationMap:
     setResults((prev) => ({
-      NeuroBridge: prev.NeuroBridge,
+      ...prev,
       NeuroQuery: nqResults.map((article) => ({
         ...article,
         pmcid: translationMap.get(`${article.pmid}`),
@@ -183,11 +206,13 @@ export const SearchProvider = ({ children }) => {
     Promise.all([
       nbFetchResults(nbQuery),
       nqFetchResults(nqQuery),
+      fwFetchResults(nbQuery), // this is in the same solr db and has the same input format as NB
     ])
-      .then(([nbResults, nqResults]) => {
+      .then(([nbResults, nqResults, fwResults]) => {
         setResults({
           NeuroBridge: nbResults,
           NeuroQuery: nqResults,
+          Flywheel: fwResults,
         })
         setLoading(false);
         return nqResults;
@@ -204,7 +229,7 @@ export const SearchProvider = ({ children }) => {
   };
 
   const clearResults = () => {
-    setResults({ NeuroBridge: [], NeuroQuery: [] })
+    setResults({ NeuroBridge: [], NeuroQuery: [], Flywheel: [] })
   }
 
   return (

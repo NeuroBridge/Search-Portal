@@ -3,6 +3,7 @@ import {
   renderAbstractCell,
   renderFullTextHeader,
   renderFullTextCell,
+  renderFlywheelSummaryWithTooltip,
   // renderScoreCell,
 } from './renderers'
 
@@ -40,5 +41,16 @@ export const columns = [
   //   renderCell: renderScoreCell,
   //   width: 110,
   // },
+]
+
+export const flywheelColumns = [
+  {
+    field: 'summary',
+    description: 'Article summary',
+    headerName: 'Summary',
+    renderCell: renderFlywheelSummaryWithTooltip,
+    flex: 1,
+    sortable: false,
+  }
 ]
 
