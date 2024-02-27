@@ -50,6 +50,10 @@ export const ResultsTable = () => {
   const nqLink = `https://neuroquery.org/query?text=${ translatedTerms.join('+') }`;
 
   const handleRowClick = ({ row }) => {
+    // if we're on the flywheel page, don't open the PubMed viewer bc those
+    // articles don't have PubMed IDs
+    if(currentTabIndex === 2) return;
+    
     setIsSidebarOpen(true);
 
     // if this row is already open in the tabs, set the active tab to it and do nothing
@@ -79,6 +83,10 @@ export const ResultsTable = () => {
   };
 
   const handleRowDoubleClick = ({ row }) => {
+    // if we're on the flywheel page, don't open the PubMed viewer bc those
+    // articles don't have PubMed IDs
+    if(currentTabIndex == 2) return;
+    
     // if the tab is double clicked, we want to pin it so it is in the list 
     // until explicitly closed
     setStudyTabs((prev) => {
