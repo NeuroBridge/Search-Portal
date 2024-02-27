@@ -56,6 +56,12 @@ export const TableHeader = ({ currentTabIndex, handleChangeTab, detail }) => {
               aria-controls="results-tabpanel-NeuroQuery"
             />
           </Tooltip>
+          <Tab
+            sx={{ textTransform: 'revert' }}
+            label={ `Flywheel (${ results.Flywheel.length })` }
+            id={ `results-tab-Flywheel` }
+            aria-controls="results-tabpanel-Flywheel"
+          />
         </Tabs>
 
         <Stack

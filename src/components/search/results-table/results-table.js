@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Card, Fade, Typography } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
-import { columns } from './columns'
+import { columns, flywheelColumns } from './columns'
 import { TableHeader } from './table-header'
 import { useSearch } from '../context'
 import { Link } from '../../link'
@@ -37,7 +37,9 @@ export const ResultsTable = () => {
     if (!results || !Object.keys(results).length) {
       return []
     }
-    const serviceId = Object.keys(results).sort()[currentTabIndex]
+    // `results` should be refactored to not be an object since key order
+    // isn't guaranteed for objects.
+    const serviceId = Object.keys(results)[currentTabIndex]
     return results[serviceId] || []
   }, [currentTabIndex, totalResultCount, lastRequestTime, results])
 
@@ -109,7 +111,7 @@ export const ResultsTable = () => {
           }}
           autoHeight
           rows={ currentTableData }
-          columns={ columns }
+          columns={ currentTabIndex == 2 ? flywheelColumns : columns }
           getRowId={ row => row.pmid }
           pageSize={ pageSize }
           onPageSizeChange={ newSize => setPageSize(newSize) }

@@ -42,3 +42,13 @@ export const columns = [
   // },
 ]
 
+export const flywheelColumns = [
+  {
+    field: 'summary',
+    description: 'Article summary',
+    headerName: 'Summary',
+    flex: 1,
+    sortable: false,
+  }
+]
+
